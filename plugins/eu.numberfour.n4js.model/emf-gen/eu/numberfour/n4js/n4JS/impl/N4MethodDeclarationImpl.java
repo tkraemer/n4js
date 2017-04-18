@@ -758,6 +758,25 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean hasComputedPropertyName() {
+		final LiteralOrComputedPropertyName declName = this.getDeclaredName();
+		return ((declName != null) && declName.hasComputedPropertyName());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isReturnValueOptional() {
+		return (((this.getDefinedFunction() != null) && this.getDefinedFunction().isReturnValueOptional()) || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark()));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isAsync() {
 		return this.isDeclaredAsync();
 	}
@@ -1188,6 +1207,7 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 			switch (baseOperationID) {
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_NAME: return N4JSPackage.N4_METHOD_DECLARATION___GET_NAME;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_LOCAL_ARGUMENTS_VARIABLE: return N4JSPackage.N4_METHOD_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE;
+				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___IS_RETURN_VALUE_OPTIONAL: return N4JSPackage.N4_METHOD_DECLARATION___IS_RETURN_VALUE_OPTIONAL;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC: return N4JSPackage.N4_METHOD_DECLARATION___IS_ASYNC;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR: return N4JSPackage.N4_METHOD_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR;
 				default: return -1;
@@ -1200,6 +1220,7 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 		}
 		if (baseClass == FunctionDefinition.class) {
 			switch (baseOperationID) {
+				case N4JSPackage.FUNCTION_DEFINITION___IS_RETURN_VALUE_OPTIONAL: return N4JSPackage.N4_METHOD_DECLARATION___IS_RETURN_VALUE_OPTIONAL;
 				case N4JSPackage.FUNCTION_DEFINITION___IS_ASYNC: return N4JSPackage.N4_METHOD_DECLARATION___IS_ASYNC;
 				case N4JSPackage.FUNCTION_DEFINITION___GET_DEFINED_FUNCTION: return N4JSPackage.N4_METHOD_DECLARATION___GET_DEFINED_FUNCTION;
 				default: return -1;
@@ -1218,6 +1239,7 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.N4_METHOD_DECLARATION___GET_NAME;
+				case N4JSPackage.PROPERTY_NAME_OWNER___HAS_COMPUTED_PROPERTY_NAME: return N4JSPackage.N4_METHOD_DECLARATION___HAS_COMPUTED_PROPERTY_NAME;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.N4_METHOD_DECLARATION___IS_VALID_NAME;
 				default: return -1;
 			}
@@ -1257,6 +1279,10 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 				return getDefinedTypeElement();
 			case N4JSPackage.N4_METHOD_DECLARATION___GET_NAME:
 				return getName();
+			case N4JSPackage.N4_METHOD_DECLARATION___HAS_COMPUTED_PROPERTY_NAME:
+				return hasComputedPropertyName();
+			case N4JSPackage.N4_METHOD_DECLARATION___IS_RETURN_VALUE_OPTIONAL:
+				return isReturnValueOptional();
 			case N4JSPackage.N4_METHOD_DECLARATION___IS_ASYNC:
 				return isAsync();
 			case N4JSPackage.N4_METHOD_DECLARATION___GET_DEFINED_FUNCTION:

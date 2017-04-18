@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.postprocessing
 
+import com.google.common.base.Optional
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import eu.numberfour.n4js.misc.DestructureHelper
@@ -17,6 +18,7 @@ import eu.numberfour.n4js.n4JS.ArrayLiteral
 import eu.numberfour.n4js.n4JS.N4JSASTUtils
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.types.InferenceVariable
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
@@ -26,11 +28,9 @@ import eu.numberfour.n4js.typesystem.constraints.InferenceContext
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.Arrays
 import java.util.List
+import java.util.Map
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import com.google.common.base.Optional
-import java.util.Map
-import eu.numberfour.n4js.ts.types.InferenceVariable
 
 /**
  * {@link PolyProcessor} delegates here for processing array literals.
@@ -290,6 +290,19 @@ if(isValueToBeDestructured) {
 			];
 			val typeRef = buildFallbackTypeForArrayLiteral(isIterableN, resultLen, betterElemTypeRefs, expectedElemTypeRefs, G);
 			cache.storeType(arrLit, typeRef);
+		}
+		// PolyProcessor#isResponsibleFor(TypableElement) claims responsibility of AST nodes of type 'ArrayElement'
+		// contained in an ArrayLiteral which is poly, so we are responsible for storing the types of those
+		// 'ArrayElement' nodes in cache
+		// (note: compare this with similar handling of 'Argument' nodes in PolyProcessor_CallExpression)
+		for (arrElem : arrLit.elements) {
+			val expr = arrElem?.expression;
+			if (expr!==null) {
+				val exprType = getFinalResultTypeOfNestedPolyExpression(expr);
+				if (exprType!==null) {
+					cache.storeType(arrElem, exprType);
+				}
+			}
 		}
 	}
 }

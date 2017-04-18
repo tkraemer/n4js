@@ -13,7 +13,7 @@
 /* XPECT organizeImports ---
      
    +   // trailing comment
-   | import {a,x} from "a/ExpVar"  [// trailing comment|]
+   | import {a,x} from "a/ExpVar"  [// trailing comment|;]
      var a2 = a;
      var x2 = x;
 --- */

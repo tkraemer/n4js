@@ -40,7 +40,7 @@ public class N4JSObjectLiteralTypesBuilder {
 	def package createObjectLiteral(ObjectLiteral objectLiteral, TModule target, boolean preLinkingPhase) {
 		val builtInTypeScope = BuiltInTypeScope.get(objectLiteral.eResource.resourceSet)
 		val TStructuralType structType = TypesFactory.eINSTANCE.createTStructuralType
-		objectLiteral.propertyAssignments.filter[name!==null].forEach [
+		objectLiteral.propertyAssignments.filter[name!==null || hasComputedPropertyName].forEach [
 			val TStructMember typeModelElement = createTypeModelElement(structType, objectLiteral, it, builtInTypeScope, preLinkingPhase);
 			if(typeModelElement!==null) {
 				typeModelElement.astElement = it;
@@ -62,7 +62,8 @@ public class N4JSObjectLiteralTypesBuilder {
 	 */
 	private def dispatch TStructField createTypeModelElement(TStructuralType structType, ObjectLiteral objectLiteral, PropertyNameValuePair nameValuePair, BuiltInTypeScope builtInTypeScope, boolean preLinkingPhase) {
 		val TStructField field = TypesFactory.eINSTANCE.createTStructField
-		field.name = nameValuePair.name
+		field.setMemberName(nameValuePair);
+		field.optional = nameValuePair.declaredOptional;
 		if (nameValuePair.declaredTypeRef !== null) {
 			setCopyOfReference([TypeRef typeRef | field.typeRef = typeRef], nameValuePair.declaredTypeRef, preLinkingPhase);
 		}
@@ -89,7 +90,8 @@ public class N4JSObjectLiteralTypesBuilder {
 	 */
 	private def dispatch TStructGetter createTypeModelElement(TStructuralType structType, ObjectLiteral objectLiteral, PropertyGetterDeclaration getterDecl, BuiltInTypeScope builtInTypeScope, boolean preLinkingPhase) {
 		val TStructGetter getter = TypesFactory.eINSTANCE.createTStructGetter
-		getter.name = getterDecl.name
+		getter.setMemberName(getterDecl);
+		getter.optional = getterDecl.declaredOptional;
 		if (getterDecl.declaredTypeRef !== null) {
 			setCopyOfReference([TypeRef typeRef | getter.declaredTypeRef = typeRef], getterDecl.declaredTypeRef, preLinkingPhase);
 		} else {
@@ -105,7 +107,8 @@ public class N4JSObjectLiteralTypesBuilder {
 	 */
 	private def dispatch TStructSetter createTypeModelElement(TStructuralType structType, ObjectLiteral objectLiteral, PropertySetterDeclaration setterDecl, BuiltInTypeScope builtInTypeScope, boolean preLinkingPhase) {
 		val TStructSetter setter = TypesFactory.eINSTANCE.createTStructSetter
-		setter.name = setterDecl.name
+		setter.setMemberName(setterDecl);
+		setter.optional = setterDecl.declaredOptional;
 		// IMPORTANT: do not create the formal parameter with N4JSFormalParameterTypesBuilder#createFormalParameter()
 		// because we here use improved type inference (the type of a getter/setter in an object literal is inferred
 		// similarly to that of a name/value pair)
@@ -135,7 +138,7 @@ public class N4JSObjectLiteralTypesBuilder {
 	 */
 	private def dispatch TStructMethod createTypeModelElement(TStructuralType structType, ObjectLiteral objectLiteral, PropertyMethodDeclaration methodDecl, BuiltInTypeScope builtInTypeScope, boolean preLinkingPhase) {
 		val TStructMethod result = TypesFactory.eINSTANCE.createTStructMethod;
-		result.name = methodDecl.name;
+		result.setMemberName(methodDecl);
 		// IMPORTANT: do not create the formal parameters as above for the property setters but instead create them with
 		// method N4JSFormalParameterTypesBuilder#createFormalParameter() (for consistency with methods in classes)
 		result.fpars += methodDecl.fpars.map[createFormalParameter(builtInTypeScope, preLinkingPhase)];

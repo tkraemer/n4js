@@ -1,0 +1,13 @@
+import * as React from "jsxbackend/react"
+
+export public class LowerComponent extends React.Component<~Object with {whatTextShouldIShow : string}, ~Object with {squares: Array<string>}> {
+	@Override
+	public render() : React.Element{
+		return (<div>{this.props.whatTextShouldIShow}</div>);
+	}
+
+	@Override
+	protected componentWillUnmount(): void{
+		console.log("unmount");
+	}
+}

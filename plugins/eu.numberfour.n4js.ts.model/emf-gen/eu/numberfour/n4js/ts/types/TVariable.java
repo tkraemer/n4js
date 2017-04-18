@@ -23,41 +23,16 @@ package eu.numberfour.n4js.ts.types;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.types.TVariable#isConst <em>Const</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TVariable#isExternal <em>External</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TVariable#isObjectLiteral <em>Object Literal</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TVariable#isNewExpression <em>New Expression</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.ts.types.TypesPackage#getTVariable()
  * @model
  * @generated
  */
-public interface TVariable extends TExportableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement, TTypedElement {
-	/**
-	 * Returns the value of the '<em><b>Const</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Const</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Const</em>' attribute.
-	 * @see #setConst(boolean)
-	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTVariable_Const()
-	 * @model unique="false"
-	 * @generated
-	 */
-	boolean isConst();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TVariable#isConst <em>Const</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Const</em>' attribute.
-	 * @see #isConst()
-	 * @generated
-	 */
-	void setConst(boolean value);
-
+public interface TVariable extends TExportableElement, TConstableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement, TTypedElement {
 	/**
 	 * Returns the value of the '<em><b>External</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -83,6 +58,58 @@ public interface TVariable extends TExportableElement, SyntaxRelatedTElement, TA
 	 * @generated
 	 */
 	void setExternal(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Object Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Object Literal</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Object Literal</em>' attribute.
+	 * @see #setObjectLiteral(boolean)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTVariable_ObjectLiteral()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isObjectLiteral();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TVariable#isObjectLiteral <em>Object Literal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Object Literal</em>' attribute.
+	 * @see #isObjectLiteral()
+	 * @generated
+	 */
+	void setObjectLiteral(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>New Expression</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>New Expression</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>New Expression</em>' attribute.
+	 * @see #setNewExpression(boolean)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTVariable_NewExpression()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isNewExpression();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TVariable#isNewExpression <em>New Expression</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>New Expression</em>' attribute.
+	 * @see #isNewExpression()
+	 * @generated
+	 */
+	void setNewExpression(boolean value);
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -144,8 +144,16 @@ public class FileBasedWorkspace extends InternalN4JSWorkspace {
 	public ProjectDescription getProjectDescription(URI location) {
 		LazyProjectDescriptionHandle handle = projectElementHandles.get(location);
 		if (handle == null) {
+			// check case without trailing path separator
+			if (location.hasTrailingPathSeparator()) {
+				handle = projectElementHandles.get(location.trimSegments(1));
+			}
+		}
+
+		if (handle == null) {
 			return null;
 		}
+
 		ProjectDescription description = handle.resolve();
 		return description;
 	}

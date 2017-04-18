@@ -2,6 +2,8 @@
 include::{find}config.adoc[]
 
 = N4JS Language Specification
+Numberfour AG
+{revnumber}, {docdatetime}
 ////
 Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials

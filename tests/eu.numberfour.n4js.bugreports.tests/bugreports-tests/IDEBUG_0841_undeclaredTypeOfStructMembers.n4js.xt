@@ -11,7 +11,7 @@ o.f;
 // XPECT noerrors -->
 o.g;
 
-// XPECT type of 'o.m()' --> any
+// XPECT type of 'o.m()' --> void
 // XPECT noerrors -->
 o.m();
 

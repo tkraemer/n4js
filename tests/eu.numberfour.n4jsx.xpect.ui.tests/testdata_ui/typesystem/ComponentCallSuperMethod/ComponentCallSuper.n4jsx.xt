@@ -1,0 +1,41 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.xpect.ui.tests.N4JSXXpectPluginUITest  
+   Workspace {
+   	 Project "ComponentSuperA" {
+   	 	Folder "src" { 
+   	 		File "LowerComponent.n4jsx" {}
+			Folder "jsxbackend" {
+				File "react.n4jsd" { from = "../../../reactFiles/react.n4jsd" }
+			}
+   	 	}
+   	 	File "manifest.n4mf" { from="manifest_A.n4mf" }
+   	 }
+   	 Project "ComponentSuperB" {
+   	 	Folder "src" { 
+   	 		ThisFile {}
+   	 	}
+   	 	File "manifest.n4mf" { from="manifest_B.n4mf" }
+   	 }
+   }
+   END_SETUP
+*/
+
+import { LowerComponent } from "LowerComponent"
+import * as React from "jsxbackend/react"
+
+
+class MyComponent extends LowerComponent {
+
+	@Override
+	public render() : React.Element{
+		// XPECT noerrors --> "The method render is not visible." at "render"
+		return super.render();
+	}
+	
+	@Override
+	protected componentWillUnmount(): void{
+		// XPECT noerrors --> "The method componentWillUnmount is not visible." at "componentWillUnmount"
+		super.componentWillUnmount();
+	}
+}
+
+

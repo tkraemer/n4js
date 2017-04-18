@@ -25,11 +25,11 @@ class N4JSNpmManifestContentProvider {
 	 * @param outputFolder the name of the folder with js files
 	 * @param externalFolder the name of the folder with n4js and n4jsd files
 	 */
-	def String getContent(String projectId, String outputFolder, String externalFolder, String main)
+	def String getContent(String projectId, String outputFolder, String externalFolder, String main, String version)
 	'''
 		ProjectId: «projectId»
 		ProjectType: library
-		ProjectVersion: 0.0.1-SNAPSHOT
+		ProjectVersion: «IF version.isNullOrEmpty»0.0.1-SNAPSHOT«ELSE»«version»«ENDIF»
 		VendorId: npm
 		VendorName: "npm"
 		Output: "«outputFolder»"«

@@ -123,4 +123,5 @@ public interface Binary {
 	 * @return a status representing the outcome of the validation process.
 	 */
 	IStatus validate();
+
 }

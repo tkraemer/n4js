@@ -451,7 +451,7 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 			// for certain problems in single-expression arrow functions, we want a special error message
 			val singleExprArrowFunction = N4JSASTUtils.getContainingSingleExpressionArrowFunction(expression);
 			if (singleExprArrowFunction!==null && TypeUtils.isVoid(inferredType.value)) {
-				if (TypeUtils.isVoid(expectedType.value) || TypeUtils.isOptional(expectedType.value)) {
+				if (TypeUtils.isVoid(expectedType.value) || singleExprArrowFunction.isReturnValueOptional) {
 					return; // all good
 				}
 				if(singleExprArrowFunction.returnTypeRef===null) { // show specialized error message only if return type of arrow function was inferred (i.e. not declared explicitly)

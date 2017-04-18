@@ -81,11 +81,31 @@
 									};
 								}
 								if (options.filter && options.filter.length) {
-									testCatalog.testDescriptors = testCatalog.testDescriptors.filter((function(info) {
-										return options.filter.some((function(f) {
-											return info.fqn.indexOf(f) >= 0;
-										}).bind(this));
-									}).bind(this));
+									const filters = options.filter.slice(0).sort();
+									const descriptors = [];
+									for(let info of testCatalog.testDescriptors) {
+										let methods = new Set();
+										for(let filter of filters) {
+											const $destruct0 = $sliceToArrayForDestruct((filter.split("#")), 2), fqnFilter = $destruct0[0], methodFilter = $destruct0[1];
+											if (!fqnFilter || info.fqn.indexOf(fqnFilter) >= 0) {
+												if (methodFilter) {
+													for(let method of info.testMethods) {
+														if (method.indexOf(methodFilter) >= 0) {
+															methods.add(method);
+														}
+													}
+												} else {
+													methods = new Set(info.testMethods);
+													break;
+												}
+											}
+										}
+										if (methods.size > 0) {
+											info.testMethods = Array.from(methods);
+											descriptors.push(info);
+										}
+									}
+									testCatalog.testDescriptors = descriptors;
 								}
 								this.consoleReporter.cliColor = cli_color_.default;
 								let reporters = [

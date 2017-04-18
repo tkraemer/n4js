@@ -16,6 +16,7 @@ import static java.util.Collections.singletonList;
 import java.io.File;
 import java.net.URI;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.core.runtime.IStatus;
 
@@ -61,11 +62,10 @@ public class NodeJsBinary implements Binary {
 
 	@Override
 	public String getDescription() {
-		return "Node.js\u00AE configuration preference page. The root folder location of the Node.js\u00AE executable "
-				+ "can be configured here. If not given, then the '" + getDefaultNodePath()
+		return "Configuration of the folder location of the Node.js\u00AE executable "
+				+ "can be provided here. If not given, then the '" + getDefaultNodePath()
 				+ "' location will be used as the default location. The required minimum version for Node.js is '"
-				+ getMinimumVersion() + "' and the required minimum version for npm is '"
-				+ npmBinaryProvider.get().getMinimumVersion() + "'.";
+				+ getMinimumVersion() + "'.";
 	}
 
 	@Override
@@ -115,12 +115,14 @@ public class NodeJsBinary implements Binary {
 		return validator.validate(this);
 	}
 
+	/**
+	 * Custom hashcode, used to persist settings in the map {@link BinariesPreferenceStore} internal map. Key part about
+	 * that hashCode is that it will be the same for every instance of this class, allowing to easily serialize
+	 * {@code Binary -> URI} setting even between platform runs.
+	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-		return result;
+		return Objects.hashCode(getId());
 	}
 
 	@Override
@@ -135,21 +137,11 @@ public class NodeJsBinary implements Binary {
 			return false;
 		}
 		final NodeJsBinary other = (NodeJsBinary) obj;
-		if (getId() == null) {
-			if (other.getId() != null) {
-				return false;
-			}
-		} else if (!getId().equals(other.getId())) {
-			return false;
-		}
-		return true;
+		return Objects.equals(getId(), other.getId());
 	}
 
 	/**
-	 * (non-API)
-	 *
-	 * Returns with a pair containing the user provided or the default location of the binary and a boolean value
-	 * denoting whether the path is user provided
+	 * Returns user provided or the default location of the binary.
 	 *
 	 * @return the user configured absolute path to the binary or the default one.
 	 */

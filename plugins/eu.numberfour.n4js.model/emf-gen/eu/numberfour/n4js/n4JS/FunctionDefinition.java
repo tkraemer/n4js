@@ -137,6 +137,18 @@ public interface FunctionDefinition extends FunctionOrFieldAccessor, TypeDefinin
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
+	 * Tells if the return value is optional.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (((this.getDefinedFunction() != null) && this.getDefinedFunction().isReturnValueOptional()) || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark()));'"
+	 * @generated
+	 */
+	boolean isReturnValueOptional();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
 	 * *
 	 * Default implementation just returns declaredAsync value, also overrides default implementation in FunctionOrFieldAcccessor
 	 * <!-- end-model-doc -->

@@ -91,12 +91,8 @@ Type: 	  TObjectPrototype
 ;
 
 TypeRef:
-	TypeRefWithoutModifiers
-	undefModifier=UndefModifierToken? nullModifier=NullModifierToken?
+	TypeRefWithoutModifiers followedByQuestionMark?='?'?
 ;
-
-NullModifierToken returns NullModifier: 'notnull'|'nullable';
-UndefModifierToken returns UndefModifier: '?'|'!';
 
 PrimitiveType:
 	'primitive' name=VoidOrBindingIdentifier
@@ -181,7 +177,9 @@ TObjectPrototype:
  * Used to define common super types, e.g. for all enumerations.
  */
 VirtualBaseType: {VirtualBaseType}
-	'virtualBase' name=BindingTypesIdentifier '{'
+	'virtualBase' name=BindingTypesIdentifier
+	('indexed' declaredElementType=ParameterizedTypeRefNominal)?
+	'{'
 		(ownedMembers+=TMember)*
 	'}'
 ;
@@ -240,6 +238,7 @@ TField:
 	declaredMemberAccessModifier=MemberAccessModifier
  	(declaredStatic?='static' | const?='const' | declaredFinal?='final')?
 	(name=TypesIdentifier | name=TypesComputedPropertyName)
+	(optional?='?')?
 	':' typeRef=TypeRef
 	';'?
 ;
@@ -250,6 +249,7 @@ TGetter: =>({TGetter}
 	'get'
   	(name=TypesIdentifier | name=TypesComputedPropertyName)
   	)
+	(optional?='?')?
   	'(' ')' ':' declaredTypeRef=TypeRef
 ;
 
@@ -260,6 +260,7 @@ TSetter:
  	'set'
  	(name=TypesIdentifier | name=TypesComputedPropertyName)
  	)
+	(optional?='?')?
  	'(' fpar=TFormalParameter ')'
 ;
 

@@ -1,0 +1,9 @@
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP */
+
+//Constraint solver problem
+let x: ~Object with { conditions: ~Object with { nr?: int, st?: string } }  = {
+	//XPECT noerrors
+	conditions: {
+		nr : 3
+	}
+};

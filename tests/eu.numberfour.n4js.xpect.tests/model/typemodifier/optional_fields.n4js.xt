@@ -1,0 +1,37 @@
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP */
+
+
+class F {
+	public field?: string;
+}
+
+let f1: ~~F;
+
+// XPECT noerrors -->
+f1 = {};
+// XPECT noerrors -->
+f1 = { string field: undefined };
+// XPECT errors --> "~Object with { field: number } is not a structural subtype of ~~F: field failed: number is not equal to string." at "{ number field: undefined }"
+f1 = { number field: undefined };
+
+
+let f2: ~Object with { field?: string };
+
+// XPECT noerrors -->
+f2 = {};
+// XPECT noerrors -->
+f2 = { string field: undefined };
+// XPECT errors --> "~Object with { field: number } is not a structural subtype of ~Object with { field?: string }: field failed: number is not equal to string." at "{ number field: undefined }"
+f2 = { number field: undefined };
+
+
+// XPECT type of 'f3' --> ~Object with { field?: string }
+let f3 = { string field?: undefined };
+
+// XPECT noerrors -->
+f3 = {};
+// XPECT noerrors -->
+f3 = { string field: undefined };
+// XPECT errors --> "~Object with { field: number } is not a structural subtype of ~Object with { field?: string }: field failed: number is not equal to string." at "{ number field: undefined }"
+f3 = { number field: undefined };
+

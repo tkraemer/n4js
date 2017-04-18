@@ -34,6 +34,7 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.validation.IssueCodes.*
+import eu.numberfour.n4js.ts.types.TMethod
 
 /**
  * Validate use of super keyword.
@@ -168,7 +169,26 @@ class N4JSSuperValidator extends AbstractN4JSDeclarativeValidator {
 	private def internalCheckSuperMemberAccess(SuperLiteral superLiteral, N4MemberDeclaration containingMemberDecl) {
 		holdsSuperCallInMethodOrFieldAccessor(superLiteral, containingMemberDecl) //
 		&& holdsSuperCallNotNested(superLiteral, containingMemberDecl) //
-		&& holdsSuperIsReceiverOfCall(superLiteral);
+		&& holdsSuperIsReceiverOfCall(superLiteral)
+		&& holdsSuperMethodIsConcrete(superLiteral);
+	}
+	
+	/**
+	 * Makes sure that super method calls are only allowed for non-abstract super methods.
+	 */
+	private def boolean holdsSuperMethodIsConcrete(SuperLiteral superLiteral) {
+		val literalContainer = superLiteral.eContainer;
+		if (literalContainer instanceof ParameterizedPropertyAccessExpression &&
+			(literalContainer as ParameterizedPropertyAccessExpression).property instanceof TMethod) {
+				val method = (literalContainer as ParameterizedPropertyAccessExpression).property as TMethod;
+				if (method.abstract) {
+					addIssue(messageForCLF_CANNOT_CALL_ABSTRACT_SUPER_METHOD, literalContainer,
+						N4JSPackage.Literals.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY, 
+						CLF_CANNOT_CALL_ABSTRACT_SUPER_METHOD);
+					return false;
+				}
+			}
+		return true;
 	}
 
 	/**

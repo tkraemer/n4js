@@ -424,6 +424,7 @@ The lengths of the major, minor and micro numbers is additionally limited to fou
   \Rightarrowdo[jr: qualifier]{Do we need support for distinction of build numbers and qualifier?}
 ////
 
+In general based on OSGi version and version ranges are described in chapters 3.2.5 resp. 3.2.6 (see http://www.osgi.org/download/r4v43/osgi.core-4.3.0.pdf[OSGi core 4.3.0] ).
 
 MainModule ::
 (optional) A plain module specifier defining the project’s 'main module'.

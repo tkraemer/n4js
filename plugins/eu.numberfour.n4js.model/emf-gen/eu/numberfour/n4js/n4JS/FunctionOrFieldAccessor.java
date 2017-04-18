@@ -106,6 +106,15 @@ public interface FunctionOrFieldAccessor extends AnnotableElement, VariableEnvir
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return false;'"
+	 * @generated
+	 */
+	boolean isReturnValueOptional();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
 	 * Default implementation, always returns false (since accessors cannot be async), overridden in FunctionDefinition

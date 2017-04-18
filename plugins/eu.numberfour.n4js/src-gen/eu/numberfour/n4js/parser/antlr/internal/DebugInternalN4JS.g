@@ -2941,6 +2941,8 @@ rulePropertyAssignment:
 			(ruleTypeRefWithModifiers
 			?
 			ruleLiteralOrComputedPropertyName
+			'?'
+			?
 			':'
 			)=>
 			rulePropertyNameValuePair
@@ -3128,6 +3130,8 @@ norm1_PropertyAssignment:
 			(ruleTypeRefWithModifiers
 			?
 			norm1_LiteralOrComputedPropertyName
+			'?'
+			?
 			':'
 			)=>
 			norm1_PropertyNameValuePair
@@ -3484,6 +3488,8 @@ ruleAnnotatedPropertyAssignment:
 				ruleLiteralOrComputedPropertyName
 			)
 		)
+		'?'
+		?
 		'('
 		ruleFormalParameter
 		')'
@@ -3714,6 +3720,8 @@ norm1_AnnotatedPropertyAssignment:
 				norm1_LiteralOrComputedPropertyName
 			)
 		)
+		'?'
+		?
 		'('
 		norm1_FormalParameter
 		')'
@@ -3844,11 +3852,15 @@ rulePropertyNameValuePair:
 		(ruleTypeRefWithModifiers
 		?
 		ruleLiteralOrComputedPropertyName
+		'?'
+		?
 		':'
 		)=>
 		ruleTypeRefWithModifiers
 		?
 		ruleLiteralOrComputedPropertyName
+		'?'
+		?
 		':'
 	)
 	norm1_AssignmentExpression
@@ -3860,11 +3872,15 @@ norm1_PropertyNameValuePair:
 		(ruleTypeRefWithModifiers
 		?
 		norm1_LiteralOrComputedPropertyName
+		'?'
+		?
 		':'
 		)=>
 		ruleTypeRefWithModifiers
 		?
 		norm1_LiteralOrComputedPropertyName
+		'?'
+		?
 		':'
 	)
 	norm3_AssignmentExpression
@@ -4072,6 +4088,8 @@ rulePropertySetterDeclaration:
 			ruleLiteralOrComputedPropertyName
 		)
 	)
+	'?'
+	?
 	'('
 	ruleFormalParameter
 	')'
@@ -4234,6 +4252,8 @@ norm1_PropertySetterDeclaration:
 			norm1_LiteralOrComputedPropertyName
 		)
 	)
+	'?'
+	?
 	'('
 	norm1_FormalParameter
 	')'
@@ -7195,6 +7215,8 @@ ruleAnnotatedN4MemberDeclaration:
 				ruleLiteralOrComputedPropertyName
 			)
 		)
+		'?'
+		?
 		'('
 		ruleFormalParameter
 		')'
@@ -7420,6 +7442,8 @@ norm1_AnnotatedN4MemberDeclaration:
 				norm1_LiteralOrComputedPropertyName
 			)
 		)
+		'?'
+		?
 		'('
 		norm1_FormalParameter
 		')'
@@ -7477,6 +7501,8 @@ ruleFieldDeclarationImpl:
 	*
 	ruleBogusTypeRefFragment?
 	ruleLiteralOrComputedPropertyName
+	'?'
+	?
 	ruleColonSepTypeRef?
 	(
 		'='
@@ -7491,6 +7517,8 @@ norm1_FieldDeclarationImpl:
 	*
 	ruleBogusTypeRefFragment?
 	norm1_LiteralOrComputedPropertyName
+	'?'
+	?
 	ruleColonSepTypeRef?
 	(
 		'='
@@ -7695,6 +7723,8 @@ ruleGetterHeader:
 		('break' | 'case' | 'catch' | 'class' | 'const' | 'continue' | 'debugger' | 'default' | 'delete' | 'do' | 'else' | 'export' | 'extends' | 'finally' | 'for' | 'function' | 'if' | 'import' | 'in' | 'instanceof' | 'new' | 'return' | 'super' | 'switch' | 'this' | 'throw' | 'try' | 'typeof' | 'var' | 'void' | 'while' | 'with' | 'yield' | 'null' | 'true' | 'false' | 'enum' | 'get' | 'set' | 'let' | 'project' | 'external' | 'abstract' | 'static' | 'as' | 'from' | 'constructor' | 'of' | 'target' | 'type' | 'union' | 'intersection' | 'This' | 'Promisify' | 'await' | 'async' | 'implements' | 'interface' | 'private' | 'protected' | 'public' | 'out' | '[' | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
 		ruleLiteralOrComputedPropertyName
 	)
+	'?'
+	?
 	'('
 	')'
 	ruleColonSepTypeRef?
@@ -7708,6 +7738,8 @@ norm1_GetterHeader:
 		('break' | 'case' | 'catch' | 'class' | 'const' | 'continue' | 'debugger' | 'default' | 'delete' | 'do' | 'else' | 'export' | 'extends' | 'finally' | 'for' | 'function' | 'if' | 'import' | 'in' | 'instanceof' | 'new' | 'return' | 'super' | 'switch' | 'this' | 'throw' | 'try' | 'typeof' | 'var' | 'void' | 'while' | 'with' | 'yield' | 'null' | 'true' | 'false' | 'enum' | 'get' | 'set' | 'let' | 'project' | 'external' | 'abstract' | 'static' | 'as' | 'from' | 'constructor' | 'of' | 'target' | 'type' | 'union' | 'intersection' | 'This' | 'Promisify' | 'await' | 'async' | 'implements' | 'interface' | 'private' | 'protected' | 'public' | 'out' | '[' | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT)=>
 		norm1_LiteralOrComputedPropertyName
 	)
+	'?'
+	?
 	'('
 	')'
 	ruleColonSepTypeRef?
@@ -7869,6 +7901,8 @@ ruleN4SetterDeclaration:
 			ruleLiteralOrComputedPropertyName
 		)
 	)
+	'?'
+	?
 	'('
 	ruleFormalParameter
 	')'
@@ -8036,6 +8070,8 @@ norm1_N4SetterDeclaration:
 			norm1_LiteralOrComputedPropertyName
 		)
 	)
+	'?'
+	?
 	'('
 	norm1_FormalParameter
 	')'
@@ -8354,16 +8390,12 @@ ruleBogusTypeRef:
 
 // Rule TypeRefWithModifiers
 ruleTypeRefWithModifiers:
+	ruleTypeRefWithoutModifiers
 	(
-		ruleTypeRefWithoutModifiers
-		(
-			(ruleUndefModifierToken
-			)=>
-			ruleUndefModifierToken
-		)?
-		    |
-		ruleUndefModifierToken
-	)
+		('?'
+		)=>
+		'?'
+	)?
 ;
 
 // Rule TypeRefWithoutModifiers
@@ -8708,6 +8740,8 @@ ruleTStructMethod:
 // Rule TStructField
 ruleTStructField:
 	ruleIdentifierName
+	'?'
+	?
 	(
 		':'
 		ruleTypeRef
@@ -8723,6 +8757,8 @@ ruleTStructGetter:
 		'get'
 		ruleIdentifierName
 	)
+	'?'
+	?
 	'('
 	')'
 	(
@@ -8740,6 +8776,8 @@ ruleTStructSetter:
 		'set'
 		ruleIdentifierName
 	)
+	'?'
+	?
 	'('
 	ruleTAnonymousFormalParameter
 	')'
@@ -8812,11 +8850,6 @@ ruleWildcardNewNotation:
 		'in'
 		ruleTypeRef
 	)
-;
-
-// Rule UndefModifierToken
-ruleUndefModifierToken:
-	'?'
 ;
 
 // Rule BindingIdentifier

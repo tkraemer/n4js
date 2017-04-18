@@ -22,7 +22,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.ts.conversions.IdentifierDelegateValueConverter;
-import eu.numberfour.n4js.ts.types.UndefModifier;
 
 /**
  * Registers special value converters for N4JS.
@@ -44,9 +43,6 @@ public class ValueConverters extends AbstractDeclarativeValueConverterService {
 
 	@Inject
 	private ScientificIntValueConverter scientificIntValueConverter;
-
-	@Inject
-	private N4JSUndefModifierValueConverter n4jsUndefModifierValueConverter;
 
 	@Inject
 	private DoubleValueConverter doubleValueConverter;
@@ -164,14 +160,6 @@ public class ValueConverters extends AbstractDeclarativeValueConverterService {
 	@ValueConverter(rule = "DOUBLE")
 	public IValueConverter<BigDecimal> Double() {
 		return doubleValueConverter;
-	}
-
-	/**
-	 * @return the registered value converter for the rule {@code UndefModifierToken}
-	 */
-	@ValueConverter(rule = "UndefModifierToken")
-	public IValueConverter<UndefModifier> getUndefModifierTokenConverter() {
-		return n4jsUndefModifierValueConverter;
 	}
 
 	/**

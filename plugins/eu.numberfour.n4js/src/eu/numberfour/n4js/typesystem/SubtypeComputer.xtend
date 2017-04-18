@@ -18,7 +18,6 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.types.TypeVariable
-import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.constraints.InferenceContext
@@ -28,6 +27,7 @@ import java.util.List
 import org.eclipse.xtext.util.CancelIndicator
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.ts.types.TFunction
 
 /**
  * Contains some helper methods to compute if type A is a subtype of type B.
@@ -156,20 +156,22 @@ class SubtypeComputer extends TypeSystemHelperStrategy {
 			// f():undefined <: f():A?   --> true
 
 			if (rightReturnTypeRef.declaredType !== G.voidType) {
+				val rightFunType = right.declaredType;
+				val boolean isRightReturnOptional = if (rightFunType instanceof TFunction)
+						rightFunType.returnValueOptional
+					else
+						right.isReturnValueOptional;
+				
 				if (leftReturnTypeRef.declaredType !== G.voidType) {
-
 					// both are non-void
-					if (leftReturnTypeRef.undefModifier == UndefModifier.OPTIONAL
-						&& !(rightReturnTypeRef.undefModifier == UndefModifier.OPTIONAL)) {
+					if (left.isReturnValueOptional && !isRightReturnOptional) {
 						return false;
 					} else if (!isSubtype(G, leftReturnTypeRef, rightReturnTypeRef)) {
 						return false;
 					}
 				} else {
-
 					// left is void, right is non-void
-					if (!(rightReturnTypeRef.undefModifier == UndefModifier.OPTIONAL)
-						&& !ts.equaltypeSucceeded(G, rightReturnTypeRef, G.undefinedTypeRef)) {
+					if (!isRightReturnOptional && !ts.equaltypeSucceeded(G, rightReturnTypeRef, G.undefinedTypeRef)) {
 						return false;
 					}
 				}

@@ -49,6 +49,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4FieldDeclarationImpl#getBogusTypeRef <em>Bogus Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4FieldDeclarationImpl#getDeclaredName <em>Declared Name</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4FieldDeclarationImpl#getDefinedField <em>Defined Field</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4FieldDeclarationImpl#isDeclaredOptional <em>Declared Optional</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4FieldDeclarationImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  *
@@ -94,6 +95,26 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 	 * @ordered
 	 */
 	protected TField definedField;
+
+	/**
+	 * The default value of the '{@link #isDeclaredOptional() <em>Declared Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeclaredOptional()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean DECLARED_OPTIONAL_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isDeclaredOptional() <em>Declared Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeclaredOptional()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean declaredOptional = DECLARED_OPTIONAL_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -296,6 +317,27 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isDeclaredOptional() {
+		return declaredOptional;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDeclaredOptional(boolean newDeclaredOptional) {
+		boolean oldDeclaredOptional = declaredOptional;
+		declaredOptional = newDeclaredOptional;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.N4_FIELD_DECLARATION__DECLARED_OPTIONAL, oldDeclaredOptional, declaredOptional));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Expression getExpression() {
 		return expression;
 	}
@@ -409,6 +451,16 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean hasComputedPropertyName() {
+		final LiteralOrComputedPropertyName declName = this.getDeclaredName();
+		return ((declName != null) && declName.hasComputedPropertyName());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -441,6 +493,8 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 			case N4JSPackage.N4_FIELD_DECLARATION__DEFINED_FIELD:
 				if (resolve) return getDefinedField();
 				return basicGetDefinedField();
+			case N4JSPackage.N4_FIELD_DECLARATION__DECLARED_OPTIONAL:
+				return isDeclaredOptional();
 			case N4JSPackage.N4_FIELD_DECLARATION__EXPRESSION:
 				return getExpression();
 		}
@@ -466,6 +520,9 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 				return;
 			case N4JSPackage.N4_FIELD_DECLARATION__DEFINED_FIELD:
 				setDefinedField((TField)newValue);
+				return;
+			case N4JSPackage.N4_FIELD_DECLARATION__DECLARED_OPTIONAL:
+				setDeclaredOptional((Boolean)newValue);
 				return;
 			case N4JSPackage.N4_FIELD_DECLARATION__EXPRESSION:
 				setExpression((Expression)newValue);
@@ -494,6 +551,9 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 			case N4JSPackage.N4_FIELD_DECLARATION__DEFINED_FIELD:
 				setDefinedField((TField)null);
 				return;
+			case N4JSPackage.N4_FIELD_DECLARATION__DECLARED_OPTIONAL:
+				setDeclaredOptional(DECLARED_OPTIONAL_EDEFAULT);
+				return;
 			case N4JSPackage.N4_FIELD_DECLARATION__EXPRESSION:
 				setExpression((Expression)null);
 				return;
@@ -517,6 +577,8 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 				return declaredName != null;
 			case N4JSPackage.N4_FIELD_DECLARATION__DEFINED_FIELD:
 				return definedField != null;
+			case N4JSPackage.N4_FIELD_DECLARATION__DECLARED_OPTIONAL:
+				return declaredOptional != DECLARED_OPTIONAL_EDEFAULT;
 			case N4JSPackage.N4_FIELD_DECLARATION__EXPRESSION:
 				return expression != null;
 		}
@@ -613,6 +675,7 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.N4_FIELD_DECLARATION___GET_NAME;
+				case N4JSPackage.PROPERTY_NAME_OWNER___HAS_COMPUTED_PROPERTY_NAME: return N4JSPackage.N4_FIELD_DECLARATION___HAS_COMPUTED_PROPERTY_NAME;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.N4_FIELD_DECLARATION___IS_VALID_NAME;
 				default: return -1;
 			}
@@ -640,8 +703,26 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 				return isValidName();
 			case N4JSPackage.N4_FIELD_DECLARATION___GET_NAME:
 				return getName();
+			case N4JSPackage.N4_FIELD_DECLARATION___HAS_COMPUTED_PROPERTY_NAME:
+				return hasComputedPropertyName();
 		}
 		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (declaredOptional: ");
+		result.append(declaredOptional);
+		result.append(')');
+		return result.toString();
 	}
 
 } //N4FieldDeclarationImpl

@@ -18,6 +18,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.FieldAccessor
 import eu.numberfour.n4js.ts.types.TField
+import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TN4Classifier
 import eu.numberfour.n4js.ts.types.TSetter
@@ -101,13 +102,13 @@ class StructuralTypingComputer extends TypeSystemHelperStrategy {
 		val iter = structuralTypesHelper.getMembersTripleIterator(G2, left, right, true);
 		while (iter.hasNext) {
 			// check if left member can fulfill the structural requirement imposed by right member
-			checkMembers(iter.next, info);
+			checkMembers(left, iter.next, info);
 		}
 
 		return result(left, right, info.missingMembers, info.wrongMembers);
 	}
 
-	def private void checkMembers(StructuralMembersTriple triple, StructTypingInfo info) {
+	def private void checkMembers(TypeRef leftTypeRef, StructuralMembersTriple triple, StructTypingInfo info) {
 
 		val leftMember = triple.left;
 		val rightMember = triple.right;
@@ -115,7 +116,7 @@ class StructuralTypingComputer extends TypeSystemHelperStrategy {
 		val leftStrategy = info.leftStrategy;
 		val rightStrategy = info.rightStrategy;
 
-		checkMembers(leftMember, rightMember, info, rightStrategy);
+		checkMembers(leftTypeRef, leftMember, rightMember, info, rightStrategy);
 
 		switch (rightStrategy) {
 
@@ -123,7 +124,9 @@ class StructuralTypingComputer extends TypeSystemHelperStrategy {
 			case STRUCTURAL_READ_ONLY_FIELDS: {
 
 				// For any readable, non-optional right members. Initialized fields does not count as optional.
-				if (READABLE_FIELDS_PREDICATE.apply(rightMember) && !rightMember.optional) {
+				val handleOptionality = leftTypeRef.isTypeOfNewExpressionOrFinalNominal || leftTypeRef.isTypeOfObjectLiteral;
+				val memberNecessary = !rightMember.optional || (rightMember.optional && !handleOptionality);
+				if (memberNecessary && READABLE_FIELDS_PREDICATE.apply(rightMember)) {
 
 					// For ~w~ left members requires an explicit getter.
 					if (STRUCTURAL_WRITE_ONLY_FIELDS === leftStrategy
@@ -143,7 +146,7 @@ class StructuralTypingComputer extends TypeSystemHelperStrategy {
 			case STRUCTURAL_WRITE_ONLY_FIELDS: {
 
 				// For any writable right members.
-				if (WRITABLE_FIELDS_PREDICATE.apply(rightMember)) {
+				if (WRITABLE_FIELDS_PREDICATE.apply(rightMember) && !leftTypeRef.isTypeOfObjectLiteral) {
 
 					// If left is either ~r~ or ~i~, then an explicit setter is required.
 					if ((STRUCTURAL_READ_ONLY_FIELDS === leftStrategy || STRUCTURAL_FIELD_INITIALIZER === leftStrategy)
@@ -207,11 +210,23 @@ class StructuralTypingComputer extends TypeSystemHelperStrategy {
 					// for a writable field on the right-hand side, require a getter/setter pair on the left
 					if (rightMember.writeableField && leftMember instanceof FieldAccessor) {
 						if (!(leftOtherAccessor instanceof TSetter)) {
-							// special error message in case only either a getter XOR setter is supplied for a field
-							info.wrongMembers.add(rightMember.name + " failed: writable field requires a field or a getter/setter pair in subtype.");
+							if(!leftTypeRef.isTypeOfObjectLiteral) {
+								val isSpecialCaseOfDispensableGetterForOptionalField = leftMember instanceof TSetter
+									&& rightMember.optional
+									&& leftTypeRef.isTypeOfNewExpressionOrFinalNominal;
+								if(!isSpecialCaseOfDispensableGetterForOptionalField) {
+									// special error message in case only either a getter XOR setter is supplied for a field
+									val msgSpecial = if(leftMember instanceof TGetter && rightMember.optional) {
+										"optional writable field requires at least a setter in subtype."
+									} else {
+										"writable field requires a field or a getter/setter pair in subtype."
+									};
+									info.wrongMembers.add(rightMember.name + " failed: " + msgSpecial);
+								}
+							}
 						} else {
 							// check type of setter as usual
-							checkMembers(leftOtherAccessor, rightMember, info, rightStrategy);
+							checkMembers(leftTypeRef, leftOtherAccessor, rightMember, info, rightStrategy);
 						}
 					}
 
@@ -236,22 +251,16 @@ class StructuralTypingComputer extends TypeSystemHelperStrategy {
 	 * on left side; the requirement that BOTH a getter AND setter must be provided for a writable field must be
 	 * checked outside this method.
 	 */
-	def private void checkMembers(TMember left, TMember right, StructTypingInfo info, TypingStrategy rightStrategy) {
+	def private void checkMembers(TypeRef leftTypeRef, TMember left, TMember right, StructTypingInfo info, TypingStrategy rightStrategy) {
 		val G = info.G;
 
 		// !!! keep the following aligned with below method #reduceMembers() !!!
 		if (left === null) {
 			// no corresponding member found on left side
-
-			if ((null !== right && right.optional)
-				|| (STRUCTURAL_FIELD_INITIALIZER === rightStrategy && (right.initializedField || right.optionalSetter))) {
-				// nothing to do (rightMember is optional or initialized for ~i~ typing.)
-			} else if (right?.containingType === info.G.objectType) {
-				// ignore object members, can only happen if left is structural field type
-			} else {
-				// standard case of missing member on left side -> report error
+			if (memberIsMissing(leftTypeRef, right, info)) {
 				info.missingMembers.add(keywordProvider.keyword(right) + " " + right.name);
 			}
+
 		} else {
 			// found a corresponding member
 			// -> make sure types are compatible
@@ -293,22 +302,21 @@ class StructuralTypingComputer extends TypeSystemHelperStrategy {
 	 * belong into class <code>InferenceContext</code>, but is placed here to keep it aligned with above method more
 	 * easily.
 	 */
-	def public TypeConstraint reduceMembers(TMember left, TMember right, Variance variance, StructTypingInfo info) {
+	def public TypeConstraint reduceMembers(TypeRef leftTypeRef, TMember left, TMember right, Variance variance, StructTypingInfo info) {
 		if (variance === Variance.CONTRA) {
 			// normalize variance (i.e. turn CONTRA into CO)
-			return reduceMembers(right, left, Variance.CO, info);
+			return reduceMembers(leftTypeRef, right, left, Variance.CO, info);
 		}
 
 		// !!! keep the following aligned with above method #checkMembers() !!!
 		if (left === null) {
-			if ((null !== right && right.optional)
-				|| (STRUCTURAL_FIELD_INITIALIZER === info?.rightStrategy && (right.initializedField || right.optionalSetter))) {
-				return TypeConstraint.TRUE;
-			} else if (right?.containingType === info.G.objectType) {
-				return TypeConstraint.TRUE;
-			} else {
+			// no corresponding member found on left side
+			if (memberIsMissing(leftTypeRef, right, info)) {
 				return TypeConstraint.FALSE;
+			} else {
+				return TypeConstraint.TRUE;
 			}
+
 		} else {
 			val mtypes = getMemberTypes(left, right, info);
 
@@ -330,6 +338,42 @@ class StructuralTypingComputer extends TypeSystemHelperStrategy {
 				return new TypeConstraint(mtypes.key, mtypes.value, variance);
 			}
 		}
+	}
+
+	def private boolean memberIsMissing(TypeRef leftTypeRef, TMember right, StructTypingInfo info) {
+		val rightMemberIsOptional = rightMemberIsOptional(leftTypeRef, right, info.rightStrategy);
+		if (rightMemberIsOptional) {
+			// nothing to do (rightMember is optional or initialized for ~i~ typing.)
+			return false;
+		} else if (right?.containingType === info.G.objectType) {
+			// ignore object members, can only happen if left is structural field type
+			return false;
+		} else {
+			// standard case of missing member on left side -> report error
+			return true;
+		}
+	}
+
+	def private boolean rightMemberIsOptional(TypeRef leftTypeRef, TMember right, TypingStrategy rightStrategy) {
+		val boolean objectLiteralOrNewExpression = leftTypeRef.isTypeOfObjectLiteral || leftTypeRef.isTypeOfNewExpressionOrFinalNominal;
+		val boolean optionalObjectLiteralOrNewExpression = right.optional && objectLiteralOrNewExpression;
+		val boolean rightMemberIsOptional = switch (rightStrategy) {
+			case STRUCTURAL,
+			case STRUCTURAL_FIELDS,
+			case STRUCTURAL_WRITE_ONLY_FIELDS: {
+				right.optional && (leftTypeRef.isTypeOfObjectLiteral || (right instanceof TGetter && leftTypeRef.isTypeOfNewExpressionOrFinalNominal))
+			}
+			case STRUCTURAL_READ_ONLY_FIELDS: {
+				optionalObjectLiteralOrNewExpression
+			}
+			case STRUCTURAL_FIELD_INITIALIZER: {
+				right.initializedField || right.optionalSetter || optionalObjectLiteralOrNewExpression
+			}
+			default: {
+				false
+			}
+		};
+		return rightMemberIsOptional;
 	}
 
 	/**

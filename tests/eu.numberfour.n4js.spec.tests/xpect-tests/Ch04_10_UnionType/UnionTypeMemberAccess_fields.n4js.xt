@@ -17,6 +17,8 @@ class T1 {
 	f3 : A;
 	
 	f4 : A;
+	
+	f5? : A;
 }
 
 
@@ -31,6 +33,8 @@ class T2 {
 	f3 : ASub;
 	
 	f4 : B;
+	
+	f5? : B;
 }
 
 
@@ -47,10 +51,14 @@ u.f1;
 u.f2;
 // XPECT type of 'u.f3' --> union{A,ASub}
 u.f3;
-// XPECT expectedType at 'null' --> intersection{A,ASub}?
+// XPECT expectedType at 'null' --> intersection{A,ASub}
 u.f3 = null;
 // XPECT type of 'u.f4' --> union{A,B}
 u.f4;
-// XPECT expectedType at 'null' --> intersection{A,B}?
+// XPECT expectedType at 'null' --> intersection{A,B}
 u.f4 = null;
+// XPECT type of 'u.f5' --> union{A,B}
+u.f5;
+// XPECT expectedType at 'null' --> intersection{A,B}
+u.f5 = null;
 

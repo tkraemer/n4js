@@ -18,7 +18,7 @@ import org.xpect.runner.XpectSuiteClasses;
 import org.xpect.xtext.lib.tests.ResourceDescriptionTest;
 import org.xpect.xtext.lib.tests.ValidationTest;
 
-import eu.numberfour.n4js.xpect.methods.AccessModifierAxpectMethod;
+import eu.numberfour.n4js.xpect.methods.AccessModifierXpectMethod;
 import eu.numberfour.n4js.xpect.methods.FindReferencesXpectMethod;
 import eu.numberfour.n4js.xpect.methods.FormatterXpectMethod;
 import eu.numberfour.n4js.xpect.methods.LinkingXpectMethod;
@@ -41,7 +41,7 @@ import eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectTestFilesCollector.N4IDEXpec
  * - {@link N4IDEXpectTestURIProvider} that will be used by {@link XpectRunner}
  */
 @XpectSuiteClasses({
-		AccessModifierAxpectMethod.class,
+		AccessModifierXpectMethod.class,
 		FindReferencesXpectMethod.class,
 		FormatterXpectMethod.class,
 		LinkingXpectMethod.class,

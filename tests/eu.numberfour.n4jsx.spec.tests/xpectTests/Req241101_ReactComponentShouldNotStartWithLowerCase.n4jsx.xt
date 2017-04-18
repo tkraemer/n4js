@@ -18,7 +18,7 @@ function myReactFuncComponent(props: ~React.ComponentProps with {myProp: string}
 
 
 //XPECT warnings --> "Class names should start with upper case letter." at "c"
-class c extends React.Component<~Object with {prop: int}, Object> {
+class c extends React.Component<~React.ComponentProps with {prop: int}, Object> {
 	@Override
 	public render(): React.Element {
 		return <button/>

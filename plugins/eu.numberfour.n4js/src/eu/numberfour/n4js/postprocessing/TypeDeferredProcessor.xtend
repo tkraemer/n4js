@@ -13,15 +13,24 @@ package eu.numberfour.n4js.postprocessing
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
+import eu.numberfour.n4js.n4JS.FormalParameter
+import eu.numberfour.n4js.n4JS.FunctionDefinition
+import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4GetterDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
+import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration
+import eu.numberfour.n4js.n4JS.SetterDeclaration
+import eu.numberfour.n4js.n4JS.TypedElement
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.TMethod
-import eu.numberfour.n4js.ts.types.UndefModifier
+import eu.numberfour.n4js.ts.types.TTypedElement
+import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
@@ -30,16 +39,6 @@ import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EObject
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.n4JS.FormalParameter
-import eu.numberfour.n4js.n4JS.FunctionExpression
-import eu.numberfour.n4js.n4JS.TypedElement
-import eu.numberfour.n4js.ts.types.TypableElement
-import eu.numberfour.n4js.n4JS.FunctionDefinition
-import eu.numberfour.n4js.n4JS.SetterDeclaration
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
-import eu.numberfour.n4js.ts.typeRefs.TypeArgument
-import eu.numberfour.n4js.ts.types.TTypedElement
-import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration
 
 /**
  * Processor for handling {@link DeferredTypeRef}s, <b>except</b> those related to poly expressions, which are handled
@@ -65,9 +64,9 @@ package class TypeDeferredProcessor extends AbstractProcessor {
 						assertTrueIfRigid(cache, "return type of constructor in TModule should be a DeferredTypeRef",
 							tCtor.returnTypeRef instanceof DeferredTypeRef);
 						val implicitReturnTypeRef = TypeRefsFactory.eINSTANCE.createThisTypeRef;
-						implicitReturnTypeRef.undefModifier = UndefModifier.OPTIONAL;
 						val boundThisTypeRef = tsh.bindAndSubstituteThisTypeRef(G, obj, implicitReturnTypeRef);
 						EcoreUtilN4.doWithDeliver(false, [
+							tCtor.returnValueMarkedOptional = true;
 							tCtor.returnTypeRef = TypeUtils.copy(boundThisTypeRef);
 						], tCtor);
 					}

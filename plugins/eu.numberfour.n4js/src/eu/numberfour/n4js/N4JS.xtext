@@ -671,7 +671,7 @@ AnnotatedPropertyAssignment <Yield> returns PropertyAssignment:
 		) body=Block<Yield=false>
 	| =>({PropertySetterDeclaration.annotationList=current}
 			'set' ->declaredName=LiteralOrComputedPropertyName <Yield>
-		) '(' fpar=FormalParameter<Yield> ')' body=Block<Yield=false>
+		) (declaredOptional?='?')? '(' fpar=FormalParameter<Yield> ')' body=Block<Yield=false>
 	| =>({PropertyMethodDeclaration.annotationList=current}
 			TypeVariables? returnTypeRef=TypeRefWithModifiers?
 			(generator?='*' declaredName=LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody <Generator=true>
@@ -695,7 +695,11 @@ PropertyMethodDeclaration <Yield>:
 
 PropertyNameValuePair <Yield>:
 	=> (
-		{PropertyNameValuePair} declaredTypeRef=TypeRefWithModifiers? declaredName=LiteralOrComputedPropertyName<Yield> ':'
+		{PropertyNameValuePair}
+		declaredTypeRef=TypeRefWithModifiers?
+		declaredName=LiteralOrComputedPropertyName<Yield>
+		(declaredOptional?='?')?
+		':'
 	)
 	expression=AssignmentExpression<In=true,Yield>
 ;
@@ -724,6 +728,7 @@ PropertySetterDeclaration <Yield>:
 		'set'
 		->declaredName=LiteralOrComputedPropertyName <Yield>
 	)
+	(declaredOptional?='?')?
 	'(' fpar=FormalParameter<Yield> ')'	body=Block<Yield=false>
 ;
 
@@ -1333,7 +1338,7 @@ AnnotatedN4MemberDeclaration <Yield> returns N4MemberDeclaration:
 	N4MemberAnnotationList (
 			=> ({N4GetterDeclaration.annotationList=current} (declaredModifiers+=N4Modifier)* GetterHeader<Yield>) (body=Block<Yield>)? ';'?
 		| 	=> ({N4SetterDeclaration.annotationList=current} (declaredModifiers+=N4Modifier)* 'set' -> declaredName=LiteralOrComputedPropertyName <Yield>)
-				'(' fpar=FormalParameter<Yield> ')' (body=Block<Yield>)? ';'?
+				(declaredOptional?='?')? '(' fpar=FormalParameter<Yield> ')' (body=Block<Yield>)? ';'?
 		| 	=> (
 				{N4MethodDeclaration.annotationList=current} (declaredModifiers+=N4Modifier)* TypeVariables? BogusTypeRefFragment?
 				(
@@ -1347,7 +1352,11 @@ AnnotatedN4MemberDeclaration <Yield> returns N4MemberDeclaration:
 
 fragment FieldDeclarationImpl <Yield>*:
 	(declaredModifiers+=N4Modifier)* BogusTypeRefFragment?
-	declaredName=LiteralOrComputedPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)? Semi
+	declaredName=LiteralOrComputedPropertyName<Yield>
+	(declaredOptional?='?')?
+	ColonSepTypeRef?
+	('=' expression=Expression<In=true,Yield>)?
+	Semi
 ;
 
 N4FieldDeclaration <Yield>:
@@ -1390,7 +1399,7 @@ N4GetterDeclaration <Yield>:
 ;
 
 fragment GetterHeader <Yield>*:
-	BogusTypeRefFragment? 'get' -> declaredName=LiteralOrComputedPropertyName <Yield> '(' ')' ColonSepTypeRef?
+	BogusTypeRefFragment? 'get' -> declaredName=LiteralOrComputedPropertyName<Yield> (declaredOptional?='?')? '(' ')' ColonSepTypeRef?
 ;
 
 N4SetterDeclaration <Yield>:
@@ -1399,6 +1408,7 @@ N4SetterDeclaration <Yield>:
 		'set'
 		->declaredName=LiteralOrComputedPropertyName <Yield>
 	)
+	(declaredOptional?='?')?
 	'(' fpar=FormalParameter<Yield> ')' (body=Block<Yield>)? ';'?
 ;
 
@@ -1455,19 +1465,12 @@ Elision returns BindingElement:
 	{BindingElement} ','
 ;
 
-// TODO GH-206: the following rules duplicate the corresponding rules in TypeExpressions.xtext and should be removed
-// (having these rules here, is a temporary work-around for the problem described in GH-206)
-
-
-
-
 LiteralOrComputedPropertyName <Yield>:
 	literalName=IdentifierName
 	| literalName=STRING
 	| literalName=NumericLiteralAsString
 	| '[' expression=AssignmentExpression<In=true,Yield> ']'
 ;
-
 
 /**
  * Intentionally unused to get rid of bogus lexer errors when

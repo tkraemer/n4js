@@ -55,6 +55,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TMethodImpl#isDeclaredFinal <em>Declared Final</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TMethodImpl#isDeclaredStatic <em>Declared Static</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TMethodImpl#isDeclaredOverride <em>Declared Override</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TMethodImpl#isHasComputedName <em>Has Computed Name</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TMethodImpl#isHasNoBody <em>Has No Body</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TMethodImpl#getDeclaredMemberAccessModifier <em>Declared Member Access Modifier</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TMethodImpl#isDeclaredAbstract <em>Declared Abstract</em>}</li>
@@ -123,6 +124,26 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 	 * @ordered
 	 */
 	protected boolean declaredOverride = DECLARED_OVERRIDE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isHasComputedName() <em>Has Computed Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isHasComputedName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean HAS_COMPUTED_NAME_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isHasComputedName() <em>Has Computed Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isHasComputedName()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean hasComputedName = HAS_COMPUTED_NAME_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isHasNoBody() <em>Has No Body</em>}' attribute.
@@ -291,6 +312,27 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isHasComputedName() {
+		return hasComputedName;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setHasComputedName(boolean newHasComputedName) {
+		boolean oldHasComputedName = hasComputedName;
+		hasComputedName = newHasComputedName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TMETHOD__HAS_COMPUTED_NAME, oldHasComputedName, hasComputedName));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isHasNoBody() {
 		return hasNoBody;
 	}
@@ -442,6 +484,10 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 			TypeRef _returnTypeRef_1 = this.getReturnTypeRef();
 			String _typeRefAsString = _returnTypeRef_1.getTypeRefAsString();
 			_append_5.append(_typeRefAsString);
+		}
+		boolean _isReturnValueOptional = this.isReturnValueOptional();
+		if (_isReturnValueOptional) {
+			strb.append("?");
 		}
 		return strb.toString();
 	}
@@ -615,6 +661,8 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 				return isDeclaredStatic();
 			case TypesPackage.TMETHOD__DECLARED_OVERRIDE:
 				return isDeclaredOverride();
+			case TypesPackage.TMETHOD__HAS_COMPUTED_NAME:
+				return isHasComputedName();
 			case TypesPackage.TMETHOD__HAS_NO_BODY:
 				return isHasNoBody();
 			case TypesPackage.TMETHOD__DECLARED_MEMBER_ACCESS_MODIFIER:
@@ -643,6 +691,9 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 				return;
 			case TypesPackage.TMETHOD__DECLARED_OVERRIDE:
 				setDeclaredOverride((Boolean)newValue);
+				return;
+			case TypesPackage.TMETHOD__HAS_COMPUTED_NAME:
+				setHasComputedName((Boolean)newValue);
 				return;
 			case TypesPackage.TMETHOD__HAS_NO_BODY:
 				setHasNoBody((Boolean)newValue);
@@ -677,6 +728,9 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 			case TypesPackage.TMETHOD__DECLARED_OVERRIDE:
 				setDeclaredOverride(DECLARED_OVERRIDE_EDEFAULT);
 				return;
+			case TypesPackage.TMETHOD__HAS_COMPUTED_NAME:
+				setHasComputedName(HAS_COMPUTED_NAME_EDEFAULT);
+				return;
 			case TypesPackage.TMETHOD__HAS_NO_BODY:
 				setHasNoBody(HAS_NO_BODY_EDEFAULT);
 				return;
@@ -707,6 +761,8 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 				return declaredStatic != DECLARED_STATIC_EDEFAULT;
 			case TypesPackage.TMETHOD__DECLARED_OVERRIDE:
 				return declaredOverride != DECLARED_OVERRIDE_EDEFAULT;
+			case TypesPackage.TMETHOD__HAS_COMPUTED_NAME:
+				return hasComputedName != HAS_COMPUTED_NAME_EDEFAULT;
 			case TypesPackage.TMETHOD__HAS_NO_BODY:
 				return hasNoBody != HAS_NO_BODY_EDEFAULT;
 			case TypesPackage.TMETHOD__DECLARED_MEMBER_ACCESS_MODIFIER:
@@ -731,6 +787,7 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 				case TypesPackage.TMETHOD__DECLARED_FINAL: return TypesPackage.TMEMBER__DECLARED_FINAL;
 				case TypesPackage.TMETHOD__DECLARED_STATIC: return TypesPackage.TMEMBER__DECLARED_STATIC;
 				case TypesPackage.TMETHOD__DECLARED_OVERRIDE: return TypesPackage.TMEMBER__DECLARED_OVERRIDE;
+				case TypesPackage.TMETHOD__HAS_COMPUTED_NAME: return TypesPackage.TMEMBER__HAS_COMPUTED_NAME;
 				default: return -1;
 			}
 		}
@@ -756,6 +813,7 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 				case TypesPackage.TMEMBER__DECLARED_FINAL: return TypesPackage.TMETHOD__DECLARED_FINAL;
 				case TypesPackage.TMEMBER__DECLARED_STATIC: return TypesPackage.TMETHOD__DECLARED_STATIC;
 				case TypesPackage.TMEMBER__DECLARED_OVERRIDE: return TypesPackage.TMETHOD__DECLARED_OVERRIDE;
+				case TypesPackage.TMEMBER__HAS_COMPUTED_NAME: return TypesPackage.TMETHOD__HAS_COMPUTED_NAME;
 				default: return -1;
 			}
 		}
@@ -884,6 +942,8 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 		result.append(declaredStatic);
 		result.append(", declaredOverride: ");
 		result.append(declaredOverride);
+		result.append(", hasComputedName: ");
+		result.append(hasComputedName);
 		result.append(", hasNoBody: ");
 		result.append(hasNoBody);
 		result.append(", declaredMemberAccessModifier: ");

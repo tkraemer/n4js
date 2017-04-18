@@ -10,8 +10,8 @@
  */
 export public class ~TestInfo {
     public origin: string;
-    public fqn: string?;
-    public module: string?;
-    public testMethods: Array<string>?;
+    public fqn?: string;
+    public module?: string;
+    public testMethods?: Array<string>;
     public constructor(@Spec spec: ~i~this){}
 }

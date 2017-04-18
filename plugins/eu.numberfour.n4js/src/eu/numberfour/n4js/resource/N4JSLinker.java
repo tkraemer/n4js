@@ -51,7 +51,7 @@ import eu.numberfour.n4js.n4JS.ImportSpecifier;
 import eu.numberfour.n4js.n4JS.NamedImportSpecifier;
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression;
 import eu.numberfour.n4js.n4JS.Script;
-import eu.numberfour.n4js.scoping.members.UnionMemberScope;
+import eu.numberfour.n4js.scoping.members.ComposedMemberScope;
 import eu.numberfour.n4js.validation.ASTStructureValidator;
 
 /**
@@ -329,7 +329,7 @@ public class N4JSLinker extends LazyLinker {
 		if (adapter != null)
 			adapter.clear();
 
-		UnionMemberScope.clearCachedComposedMembers(model);
+		ComposedMemberScope.clearCachedComposedMembers(model);
 	}
 
 	/**

@@ -4,7 +4,7 @@
 # $1 = first path
 # $2 = second path
 #
-# Output: the relative path between 1st and 2nd paths
+# Relpath function: returns the relative path between 1st and 2nd paths
 relpath() {
     local pos="${1%%/}" ref="${2%%/}" down=''
 
@@ -19,40 +19,55 @@ relpath() {
 }
 
 GEN_FOLDER=generated-docs
+
 echo copying resources to ./$GEN_FOLDER/
 
-rm -r ./$GEN_FOLDER/; mkdir ./$GEN_FOLDER/ 
+rm -rf ./$GEN_FOLDER/; mkdir ./$GEN_FOLDER/ 
 cp -r ./res/scripts ./res/styles ./src/articles ./src/faq ./src/features ./src/images ./src/releases  ./src/userguides ./$GEN_FOLDER/
 cp ./src/index.html ./$GEN_FOLDER/index.html 
 
-cd src
-FILES=`find .  -name "*.adoc" ! -name 'config.adoc' -print`
-cd ..
+pushd src
+	FILES=`find .  -name "*.adoc" ! -name 'config.adoc' -print`
+popd
 
 # Rundoc function to convert source files to HTML. Attributes are passed with the '-a' flag.
 for f in $FILES; 
 do 
+	# If Jenkins is building, then use AsciiSpec
+	# otherwise, use AsciiDoctor
+	if [ "${1}" == "--jenkins" ]; then
+		ASPEC=asciispec
+	else
+		ASPEC=asciidoctor
+	fi
+
 	ADOC_FILE=src/$f
 	REL_PATH="${f//\.\//}"
 	REL_PATH="${REL_PATH//[^\/]/}"
 	REL_PATH="${REL_PATH//[\/]/../}"
-	OUT_FOLDER=./$GEN_FOLDER/$(dirname $f)
 	HEADER_DIR=$(basename $(dirname $f))
-	echo running AsciiDoctor on $ADOC_FILE to $OUT_FOLDER
+	OUT_FOLDER=./$GEN_FOLDER/$(dirname $f)
+	ATTRS="-a doctype=book -a experimental=true -a stylesheet=n4js-adoc.css -a sectlinks -a docinfo1=true -a linkcss=true -a !source-highlighter -a icons=font"
+
+	echo running $ASPEC on $ADOC_FILE to $OUT_FOLDER
+
 	mkdir -p $OUT_FOLDER
-	asciidoctor -D $OUT_FOLDER $ADOC_FILE \
--a stylesdir=${REL_PATH}../res/styles -a stylesheet=n4js-adoc.css \
--a highlightjsdir=${REL_PATH}../res/scripts -a highlightjs-theme=n4jshighlighter -a source-highlighter=highlightjs \
--a docinfodir=${REL_PATH}../res/headers/$HEADER_DIR -a docinfo1=true \
--a idseparator=- -a doctype=book
+
+	$ASPEC $ATTRS -a stylesdir=${REL_PATH}../res/styles  -a highlightjsdir=${REL_PATH}/scripts \
+	-a docinfodir=${REL_PATH}../res/headers/$HEADER_DIR -D $OUT_FOLDER $ADOC_FILE
 done
 
-cd ./$GEN_FOLDER/
-find . -name "*.adoc" -delete && find . -name "*.graffle" -delete
-cd ..
+# Delete unwanted source files.
+pushd ./$GEN_FOLDER/
+	find . -name "*.adoc" -delete && find . -name "*.graffle" -delete
+popd
 
-# Adding -l flag for launching pages after build
-if [ "${1}" == "--launch" ] || [ "${1}" == "-l" ]; then
-open ./$GEN_FOLDER/index.html
-exit 0
+# If Jenkins is building, move generated docs
+if [ "${1}" == "--jenkins" ]; then
+	cp -r generated-docs ../
+	exit 0
+# Add -p flag to launch pages after build
+elif [ "${1}" == "--preview" ] || [ "${1}" == "-p" ]; then
+	open ./$GEN_FOLDER/index.html
+	exit 0
 fi

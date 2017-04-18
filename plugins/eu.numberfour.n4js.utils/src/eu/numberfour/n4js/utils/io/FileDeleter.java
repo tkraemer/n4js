@@ -19,6 +19,7 @@ import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
 
@@ -70,6 +71,44 @@ public class FileDeleter implements FileVisitor<Path> {
 	public static void delete(Path resourceToDelete, boolean logToStdErr) throws IOException {
 		if (resourceToDelete.toFile().exists()) {
 			Files.walkFileTree(resourceToDelete, new FileDeleter(logToStdErr));
+		}
+	}
+
+	/**
+	 * Sugar for {@link #delete(File)}, allows to pass custom error handler. If exception is caught handler will be
+	 * invoked, and exception will not be propagated to the caller.
+	 *
+	 * @param resourceToDelete
+	 *            path to the file resource or to the folder to delete.
+	 * @param errorHandler
+	 *            error handler invoked in case of {@link IOException} is caught
+	 */
+	public static void delete(File resourceToDelete, Consumer<IOException> errorHandler) {
+		if (resourceToDelete.exists()) {
+			try {
+				Files.walkFileTree(resourceToDelete.toPath(), new FileDeleter(false));
+			} catch (IOException ioe) {
+				errorHandler.accept(ioe);
+			}
+		}
+	}
+
+	/**
+	 * Sugar for {@link #delete(Path)}, allows to pass custom error handler. If exception is caught handler will be
+	 * invoked, and exception will not be propagated to the caller.
+	 *
+	 * @param resourceToDelete
+	 *            path to the file resource or to the folder to delete.
+	 * @param errorHandler
+	 *            error handler invoked in case of {@link IOException} is caught
+	 */
+	public static void delete(Path resourceToDelete, Consumer<IOException> errorHandler) {
+		if (resourceToDelete.toFile().exists()) {
+			try {
+				Files.walkFileTree(resourceToDelete, new FileDeleter(false));
+			} catch (IOException ioe) {
+				errorHandler.accept(ioe);
+			}
 		}
 	}
 

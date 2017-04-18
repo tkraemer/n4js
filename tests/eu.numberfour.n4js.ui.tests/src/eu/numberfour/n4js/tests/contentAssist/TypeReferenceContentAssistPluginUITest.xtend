@@ -25,7 +25,7 @@ class TypeReferenceContentAssistPluginUITest extends AbstractN4JSContentAssistTe
 	@Test def void testTypeProposals_importAdded() {
 		//TODO IDE-1869 should be ...assertProposal("MyFirstClass")
 		newBuilder().append("var x: My").assertProposal("path.Libs.MyFirstClass").withDisplayString('MyFirstClass - path/Libs').apply.expectContent('''
-			import { MyFirstClass } from "path/Libs";
+			import {MyFirstClass} from "path/Libs";
 			var x: MyFirstClass''')
 	}
 
@@ -56,7 +56,7 @@ class TypeReferenceContentAssistPluginUITest extends AbstractN4JSContentAssistTe
 	@Test def void testTypeProposals_importAdjusted() {
 		//TODO IDE-1869 should be ...assertProposal("MyFirstClass")
 		newBuilder().append('''
-			import { MySecondClass } from 'path/Libs'
+			import {MySecondClass} from 'path/Libs'
 
 			var varName: MyF<|>
 		''').assertProposalAtCursor("path.Libs.MyFirstClass").withDisplayString('MyFirstClass - path/Libs').apply.expectContent(
@@ -68,8 +68,8 @@ class TypeReferenceContentAssistPluginUITest extends AbstractN4JSContentAssistTe
 //		'''
 // new expectation after disabling ImportRewriter#enhanceExistingImportDeclaration(ImportDeclaration,QualifiedName,String,MultiTextEdit):
 		'''
-			import { MySecondClass } from 'path/Libs'
-			import { MyFirstClass } from "path/Libs";
+			import {MySecondClass} from 'path/Libs'
+			import {MyFirstClass} from "path/Libs";
 
 			var varName: MyFirstClass<|>
 		'''
@@ -94,61 +94,61 @@ class TypeReferenceContentAssistPluginUITest extends AbstractN4JSContentAssistTe
 		newBuilder().append('''
 			/* some comment */
 			var varName: MLiFi''').applyProposal("path.MoreLibs.MoreLibFirstClass").expectContent('''
-			import { MoreLibFirstClass } from "path/MoreLibs";
+			import {MoreLibFirstClass} from "path/MoreLibs";
 			/* some comment */
 			var varName: MoreLibFirstClass''')
 	}
 
 	@Test def void testTypeProposals_secondImportAdded() {
 		newBuilder().append('''
-			import { MoreLibFirstClass } from "path/MoreLibs"
+			import {MoreLibFirstClass} from "path/MoreLibs"
 
 			var varName: MyF''').applyProposal("path.Libs.MyFirstClass").expectContent('''
-			import { MoreLibFirstClass } from "path/MoreLibs"
-			import { MyFirstClass } from "path/Libs";
+			import {MoreLibFirstClass} from "path/MoreLibs"
+			import {MyFirstClass} from "path/Libs";
 
 			var varName: MyFirstClass''')
 	}
 
 	@Test def void testTypeProposals_secondImportAddedAfterHiddenTokens() {
 		newBuilder().append('''
-			import { MoreLibFirstClass } from "path/MoreLibs" /* some comment */
+			import {MoreLibFirstClass} from "path/MoreLibs" /* some comment */
 
 			var varName: MyF''').applyProposal("path.Libs.MyFirstClass").expectContent('''
-			import { MoreLibFirstClass } from "path/MoreLibs" /* some comment */
-			import { MyFirstClass } from "path/Libs";
+			import {MoreLibFirstClass} from "path/MoreLibs" /* some comment */
+			import {MyFirstClass} from "path/Libs";
 
 			var varName: MyFirstClass''')
 	}
 
 	@Test def void testTypeProposals_secondImportAddedWithMultipleEmptyLines() {
 		newBuilder().append('''
-			import { MoreLibFirstClass } from "path/MoreLibs"
+			import {MoreLibFirstClass} from "path/MoreLibs"
 
 
 			var varName: MyF''').applyProposal("path.Libs.MyFirstClass").expectContent('''
-			import { MoreLibFirstClass } from "path/MoreLibs"
-			import { MyFirstClass } from "path/Libs";
+			import {MoreLibFirstClass} from "path/MoreLibs"
+			import {MyFirstClass} from "path/Libs";
 
 
 			var varName: MyFirstClass''')
 	}
 
 	@Test def void testTypeProposals_secondImportAddedBetweenImportDeclarations() {
-		val prefix = "import { MoreLibFirstClass } from \"path/MoreLibs\" /* trailing comment */" + "\n" +
+		val prefix = "import {MoreLibFirstClass} from \"path/MoreLibs\" /* trailing comment */" + "\n" +
 			"\n" +
 		 	"var varName: MyF";
 
 		val model = prefix + "\n" +
 			"\n" +
-			"/* leading comment */import { MoreLibSecondClass } from \"path/MoreLibs\" /* trailing comment */"
+			"/* leading comment */import {MoreLibSecondClass} from \"path/MoreLibs\" /* trailing comment */"
 
-		val expected = "import { MoreLibFirstClass } from \"path/MoreLibs\" /* trailing comment */" + "\n" +
-			"import { MyFirstClass } from \"path/Libs\"" + ";" +"\n" +
+		val expected = "import {MoreLibFirstClass} from \"path/MoreLibs\" /* trailing comment */" + "\n" +
+			"import {MyFirstClass} from \"path/Libs\"" + ";" +"\n" +
 			"\n" +
 			"var varName: MyFirstClass" + "\n" +
 			"\n" +
-			"/* leading comment */import { MoreLibSecondClass } from \"path/MoreLibs\" /* trailing comment */"
+			"/* leading comment */import {MoreLibSecondClass} from \"path/MoreLibs\" /* trailing comment */"
 
 		newBuilder().append(model)
 			.applyProposal(prefix.length, "path.Libs.MyFirstClass")
@@ -157,12 +157,12 @@ class TypeReferenceContentAssistPluginUITest extends AbstractN4JSContentAssistTe
 
 	@Test def void testTypeProposals_aliasProposed() {
 			//TODO IDE-1869 should be ...assertText("MyRenamedClass", "MyFirstClass", "MySecondClass")
-		newBuilder().append("import { MyFirstClass as MyRenamedClass } from 'path/Libs' var varName: my")
+		newBuilder().append("import {MyFirstClass as MyRenamedClass} from 'path/Libs' var varName: my")
 			.assertText("MyRenamedClass", "path.Libs.MyFirstClass", "path.Libs.MySecondClass");
 	}
 
 	@Test def void testTypeProposals_aliasExplained() {
-		newBuilder().append("import { MyFirstClass as MyRenamedClass } from 'path/Libs' var varName: my")
+		newBuilder().append("import {MyFirstClass as MyRenamedClass} from 'path/Libs' var varName: my")
 			.assertProposal("MyRenamedClass")
 			.withDisplayString('MyRenamedClass - path/Libs alias for MyFirstClass')
 	}

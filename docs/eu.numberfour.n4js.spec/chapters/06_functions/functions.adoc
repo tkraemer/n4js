@@ -464,7 +464,7 @@ task:IDE-662[]
 A special arguments object is defined within the body of a function.
 It is accessible through the implicitly-defined local variable named ,
 unless it is shadowed by a local variable, a formal parameter or a
-function named `arguments` or in the rare case that the function itself is called ’arguments’ cite:[ECMA11a(S10.5,pp59)].
+function named `arguments` or in the rare case that the function itself is called ’arguments’ cite:[ECMA11a(S10.5,p.59)].
 The argument object has array-like behavior even though it is not of type `array`:
 
 * All actual passed-in parameters of the current execution context can be retrieved by $0-based$ index access.
@@ -472,7 +472,7 @@ The argument object has array-like behavior even though it is not of type `array
 * It is possible to store custom values in the arguments object, even outside the original index boundaries.
 * All obtained values from the arguments object are of type `any`.
 
-In non-strict ES mode the `callee` property holds a reference to the function executed cite:[ECMA11a(S10.6,pp61)].
+In non-strict ES mode the `callee` property holds a reference to the function executed cite:[ECMA11a(S10.6,p.61)].
 
 .Arguments.callee
 [req,id=IDE-81,version=1]

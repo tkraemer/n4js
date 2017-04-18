@@ -25,9 +25,9 @@ import java.util.Iterator
 import java.util.NoSuchElementException
 
 import static eu.numberfour.n4js.ts.types.TypingStrategy.*
+import static eu.numberfour.n4js.utils.StructuralMembersPredicates.*
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
-import static extension eu.numberfour.n4js.utils.StructuralMembersPredicates.*
 
 /**
  * An iterator over pairs of corresponding members from two structural types. Collecting the members is not
@@ -104,14 +104,23 @@ class StructuralMembersTripleIterator implements Iterator<StructuralMembersTripl
 				leftMember = if (leftIndex < membersLeft.size) membersLeft.get(leftIndex) else null;
 				compare = MEMBERS_BY_NameAndAccess.compare(leftMember, rightMember);
 				if (compare === 0 && !compatibleMemberTypes(leftMember, rightMember)) {
-					compare = -1; // using -1 instead of 0 or +1 means: "skip it, but continue the search"
+					compare = MEMBERS_BY_NameTypeAndAccess.compare(leftMember, rightMember);
 				}
 				// match?
 				if (compare < 0) {
+					// mismatch: since leftMember is lower than rightMember, upcoming leftMembers might be a match
+					// -> so skip current leftMember and continue the search for the current rightMember ...
 					leftIndex++;
 				} else if (compare > 0) {
+					// mismatch: since leftMember is greater than rightMember, later leftMembers won't be a match either
+					// -> so stop searching and do *not* increment leftIndex, because the current leftMember might be a
+					// match for the next rightMember
 					leftMember = null;
-				} // compare == 0, do nothing (do not increase leftIndex, as we may have duplicates in membersRight)
+				} else {
+					// match!
+					// -> do nothing (in particular, do not increase leftIndex, as there may be duplicates in
+					// membersRight, so the current leftMember might be a match for the next rightMember)
+				}
 			} while (compare < 0); // exit if equals or greater
 
 			var leftOtherAccessor = null as FieldAccessor;

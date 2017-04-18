@@ -214,6 +214,15 @@ public abstract class FunctionOrFieldAccessorImpl extends AnnotableElementImpl i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isReturnValueOptional() {
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isAsync() {
 		return false;
 	}
@@ -371,6 +380,8 @@ public abstract class FunctionOrFieldAccessorImpl extends AnnotableElementImpl i
 				return getName();
 			case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_LOCAL_ARGUMENTS_VARIABLE:
 				return getLocalArgumentsVariable();
+			case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___IS_RETURN_VALUE_OPTIONAL:
+				return isReturnValueOptional();
 			case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC:
 				return isAsync();
 			case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR:

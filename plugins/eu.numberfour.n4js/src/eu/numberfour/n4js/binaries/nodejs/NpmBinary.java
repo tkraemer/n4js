@@ -10,11 +10,12 @@
  */
 package eu.numberfour.n4js.binaries.nodejs;
 
-import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 
 import java.io.File;
 import java.net.URI;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.core.runtime.IStatus;
 
@@ -38,16 +39,26 @@ public class NpmBinary implements Binary {
 	private Provider<NodeJsBinary> nodeJsBinaryProvider;
 
 	@Inject
+	private Provider<NpmrcBinary> npmrcBinaryProvider;
+
+	@Inject
 	private BinariesPreferenceStore preferenceStore;
 
 	@Override
 	public String getId() {
-		return NodeJsBinary.class.getName();
+		return NpmBinary.class.getName();
 	}
 
 	@Override
 	public String getLabel() {
 		return NodeBinariesConstants.NPM_LABEL;
+	}
+
+	@Override
+	public String getDescription() {
+		return "Configuration of the folder location of the npm library "
+				+ "can be provided here. If not given, then the location will be resolved by used Node.js\u00AE. The required minimum version npm is '"
+				+ NodeBinariesConstants.NPM_MIN_VERSION + "'.";
 	}
 
 	@Override
@@ -73,7 +84,7 @@ public class NpmBinary implements Binary {
 
 	@Override
 	public Iterable<Binary> getChildren() {
-		return emptyList();
+		return singletonList(npmrcBinaryProvider.get());
 	}
 
 	@Override
@@ -102,12 +113,14 @@ public class NpmBinary implements Binary {
 		return validator.validate(this);
 	}
 
+	/**
+	 * Custom hashcode, used to persist settings in the map {@link BinariesPreferenceStore} internal map. Key part about
+	 * that hashCode is that it will be the same for every instance of this class, allowing to easily serialize
+	 * {@code Binary -> URI} setting even between platform runs.
+	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-		return result;
+		return Objects.hashCode(getId());
 	}
 
 	@Override
@@ -122,14 +135,7 @@ public class NpmBinary implements Binary {
 			return false;
 		}
 		final NpmBinary other = (NpmBinary) obj;
-		if (getId() == null) {
-			if (other.getId() != null) {
-				return false;
-			}
-		} else if (!getId().equals(other.getId())) {
-			return false;
-		}
-		return true;
+		return Objects.equals(getId(), other.getId());
 	}
 
 }

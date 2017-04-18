@@ -42,7 +42,7 @@ import "http://www.numberfour.eu/ide/ts/TypeRefs"
  */
 TypeRef:
 	UnionTypeExpression;
-	
+
 UnionTypeExpression returns TypeRef:
 	IntersectionTypeExpression ({UnionTypeExpression.typeRefs+=current} ("|" typeRefs+=IntersectionTypeExpression)+)?;
 
@@ -60,7 +60,7 @@ BogusTypeRef returns TypeRef:
 	TypeRefWithModifiers;
 	
 TypeRefWithModifiers returns StaticBaseTypeRef:
-	TypeRefWithoutModifiers =>undefModifier=UndefModifierToken? | {ParameterizedTypeRef} undefModifier=UndefModifierToken;
+	TypeRefWithoutModifiers =>followedByQuestionMark?='?'?;
 
 TypeRefWithoutModifiers returns StaticBaseTypeRef:
 	  ((ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'?)
@@ -195,13 +195,14 @@ TStructMethod:
 
 
 TStructField:
-	name=IdentifierName (':' typeRef=TypeRef)?
+	name=IdentifierName (optional?='?')? (':' typeRef=TypeRef)?
 ;
 
 TStructGetter:
 	=> ({TStructGetter}
 	'get'
 	name=IdentifierName)
+	(optional?='?')?
 	'(' ')' (':' declaredTypeRef=TypeRef)?
 ;
 
@@ -209,6 +210,7 @@ TStructSetter:
 	=> ({TStructSetter}
 	'set'
 	name=IdentifierName)
+	(optional?='?')?
 	'(' fpar=TAnonymousFormalParameter ')'
 ;
 
@@ -240,9 +242,6 @@ Wildcard returns Wildcard:
 WildcardNewNotation returns Wildcard:
 	(usingInOutNotation?='out' declaredUpperBound=TypeRef)
 |	(usingInOutNotation?='in' declaredLowerBound=TypeRef);
-
-UndefModifierToken returns UndefModifier:
-	'?';
 
 TypeVariable:
 	name=IDENTIFIER ('extends' declaredUpperBound=TypeRef)?;

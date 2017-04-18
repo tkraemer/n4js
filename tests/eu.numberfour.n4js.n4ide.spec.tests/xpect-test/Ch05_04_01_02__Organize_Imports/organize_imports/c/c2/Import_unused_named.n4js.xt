@@ -16,8 +16,8 @@
      
    - import * as N from "a
    | /[a1|]/[A"|<-- obsolete]
-   | import { [B|IB] } from "a/a2/A" [// <-- obsolete|]
-   | import [{ IB }|* as N] from "a/[a2|a1]/A"
+   | import { [B|IB] } from "a/a2/A" [// <-- obsolete|;]
+   | import [{ IB }|* as N] from "a/[a2|a1]/A"[|;]
      var a : N.A = new N.A(); //  'a/a1/A'
      //var b : B = new B(); //  'a/a2/A'
      var ia : N.IA; //  'a/a1/A'

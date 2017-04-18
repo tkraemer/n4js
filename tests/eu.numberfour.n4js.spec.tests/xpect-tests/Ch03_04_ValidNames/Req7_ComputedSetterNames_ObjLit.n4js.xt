@@ -24,6 +24,6 @@ var c1 = {
 // XPECT noerrors -->
 c1['@abc'] = "abc"
 
-// XPECT errors -->"Member [@xyz] not found." at "c1['@xyz']"
+// XPECT errors -->"Member @xyz not found." at "c1['@xyz']"
 c1['@xyz'] = "xyz"
 

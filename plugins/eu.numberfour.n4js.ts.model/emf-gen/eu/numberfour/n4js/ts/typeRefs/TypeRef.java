@@ -7,11 +7,9 @@
  */
 package eu.numberfour.n4js.ts.typeRefs;
 
-import eu.numberfour.n4js.ts.types.NullModifier;
 import eu.numberfour.n4js.ts.types.TStructMember;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypingStrategy;
-import eu.numberfour.n4js.ts.types.UndefModifier;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -28,8 +26,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#getNullModifier <em>Null Modifier</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#getUndefModifier <em>Undef Modifier</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#isFollowedByQuestionMark <em>Followed By Question Mark</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getTypeRef()
@@ -38,73 +35,45 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface TypeRef extends TypeArgument, Versionable {
 	/**
-	 * Returns the value of the '<em><b>Null Modifier</b></em>' attribute.
-	 * The literals are from the enumeration {@link eu.numberfour.n4js.ts.types.NullModifier}.
+	 * Returns the value of the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Null Modifier</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Null Modifier</em>' attribute.
-	 * @see eu.numberfour.n4js.ts.types.NullModifier
-	 * @see #setNullModifier(NullModifier)
-	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getTypeRef_NullModifier()
+	 * <!-- begin-model-doc -->
+	 * <b>SHOULD NOT BE USED, EXCEPT FOR DECLARATION OF OPTIONAL RETURN VALUES</b>
+	 * <p>
+	 * Represents the old ? after a type reference for defining optional fields / return values. At the moment, this is
+	 * used only for declaring the return value of a function optional. In the future, this might be used for
+	 * undefined/null-analysis. For example, <code>string?</code> might be syntactic sugar for
+	 * <code>string|undefined</code>.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Followed By Question Mark</em>' attribute.
+	 * @see #setFollowedByQuestionMark(boolean)
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getTypeRef_FollowedByQuestionMark()
 	 * @model unique="false"
 	 * @generated
 	 */
-	NullModifier getNullModifier();
+	boolean isFollowedByQuestionMark();
 
 	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#getNullModifier <em>Null Modifier</em>}' attribute.
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#isFollowedByQuestionMark <em>Followed By Question Mark</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Null Modifier</em>' attribute.
-	 * @see eu.numberfour.n4js.ts.types.NullModifier
-	 * @see #getNullModifier()
+	 * @param value the new value of the '<em>Followed By Question Mark</em>' attribute.
+	 * @see #isFollowedByQuestionMark()
 	 * @generated
 	 */
-	void setNullModifier(NullModifier value);
-
-	/**
-	 * Returns the value of the '<em><b>Undef Modifier</b></em>' attribute.
-	 * The literals are from the enumeration {@link eu.numberfour.n4js.ts.types.UndefModifier}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Undef Modifier</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Undef Modifier</em>' attribute.
-	 * @see eu.numberfour.n4js.ts.types.UndefModifier
-	 * @see #setUndefModifier(UndefModifier)
-	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getTypeRef_UndefModifier()
-	 * @model unique="false"
-	 * @generated
-	 */
-	UndefModifier getUndefModifier();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#getUndefModifier <em>Undef Modifier</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Undef Modifier</em>' attribute.
-	 * @see eu.numberfour.n4js.ts.types.UndefModifier
-	 * @see #getUndefModifier()
-	 * @generated
-	 */
-	void setUndefModifier(UndefModifier value);
+	void setFollowedByQuestionMark(boolean value);
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * *
-	 * Returns null and undef modifier strings similar to N4JS syntax, not all values are represented.
-	 * This method is called by subclasses in overridden method.
+	 * Returns all type modifiers of the receiving type reference as a string, similar to N4JS syntax. This method is
+	 * called by subclasses in overridden method. Currently, the <code>+</code> for dynamic is the only existing type
+	 * modifier.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _switchResult = null;\n<%eu.numberfour.n4js.ts.types.NullModifier%> _nullModifier = this.getNullModifier();\nif (_nullModifier != null)\n{\n\tswitch (_nullModifier)\n\t{\n\t\tcase NA:\n\t\t\t_switchResult = \"\";\n\t\t\tbreak;\n\t\tcase NULLABLE:\n\t\t\t_switchResult = \"\";\n\t\t\tbreak;\n\t\tcase NOTNULL:\n\t\t\t_switchResult = \"!\";\n\t\t\tbreak;\n\t\tcase ISNULL:\n\t\t\t_switchResult = \"\";\n\t\t\tbreak;\n\t\tdefault:\n\t\t\tbreak;\n\t}\n}\n<%java.lang.String%> _switchResult_1 = null;\n<%eu.numberfour.n4js.ts.types.UndefModifier%> _undefModifier = this.getUndefModifier();\nif (_undefModifier != null)\n{\n\tswitch (_undefModifier)\n\t{\n\t\tcase NA:\n\t\t\t_switchResult_1 = \"\";\n\t\t\tbreak;\n\t\tcase MANDATORY:\n\t\t\t_switchResult_1 = \"\";\n\t\t\tbreak;\n\t\tcase OPTIONAL:\n\t\t\t_switchResult_1 = \"?\";\n\t\t\tbreak;\n\t\tcase ISUNDEFINED:\n\t\t\t_switchResult_1 = \"\";\n\t\t\tbreak;\n\t\tdefault:\n\t\t\tbreak;\n\t}\n}\nreturn (_switchResult + _switchResult_1);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return \"\";'"
 	 * @generated
 	 */
 	String getModifiersAsString();
@@ -113,17 +82,28 @@ public interface TypeRef extends TypeArgument, Versionable {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * *
 	 * Returns true if the type referenced is either class which is declared final, an enum or a primitive. This is needed in case of type
 	 * casts, for example.
 	 * <p>
 	 * The method is robust, if declared type is null, false is returned.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%eu.numberfour.n4js.ts.types.Type%> dtype = this.getDeclaredType();\nif ((dtype == null))\n{\n\treturn false;\n}\nreturn dtype.isFinal();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%eu.numberfour.n4js.ts.types.Type%> dtype = this.getDeclaredType();\nreturn ((dtype != null) && dtype.isFinal());'"
 	 * @generated
 	 */
 	boolean isFinalByType();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Tells if this type reference has a declared type which is "array like" as defined by {@link Type#isArrayLike()}.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%eu.numberfour.n4js.ts.types.Type%> dtype = this.getDeclaredType();\nreturn ((dtype != null) && dtype.isArrayLike());'"
+	 * @generated
+	 */
+	boolean isArrayLike();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -229,15 +209,6 @@ public interface TypeRef extends TypeArgument, Versionable {
 	 * @generated
 	 */
 	EList<TypeArgument> getTypeArgs();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (<%com.google.common.base.Objects%>.equal(this.getNullModifier(), <%eu.numberfour.n4js.ts.types.NullModifier%>.ISNULL) || <%com.google.common.base.Objects%>.equal(this.getUndefModifier(), <%eu.numberfour.n4js.ts.types.UndefModifier%>.ISUNDEFINED));'"
-	 * @generated
-	 */
-	boolean undefinedOrNull();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -352,6 +323,34 @@ public interface TypeRef extends TypeArgument, Versionable {
 	 * @generated
 	 */
 	boolean isDefSiteStructuralTyping();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Tells whether this type reference represents the type of an object literal.
+	 * Used to activate the special semantics of optional fields in certain cases.
+	 * @see TypeRef#isTypeOfNewExpressionOrFinalNominal()
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return false;'"
+	 * @generated
+	 */
+	boolean isTypeOfObjectLiteral();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Tells whether this type reference represents the type of a new expression or final nominal classifier.
+	 * Used to activate the special semantics of optional fields in certain cases.
+	 * @see TypeRef#isTypeOfObjectLiteral()
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return false;'"
+	 * @generated
+	 */
+	boolean isTypeOfNewExpressionOrFinalNominal();
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -27,6 +27,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFunction#isExternal <em>External</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFunction#getFpars <em>Fpars</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TFunction#isReturnValueMarkedOptional <em>Return Value Marked Optional</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFunction#getReturnTypeRef <em>Return Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFunction#getTypeVars <em>Type Vars</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFunction#getDeclaredThisType <em>Declared This Type</em>}</li>
@@ -80,6 +81,34 @@ public interface TFunction extends DeclaredTypeWithAccessModifier, SyntaxRelated
 	 * @generated
 	 */
 	EList<TFormalParameter> getFpars();
+
+	/**
+	 * Returns the value of the '<em><b>Return Value Marked Optional</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Explicitly marks the return value of this TFunction as optional. This is only used for TFunctions that are
+	 * created programmatically. Those that appear in the AST (only possible in Types.xtext language) will instead have
+	 * a 'returnTypeRef' with 'followedByQuestionMark' set to <code>true</code>.
+	 * This will probably become obsolete once we implement undefined/null analysis.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Return Value Marked Optional</em>' attribute.
+	 * @see #setReturnValueMarkedOptional(boolean)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTFunction_ReturnValueMarkedOptional()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isReturnValueMarkedOptional();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TFunction#isReturnValueMarkedOptional <em>Return Value Marked Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Return Value Marked Optional</em>' attribute.
+	 * @see #isReturnValueMarkedOptional()
+	 * @generated
+	 */
+	void setReturnValueMarkedOptional(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Return Type Ref</b></em>' containment reference.
@@ -225,6 +254,15 @@ public interface TFunction extends DeclaredTypeWithAccessModifier, SyntaxRelated
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isReturnValueMarkedOptional() || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark()));'"
+	 * @generated
+	 */
+	boolean isReturnValueOptional();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
 	 * Tells whether this function is a method that represents a callable constructor.
@@ -258,7 +296,7 @@ public interface TFunction extends DeclaredTypeWithAccessModifier, SyntaxRelated
 	 * This includes formal parameters and return type (if declared), but excludes annotations.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%java.lang.StringBuilder%> strb = new <%java.lang.StringBuilder%>();\nboolean _isGeneric = this.isGeneric();\nif (_isGeneric)\n{\n\t<%java.lang.StringBuilder%> _append = strb.append(\"<\");\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TypeVariable%>> _typeVars = this.getTypeVars();\n\tfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TypeVariable%>, <%java.lang.String%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TypeVariable%>, <%java.lang.String%>>()\n\t{\n\t\tpublic <%java.lang.String%> apply(final <%eu.numberfour.n4js.ts.types.TypeVariable%> it)\n\t\t{\n\t\t\treturn it.getTypeAsString();\n\t\t}\n\t};\n\t<%org.eclipse.emf.common.util.EList%><<%java.lang.String%>> _map = <%org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions%>.<<%eu.numberfour.n4js.ts.types.TypeVariable%>, <%java.lang.String%>>map(_typeVars, _function);\n\t<%java.lang.String%> _join = <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.join(_map, \",\");\n\t<%java.lang.StringBuilder%> _append_1 = _append.append(_join);\n\t_append_1.append(\"> \");\n}\nboolean _isDeclaredAsync = this.isDeclaredAsync();\nif (_isDeclaredAsync)\n{\n\tstrb.append(\"async \");\n}\nstrb.append(\"function \");\nboolean _isDeclaredGenerator = this.isDeclaredGenerator();\nif (_isDeclaredGenerator)\n{\n\tstrb.append(\"* \");\n}\n<%java.lang.String%> _name = this.getName();\n<%java.lang.StringBuilder%> _append_2 = strb.append(_name);\n<%java.lang.StringBuilder%> _append_3 = _append_2.append(\"(\");\n<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> _fpars = this.getFpars();\nfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>, <%java.lang.String%>> _function_1 = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>, <%java.lang.String%>>()\n{\n\tpublic <%java.lang.String%> apply(final <%eu.numberfour.n4js.ts.types.TFormalParameter%> it)\n\t{\n\t\treturn it.getFormalParameterAsString();\n\t}\n};\n<%org.eclipse.emf.common.util.EList%><<%java.lang.String%>> _map_1 = <%org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions%>.<<%eu.numberfour.n4js.ts.types.TFormalParameter%>, <%java.lang.String%>>map(_fpars, _function_1);\n<%java.lang.String%> _join_1 = <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.join(_map_1, \", \");\n<%java.lang.StringBuilder%> _append_4 = _append_3.append(_join_1);\n_append_4.append(\")\");\n<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _returnTypeRef = this.getReturnTypeRef();\nboolean _tripleNotEquals = (_returnTypeRef != null);\nif (_tripleNotEquals)\n{\n\t<%java.lang.StringBuilder%> _append_5 = strb.append(\": \");\n\t<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _returnTypeRef_1 = this.getReturnTypeRef();\n\t<%java.lang.String%> _typeRefAsString = _returnTypeRef_1.getTypeRefAsString();\n\t_append_5.append(_typeRefAsString);\n}\nreturn strb.toString();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%java.lang.StringBuilder%> strb = new <%java.lang.StringBuilder%>();\nboolean _isGeneric = this.isGeneric();\nif (_isGeneric)\n{\n\t<%java.lang.StringBuilder%> _append = strb.append(\"<\");\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TypeVariable%>> _typeVars = this.getTypeVars();\n\tfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TypeVariable%>, <%java.lang.String%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TypeVariable%>, <%java.lang.String%>>()\n\t{\n\t\tpublic <%java.lang.String%> apply(final <%eu.numberfour.n4js.ts.types.TypeVariable%> it)\n\t\t{\n\t\t\treturn it.getTypeAsString();\n\t\t}\n\t};\n\t<%org.eclipse.emf.common.util.EList%><<%java.lang.String%>> _map = <%org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions%>.<<%eu.numberfour.n4js.ts.types.TypeVariable%>, <%java.lang.String%>>map(_typeVars, _function);\n\t<%java.lang.String%> _join = <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.join(_map, \",\");\n\t<%java.lang.StringBuilder%> _append_1 = _append.append(_join);\n\t_append_1.append(\"> \");\n}\nboolean _isDeclaredAsync = this.isDeclaredAsync();\nif (_isDeclaredAsync)\n{\n\tstrb.append(\"async \");\n}\nstrb.append(\"function \");\nboolean _isDeclaredGenerator = this.isDeclaredGenerator();\nif (_isDeclaredGenerator)\n{\n\tstrb.append(\"* \");\n}\n<%java.lang.String%> _name = this.getName();\n<%java.lang.StringBuilder%> _append_2 = strb.append(_name);\n<%java.lang.StringBuilder%> _append_3 = _append_2.append(\"(\");\n<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> _fpars = this.getFpars();\nfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>, <%java.lang.String%>> _function_1 = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>, <%java.lang.String%>>()\n{\n\tpublic <%java.lang.String%> apply(final <%eu.numberfour.n4js.ts.types.TFormalParameter%> it)\n\t{\n\t\treturn it.getFormalParameterAsString();\n\t}\n};\n<%org.eclipse.emf.common.util.EList%><<%java.lang.String%>> _map_1 = <%org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions%>.<<%eu.numberfour.n4js.ts.types.TFormalParameter%>, <%java.lang.String%>>map(_fpars, _function_1);\n<%java.lang.String%> _join_1 = <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.join(_map_1, \", \");\n<%java.lang.StringBuilder%> _append_4 = _append_3.append(_join_1);\n_append_4.append(\")\");\n<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _returnTypeRef = this.getReturnTypeRef();\nboolean _tripleNotEquals = (_returnTypeRef != null);\nif (_tripleNotEquals)\n{\n\t<%java.lang.StringBuilder%> _append_5 = strb.append(\": \");\n\t<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _returnTypeRef_1 = this.getReturnTypeRef();\n\t<%java.lang.String%> _typeRefAsString = _returnTypeRef_1.getTypeRefAsString();\n\t_append_5.append(_typeRefAsString);\n}\nboolean _isReturnValueOptional = this.isReturnValueOptional();\nif (_isReturnValueOptional)\n{\n\tstrb.append(\"?\");\n}\nreturn strb.toString();'"
 	 * @generated
 	 */
 	String getFunctionAsString();

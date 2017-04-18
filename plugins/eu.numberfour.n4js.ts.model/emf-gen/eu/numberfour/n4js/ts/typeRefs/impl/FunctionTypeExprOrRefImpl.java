@@ -115,6 +115,15 @@ public abstract class FunctionTypeExprOrRefImpl extends StaticBaseTypeRefImpl im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isReturnValueOptional() {
+		return ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TypeRef getReturnTypeRef() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
@@ -224,9 +233,18 @@ public abstract class FunctionTypeExprOrRefImpl extends StaticBaseTypeRefImpl im
 			_xifexpression_2 = "";
 		}
 		String _plus_8 = (_plus_7 + _xifexpression_2);
-		String _plus_9 = (_plus_8 + "}");
+		String _xifexpression_3 = null;
+		boolean _isReturnValueOptional = this.isReturnValueOptional();
+		if (_isReturnValueOptional) {
+			_xifexpression_3 = "?";
+		}
+		else {
+			_xifexpression_3 = "";
+		}
+		String _plus_9 = (_plus_8 + _xifexpression_3);
+		String _plus_10 = (_plus_9 + "}");
 		String _modifiersAsString = this.getModifiersAsString();
-		return (_plus_9 + _modifiersAsString);
+		return (_plus_10 + _modifiersAsString);
 	}
 
 	/**
@@ -271,6 +289,8 @@ public abstract class FunctionTypeExprOrRefImpl extends StaticBaseTypeRefImpl im
 				return getTypeVarUpperBound((TypeVariable)arguments.get(0));
 			case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_FPARS:
 				return getFpars();
+			case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___IS_RETURN_VALUE_OPTIONAL:
+				return isReturnValueOptional();
 			case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_RETURN_TYPE_REF:
 				return getReturnTypeRef();
 			case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___IS_GENERIC:

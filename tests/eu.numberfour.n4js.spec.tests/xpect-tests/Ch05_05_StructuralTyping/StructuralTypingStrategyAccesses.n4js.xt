@@ -7,7 +7,7 @@ class C {
 	public finalField2 : int;
 	public datafield: int;
 	public initField = "string";
-	public anyField : any?;
+	public anyField? : any;
 	public get accessor(): int { return 0; }
 	public set accessor(v: int) { }
 	public get accRead() : int { return 0; }

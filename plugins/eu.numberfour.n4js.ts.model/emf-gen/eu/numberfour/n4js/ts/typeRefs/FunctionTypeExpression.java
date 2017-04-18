@@ -76,6 +76,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#getUnboundTypeVars <em>Unbound Type Vars</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#getUnboundTypeVarsUpperBounds <em>Unbound Type Vars Upper Bounds</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#getFpars <em>Fpars</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#isReturnValueMarkedOptional <em>Return Value Marked Optional</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#getReturnTypeRef <em>Return Type Ref</em>}</li>
  * </ul>
  *
@@ -118,9 +119,9 @@ public interface FunctionTypeExpression extends FunctionTypeExprOrRef {
 	 * <!-- begin-model-doc -->
 	 * Always <code>null</code> in use case 1. In use case 2.a (not 2.b) this refers(!)
 	 * to the original TFunction for which this FunctionTypeExpression represents a binding.
-	 * For more details on use cases see API doc of {@link FunctionTypeExpression}.
 	 * In use case 3 this refers(!) to the TFunction in the type model generated from
 	 * the FunctionTypeExpression in the AST.
+	 * For more details on use cases see API doc of {@link FunctionTypeExpression}.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Declared Type</em>' reference.
 	 * @see #setDeclaredType(TFunction)
@@ -237,6 +238,34 @@ public interface FunctionTypeExpression extends FunctionTypeExprOrRef {
 	EList<TFormalParameter> getFpars();
 
 	/**
+	 * Returns the value of the '<em><b>Return Value Marked Optional</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Explicitly marks the return value of this FunctionTypeExpression as optional. This only used for function type
+	 * expressions that are created programmatically. Those that appear in the AST will instead have a 'returnTypeRef'
+	 * with 'followedByQuestionMark' set to <code>true</code>.
+	 * This will probably become obsolete once we implement undefined/null analysis.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Return Value Marked Optional</em>' attribute.
+	 * @see #setReturnValueMarkedOptional(boolean)
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getFunctionTypeExpression_ReturnValueMarkedOptional()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isReturnValueMarkedOptional();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#isReturnValueMarkedOptional <em>Return Value Marked Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Return Value Marked Optional</em>' attribute.
+	 * @see #isReturnValueMarkedOptional()
+	 * @generated
+	 */
+	void setReturnValueMarkedOptional(boolean value);
+
+	/**
 	 * Returns the value of the '<em><b>Return Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -294,5 +323,14 @@ public interface FunctionTypeExpression extends FunctionTypeExprOrRef {
 	 * @generated
 	 */
 	TypeRef getTypeVarUpperBound(TypeVariable typeVar);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isReturnValueMarkedOptional() || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark()));'"
+	 * @generated
+	 */
+	boolean isReturnValueOptional();
 
 } // FunctionTypeExpression

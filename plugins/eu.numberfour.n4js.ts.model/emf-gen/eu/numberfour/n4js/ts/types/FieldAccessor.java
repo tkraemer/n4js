@@ -22,6 +22,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link eu.numberfour.n4js.ts.types.FieldAccessor#isOptional <em>Optional</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.FieldAccessor#isDeclaredAbstract <em>Declared Abstract</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.FieldAccessor#getDeclaredThisType <em>Declared This Type</em>}</li>
  * </ul>
@@ -31,6 +32,32 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
  * @generated
  */
 public interface FieldAccessor extends TMemberWithAccessModifier {
+	/**
+	 * Returns the value of the '<em><b>Optional</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Optional</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Optional</em>' attribute.
+	 * @see #setOptional(boolean)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getFieldAccessor_Optional()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isOptional();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.FieldAccessor#isOptional <em>Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Optional</em>' attribute.
+	 * @see #isOptional()
+	 * @generated
+	 */
+	void setOptional(boolean value);
+
 	/**
 	 * Returns the value of the '<em><b>Declared Abstract</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -87,7 +114,6 @@ public interface FieldAccessor extends TMemberWithAccessModifier {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return null;'"
 	 * @generated
 	 */
 	TypeRef getDeclaredTypeRef();

@@ -12,6 +12,7 @@ package eu.numberfour.n4js.utils
 
 import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.common.unicode.CharTypes
+import eu.numberfour.n4js.compileTime.CompileTimeValue
 import eu.numberfour.n4js.conversion.IdentifierValueConverter
 import eu.numberfour.n4js.n4JS.AbstractAnnotationList
 import eu.numberfour.n4js.n4JS.AnnotableElement
@@ -20,7 +21,9 @@ import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
 import eu.numberfour.n4js.n4JS.FunctionDefinition
+import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.IndexedAccessExpression
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4EnumLiteral
@@ -30,16 +33,20 @@ import eu.numberfour.n4js.n4JS.N4JSASTUtils
 import eu.numberfour.n4js.n4JS.N4MemberAnnotationList
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
+import eu.numberfour.n4js.n4JS.NewExpression
 import eu.numberfour.n4js.n4JS.NumericLiteral
+import eu.numberfour.n4js.n4JS.ObjectLiteral
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.PropertyAssignmentAnnotationList
 import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration
+import eu.numberfour.n4js.n4JS.PropertyNameKind
 import eu.numberfour.n4js.n4JS.Script
-import eu.numberfour.n4js.n4JS.StringLiteral
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
+import eu.numberfour.n4js.n4JS.VariableDeclaration
+import eu.numberfour.n4js.postprocessing.ASTMetaInfoCache
 import eu.numberfour.n4js.ts.conversions.ComputedPropertyNameValueConverter
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
@@ -56,7 +63,6 @@ import eu.numberfour.n4js.ts.types.MemberAccessModifier
 import eu.numberfour.n4js.ts.types.TAnnotableElement
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
-import eu.numberfour.n4js.ts.types.TEnumLiteral
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TMember
@@ -68,6 +74,7 @@ import eu.numberfour.n4js.ts.types.TStructMember
 import eu.numberfour.n4js.ts.types.TVariable
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.types.Type
+import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.types.util.AllSuperTypesCollector
 import eu.numberfour.n4js.ts.types.util.ExtendedClassesIterable
 import eu.numberfour.n4js.ts.types.util.Variance
@@ -147,6 +154,16 @@ class N4JSLanguageUtils {
 	}
 
 	/**
+	 * Tells if given expression denotes the value 'undefined'.
+	 */
+	def static boolean isUndefinedLiteral(RuleEnvironment G, Expression expr) {
+		if(expr instanceof IdentifierRef) {
+			return expr.id===G.globalObjectScope.fieldUndefined;
+		}
+		return false;
+	}
+
+	/**
 	 * Tells if given object is a <em>type model element</em>, i.e. is contained below a {@link TModule} element.
 	 * <p>
 	 * Note that it is not possible to tell AST nodes from type model elements only based on the object's type, because
@@ -159,7 +176,8 @@ class N4JSLanguageUtils {
 
 	/**
 	 * Tells if given AST node is a typable AST node, i.e. a node that has an (actual) type that can be inferred
-	 * using the type system.
+	 * using the type system. When <code>true</code> is returned, the given AST node can safely be casted to
+	 * {@link TypableElement}.
 	 * <p>
 	 * For performance reasons, this method will simply assume {@code astNode} to be an AST node (i.e. contained below
 	 * a {@link Script} element) and will not check this again.
@@ -595,6 +613,43 @@ class N4JSLanguageUtils {
 	}
 
 	/**
+	 * If the given expression is a property access to one of the fields in {@code Symbol}, then this method returns the
+	 * referenced field, otherwise <code>null</code>. This method may perform proxy resolution.
+	 */
+	def public static TField getAccessedBuiltInSymbol(RuleEnvironment G, Expression expr) {
+		return getAccessedBuiltInSymbol(G, expr, true);
+	}
+
+	/**
+	 * Same as {@link #getAccessedBuiltInSymbol(RuleEnvironment, Expression)}, but proxy resolution can be disallowed.
+	 * However, if proxy resolution is disallowed, this method will only support a "direct access" to built-in symbols,
+	 * i.e. the target must be an {@link IdentifierRef} directly pointing to built-in object 'Symbol'.
+	 */
+	def public static TField getAccessedBuiltInSymbol(RuleEnvironment G, Expression expr, boolean allowProxyResolution) {
+		if (expr instanceof ParameterizedPropertyAccessExpression) {
+			val sym = G.symbolObjectType;
+			if (allowProxyResolution) {
+				// mode #1: we may resolve proxies
+				val prop = expr.property;
+				if(prop instanceof TField && prop.eContainer===sym) {
+					return prop as TField;
+				}
+			} else {
+				// mode #2: we must avoid proxy resolution
+				// (NOTE: this mode only supports direct access to built-in symbols, i.e. target must be IdentiferRef
+				// to built-in object 'Symbol')
+				val targetExpr = expr.target;
+				val targetElem = if (targetExpr instanceof IdentifierRef) targetExpr.id; // n.b.: only supports direct access
+				if (targetElem === sym) {
+					val propName = expr.propertyAsText; // do NOT use expr.property!
+					return sym.ownedMembers.filter(TField).findFirst[static && name == propName];
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Tells if the given class has a covariant constructor, cf. {@link AnnotationDefinition#COVARIANT_CONSTRUCTOR}, or
 	 * the given interface requires all implementing classes to have a covariant constructor.
 	 */
@@ -622,38 +677,151 @@ class N4JSLanguageUtils {
 	}
 
 	/**
-	 * Tells if the given expression is valid as an index within an {@link IndexedAccessExpression}.
+	 * Tells if the given expression is evaluated during post-processing as a compile-time expression and has its
+	 * {@link CompileTimeValue value} stored in the {@link ASTMetaInfoCache}.
+	 * <p>
+	 * Note that every expression may be a compile-time expression (in fact, every number or string literal is a
+	 * compile-time expression) but being a compile-time expression only has a special effect in case of certain
+	 * expressions. This method returns <code>true</code> for these expressions.
+	 * <p>
+	 * IMPORTANT: this method will return <code>true</code> only for root expressions directly processed as
+	 * compile-time expressions, not for expressions directly or indirectly nested in such an expression.
 	 */
-	def static boolean isValidIndexExpression(RuleEnvironment G, Expression indexExpr) {
-		if(indexExpr instanceof NumericLiteral || indexExpr instanceof StringLiteral) {
+	def static boolean isProcessedAsCompileTimeExpression(Expression expr) {
+		// cases of expressions that are required to be a compile-time expression:
+		if(isMandatoryCompileTimeExpression(expr)) {
 			return true;
-		} else if(G.getAccessedBuiltInSymbol(indexExpr)!==null) {
-			return true;
-		} else if(indexExpr instanceof ParameterizedPropertyAccessExpression) {
-			return indexExpr.property instanceof TEnumLiteral;
+		}
+		// cases of expressions that may or may not be a compile-time expression:
+		val parent = expr.eContainer;
+		return parent instanceof ExportedVariableDeclaration
+			|| parent instanceof N4FieldDeclaration;
+	}
+
+	/**
+	 * Tells if the given expression is required to be a compile-time expression, according to the N4JS language
+	 * specification.
+	 * <p>
+	 * IMPORTANT: this method will return <code>true</code> only for root expressions directly required to be
+	 * compile-time expressions, not for expressions directly or indirectly nested in such an expression.
+	 */
+	def static boolean isMandatoryCompileTimeExpression(Expression expr) {
+		val parent = expr.eContainer;
+		if(parent instanceof LiteralOrComputedPropertyName) {
+			return parent.kind===PropertyNameKind.COMPUTED && parent.expression===expr;
+		} else if(parent instanceof IndexedAccessExpression) {
+			return parent.index===expr;
 		}
 		return false;
 	}
+
 	/**
-	 * If the given expression is a {@link #isValidIndexExpression(RuleEnvironment, Expression) valid index expression}
-	 * but is *not* numerical, then this method will return the name of the member the index access expression is
-	 * referring to. Returns <code>null</code> if the expression is invalid or numerical.
+	 * Returns the property/member name to use for the given compile-time value or <code>null</code> if the value is
+	 * invalid. This is used to derive a property/member from a compile-time expression in computed property names and
+	 * index access expressions.
+	 * <p>
+	 * IMPLEMENTATION NOTE: we can simply use #toString() on a valid value, even if we have a ValueBoolean, ValueNumber,
+	 * or ValueSymbol.
+	 * <p>
+	 * For undefined, null, NaN, Infinity, booleans, and numbers: they are equivalent to their corresponding string
+	 * literal, as illustrated in this snippet:
+	 *
+	 * <pre>
+	 *     // plain Javascript
+	 *
+	 *     var obj = {
+	 *         [undefined]: 'a',
+	 *         [null]     : 'b',
+	 *         41         : 'c',
+	 *         [42]       : 'd',
+	 *         [false]    : 'e',
+	 *         [NaN]      : 'f',
+	 *         [Infinity] : 'g'
+	 *     };
+	 *
+	 *     console.log( obj[undefined] === obj['undefined']); // will print true!
+	 *     console.log( obj[null]      === obj['null']     ); // will print true!
+	 *     console.log( obj[41]        === obj['41']       ); // will print true!
+	 *     console.log( obj[42]        === obj['42']       ); // will print true!
+	 *     console.log( obj[false]     === obj['false']    ); // will print true!
+	 *     console.log( obj[NaN]       === obj['NaN']      ); // will print true!
+	 *     console.log( obj[Infinity]  === obj['Infinity'] ); // will print true!
+	 * </pre>
+	 * <p>
+	 * For symbols: the #toString() method in ValueSymbol prepends {@link N4JSLanguageUtils#SYMBOL_IDENTIFIER_PREFIX},
+	 * so we can simply use that.
 	 */
-	def static String getMemberNameForIndexExpression(RuleEnvironment G, Expression indexExpr) {
-		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(indexExpr);
-		if(accessedBuiltInSymbol!==null) {
-			return SYMBOL_IDENTIFIER_PREFIX + accessedBuiltInSymbol.name;
+	def public static String derivePropertyNameFromCompileTimeValue(CompileTimeValue value) {
+		return if (value !== null && value.valid) {
+			value.toString // see API doc for why we can simply use #toString() here
 		} else {
-			return switch(indexExpr) {
-				StringLiteral:
-					indexExpr.value
-				ParameterizedPropertyAccessExpression: {
-					val prop = indexExpr.property;
-					if(prop instanceof TEnumLiteral) {
-						prop.valueOrName
-					}
-				}
-			};
+			null
 		}
+	}
+
+
+	/**
+	 * Checks whether the given expression is an object literal or references an object literal
+	 * transitively through a const variable.
+	 *
+	 * @param expr
+	 *			the expression to check.
+	 * @return true if the expression is an object literal or references an object literal
+	 * 			transitively through a const variable.
+	 */
+	def static boolean isConstTransitiveObjectLiteral(TypableElement expr) {
+		if (expr instanceof ObjectLiteral)
+			return true;
+
+		if (expr instanceof IdentifierRef) {
+			val idElem = expr.getId();
+			if (idElem instanceof VariableDeclaration) {
+				// Case 1: non-exported const, e.g. const ol = {}
+				if (idElem.isConst()) {
+					return idElem.expression instanceof ObjectLiteral;
+				}
+			} else if (idElem instanceof TVariable) {
+				// Case 2: exported const, e.g. exported const ol = {}
+				return idElem.objectLiteral;
+			}
+		}
+
+		return false;
+	}
+	
+	/**
+	 * Checks whether the given expression is a new expression, an expression of a final and nominal type,
+	 * or references these expressions transitively through a const variable.
+	 *
+	 * @param expr
+	 *			the expression to check.
+	 * @return true if the expression is a new expression, an expression of a final and nominal type,
+	 * 			or references these expressions transitively through a const variable.
+	 */
+	def static boolean isConstTransitiveNewExpressionOrFinalNominalClassInstance(TypableElement expr, TypeRef typeRef) {
+		if (expr instanceof NewExpression)
+			return true;
+		
+		if (typeRef !== null) {
+			val declType = typeRef.declaredType;
+			if (declType !== null && declType.isFinal && typeRef.typingStrategy == TypingStrategy.NOMINAL) {
+				return true;
+			}
+		}
+
+		if (expr instanceof IdentifierRef) {
+			val idElem = expr.getId();
+			if (idElem instanceof VariableDeclaration) {
+				// Case 1: non-exported const, e.g. const ol = new A()
+				if (idElem.isConst()) {
+					return idElem.expression instanceof NewExpression;
+				}
+			} else if (idElem instanceof TVariable) {
+				// Case 2: exported const, e.g. exported const ol = new A()
+				return idElem.newExpression;
+			}
+		}
+
+		return false;
 	}
 }

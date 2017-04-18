@@ -1,0 +1,11 @@
+export public var exportedVar = {
+    obj1: {
+        obj2: {
+            obj3: {
+                prop : 0
+            }
+        }
+    }
+};
+
+

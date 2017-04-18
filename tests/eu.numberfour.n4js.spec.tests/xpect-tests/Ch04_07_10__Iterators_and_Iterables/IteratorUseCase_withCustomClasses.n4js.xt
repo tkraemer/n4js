@@ -22,7 +22,7 @@ class NodeJsWorkAround<T> implements CustomIterable<T>, CustomIterator<T> {
 		return this.iteratorOfWrappedIterable;
 	}
 	@Override
-	public next() : ~Object with {done : boolean; value : T?;} {
+	public next() : ~Object with {done : boolean; value? : T;} {
 		return this.iteratorOfWrappedIterable.next();
 	}
 	public static <T> build(someIterable : CustomIterable<T>) : NodeJsWorkAround<T> {
@@ -33,7 +33,7 @@ class NodeJsWorkAround<T> implements CustomIterable<T>, CustomIterator<T> {
 
 interface CustomIterator<T> extends Iterator<T> {
 	@Override
-	public next() : ~Object with {done : boolean; value : T?;}
+	public next() : ~Object with {done : boolean; value? : T;}
 }
 interface CustomIterable<T> extends Iterable<T> {
 	@Override
@@ -50,7 +50,7 @@ class MyIterator<T> implements CustomIterator<T> {
 	}
 	
 	@Override
-	public next() : ~Object with {done : boolean; value : T?;} {
+	public next() : ~Object with {done : boolean; value? : T;} {
 		if (this.index >= 0 && this.index < this.arr.length) {
 			console.log('returning next element (current index: '+this.index+') ...');
 			return { done: false, value: this.arr[this.index++] };

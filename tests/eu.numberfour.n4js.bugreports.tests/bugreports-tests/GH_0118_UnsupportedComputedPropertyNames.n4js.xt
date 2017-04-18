@@ -4,7 +4,7 @@
 let some: any+;
 
 class C {
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "`someMethod`"
+	// XPECT noerrors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "`someMethod`"
 	[`someMethod`]() {}
 }
 

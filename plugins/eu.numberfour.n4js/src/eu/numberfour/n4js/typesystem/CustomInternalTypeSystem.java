@@ -103,9 +103,10 @@ public class CustomInternalTypeSystem extends InternalTypeSystem {
 	@Override
 	public void checkAssignableTo(Object result, Class<?> destinationClass)
 			throws RuleFailedException {
-		if (result == null || !isResultAssignableTo(result, destinationClass))
+		if (result == null || !isResultAssignableTo(result, destinationClass)) {
 			throw new RuleFailedExceptionWithoutStacktrace(stringRep(result)
 					+ " cannot be assigned to " + stringRep(destinationClass));
+		}
 	}
 
 	@Override

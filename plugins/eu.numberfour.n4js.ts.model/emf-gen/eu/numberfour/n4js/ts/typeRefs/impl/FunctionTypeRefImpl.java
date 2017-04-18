@@ -122,6 +122,15 @@ public class FunctionTypeRefImpl extends ParameterizedTypeRefImpl implements Fun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isReturnValueOptional() {
+		return ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isGeneric() {
 		EList<TypeVariable> _typeVars = this.getTypeVars();
 		boolean _isEmpty = _typeVars.isEmpty();
@@ -220,9 +229,18 @@ public class FunctionTypeRefImpl extends ParameterizedTypeRefImpl implements Fun
 			_xifexpression_2 = "";
 		}
 		String _plus_8 = (_plus_7 + _xifexpression_2);
-		String _plus_9 = (_plus_8 + "}");
+		String _xifexpression_3 = null;
+		boolean _isReturnValueOptional = this.isReturnValueOptional();
+		if (_isReturnValueOptional) {
+			_xifexpression_3 = "?";
+		}
+		else {
+			_xifexpression_3 = "";
+		}
+		String _plus_9 = (_plus_8 + _xifexpression_3);
+		String _plus_10 = (_plus_9 + "}");
 		String _modifiersAsString = this.getModifiersAsString();
-		return (_plus_9 + _modifiersAsString);
+		return (_plus_10 + _modifiersAsString);
 	}
 
 	/**
@@ -261,6 +279,7 @@ public class FunctionTypeRefImpl extends ParameterizedTypeRefImpl implements Fun
 				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VARS: return TypeRefsPackage.FUNCTION_TYPE_REF___GET_TYPE_VARS;
 				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE: return TypeRefsPackage.FUNCTION_TYPE_REF___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE;
 				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_FPARS: return TypeRefsPackage.FUNCTION_TYPE_REF___GET_FPARS;
+				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___IS_RETURN_VALUE_OPTIONAL: return TypeRefsPackage.FUNCTION_TYPE_REF___IS_RETURN_VALUE_OPTIONAL;
 				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_RETURN_TYPE_REF: return TypeRefsPackage.FUNCTION_TYPE_REF___GET_RETURN_TYPE_REF;
 				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___IS_GENERIC: return TypeRefsPackage.FUNCTION_TYPE_REF___IS_GENERIC;
 				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___IS_RAW: return TypeRefsPackage.FUNCTION_TYPE_REF___IS_RAW;
@@ -292,6 +311,8 @@ public class FunctionTypeRefImpl extends ParameterizedTypeRefImpl implements Fun
 				return getReturnTypeRef();
 			case TypeRefsPackage.FUNCTION_TYPE_REF___GET_FUNCTION_TYPE:
 				return getFunctionType();
+			case TypeRefsPackage.FUNCTION_TYPE_REF___IS_RETURN_VALUE_OPTIONAL:
+				return isReturnValueOptional();
 			case TypeRefsPackage.FUNCTION_TYPE_REF___IS_GENERIC:
 				return isGeneric();
 			case TypeRefsPackage.FUNCTION_TYPE_REF___IS_RAW:

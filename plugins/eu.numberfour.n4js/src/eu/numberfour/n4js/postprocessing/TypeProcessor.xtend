@@ -21,8 +21,10 @@ import eu.numberfour.n4js.n4JS.NewExpression
 import eu.numberfour.n4js.n4JS.PropertyNameValuePair
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.VariableDeclaration
+import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
@@ -34,6 +36,7 @@ import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem.RuleFailedExceptio
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleApplicationTrace
 import it.xsemantics.runtime.RuleEnvironment
@@ -43,7 +46,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
-import eu.numberfour.n4js.n4JS.YieldExpression
 
 /**
  * Processor for handling type inference during post-processing of an N4JS resource. Roughly corresponds to
@@ -66,18 +68,25 @@ public class TypeProcessor extends AbstractProcessor {
 	private TypeSystemHelper tsh;
 
 
-	def void typeNode(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
-		if (node instanceof TypableElement) {
+	/**
+	 * If the given AST node is typable this method will infer its type and store the result in the given cache.
+	 * <p>
+	 * This method mainly checks if the given node is typable. Main processing is done in
+	 * {@link #typeNode2(RuleEnvironment, TypableElement, ASTMetaInfoCache, int) typeNode2()}.
+	 */
+	def public void typeNode(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
+		if (node.isTypableNode) {
+			val nodeCasted = node as TypableElement; // because #isTypableNode() returned true
 			// we have a typable node
 			if (N4JSASTUtils.isArrayOrObjectLiteralUsedAsDestructuringPattern(node)
-				&& polyProcessor.isEntryPoint(node)) {
+				&& polyProcessor.isEntryPoint(nodeCasted)) {
 				// special case: array or object literal being used as a destructuring pattern
 				log(indentLevel, "ignored (array or object literal being used as a destructuring pattern)")
 				destructureProcessor.typeDestructuringPattern(G, node, cache, indentLevel);
 
 			} else {
 				// standard case
-				typeNode(G, node, cache, indentLevel);
+				typeNode2(G, nodeCasted, cache, indentLevel);
 			}
 		} else {
 			// not a typable node
@@ -85,7 +94,25 @@ public class TypeProcessor extends AbstractProcessor {
 		}
 	}
 
-	def private void typeNode(RuleEnvironment G, TypableElement node, ASTMetaInfoCache cache, int indentLevel) {
+	/**
+	 * Infers type of given AST node and stores the result in the given cache.
+	 * <p>
+	 * More precisely:
+	 * <ol>
+	 * <li>if given node is part of a poly expression:
+	 *     <ol>
+	 *     <li>if given node is the root of a tree of nested poly expressions (including the case that node is a poly
+	 *         expression without any nested poly expressions):<br>
+	 *         --> inference of entire tree of nested poly expressions AND storage of all results in cache is delegated
+	 *             to class {@link PolyProcessor}.
+	 *     <li>otherwise:<br>
+	 *         --> ignore this node ({@code PolyProcessor} will deal with it when processing the parent poly expression)
+	 *     </ol>
+	 * <li>otherwise (standard case):<br>
+	 *     --> infer type of node by asking Xsemantics + store the result in the given cache.
+	 * </ol>
+	 */
+	def private void typeNode2(RuleEnvironment G, TypableElement node, ASTMetaInfoCache cache, int indentLevel) {
 		try {
 			if (polyProcessor.isResponsibleFor(node)) {
 				if (polyProcessor.isEntryPoint(node)) {
@@ -99,7 +126,7 @@ public class TypeProcessor extends AbstractProcessor {
 					]);
 				} else {
 					// we have a poly expression, but one that is nested in another poly expression
-					// -> ignore here, because polyComputer will deal with it when computing the parent poly expression
+					// -> ignore here, because polyProcessor will deal with it when processing the parent poly expression
 					log(indentLevel,
 						"deferred (nested in poly expression --> will be inferred during inference of outer poly expression)");
 
@@ -110,9 +137,12 @@ public class TypeProcessor extends AbstractProcessor {
 				// -> simply ask Xsemantics
 				log(indentLevel, "asking Xsemantics ...");
 				val result = askXsemanticsForType(G, null, node);
+
+				val resultAdjusted = adjustResultForLocationInAST(G, result, N4JSASTUtils.ignoreParentheses(node));
+
 				// in this case, we are responsible for storing the type in the cache
 				// (Xsemantics does not know of the cache)
-				cache.storeType(node, result);
+				cache.storeType(node, resultAdjusted);
 			}
 		} catch (RuleFailedException e) {
 			cache.storeType(node, new Result(e));
@@ -123,6 +153,33 @@ public class TypeProcessor extends AbstractProcessor {
 		}
 
 		log(indentLevel, cache.getTypeFailSafe(node));
+	}
+
+	/**
+	 * Make sure that the value of the two location-dependent special properties <code>typeOfObjectLiteral</code> and
+	 * <code>typeOfNewExpressionOrFinalNominal</code> in {@link ParameterizedTypeRef} correctly reflect the current
+	 * location in the AST, i.e. the the location of the given <code>astNode</code>, no matter where the type reference
+	 * in the given <code>result</code> stems from.
+	 * <p>
+	 * For more details see {@link TypeRef#isTypeOfObjectLiteral()}.
+	 */
+	def private <T extends TypeRef> Result<T> adjustResultForLocationInAST(RuleEnvironment G, Result<T> result, TypableElement astNode) {
+		if (!result.failed) {
+			val typeRef = result.value;
+			if (typeRef instanceof ParameterizedTypeRef) {
+				val isTypeOfObjectLiteral = N4JSLanguageUtils.isConstTransitiveObjectLiteral(astNode);
+				val isTypeOfNewExpressionOrFinalNominal = N4JSLanguageUtils.
+					isConstTransitiveNewExpressionOrFinalNominalClassInstance(astNode, typeRef);
+				if (typeRef.typeOfObjectLiteral !== isTypeOfObjectLiteral
+					|| typeRef.typeOfNewExpressionOrFinalNominal !== isTypeOfNewExpressionOrFinalNominal) {
+					val typeRefCpy = TypeUtils.copy(typeRef);
+					typeRefCpy.typeOfObjectLiteral = isTypeOfObjectLiteral;
+					typeRefCpy.typeOfNewExpressionOrFinalNominal = isTypeOfNewExpressionOrFinalNominal;
+					return new Result(typeRefCpy);
+				}
+			}
+		}
+		return result;
 	}
 
 

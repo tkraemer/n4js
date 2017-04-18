@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.FieldAccessorImpl#isOptional <em>Optional</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.FieldAccessorImpl#isDeclaredAbstract <em>Declared Abstract</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.FieldAccessorImpl#getDeclaredThisType <em>Declared This Type</em>}</li>
  * </ul>
@@ -41,6 +42,26 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * @generated
  */
 public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl implements FieldAccessor {
+	/**
+	 * The default value of the '{@link #isOptional() <em>Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isOptional()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean OPTIONAL_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isOptional() <em>Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isOptional()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean optional = OPTIONAL_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #isDeclaredAbstract() <em>Declared Abstract</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -88,6 +109,27 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 	@Override
 	protected EClass eStaticClass() {
 		return TypesPackage.Literals.FIELD_ACCESSOR;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isOptional() {
+		return optional;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setOptional(boolean newOptional) {
+		boolean oldOptional = optional;
+		optional = newOptional;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.FIELD_ACCESSOR__OPTIONAL, oldOptional, optional));
 	}
 
 	/**
@@ -160,7 +202,9 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 	 * @generated
 	 */
 	public TypeRef getDeclaredTypeRef() {
-		return null;
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -194,6 +238,8 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case TypesPackage.FIELD_ACCESSOR__OPTIONAL:
+				return isOptional();
 			case TypesPackage.FIELD_ACCESSOR__DECLARED_ABSTRACT:
 				return isDeclaredAbstract();
 			case TypesPackage.FIELD_ACCESSOR__DECLARED_THIS_TYPE:
@@ -210,6 +256,9 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case TypesPackage.FIELD_ACCESSOR__OPTIONAL:
+				setOptional((Boolean)newValue);
+				return;
 			case TypesPackage.FIELD_ACCESSOR__DECLARED_ABSTRACT:
 				setDeclaredAbstract((Boolean)newValue);
 				return;
@@ -228,6 +277,9 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case TypesPackage.FIELD_ACCESSOR__OPTIONAL:
+				setOptional(OPTIONAL_EDEFAULT);
+				return;
 			case TypesPackage.FIELD_ACCESSOR__DECLARED_ABSTRACT:
 				setDeclaredAbstract(DECLARED_ABSTRACT_EDEFAULT);
 				return;
@@ -246,6 +298,8 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case TypesPackage.FIELD_ACCESSOR__OPTIONAL:
+				return optional != OPTIONAL_EDEFAULT;
 			case TypesPackage.FIELD_ACCESSOR__DECLARED_ABSTRACT:
 				return declaredAbstract != DECLARED_ABSTRACT_EDEFAULT;
 			case TypesPackage.FIELD_ACCESSOR__DECLARED_THIS_TYPE:
@@ -296,7 +350,9 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (declaredAbstract: ");
+		result.append(" (optional: ");
+		result.append(optional);
+		result.append(", declaredAbstract: ");
 		result.append(declaredAbstract);
 		result.append(')');
 		return result.toString();

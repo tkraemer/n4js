@@ -17,7 +17,6 @@ import eu.numberfour.n4js.n4JS.AssignmentExpression
 import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.ExportableElement
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
-import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition
@@ -25,11 +24,9 @@ import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4GetterDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
-import eu.numberfour.n4js.n4JS.N4SetterDeclaration
 import eu.numberfour.n4js.n4JS.NamespaceImportSpecifier
 import eu.numberfour.n4js.n4JS.ObjectLiteral
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
-import eu.numberfour.n4js.n4JS.PropertySetterDeclaration
 import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.VariableStatement
@@ -39,15 +36,13 @@ import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
-import eu.numberfour.n4js.ts.types.TAnonymousFormalParameter
 import eu.numberfour.n4js.ts.types.TField
+import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TMethod
-import eu.numberfour.n4js.ts.types.TStructField
 import eu.numberfour.n4js.ts.types.TypeAccessModifier
 import eu.numberfour.n4js.ts.types.TypingStrategy
-import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.utils.ContainerTypesHelper
@@ -150,26 +145,30 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Check
 	def checkTypeRefOptionalFlag(TypeRef typeRef) {
-		if (typeRef.undefModifier == UndefModifier.OPTIONAL) {
+		if (typeRef.isFollowedByQuestionMark) {
 			val parent = typeRef.eContainer;
 
-			val isLegalUseOfOptional = isFormalParameterButNotInASetter(parent) ||
-				isReturnTypeButNotOfAGetter(typeRef, parent) || parent instanceof N4FieldDeclaration ||
-				parent instanceof TAnonymousFormalParameter || parent instanceof TStructField;
+			val isLegalUseOfOptional = isReturnTypeButNotOfAGetter(typeRef, parent);
 
-			if (!isLegalUseOfOptional) {
-				val message = getMessageForEXP_OPTIONAL_INVALID_PLACE
-				val node = NodeModelUtils.findActualNodeFor(typeRef)
-				if (node !== null) {
-					addIssue(message, typeRef, node.offset, node.length, EXP_OPTIONAL_INVALID_PLACE)
+			if(!isLegalUseOfOptional) {
+
+				if(parent instanceof TFormalParameter) {
+					return; // avoid duplicate error messages
+				} else if(parent instanceof N4FieldDeclaration || parent instanceof TField) {
+					val message = messageForCLF_FIELD_OPTIONAL_OLD_SYNTAX;
+					val node = NodeModelUtils.findActualNodeFor(typeRef)
+					if (node !== null) {
+						addIssue(message, typeRef, node.offset, node.length, CLF_FIELD_OPTIONAL_OLD_SYNTAX)
+					}
+				} else {
+					val message = messageForEXP_OPTIONAL_INVALID_PLACE;
+					val node = NodeModelUtils.findActualNodeFor(typeRef)
+					if (node !== null) {
+						addIssue(message, typeRef, node.offset, node.length, EXP_OPTIONAL_INVALID_PLACE)
+					}
 				}
 			}
 		}
-	}
-
-	def private isFormalParameterButNotInASetter(EObject elem) {
-		elem instanceof FormalParameter && !(elem.eContainer instanceof N4SetterDeclaration) &&
-			!(elem.eContainer instanceof PropertySetterDeclaration)
 	}
 
 	def private isReturnTypeButNotOfAGetter(TypeRef typeRef, EObject parent) {

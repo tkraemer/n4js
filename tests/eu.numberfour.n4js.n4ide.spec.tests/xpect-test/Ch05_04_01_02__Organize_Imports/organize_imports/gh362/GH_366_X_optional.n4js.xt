@@ -1,0 +1,26 @@
+/* XPECT_SETUP eu.numberfour.n4js.n4ide.spec.tests.N4JSXpectPluginUITest  
+   Workspace {
+   	 Project "P1" {
+   	 	Folder "src" { 	
+   	 		Folder "imports" { File "ImportData.n4js" {} } 
+   	 		Folder "importing"  { ThisFile {} }	   	 		
+   	 	}
+   	 	File "manifest.n4mf" { from="manifest.n4mf" }
+   	 }
+   }
+   END_SETUP
+*/
+
+/* XPECT organizeImports ---
++ import {A} from "
+| [class|imports/ImportData";]
+| [|class] C{
+  		a ? : ~r~  /\* ~r~ *\/  A  /\*  ?  *\/ ;
+  }
+--- */
+
+class C{
+	// XPECT errors --> "Couldn't resolve reference to Type 'A'." at "A"
+	a ? : ~r~  /* ~r~ */  A  /*  ?  */ ;
+}
+

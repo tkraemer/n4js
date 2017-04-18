@@ -282,6 +282,15 @@ public abstract class FunctionDefinitionImpl extends FunctionOrFieldAccessorImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isReturnValueOptional() {
+		return (((this.getDefinedFunction() != null) && this.getDefinedFunction().isReturnValueOptional()) || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark()));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isAsync() {
 		return this.isDeclaredAsync();
 	}
@@ -458,6 +467,7 @@ public abstract class FunctionDefinitionImpl extends FunctionOrFieldAccessorImpl
 	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
 		if (baseClass == FunctionOrFieldAccessor.class) {
 			switch (baseOperationID) {
+				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___IS_RETURN_VALUE_OPTIONAL: return N4JSPackage.FUNCTION_DEFINITION___IS_RETURN_VALUE_OPTIONAL;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC: return N4JSPackage.FUNCTION_DEFINITION___IS_ASYNC;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
@@ -478,6 +488,8 @@ public abstract class FunctionDefinitionImpl extends FunctionOrFieldAccessorImpl
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
+			case N4JSPackage.FUNCTION_DEFINITION___IS_RETURN_VALUE_OPTIONAL:
+				return isReturnValueOptional();
 			case N4JSPackage.FUNCTION_DEFINITION___IS_ASYNC:
 				return isAsync();
 			case N4JSPackage.FUNCTION_DEFINITION___GET_DEFINED_FUNCTION:

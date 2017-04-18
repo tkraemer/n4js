@@ -53,6 +53,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getAstElement <em>Ast Element</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#isExternal <em>External</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getFpars <em>Fpars</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#isReturnValueMarkedOptional <em>Return Value Marked Optional</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getReturnTypeRef <em>Return Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getTypeVars <em>Type Vars</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getDeclaredThisType <em>Declared This Type</em>}</li>
@@ -103,6 +104,26 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 	 * @ordered
 	 */
 	protected EList<TFormalParameter> fpars;
+
+	/**
+	 * The default value of the '{@link #isReturnValueMarkedOptional() <em>Return Value Marked Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isReturnValueMarkedOptional()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean RETURN_VALUE_MARKED_OPTIONAL_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isReturnValueMarkedOptional() <em>Return Value Marked Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isReturnValueMarkedOptional()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean returnValueMarkedOptional = RETURN_VALUE_MARKED_OPTIONAL_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getReturnTypeRef() <em>Return Type Ref</em>}' containment reference.
@@ -289,6 +310,27 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isReturnValueMarkedOptional() {
+		return returnValueMarkedOptional;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setReturnValueMarkedOptional(boolean newReturnValueMarkedOptional) {
+		boolean oldReturnValueMarkedOptional = returnValueMarkedOptional;
+		returnValueMarkedOptional = newReturnValueMarkedOptional;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFUNCTION__RETURN_VALUE_MARKED_OPTIONAL, oldReturnValueMarkedOptional, returnValueMarkedOptional));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TypeRef getReturnTypeRef() {
 		return returnTypeRef;
 	}
@@ -450,6 +492,15 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isReturnValueOptional() {
+		return (this.isReturnValueMarkedOptional() || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark()));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isCallableConstructor() {
 		final EObject parent = this.eContainer();
 		boolean _xifexpression = false;
@@ -535,6 +586,10 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 			String _typeRefAsString = _returnTypeRef_1.getTypeRefAsString();
 			_append_5.append(_typeRefAsString);
 		}
+		boolean _isReturnValueOptional = this.isReturnValueOptional();
+		if (_isReturnValueOptional) {
+			strb.append("?");
+		}
 		return strb.toString();
 	}
 
@@ -582,6 +637,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 				return isExternal();
 			case TypesPackage.TFUNCTION__FPARS:
 				return getFpars();
+			case TypesPackage.TFUNCTION__RETURN_VALUE_MARKED_OPTIONAL:
+				return isReturnValueMarkedOptional();
 			case TypesPackage.TFUNCTION__RETURN_TYPE_REF:
 				return getReturnTypeRef();
 			case TypesPackage.TFUNCTION__TYPE_VARS:
@@ -616,6 +673,9 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 			case TypesPackage.TFUNCTION__FPARS:
 				getFpars().clear();
 				getFpars().addAll((Collection<? extends TFormalParameter>)newValue);
+				return;
+			case TypesPackage.TFUNCTION__RETURN_VALUE_MARKED_OPTIONAL:
+				setReturnValueMarkedOptional((Boolean)newValue);
 				return;
 			case TypesPackage.TFUNCTION__RETURN_TYPE_REF:
 				setReturnTypeRef((TypeRef)newValue);
@@ -657,6 +717,9 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 			case TypesPackage.TFUNCTION__FPARS:
 				getFpars().clear();
 				return;
+			case TypesPackage.TFUNCTION__RETURN_VALUE_MARKED_OPTIONAL:
+				setReturnValueMarkedOptional(RETURN_VALUE_MARKED_OPTIONAL_EDEFAULT);
+				return;
 			case TypesPackage.TFUNCTION__RETURN_TYPE_REF:
 				setReturnTypeRef((TypeRef)null);
 				return;
@@ -693,6 +756,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 				return external != EXTERNAL_EDEFAULT;
 			case TypesPackage.TFUNCTION__FPARS:
 				return fpars != null && !fpars.isEmpty();
+			case TypesPackage.TFUNCTION__RETURN_VALUE_MARKED_OPTIONAL:
+				return returnValueMarkedOptional != RETURN_VALUE_MARKED_OPTIONAL_EDEFAULT;
 			case TypesPackage.TFUNCTION__RETURN_TYPE_REF:
 				return returnTypeRef != null;
 			case TypesPackage.TFUNCTION__TYPE_VARS:
@@ -770,6 +835,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
+			case TypesPackage.TFUNCTION___IS_RETURN_VALUE_OPTIONAL:
+				return isReturnValueOptional();
 			case TypesPackage.TFUNCTION___IS_CALLABLE_CONSTRUCTOR:
 				return isCallableConstructor();
 			case TypesPackage.TFUNCTION___GET_FPAR_FOR_ARG_IDX__INT:
@@ -794,6 +861,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (external: ");
 		result.append(external);
+		result.append(", returnValueMarkedOptional: ");
+		result.append(returnValueMarkedOptional);
 		result.append(", declaredAsync: ");
 		result.append(declaredAsync);
 		result.append(", declaredGenerator: ");

@@ -11,13 +11,7 @@
 package eu.numberfour.n4js.resource
 
 import com.google.inject.Singleton
-import eu.numberfour.n4js.n4JS.Expression
-import eu.numberfour.n4js.n4JS.IdentifierRef
-import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
-import eu.numberfour.n4js.n4JS.PropertyNameOwner
 import eu.numberfour.n4js.n4JS.Script
-import eu.numberfour.n4js.n4JS.StringLiteral
-import eu.numberfour.n4js.ts.conversions.ComputedPropertyNameValueConverter
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.validation.ASTStructureValidator
@@ -49,31 +43,6 @@ package final class N4JSPreProcessor {
 
 	def private dispatch void processNode(EObject astNode, N4JSResource resource, BuiltInTypeScope builtInTypes) {
 		// by default, do nothing
-	}
-
-	def private dispatch void processNode(PropertyNameOwner memberDecl, N4JSResource resource, BuiltInTypeScope builtInTypes) {
-		val nameDecl = memberDecl.declaredName;
-		if(nameDecl!==null && nameDecl.literalName===null && nameDecl.expression!==null) {
-			nameDecl.computedName = getPropertyNameFromExpression(nameDecl.expression);
-		}
-	}
-	def private String getPropertyNameFromExpression(Expression expr) {
-		if (expr instanceof StringLiteral) {
-			return expr.value;
-		} else if (expr instanceof ParameterizedPropertyAccessExpression) {
-			val target = expr.target;
-			if (target instanceof IdentifierRef) {
-				if (target.idAsText == 'Symbol') {
-					return ComputedPropertyNameValueConverter.SYMBOL_IDENTIFIER_PREFIX + expr.propertyAsText;
-				} else {
-					// this case implements support for literals of @StringBased enums
-					// (but here we cannot ensure that 'target' is actually a @StringBased enum, because that would require
-					// resolution of proxies which we are not allowed to do)
-					return expr.propertyAsText;
-				}
-			}
-		}
-		return null;
 	}
 
 	/**

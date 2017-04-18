@@ -30,14 +30,20 @@ import eu.numberfour.n4js.binaries.Binary;
 @Singleton
 public class NodeProcesBuilder {
 
-	private static String[] WIN_SHELL_COMAMNDS = { "cmd", "/c" };
-	private static String[] NIX_SHELL_COMAMNDS = { "sh", "-c" };
+	private static final String NPM_COMMAND_INSTALL = "install";
+	private static final String NPM_COMMAND_UNINSTALL = "uninstall";
+	private static final String NPM_OPTION_SAVE = "--save";
+	private static final String[] WIN_SHELL_COMAMNDS = { "cmd", "/c" };
+	private static final String[] NIX_SHELL_COMAMNDS = { "sh", "-c" };
 
 	@Inject
 	private Provider<NodeJsBinary> nodeBinaryProvider;
 
 	@Inject
 	private Provider<NpmBinary> npmBinaryProvider;
+
+	@Inject
+	private Provider<NpmrcBinary> npmrcBinaryProvider;
 
 	/**
 	 * Prepares process builder configured to invoke Node.js for main module resolution.
@@ -66,7 +72,7 @@ public class NodeProcesBuilder {
 	/**
 	 * Prepares process builder for "npm install" command.
 	 *
-	 * @param installPath
+	 * @param invocationPath
 	 *            location on which npm command should be invoked
 	 * @param packageName
 	 *            package to install (might be space separated list of names)
@@ -74,21 +80,82 @@ public class NodeProcesBuilder {
 	 *            instructs npm to save installed packages in package.json (if available)
 	 * @return configured, operating system aware process builder for "npm install" command
 	 */
-	public ProcessBuilder getNpmInstallProcessBuilder(File installPath, String packageName, boolean save) {
+	public ProcessBuilder getNpmInstallProcessBuilder(File invocationPath, String packageName, boolean save) {
+		ProcessBuilder pb = simpleCall(invocationPath, packageName, save, NPM_COMMAND_INSTALL);
+		// for npm install we need to additionally update environment with npmrc config
+		Binary npmrc = npmrcBinaryProvider.get();
+		npmrc.updateEnvironment(pb.environment());
+		return pb;
+	}
+
+	/**
+	 * Prepares process builder for "npm uninstall" command.
+	 *
+	 * @param invocationPath
+	 *            location on which npm command should be invoked
+	 * @param packageName
+	 *            package to uninstall (might be space separated list of names)
+	 * @param save
+	 *            instructs npm to save uninstalled packages in package.json (if available)
+	 * @return configured, operating system aware process builder for "npm uninstall" command
+	 */
+	public ProcessBuilder getNpmUninstallProcessBuilder(File invocationPath, String packageName, boolean save) {
+		return simpleCall(invocationPath, packageName, save, NPM_COMMAND_UNINSTALL);
+	}
+
+	/**
+	 * Prepares process builder for "npm cache clean" command.
+	 *
+	 * @param invokationPath
+	 *            location on which npm command should be invoked
+	 * @return configured, operating system aware process builder for "npm cache clean" command
+	 */
+	public ProcessBuilder getNpmCacheCleanProcessBuilder(File invokationPath) {
 		Builder<String> builder = ImmutableList.<String> builder();
 		NpmBinary npmBinary = npmBinaryProvider.get();
-		String saveCommand = save ? "--save" : "";
 
 		if (isWindows()) {
 			builder.add(WIN_SHELL_COMAMNDS);
-			builder.add(escapeBinaryPath(npmBinary.getBinaryAbsolutePath()), "install", packageName, saveCommand);
+			builder.add(escapeBinaryPath(npmBinary.getBinaryAbsolutePath()), "cache", "clean");
 		} else {
 			builder.add(NIX_SHELL_COMAMNDS);
-			builder.add(escapeBinaryPath(npmBinary.getBinaryAbsolutePath()) + " install " + packageName + " "
-					+ saveCommand);
+			builder.add(
+					escapeBinaryPath(npmBinary.getBinaryAbsolutePath()) + " cache clean");
 		}
 
-		return create(builder.build(), npmBinary, installPath, false);
+		return create(builder.build(), npmBinary, invokationPath, false);
+	}
+
+	/**
+	 * Prepares process builder for simple npm commands, e.g. "npm install" or "npm uninstall". Specific command should
+	 * be passed without surrounding spaces or or quotes.
+	 *
+	 * @param invokationPath
+	 *            location on which npm command should be invoked
+	 * @param packageName
+	 *            package passed as parameter to the command (might be space separated list of names)
+	 * @param save
+	 *            instructs npm to save command result to packages in package.json (if available)
+	 * @param simpleCommand
+	 *            command to execute
+	 * @return configured, operating system aware process builder for given command
+	 */
+	private ProcessBuilder simpleCall(File invokationPath, String packageName, boolean save, String simpleCommand) {
+		Builder<String> builder = ImmutableList.<String> builder();
+		NpmBinary npmBinary = npmBinaryProvider.get();
+		String saveCommand = save ? NPM_OPTION_SAVE : "";
+
+		if (isWindows()) {
+			builder.add(WIN_SHELL_COMAMNDS);
+			builder.add(escapeBinaryPath(npmBinary.getBinaryAbsolutePath()), simpleCommand, packageName, saveCommand);
+		} else {
+			builder.add(NIX_SHELL_COMAMNDS);
+			builder.add(
+					escapeBinaryPath(npmBinary.getBinaryAbsolutePath()) + " " + simpleCommand + " " + packageName + " "
+							+ saveCommand);
+		}
+
+		return create(builder.build(), npmBinary, invokationPath, false);
 	}
 
 	/**

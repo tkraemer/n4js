@@ -10,11 +10,11 @@ package eu.numberfour.n4js.ts.types.impl;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 import eu.numberfour.n4js.ts.types.MemberType;
+import eu.numberfour.n4js.ts.types.TConstableElement;
 import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TTypedElement;
 import eu.numberfour.n4js.ts.types.TypesPackage;
-import eu.numberfour.n4js.ts.types.UndefModifier;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -38,7 +38,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#getTypeRef <em>Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#isConst <em>Const</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#getCompileTimeValue <em>Compile Time Value</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#isHasExpression <em>Has Expression</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#isOptional <em>Optional</em>}</li>
  * </ul>
  *
  * @generated
@@ -75,6 +77,26 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	protected boolean const_ = CONST_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getCompileTimeValue() <em>Compile Time Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCompileTimeValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String COMPILE_TIME_VALUE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getCompileTimeValue() <em>Compile Time Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCompileTimeValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected String compileTimeValue = COMPILE_TIME_VALUE_EDEFAULT;
+
+	/**
 	 * The default value of the '{@link #isHasExpression() <em>Has Expression</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -93,6 +115,26 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	 * @ordered
 	 */
 	protected boolean hasExpression = HAS_EXPRESSION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isOptional() <em>Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isOptional()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean OPTIONAL_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isOptional() <em>Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isOptional()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean optional = OPTIONAL_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -182,6 +224,27 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getCompileTimeValue() {
+		return compileTimeValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCompileTimeValue(String newCompileTimeValue) {
+		String oldCompileTimeValue = compileTimeValue;
+		compileTimeValue = newCompileTimeValue;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFIELD__COMPILE_TIME_VALUE, oldCompileTimeValue, compileTimeValue));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isHasExpression() {
 		return hasExpression;
 	}
@@ -204,7 +267,19 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	 * @generated
 	 */
 	public boolean isOptional() {
-		return ((this.getTypeRef() != null) && (this.getTypeRef().getUndefModifier() == UndefModifier.OPTIONAL));
+		return optional;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setOptional(boolean newOptional) {
+		boolean oldOptional = optional;
+		optional = newOptional;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFIELD__OPTIONAL, oldOptional, optional));
 	}
 
 	/**
@@ -252,6 +327,10 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 		final StringBuilder strb = new StringBuilder();
 		String _name = this.getName();
 		strb.append(_name);
+		boolean _isOptional = this.isOptional();
+		if (_isOptional) {
+			strb.append("?");
+		}
 		TypeRef _typeRef = this.getTypeRef();
 		boolean _tripleNotEquals = (_typeRef != null);
 		if (_tripleNotEquals) {
@@ -289,8 +368,12 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 				return getTypeRef();
 			case TypesPackage.TFIELD__CONST:
 				return isConst();
+			case TypesPackage.TFIELD__COMPILE_TIME_VALUE:
+				return getCompileTimeValue();
 			case TypesPackage.TFIELD__HAS_EXPRESSION:
 				return isHasExpression();
+			case TypesPackage.TFIELD__OPTIONAL:
+				return isOptional();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -309,8 +392,14 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 			case TypesPackage.TFIELD__CONST:
 				setConst((Boolean)newValue);
 				return;
+			case TypesPackage.TFIELD__COMPILE_TIME_VALUE:
+				setCompileTimeValue((String)newValue);
+				return;
 			case TypesPackage.TFIELD__HAS_EXPRESSION:
 				setHasExpression((Boolean)newValue);
+				return;
+			case TypesPackage.TFIELD__OPTIONAL:
+				setOptional((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -330,8 +419,14 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 			case TypesPackage.TFIELD__CONST:
 				setConst(CONST_EDEFAULT);
 				return;
+			case TypesPackage.TFIELD__COMPILE_TIME_VALUE:
+				setCompileTimeValue(COMPILE_TIME_VALUE_EDEFAULT);
+				return;
 			case TypesPackage.TFIELD__HAS_EXPRESSION:
 				setHasExpression(HAS_EXPRESSION_EDEFAULT);
+				return;
+			case TypesPackage.TFIELD__OPTIONAL:
+				setOptional(OPTIONAL_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -349,8 +444,12 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 				return typeRef != null;
 			case TypesPackage.TFIELD__CONST:
 				return const_ != CONST_EDEFAULT;
+			case TypesPackage.TFIELD__COMPILE_TIME_VALUE:
+				return COMPILE_TIME_VALUE_EDEFAULT == null ? compileTimeValue != null : !COMPILE_TIME_VALUE_EDEFAULT.equals(compileTimeValue);
 			case TypesPackage.TFIELD__HAS_EXPRESSION:
 				return hasExpression != HAS_EXPRESSION_EDEFAULT;
+			case TypesPackage.TFIELD__OPTIONAL:
+				return optional != OPTIONAL_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -365,6 +464,13 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 		if (baseClass == TTypedElement.class) {
 			switch (derivedFeatureID) {
 				case TypesPackage.TFIELD__TYPE_REF: return TypesPackage.TTYPED_ELEMENT__TYPE_REF;
+				default: return -1;
+			}
+		}
+		if (baseClass == TConstableElement.class) {
+			switch (derivedFeatureID) {
+				case TypesPackage.TFIELD__CONST: return TypesPackage.TCONSTABLE_ELEMENT__CONST;
+				case TypesPackage.TFIELD__COMPILE_TIME_VALUE: return TypesPackage.TCONSTABLE_ELEMENT__COMPILE_TIME_VALUE;
 				default: return -1;
 			}
 		}
@@ -384,6 +490,13 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 				default: return -1;
 			}
 		}
+		if (baseClass == TConstableElement.class) {
+			switch (baseFeatureID) {
+				case TypesPackage.TCONSTABLE_ELEMENT__CONST: return TypesPackage.TFIELD__CONST;
+				case TypesPackage.TCONSTABLE_ELEMENT__COMPILE_TIME_VALUE: return TypesPackage.TFIELD__COMPILE_TIME_VALUE;
+				default: return -1;
+			}
+		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
@@ -397,7 +510,6 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 		if (baseClass == TMember.class) {
 			switch (baseOperationID) {
 				case TypesPackage.TMEMBER___GET_MEMBER_TYPE: return TypesPackage.TFIELD___GET_MEMBER_TYPE;
-				case TypesPackage.TMEMBER___IS_OPTIONAL: return TypesPackage.TFIELD___IS_OPTIONAL;
 				case TypesPackage.TMEMBER___IS_READABLE: return TypesPackage.TFIELD___IS_READABLE;
 				case TypesPackage.TMEMBER___IS_WRITEABLE: return TypesPackage.TFIELD___IS_WRITEABLE;
 				case TypesPackage.TMEMBER___GET_MEMBER_AS_STRING: return TypesPackage.TFIELD___GET_MEMBER_AS_STRING;
@@ -406,6 +518,11 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 			}
 		}
 		if (baseClass == TTypedElement.class) {
+			switch (baseOperationID) {
+				default: return -1;
+			}
+		}
+		if (baseClass == TConstableElement.class) {
 			switch (baseOperationID) {
 				default: return -1;
 			}
@@ -421,8 +538,6 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case TypesPackage.TFIELD___IS_OPTIONAL:
-				return isOptional();
 			case TypesPackage.TFIELD___IS_STATIC:
 				return isStatic();
 			case TypesPackage.TFIELD___IS_READABLE:
@@ -449,8 +564,12 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (const: ");
 		result.append(const_);
+		result.append(", compileTimeValue: ");
+		result.append(compileTimeValue);
 		result.append(", hasExpression: ");
 		result.append(hasExpression);
+		result.append(", optional: ");
+		result.append(optional);
 		result.append(')');
 		return result.toString();
 	}

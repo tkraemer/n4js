@@ -70,8 +70,6 @@ class SimplifyComputer extends TypeSystemHelperStrategy {
 			case 1:
 				return typeRefs.head
 			default: {
-				simplified.setNullModifier(composedType.nullModifier)
-				simplified.setUndefModifier(composedType.undefModifier)
 				return simplified;
 			}
 		}

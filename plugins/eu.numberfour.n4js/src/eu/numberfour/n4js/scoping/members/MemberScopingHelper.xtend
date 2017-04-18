@@ -53,6 +53,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
+import java.util.List
 
 /**
  */
@@ -263,15 +264,16 @@ class MemberScopingHelper {
 	}
 
 	private def dispatch IScope members(IntersectionTypeExpression intersectiontypeexp, MemberScopeRequest request) {
-//		if (intersectiontypeexp.typeRefs.isEmpty) {
-		return IScope.NULLSCOPE;
-//		}
-	// TODO implement that (uncommented hack to have a stable situation)
-//		val List<IScope> subScopes = intersectiontypeexp.typeRefs.map [ elementTypeRef |
-//			val scope = members(elementTypeRef, request);
-//			return scope;
-//		]
-//		return CompositeScope.create(subScopes);
+		if (intersectiontypeexp.typeRefs.isEmpty) {
+			return IScope.NULLSCOPE;
+		}
+	
+		val List<IScope> subScopes = intersectiontypeexp.typeRefs.map [ elementTypeRef |
+			val scope = members(elementTypeRef, request);
+			return scope;
+		]
+		
+		return new IntersectionMemberScope(intersectiontypeexp, request.context, subScopes, ts);
 	}
 
 	private def dispatch IScope members(FunctionTypeRef ftExpr, MemberScopeRequest request) {

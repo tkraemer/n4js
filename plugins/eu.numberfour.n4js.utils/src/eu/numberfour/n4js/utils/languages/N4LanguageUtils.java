@@ -13,6 +13,8 @@ package eu.numberfour.n4js.utils.languages;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -27,7 +29,7 @@ import org.eclipse.xtext.resource.IResourceServiceProvider;
 public class N4LanguageUtils {
 
 	/**
-	 * Same as {@link #getServiceForContext(URI, Class)}, but accepts any EObject contained in an Xtext language
+	 * Same as {@link #getServiceForContext(URI, Class)}, but accepts any {@link EObject} contained in an Xtext language
 	 * resource. Returns <code>null</code> if the given context object is not contained in a {@link Resource}.
 	 */
 	public static <T> Optional<T> getServiceForContext(EObject context, Class<T> serviceType) {
@@ -35,6 +37,36 @@ public class N4LanguageUtils {
 		Objects.requireNonNull(serviceType);
 		final Resource res = context.eResource();
 		final URI uri = res != null ? res.getURI() : null;
+		return uri != null ? getServiceForContext(uri, serviceType) : Optional.empty();
+	}
+
+	/**
+	 * Same as {@link #getServiceForContext(URI, Class)}, but accepts any {@link IFile} as context and converts it to
+	 * the {@link URI}. Returns <code>null</code> if the given file object cannot be converted to the {@link Resource
+	 * resource uri}.
+	 *
+	 * @see <a href="https://wiki.eclipse.org/EMF/FAQ#How_do_I_map_between_an_EMF_Resource_and_an_Eclipse_IFile.3F">How
+	 *      do I map between an EMF Resource and an Eclipse IFile?</a>
+	 */
+	public static <T> Optional<T> getServiceForContext(IFile iFile, Class<T> serviceType) {
+		Objects.requireNonNull(iFile);
+		Objects.requireNonNull(serviceType);
+		final URI uri = URI.createPlatformResourceURI(iFile.getFullPath().toString(), true);
+		return uri != null ? getServiceForContext(uri, serviceType) : Optional.empty();
+	}
+
+	/**
+	 * Same as {@link #getServiceForContext(URI, Class)}, but accepts any {@link IResource} as context and converts it
+	 * to the {@link URI}. Returns <code>null</code> if the given file object cannot be converted to the {@link Resource
+	 * resource uri}.
+	 *
+	 * @see <a href="https://wiki.eclipse.org/EMF/FAQ#How_do_I_map_between_an_EMF_Resource_and_an_Eclipse_IFile.3F">How
+	 *      do I map between an EMF Resource and an Eclipse IFile?</a>
+	 */
+	public static <T> Optional<T> getServiceForContext(IResource iResource, Class<T> serviceType) {
+		Objects.requireNonNull(iResource);
+		Objects.requireNonNull(serviceType);
+		final URI uri = URI.createPlatformResourceURI(iResource.getFullPath().toString(), true);
 		return uri != null ? getServiceForContext(uri, serviceType) : Optional.empty();
 	}
 

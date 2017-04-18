@@ -12,8 +12,8 @@
 import {TestResult} from "n4/mangel/mangeltypes/TestResult"
 import { TestStatus } from "n4/mangel/mangeltypes/TestStatus"
 export public class ResultGroup {
-    public description: string? = "";
-    public testResults: Array<TestResult>? = [];
+    public description?: string = "";
+    public testResults?: Array<TestResult> = [];
     public successes: number = 0;
     public failures: number = 0;
     public errors: number = 0;

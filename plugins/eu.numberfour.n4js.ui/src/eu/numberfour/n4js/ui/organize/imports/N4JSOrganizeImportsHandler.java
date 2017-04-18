@@ -10,78 +10,38 @@
  */
 package eu.numberfour.n4js.ui.organize.imports;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
+
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceDescription;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.MultiStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.window.Window;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.xtext.nodemodel.ILeafNode;
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
-import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
-import org.eclipse.xtext.ui.editor.model.IXtextDocument;
-import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider;
 import org.eclipse.xtext.ui.editor.utils.EditorUtils;
-import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 
-import eu.numberfour.n4js.N4JSGlobals;
-import eu.numberfour.n4js.documentation.N4JSDocumentationProvider;
-import eu.numberfour.n4js.fileextensions.FileExtensionType;
-import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry;
-import eu.numberfour.n4js.parser.InternalSemicolonInjectingParser;
-import eu.numberfour.n4js.resource.N4JSResource;
-import eu.numberfour.n4js.ts.services.TypeExpressionsGrammarAccess;
-import eu.numberfour.n4js.ui.changes.ChangeManager;
-import eu.numberfour.n4js.ui.changes.ChangeProvider;
-import eu.numberfour.n4js.ui.changes.IAtomicChange;
-import eu.numberfour.n4js.ui.changes.IChange;
-import eu.numberfour.n4js.ui.changes.Replacement;
-import eu.numberfour.n4js.ui.organize.imports.BreakException.UserCanceledBreakException;
-import eu.numberfour.n4js.utils.UtilN4;
+import eu.numberfour.n4js.organize.imports.FileContainerFilter;
+import eu.numberfour.n4js.organize.imports.FileExtensionFilter;
 
 /**
  * Handler used for two cases: Mass updates on files/folders in selection or organizing the current N4JS Editor.
@@ -91,29 +51,12 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 	private static final Logger LOGGER = Logger.getLogger(N4JSOrganizeImportsHandler.class);
 
 	@Inject
-	private N4JSOrganizeImports organizeImports;
-
+	private FileExtensionFilter extensionFilter;
 	@Inject
-	private ChangeManager changeManager;
-
-	@Inject
-	private XtextDocumentProvider docProvider;
-
-	@Inject
-	private FileExtensionsRegistry fileExtensionsRegistry;
-
-	// cleaned version of extensions got from fileExtensions
-	private Collection<String> n4FileExtensions;
-
-	@Inject
-	private TypeExpressionsGrammarAccess typeExpressionsGrammarAccess;
-
-	@Inject
-	private N4JSDocumentationProvider n4JSDocumentationProvider;
+	private FileContainerFilter containerFilter;
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-
 		Collection<?> callingMenus = HandlerUtil.getActiveMenus(event);
 		// "#TextEditorContext" is the defined plugin.xml
 		boolean fromTextContext = (callingMenus != null && callingMenus.contains("#TextEditorContext"));
@@ -127,475 +70,115 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 				&& !selection.isEmpty());
 
 		if (haveActiveEditor && (fromTextContext || fromShortCut)) {
-			organizeEditor(editor);
+			OrganizeImportsService.organizeImportsInEditor(editor, Interaction.queryUser);
 		} else if (nonEmptyStructuredSelection) {
 			// probably called on a tree-selection in the package-manager or whatever view shows the project-structure:
 			// organize files and folders:
 			// for each selection entry collect files:
-			Multimap<IProject, IFile> projectFiles = collectFiles((IStructuredSelection) selection);
+			SelectionFilesCollector filesCollector = new SelectionFilesCollector(this::filter);
+			List<IFile> collectedFiles = filesCollector.collectFiles((IStructuredSelection) selection);
 
-			HashSet<IFile> filesInSet = new HashSet<>(projectFiles.values());
-			List<IFile> filesAsList = new ArrayList<>(filesInSet);
-
-			if (filesAsList.isEmpty()) {
+			if (collectedFiles.isEmpty()) {
 				return null;
 			}
 
-			// Query unsaved
-			IWorkbench wbench = PlatformUI.getWorkbench();
-			IWorkbenchWindow activeWorkbenchWindow = wbench.getActiveWorkbenchWindow();
-			boolean allSaved = wbench.saveAll(activeWorkbenchWindow, activeWorkbenchWindow, null, true);
-			if (!allSaved) {
-				return null;
-			}
-
-			Shell shell = HandlerUtil.getActiveShell(event);
-
-			IRunnableWithProgress op = new IRunnableWithProgress() {
-				@Override
-				public void run(IProgressMonitor mon) throws InvocationTargetException, InterruptedException {
-					int totalWork = filesAsList.size();
-					SubMonitor subMon = SubMonitor.convert(mon, "Organize imports.", totalWork);
-					for (int i = 0; !subMon.isCanceled() && i < filesAsList.size(); i++) {
-						IFile currentFile = filesAsList.get(i);
-						subMon.setTaskName("Organize imports." + " - File (" + (i + 1) + " of " + totalWork + ")");
-						try {
-							SubMonitor subSubMon = subMon.split(1, SubMonitor.SUPPRESS_NONE);
-							subSubMon.setTaskName(currentFile.getName());
-							doOrganizeImports(currentFile, subSubMon);
-
-						} catch (CoreException | RuntimeException e) {
-							String msg = "Exception in file " + currentFile.getFullPath().toString() + ".";
-							LOGGER.error(msg, e);
-							if (errorDialogWithStackTrace(msg + " Hit OK to continue.", e)) {
-								// - logged anyway
-							} else {
-								throw new InvocationTargetException(e);
-							}
-						}
-					}
-					if (subMon.isCanceled()) {
-						throw new InterruptedException();
-					}
-				}
-			};
+			final boolean wasAutobuilding = getWorkspaceAutobuild();
 
 			try {
-				new ProgressMonitorDialog(shell).run(true, true, op);
+				// avoid auto-build when modifying batch of documents
+				// restore state later
+				setAutobuild(false);
+
+				// Query unsaved
+				IWorkbench wbench = PlatformUI.getWorkbench();
+				IWorkbenchWindow activeWorkbenchWindow = wbench.getActiveWorkbenchWindow();
+				boolean allSaved = wbench.saveAll(activeWorkbenchWindow, activeWorkbenchWindow, null, true);
+				if (!allSaved) {
+					LOGGER.warn("Optimize imports cannot save editors, aborting.");
+					return null;
+				}
+
+				batchOrganize(HandlerUtil.getActiveShell(event), collectedFiles);
+
 			} catch (InvocationTargetException e) {
 				throw new ExecutionException("Error during organizing imports", e);
 			} catch (InterruptedException e) {
 				// user cancelled, ok
+			} finally {
+				// restore state of auto-build
+				setAutobuild(wasAutobuilding);
 			}
 
 		}
-
 		return null;
 	}
 
-	private Multimap<IProject, IFile> collectFiles(IStructuredSelection structuredSelection) {
-		Multimap<IProject, IFile> result = HashMultimap.create();
-		for (Object object : structuredSelection.toList()) {
-			collectRelevantFiles(object, result);
-		}
-		return result;
-	}
-
-	private void collectRelevantFiles(Object element, Multimap<IProject, IFile> result) {
-		if (element instanceof IWorkingSet) {
-			IWorkingSet workingSet = (IWorkingSet) element;
-			IAdaptable[] elements = workingSet.getElements();
-			for (int j = 0; j < elements.length; j++) {
-				collectRelevantFiles(elements[j], result);
-			}
-		} else if (element instanceof IContainer) {
-			IContainer container = (IContainer) element;
-			try {
-				for (IResource child : container.members(IContainer.EXCLUDE_DERIVED)) {
-					collectRelevantFiles(child, result);
-				}
-			} catch (CoreException c) {
-				LOGGER.warn("Error while collecting files", c);
-			}
-		} else if (element instanceof IFile) {
-			collectIFiles(result, new Object[] { element });
-		}
-	}
-
-	private void collectIFiles(Multimap<IProject, IFile> result, Object[] nonJavaResources) {
-		for (Object object : nonJavaResources) {
-			if (object instanceof IFile) {
-				IFile iFile = (IFile) object;
-				if (shouldHandleFile(iFile))
-					result.put(iFile.getProject(), iFile);
-			}
-		}
+	/** Composed check that is using several sub filters to decide if a file should be organized. */
+	private boolean filter(IFile iFile) {
+		return extensionFilter.test(iFile) && containerFilter.test(iFile);
 	}
 
 	/**
-	 * Checking the file type by getting the known extensions from the FileExtensionProvider
+	 * Creates and runs runnable that twill organize imports in all provided files. Operation will show user dialog with
+	 * progress of all the tasks. This is UI blocking operation.
 	 *
-	 * @param object
-	 *            file to judge
-	 * @return true if the file is a valid file for organize import
+	 * @param shell
+	 *            for which dialog for which we create runnable
+	 * @param collectedFiles
+	 *            files that will be processed during run
 	 */
-	private boolean shouldHandleFile(IFile object) {
-		String fileExtension = object.getFileExtension();
-		return fileExtension != null && getN4FileExtensions().contains(fileExtension);
+	private void batchOrganize(Shell shell, List<IFile> collectedFiles)
+			throws InvocationTargetException, InterruptedException {
+		new ProgressMonitorDialog(shell)
+				.run(true, true, createOrganizingRunnable(collectedFiles));
 	}
 
-	/**
-	 * Access with lazy init to the desired file extensions to organize.
-	 *
-	 * @return Set of extensions for files on which organization should be applied
-	 */
-	private Collection<String> getN4FileExtensions() {
-		if (n4FileExtensions == null) {
-			n4FileExtensions = new HashSet<>(
-					fileExtensionsRegistry.getFileExtensions(FileExtensionType.TYPABLE_FILE_EXTENSION));
-			n4FileExtensions.removeAll(fileExtensionsRegistry.getFileExtensions(FileExtensionType.RAW_FILE_EXTENSION));
+	/** Creates {@link IRunnableWithProgress} that will be organize imports in the provided files. */
+	private IRunnableWithProgress createOrganizingRunnable(List<IFile> collectedFiles) {
+		IRunnableWithProgress op = new IRunnableWithProgress() {
+			@Override
+			public void run(IProgressMonitor mon) throws InvocationTargetException, InterruptedException {
+				int totalWork = collectedFiles.size();
+				SubMonitor subMon = SubMonitor.convert(mon, "Organize imports.", totalWork);
+				for (int i = 0; !subMon.isCanceled() && i < totalWork; i++) {
+					IFile currentFile = collectedFiles.get(i);
+					subMon.setTaskName("Organize imports." + " - File (" + (i + 1) + " of " + totalWork + ")");
+					try {
+						OrganizeImportsService.organizeImportsInFile(currentFile, Interaction.breakBuild, subMon);
 
-			// TODO IDE-2520 enable for N4JSX
-			//
-			// Once we enable Organize Imports with IDE-2520 filtering below should be removed. Populating list as above
-			// will be enough.
-			n4FileExtensions.remove(N4JSGlobals.N4JSX_FILE_EXTENSION);
-		}
-		return n4FileExtensions;
-	}
-
-	private void organizeEditor(XtextEditor editor) {
-		try {
-			IXtextDocument document = editor.getDocument();
-			doOrganizeImports(document, Interaction.queryUser);
-		} catch (RuntimeException re) {
-			if (re.getCause() instanceof BreakException) {
-				LOGGER.debug("user canceled");
-			} else {
-				LOGGER.warn("Unrecognized RT-exception", re);
-			}
-
-		}
-	}
-
-	private void doOrganizeImports(IFile file, IProgressMonitor mon) throws CoreException {
-
-		SubMonitor subMon = SubMonitor.convert(mon, "Organizing " + file.getName(), IProgressMonitor.UNKNOWN);
-
-		FileEditorInput fei = new FileEditorInput(file);
-
-		docProvider.connect(fei); // without connecting no document will be provided
-		IXtextDocument document = (IXtextDocument) docProvider.getDocument(fei);
-
-		docProvider.aboutToChange(fei);
-
-		doOrganizeImports(document, Interaction.breakBuild);
-
-		subMon.setTaskName("Saving " + file.getName());
-		docProvider.saveDocument(subMon.split(0), fei, document, true);
-
-		docProvider.changed(fei);
-		docProvider.disconnect(fei);
-
-	}
-
-	/**
-	 * Organize the imports in the N4JS document.
-	 *
-	 * @param document
-	 *            N4JS document
-	 * @throws RuntimeException
-	 *             wrapping a BreakException in case of user-abortion ({@link Interaction#queryUser}) or
-	 *             resolution-failure({@link Interaction#breakBuild} )
-	 */
-	public void doOrganizeImports(final IXtextDocument document, final Interaction interaction) {
-		// trigger Linking
-		document.readOnly((XtextResource p) -> {
-			N4JSResource.postProcess(p);
-			return null;
-		});
-
-		List<IChange> result = document.readOnly(
-				new IUnitOfWork<List<IChange>, XtextResource>() {
-
-					@Override
-					public List<IChange> exec(XtextResource xtextResource) throws Exception {
-						// Position, length 0
-						InsertionPoint insertionPoint = organizeImports.getImportRegion(xtextResource);
-
-						if (insertionPoint.offset != -1) {
-							List<IChange> changes = new ArrayList<>();
-							try {
-								final String NL = ChangeProvider.lineDelimiter(document,
-										insertionPoint.offset);
-
-								final String organizedImportSection = organizeImports
-										.getOrganizedImportSection(xtextResource, NL, interaction);
-								if (organizedImportSection != null) {
-									// remove old imports
-									changes.addAll(organizeImports.getCleanupChanges(xtextResource, document));
-									// insert new imports
-									changes.addAll(prepareRealInsertion(document, xtextResource, insertionPoint, NL,
-											organizedImportSection));
-									return changes;
-								}
-							} catch (UserCanceledBreakException e) {
-								return null; // user-triggered cancellation, nothing to report.
-							} catch (BreakException e) {
-								LOGGER.warn("Organize imports broke:", e);
-								throw e;
-							}
+					} catch (CoreException | RuntimeException e) {
+						String msg = "Exception in file " + currentFile.getFullPath().toString() + ".";
+						LOGGER.error(msg, e);
+						boolean errorDialogShowed = ErrorDialogWithStackTraceUtil.showErrorDialogWithStackTrace(
+								msg + " Hit OK to continue.", e);
+						if (!errorDialogShowed) {
+							throw new InvocationTargetException(e);
 						}
-						return null;
 					}
-
-				});
-
-		if (result != null && !result.isEmpty()) {
-			// do the changes really modify anything?
-			ChangeAnalysis changeAnalysis = condense(result);
-			if (changeAnalysis.noRealChanges) {
-				// verify again:
-				String del = document.get().substring(changeAnalysis.deletion.getOffset(),
-						changeAnalysis.deletion.getOffset() + changeAnalysis.deletion.getLength());
-				if (changeAnalysis.newText.getText().equals(del)) {
-					return;
+				}
+				if (subMon.isCanceled()) {
+					throw new InterruptedException();
 				}
 			}
-			document.modify(
-					new IUnitOfWork.Void<XtextResource>() {
-						@Override
-						public void process(XtextResource state) throws Exception {
-							try {
-								EcoreUtil.resolveAll(state);
-								changeManager.applyAllInSameDocument(changeAnalysis.changes, document);
-							} catch (BadLocationException e) {
-								LOGGER.error(e);
-							}
-						}
-					});
 
-		}
-
+		};
+		return op;
 	}
 
-	/**
-	 * Computes the change for real insertion. If nothing is inserted (e.g. organizedImportSection is empty) then an
-	 * empty list is returned.
-	 *
-	 * This method computes the real offset based on the information given in the passed in insertion point and creates
-	 * an replacement.
-	 *
-	 * @param document
-	 *            current Xtext document under modification
-	 * @param xtextResource
-	 *            associated Xtext-resource of the document
-	 * @param insertionPoint
-	 *            data about possible insertion-range.
-	 * @param NL
-	 *            current new line sequence
-	 * @param organizedImportSection
-	 *            text of imports
-	 * @return empty list or a single-element list with an replacement.
-	 */
-	private List<IChange> prepareRealInsertion(final IXtextDocument document, XtextResource xtextResource,
-			InsertionPoint insertionPoint, final String NL,
-			final String organizedImportSection) throws BadLocationException {
-		if (organizedImportSection.isEmpty()) {
-			// nothing to insert, then issue no change:
-			return Collections.emptyList();
-		}
-
-		// advance ImportRegion-offset if not nil and not right before a jsdoc:
-		int offset = insertionPoint.offset;
-		if (offset != 0 && !insertionPoint.isBeforeJsdocDocumentation) {
-			offset += NL.length();
-		}
-		// if the line above is part of a ML-comment, then line-break:
-		IRegion lineRegion = document.getLineInformationOfOffset(offset);
-
-		ILeafNode leafNodeAtBeginOfLine = NodeModelUtils.findLeafNodeAtOffset(
-				xtextResource.getParseResult().getRootNode(), lineRegion.getOffset());
-
-		//
-		// Three cases have to be considered:
-		// A) the begin of line is inside of an ML-comment.
-		// B) the begin of line is some ASI overlapping some real text (e.g. a ML-commen) this is not coverd in A!
-		// C) the begin of line is some ordinary location.
-		//
-		if (leafNodeAtBeginOfLine.getGrammarElement() == typeExpressionsGrammarAccess
-				.getML_COMMENTRule() // plain ML
-		) {
-			// CASE A)
-			int insertOffset = insertionPoint.offset;
-			// it is inside a ML, so we need to insert a line-break;
-			boolean atStartOfLine = insertionPoint.offset == lineRegion.getOffset();
-			String finalText = (atStartOfLine ? "" : NL) + organizedImportSection + NL;
-			return Lists.newArrayList(new Replacement(xtextResource.getURI().trimFragment(),
-					insertOffset, 0, finalText));
-
-		} else if (UtilN4.isIgnoredSyntaxErrorNode(leafNodeAtBeginOfLine,
-				InternalSemicolonInjectingParser.SEMICOLON_INSERTED)
-				// ASI overlapping something
-				&& (leafNodeAtBeginOfLine.getTotalOffset() < lineRegion.getOffset()
-		// this ASI something starts before the beginning of the line
-		)) {
-			// CASE B)
-			int insertOffset = insertionPoint.offset; // concrete
-														// position
-
-			if ((!insertionPoint.isBeforeJsdocDocumentation) &&
-			// if this was an ASI case shadowing a jsdoc-/**-style comment
-			// we should insert before this comment. Still need to double-check the
-			// concrete content:
-					n4JSDocumentationProvider.isDocumentationStyle(
-							NodeModelUtils.getTokenText(leafNodeAtBeginOfLine))) {
-				// it's an active jsdoc comment, shadowed by ASI-insertions
-				insertOffset = leafNodeAtBeginOfLine.getTotalOffset();
-
-			}
-			// it is ML, so we need to insert a line-break;
-			String finalText = NL + organizedImportSection + NL;
-			return Lists.newArrayList(new Replacement(xtextResource.getURI().trimFragment(),
-					insertOffset, 0, finalText));
-
-		} else {
-			// CASE C)
-			// The line above is not part of a ML-comment, so do this:
-			return Lists.newArrayList(ChangeProvider.insertLineAbove(document,
-					offset, organizedImportSection, false)); // indentation doesn't work
-																// with multiple lines
+	/** Sets workspace auto-build according to the provided flag. Thrown exceptions are handled by logging. */
+	private static void setAutobuild(boolean on) {
+		try {
+			final IWorkspace workspace = getWorkspace();
+			final IWorkspaceDescription description = workspace.getDescription();
+			description.setAutoBuilding(on);
+			workspace.setDescription(description);
+		} catch (CoreException e) {
+			LOGGER.debug("Organize imports cannot set auto build to " + on + ".");
 		}
 	}
 
-	/**
-	 * Very specific to the generator: One has a text with nonzero length, all others are deletions an have zero-length
-	 * texts.
-	 *
-	 * Find the one with text, try to condense the other into one atomic change.
-	 *
-	 *
-	 * @param changes
-	 *            list of Changes to process
-	 * @return Pair of Changes, flag if nothing changes.
-	 */
-	private ChangeAnalysis condense(List<IChange> changes) {
-		List<IAtomicChange> atomicResult = changeManager.flattenAndOrganized(changes);
-		if (atomicResult.isEmpty()) {
-			return new ChangeAnalysis(atomicResult, true);
-		}
-		// if all are from same uri and type of Replacement, then it will be condensed.
-		URI uri = atomicResult.get(0).getURI();
-		if (!(atomicResult.get(0) instanceof Replacement)) {
-			return new ChangeAnalysis(atomicResult, false);
-		}
-
-		// Pre condition: find the one with text != ø && other have no text.
-		// Pre uris must match.
-		Replacement rText = null;
-		for (IAtomicChange nxt : atomicResult) {
-			if (!(nxt instanceof Replacement) || !uri.equals(nxt.getURI())) {
-				return new ChangeAnalysis(atomicResult, false);
-			}
-			Replacement rplc = (Replacement) nxt;
-			if (rplc.getText() != null && rplc.getText().length() > 0) {
-				if (rText == null) {
-					rText = rplc;
-				} else {
-					return new ChangeAnalysis(atomicResult, false); // more then one text-addition, pre doesn't hold
-				}
-			}
-		}
-
-		Replacement current = null;
-		// Back to front iteration
-		for (int i = atomicResult.size() - 1; i >= 0; i--) {
-			IAtomicChange nxt = atomicResult.get(i);
-			if (nxt == rText) {
-				continue;
-			}
-			Replacement rplc = (Replacement) nxt;
-			if (current == null) {
-				current = rplc;
-				continue;
-			}
-			// all Texts are
-			if (current.getOffset() + current.getLength() == rplc.getOffset()) {
-				// possible to concatenate.
-				current = new Replacement(uri, current.getOffset(), current.getLength() + rplc.getLength(), "");
-			} else {
-				// cannot merge
-				return new ChangeAnalysis(atomicResult, false);
-			}
-		}
-		// compare length:
-		if (current == null || rText == null || current.getLength() != rText.getText().length()) {
-			return new ChangeAnalysis(atomicResult, false);
-		}
-
-		// keep correct order.
-		List<IAtomicChange> orderedChanges = null;
-		if (rText == atomicResult.get(0)) {
-			orderedChanges = Arrays.asList(rText, current);
-		} else if (rText == atomicResult.get(atomicResult.size() - 1)) {
-			orderedChanges = Arrays.asList(current, rText);
-		} else {
-			// something is wrong here ?!
-			System.out.println("XXX");
-			return new ChangeAnalysis(atomicResult, false);
-		}
-
-		ChangeAnalysis result = new ChangeAnalysis(orderedChanges, true);
-		result.deletion = current;
-		result.newText = rText;
-		return result;
-	}
-
-	static class ChangeAnalysis {
-		public ChangeAnalysis(List<IAtomicChange> changes, boolean noRealChanges) {
-			super();
-			this.changes = changes;
-			this.noRealChanges = noRealChanges;
-		}
-
-		List<IAtomicChange> changes;
-		boolean noRealChanges;
-		Replacement newText = null;
-		Replacement deletion = null;
-	}
-
-	/**
-	 * Shows JFace ErrorDialog but improved by constructing full stack trace in detail area.
-	 *
-	 * @return true if OK was pressed
-	 */
-	public static boolean errorDialogWithStackTrace(String msg, Throwable t) {
-
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-		t.printStackTrace(pw);
-
-		final String trace = sw.toString(); // stack trace as a string
-
-		// Temporary holder of child statuses
-		List<Status> childStatuses = new ArrayList<>();
-
-		// Split output by OS-independent new-line
-		for (String line : trace.split(System.getProperty("line.separator"))) {
-			// build & add status
-			childStatuses.add(new Status(IStatus.ERROR, "N4js-plugin-id", line));
-		}
-
-		MultiStatus ms = new MultiStatus("N4js-plugin-id", IStatus.ERROR,
-				childStatuses.toArray(new Status[] {}), // convert to array of statuses
-				t.getLocalizedMessage(), t);
-
-		final AtomicBoolean result = new AtomicBoolean(true);
-		Display.getDefault()
-				.syncExec(
-						() -> result.set(
-								ErrorDialog.openError(null, "Error occurred while organizing ", msg, ms) == Window.OK));
-
-		return result.get();
+	/** returns current setting of workspace auto-build */
+	private static boolean getWorkspaceAutobuild() {
+		return getWorkspace().getDescription().isAutoBuilding();
 	}
 }

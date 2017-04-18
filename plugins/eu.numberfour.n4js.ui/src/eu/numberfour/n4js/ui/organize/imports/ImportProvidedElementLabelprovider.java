@@ -22,7 +22,6 @@ import eu.numberfour.n4js.n4JS.ImportDeclaration;
 import eu.numberfour.n4js.organize.imports.ImportProvidedElement;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ui.labeling.N4JSLabelProvider;
-import eu.numberfour.n4js.ui.organize.imports.N4JSOrganizeImports.ImportableObject;
 
 /**
  */

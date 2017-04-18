@@ -222,46 +222,26 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class TypeRefWithModifiersElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.TypeRefWithModifiers");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final RuleCall cTypeRefWithoutModifiersParserRuleCall_0_0 = (RuleCall)cGroup_0.eContents().get(0);
-		private final Assignment cUndefModifierAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cUndefModifierUndefModifierTokenParserRuleCall_0_1_0 = (RuleCall)cUndefModifierAssignment_0_1.eContents().get(0);
-		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Action cParameterizedTypeRefAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cUndefModifierAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cUndefModifierUndefModifierTokenParserRuleCall_1_1_0 = (RuleCall)cUndefModifierAssignment_1_1.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cTypeRefWithoutModifiersParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Assignment cFollowedByQuestionMarkAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cFollowedByQuestionMarkQuestionMarkKeyword_1_0 = (Keyword)cFollowedByQuestionMarkAssignment_1.eContents().get(0);
 		
 		//TypeRefWithModifiers StaticBaseTypeRef:
-		//	TypeRefWithoutModifiers => undefModifier=UndefModifierToken? | {ParameterizedTypeRef} undefModifier=UndefModifierToken
+		//	TypeRefWithoutModifiers => followedByQuestionMark?='?'?
 		@Override public ParserRule getRule() { return rule; }
 		
-		//TypeRefWithoutModifiers => undefModifier=UndefModifierToken? | {ParameterizedTypeRef} undefModifier=UndefModifierToken
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
-		//TypeRefWithoutModifiers => undefModifier=UndefModifierToken?
-		public Group getGroup_0() { return cGroup_0; }
+		//TypeRefWithoutModifiers => followedByQuestionMark?='?'?
+		public Group getGroup() { return cGroup; }
 		
 		//TypeRefWithoutModifiers
-		public RuleCall getTypeRefWithoutModifiersParserRuleCall_0_0() { return cTypeRefWithoutModifiersParserRuleCall_0_0; }
+		public RuleCall getTypeRefWithoutModifiersParserRuleCall_0() { return cTypeRefWithoutModifiersParserRuleCall_0; }
 		
-		//=> undefModifier=UndefModifierToken?
-		public Assignment getUndefModifierAssignment_0_1() { return cUndefModifierAssignment_0_1; }
+		//=> followedByQuestionMark?='?'?
+		public Assignment getFollowedByQuestionMarkAssignment_1() { return cFollowedByQuestionMarkAssignment_1; }
 		
-		//UndefModifierToken
-		public RuleCall getUndefModifierUndefModifierTokenParserRuleCall_0_1_0() { return cUndefModifierUndefModifierTokenParserRuleCall_0_1_0; }
-		
-		//{ParameterizedTypeRef} undefModifier=UndefModifierToken
-		public Group getGroup_1() { return cGroup_1; }
-		
-		//{ParameterizedTypeRef}
-		public Action getParameterizedTypeRefAction_1_0() { return cParameterizedTypeRefAction_1_0; }
-		
-		//undefModifier=UndefModifierToken
-		public Assignment getUndefModifierAssignment_1_1() { return cUndefModifierAssignment_1_1; }
-		
-		//UndefModifierToken
-		public RuleCall getUndefModifierUndefModifierTokenParserRuleCall_1_1_0() { return cUndefModifierUndefModifierTokenParserRuleCall_1_1_0; }
+		//'?'
+		public Keyword getFollowedByQuestionMarkQuestionMarkKeyword_1_0() { return cFollowedByQuestionMarkQuestionMarkKeyword_1_0; }
 	}
 	public class TypeRefWithoutModifiersElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.TypeRefWithoutModifiers");
@@ -1307,16 +1287,18 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cNameIdentifierNameParserRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cColonKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cTypeRefAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cTypeRefTypeRefParserRuleCall_1_1_0 = (RuleCall)cTypeRefAssignment_1_1.eContents().get(0);
+		private final Assignment cOptionalAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cOptionalQuestionMarkKeyword_1_0 = (Keyword)cOptionalAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cColonKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cTypeRefAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cTypeRefTypeRefParserRuleCall_2_1_0 = (RuleCall)cTypeRefAssignment_2_1.eContents().get(0);
 		
 		//TStructField:
-		//	name=IdentifierName (':' typeRef=TypeRef)?;
+		//	name=IdentifierName optional?='?'? (':' typeRef=TypeRef)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=IdentifierName (':' typeRef=TypeRef)?
+		//name=IdentifierName optional?='?'? (':' typeRef=TypeRef)?
 		public Group getGroup() { return cGroup; }
 		
 		//name=IdentifierName
@@ -1325,17 +1307,23 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//IdentifierName
 		public RuleCall getNameIdentifierNameParserRuleCall_0_0() { return cNameIdentifierNameParserRuleCall_0_0; }
 		
+		//optional?='?'?
+		public Assignment getOptionalAssignment_1() { return cOptionalAssignment_1; }
+		
+		//'?'
+		public Keyword getOptionalQuestionMarkKeyword_1_0() { return cOptionalQuestionMarkKeyword_1_0; }
+		
 		//(':' typeRef=TypeRef)?
-		public Group getGroup_1() { return cGroup_1; }
+		public Group getGroup_2() { return cGroup_2; }
 		
 		//':'
-		public Keyword getColonKeyword_1_0() { return cColonKeyword_1_0; }
+		public Keyword getColonKeyword_2_0() { return cColonKeyword_2_0; }
 		
 		//typeRef=TypeRef
-		public Assignment getTypeRefAssignment_1_1() { return cTypeRefAssignment_1_1; }
+		public Assignment getTypeRefAssignment_2_1() { return cTypeRefAssignment_2_1; }
 		
 		//TypeRef
-		public RuleCall getTypeRefTypeRefParserRuleCall_1_1_0() { return cTypeRefTypeRefParserRuleCall_1_1_0; }
+		public RuleCall getTypeRefTypeRefParserRuleCall_2_1_0() { return cTypeRefTypeRefParserRuleCall_2_1_0; }
 	}
 	public class TStructGetterElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.TStructGetter");
@@ -1346,21 +1334,23 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cGetKeyword_0_0_1 = (Keyword)cGroup_0_0.eContents().get(1);
 		private final Assignment cNameAssignment_0_0_2 = (Assignment)cGroup_0_0.eContents().get(2);
 		private final RuleCall cNameIdentifierNameParserRuleCall_0_0_2_0 = (RuleCall)cNameAssignment_0_0_2.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cColonKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cDeclaredTypeRefAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cDeclaredTypeRefTypeRefParserRuleCall_3_1_0 = (RuleCall)cDeclaredTypeRefAssignment_3_1.eContents().get(0);
+		private final Assignment cOptionalAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cOptionalQuestionMarkKeyword_1_0 = (Keyword)cOptionalAssignment_1.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cColonKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cDeclaredTypeRefAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cDeclaredTypeRefTypeRefParserRuleCall_4_1_0 = (RuleCall)cDeclaredTypeRefAssignment_4_1.eContents().get(0);
 		
 		//TStructGetter:
 		//	=> ({TStructGetter}
 		//	'get'
-		//	name=IdentifierName)
+		//	name=IdentifierName) optional?='?'?
 		//	'(' ')' (':' declaredTypeRef=TypeRef)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//=> ({TStructGetter} 'get' name=IdentifierName) '(' ')' (':' declaredTypeRef=TypeRef)?
+		//=> ({TStructGetter} 'get' name=IdentifierName) optional?='?'? '(' ')' (':' declaredTypeRef=TypeRef)?
 		public Group getGroup() { return cGroup; }
 		
 		//=> ({TStructGetter} 'get' name=IdentifierName)
@@ -1381,23 +1371,29 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//IdentifierName
 		public RuleCall getNameIdentifierNameParserRuleCall_0_0_2_0() { return cNameIdentifierNameParserRuleCall_0_0_2_0; }
 		
+		//optional?='?'?
+		public Assignment getOptionalAssignment_1() { return cOptionalAssignment_1; }
+		
+		//'?'
+		public Keyword getOptionalQuestionMarkKeyword_1_0() { return cOptionalQuestionMarkKeyword_1_0; }
+		
 		//'('
-		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
 		
 		//')'
-		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
+		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 		
 		//(':' declaredTypeRef=TypeRef)?
-		public Group getGroup_3() { return cGroup_3; }
+		public Group getGroup_4() { return cGroup_4; }
 		
 		//':'
-		public Keyword getColonKeyword_3_0() { return cColonKeyword_3_0; }
+		public Keyword getColonKeyword_4_0() { return cColonKeyword_4_0; }
 		
 		//declaredTypeRef=TypeRef
-		public Assignment getDeclaredTypeRefAssignment_3_1() { return cDeclaredTypeRefAssignment_3_1; }
+		public Assignment getDeclaredTypeRefAssignment_4_1() { return cDeclaredTypeRefAssignment_4_1; }
 		
 		//TypeRef
-		public RuleCall getDeclaredTypeRefTypeRefParserRuleCall_3_1_0() { return cDeclaredTypeRefTypeRefParserRuleCall_3_1_0; }
+		public RuleCall getDeclaredTypeRefTypeRefParserRuleCall_4_1_0() { return cDeclaredTypeRefTypeRefParserRuleCall_4_1_0; }
 	}
 	public class TStructSetterElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.TStructSetter");
@@ -1408,19 +1404,21 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSetKeyword_0_0_1 = (Keyword)cGroup_0_0.eContents().get(1);
 		private final Assignment cNameAssignment_0_0_2 = (Assignment)cGroup_0_0.eContents().get(2);
 		private final RuleCall cNameIdentifierNameParserRuleCall_0_0_2_0 = (RuleCall)cNameAssignment_0_0_2.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cFparAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cFparTAnonymousFormalParameterParserRuleCall_2_0 = (RuleCall)cFparAssignment_2.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cOptionalAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cOptionalQuestionMarkKeyword_1_0 = (Keyword)cOptionalAssignment_1.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cFparAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cFparTAnonymousFormalParameterParserRuleCall_3_0 = (RuleCall)cFparAssignment_3.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//TStructSetter:
 		//	=> ({TStructSetter}
 		//	'set'
-		//	name=IdentifierName)
+		//	name=IdentifierName) optional?='?'?
 		//	'(' fpar=TAnonymousFormalParameter ')';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//=> ({TStructSetter} 'set' name=IdentifierName) '(' fpar=TAnonymousFormalParameter ')'
+		//=> ({TStructSetter} 'set' name=IdentifierName) optional?='?'? '(' fpar=TAnonymousFormalParameter ')'
 		public Group getGroup() { return cGroup; }
 		
 		//=> ({TStructSetter} 'set' name=IdentifierName)
@@ -1441,17 +1439,23 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//IdentifierName
 		public RuleCall getNameIdentifierNameParserRuleCall_0_0_2_0() { return cNameIdentifierNameParserRuleCall_0_0_2_0; }
 		
+		//optional?='?'?
+		public Assignment getOptionalAssignment_1() { return cOptionalAssignment_1; }
+		
+		//'?'
+		public Keyword getOptionalQuestionMarkKeyword_1_0() { return cOptionalQuestionMarkKeyword_1_0; }
+		
 		//'('
-		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
 		
 		//fpar=TAnonymousFormalParameter
-		public Assignment getFparAssignment_2() { return cFparAssignment_2; }
+		public Assignment getFparAssignment_3() { return cFparAssignment_3; }
 		
 		//TAnonymousFormalParameter
-		public RuleCall getFparTAnonymousFormalParameterParserRuleCall_2_0() { return cFparTAnonymousFormalParameterParserRuleCall_2_0; }
+		public RuleCall getFparTAnonymousFormalParameterParserRuleCall_3_0() { return cFparTAnonymousFormalParameterParserRuleCall_3_0; }
 		
 		//')'
-		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
+		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
 	}
 	public class TypingStrategyUseSiteOperatorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.TypingStrategyUseSiteOperator");
@@ -1703,17 +1707,6 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TypeRef
 		public RuleCall getDeclaredLowerBoundTypeRefParserRuleCall_1_1_0() { return cDeclaredLowerBoundTypeRefParserRuleCall_1_1_0; }
-	}
-	public class UndefModifierTokenElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.UndefModifierToken");
-		private final Keyword cQuestionMarkKeyword = (Keyword)rule.eContents().get(1);
-		
-		//UndefModifierToken UndefModifier:
-		//	'?'
-		@Override public ParserRule getRule() { return rule; }
-		
-		//'?'
-		public Keyword getQuestionMarkKeyword() { return cQuestionMarkKeyword; }
 	}
 	public class TypeVariableElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.TypeVariable");
@@ -2210,7 +2203,6 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final TypeArgumentElements pTypeArgument;
 	private final WildcardElements pWildcard;
 	private final WildcardNewNotationElements pWildcardNewNotation;
-	private final UndefModifierTokenElements pUndefModifierToken;
 	private final TypeVariableElements pTypeVariable;
 	private final TypeVariableWithDefSiteVarianceElements pTypeVariableWithDefSiteVariance;
 	private final BindingIdentifierElements pBindingIdentifier;
@@ -2276,7 +2268,6 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pTypeArgument = new TypeArgumentElements();
 		this.pWildcard = new WildcardElements();
 		this.pWildcardNewNotation = new WildcardNewNotationElements();
-		this.pUndefModifierToken = new UndefModifierTokenElements();
 		this.pTypeVariable = new TypeVariableElements();
 		this.pTypeVariableWithDefSiteVariance = new TypeVariableWithDefSiteVarianceElements();
 		this.pBindingIdentifier = new BindingIdentifierElements();
@@ -2393,7 +2384,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TypeRefWithModifiers StaticBaseTypeRef:
-	//	TypeRefWithoutModifiers => undefModifier=UndefModifierToken? | {ParameterizedTypeRef} undefModifier=UndefModifierToken
+	//	TypeRefWithoutModifiers => followedByQuestionMark?='?'?
 	public TypeRefWithModifiersElements getTypeRefWithModifiersAccess() {
 		return pTypeRefWithModifiers;
 	}
@@ -2669,7 +2660,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TStructField:
-	//	name=IdentifierName (':' typeRef=TypeRef)?;
+	//	name=IdentifierName optional?='?'? (':' typeRef=TypeRef)?;
 	public TStructFieldElements getTStructFieldAccess() {
 		return pTStructField;
 	}
@@ -2681,7 +2672,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//TStructGetter:
 	//	=> ({TStructGetter}
 	//	'get'
-	//	name=IdentifierName)
+	//	name=IdentifierName) optional?='?'?
 	//	'(' ')' (':' declaredTypeRef=TypeRef)?;
 	public TStructGetterElements getTStructGetterAccess() {
 		return pTStructGetter;
@@ -2694,7 +2685,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//TStructSetter:
 	//	=> ({TStructSetter}
 	//	'set'
-	//	name=IdentifierName)
+	//	name=IdentifierName) optional?='?'?
 	//	'(' fpar=TAnonymousFormalParameter ')';
 	public TStructSetterElements getTStructSetterAccess() {
 		return pTStructSetter;
@@ -2780,16 +2771,6 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getWildcardNewNotationRule() {
 		return getWildcardNewNotationAccess().getRule();
-	}
-	
-	//UndefModifierToken UndefModifier:
-	//	'?'
-	public UndefModifierTokenElements getUndefModifierTokenAccess() {
-		return pUndefModifierToken;
-	}
-	
-	public ParserRule getUndefModifierTokenRule() {
-		return getUndefModifierTokenAccess().getRule();
 	}
 	
 	//TypeVariable:

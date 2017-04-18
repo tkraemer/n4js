@@ -31,17 +31,17 @@ function truncate(s: string, n: number) {
 }
 
 export public class AssertionError extends Error{
-    public actual: any?;
-    public expected: any?;
-    public operator: string?;
-    public stackStartFunction: Function?;
+    public actual?: any;
+    public expected?: any;
+    public operator?: string;
+    public stackStartFunction?: Function;
     constructor (spec: ~Object with {
-        stack: Array<string>?;
-        actual: any?;
-        expected: any?;
-        operator: string?;
-        stackStartFunction: Function?;
-        message: string?;
+        stack?: Array<string>;
+        actual?: any;
+        expected?: any;
+        operator?: string;
+        stackStartFunction?: Function;
+        message?: string;
     }) {
         spec = spec || {};
         let stackHolder: ~Object with {stack: string;} = {stack:""}

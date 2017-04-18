@@ -10,33 +10,33 @@
  */
 package eu.numberfour.n4js.postprocessing
 
+import com.google.common.base.Optional
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import eu.numberfour.n4js.n4JS.FormalParameter
+import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.FunctionExpression
+import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
+import eu.numberfour.n4js.ts.types.ContainerType
+import eu.numberfour.n4js.ts.types.InferenceVariable
+import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.types.TFunction
+import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.constraints.InferenceContext
 import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import it.xsemantics.runtime.RuleEnvironment
+import java.util.HashMap
+import java.util.Map
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.ts.types.util.Variance
-import eu.numberfour.n4js.ts.types.ContainerType
-import eu.numberfour.n4js.n4JS.FormalParameter
-import eu.numberfour.n4js.ts.types.TFormalParameter
-import eu.numberfour.n4js.ts.types.InferenceVariable
-import eu.numberfour.n4js.n4JS.IdentifierRef
-import eu.numberfour.n4js.n4JS.FunctionDefinition
-import java.util.Map
-import java.util.HashMap
-import com.google.common.base.Optional
 
 /**
  * {@link PolyProcessor} delegates here for processing array literals.
@@ -80,6 +80,9 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 
 		processFormalParameters(G, cache, infCtx, funExpr, funTE, expectedTypeRef);
 		processReturnType(G, cache, infCtx, funExpr, funTE);
+
+		funTE.returnValueMarkedOptional = expectedTypeRef instanceof FunctionTypeExprOrRef
+			&& (expectedTypeRef as FunctionTypeExprOrRef).returnValueOptional;
 
 		// create temporary type (i.e. may contain inference variables)
 		val resultTypeRef = if (fun.typeVars.empty) {
@@ -242,11 +245,13 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 	private def void handleOnSolved(RuleEnvironment G, ASTMetaInfoCache cache, InferenceContext infCtx, FunctionExpression funExpr,
 		FunctionTypeExpression resultTypeRef, Optional<Map<InferenceVariable, TypeRef>> solution
 	) {
-		val fun = funExpr.definedType as TFunction; // types builder will have created this already
 		val solution2 = if (solution.present) solution.get else infCtx.createPseudoSolution(G.anyTypeRef);
 		val resultSolved = resultTypeRef.applySolution(G, solution2) as FunctionTypeExprOrRef;
 		cache.storeType(funExpr, resultSolved);
+		// update the defined function in the TModule
+		val fun = funExpr.definedType as TFunction; // types builder will have created this already
 		fun.replaceDeferredTypeRefs(resultSolved);
+		fun.returnValueMarkedOptional = resultSolved.returnValueOptional;
 		// store types of fpars in cache ...
 		val len = Math.min(funExpr.fpars.size, fun.fpars.size);
 		for (var i = 0; i < len; i++) {

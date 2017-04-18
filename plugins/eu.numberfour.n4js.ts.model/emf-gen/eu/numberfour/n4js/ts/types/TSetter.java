@@ -104,7 +104,7 @@ public interface TSetter extends FieldAccessor, TMemberWithAccessModifier {
 	 * Overrides TMember's method.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _name = this.getName();\n<%java.lang.String%> _plus = (\"set \" + _name);\n<%java.lang.String%> _plus_1 = (_plus + \"(\");\n<%eu.numberfour.n4js.ts.types.TFormalParameter%> _fpar = this.getFpar();\n<%java.lang.String%> _formalParameterAsString = null;\nif (_fpar!=null)\n{\n\t_formalParameterAsString=_fpar.getFormalParameterAsString();\n}\n<%java.lang.String%> _plus_2 = (_plus_1 + _formalParameterAsString);\nreturn (_plus_2 + \")\");'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _name = this.getName();\n<%java.lang.String%> _plus = (\"set \" + _name);\n<%java.lang.String%> _xifexpression = null;\nboolean _isOptional = this.isOptional();\nif (_isOptional)\n{\n\t_xifexpression = \"?\";\n}\nelse\n{\n\t_xifexpression = \"\";\n}\n<%java.lang.String%> _plus_1 = (_plus + _xifexpression);\n<%java.lang.String%> _plus_2 = (_plus_1 + \"(\");\n<%eu.numberfour.n4js.ts.types.TFormalParameter%> _fpar = this.getFpar();\n<%java.lang.String%> _formalParameterAsString = null;\nif (_fpar!=null)\n{\n\t_formalParameterAsString=_fpar.getFormalParameterAsString();\n}\n<%java.lang.String%> _plus_3 = (_plus_2 + _formalParameterAsString);\nreturn (_plus_3 + \")\");'"
 	 * @generated
 	 */
 	String getMemberAsString();

@@ -44,6 +44,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyNameValuePairImpl#getDeclaredTypeRef <em>Declared Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyNameValuePairImpl#getBogusTypeRef <em>Bogus Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyNameValuePairImpl#getDefinedField <em>Defined Field</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyNameValuePairImpl#isDeclaredOptional <em>Declared Optional</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyNameValuePairImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  *
@@ -79,6 +80,26 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 	 * @ordered
 	 */
 	protected TStructField definedField;
+
+	/**
+	 * The default value of the '{@link #isDeclaredOptional() <em>Declared Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeclaredOptional()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean DECLARED_OPTIONAL_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isDeclaredOptional() <em>Declared Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeclaredOptional()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean declaredOptional = DECLARED_OPTIONAL_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -238,6 +259,27 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isDeclaredOptional() {
+		return declaredOptional;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDeclaredOptional(boolean newDeclaredOptional) {
+		boolean oldDeclaredOptional = declaredOptional;
+		declaredOptional = newDeclaredOptional;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DECLARED_OPTIONAL, oldDeclaredOptional, declaredOptional));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Expression getExpression() {
 		return expression;
 	}
@@ -332,6 +374,8 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DEFINED_FIELD:
 				if (resolve) return getDefinedField();
 				return basicGetDefinedField();
+			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DECLARED_OPTIONAL:
+				return isDeclaredOptional();
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__EXPRESSION:
 				return getExpression();
 		}
@@ -354,6 +398,9 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 				return;
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DEFINED_FIELD:
 				setDefinedField((TStructField)newValue);
+				return;
+			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DECLARED_OPTIONAL:
+				setDeclaredOptional((Boolean)newValue);
 				return;
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__EXPRESSION:
 				setExpression((Expression)newValue);
@@ -379,6 +426,9 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DEFINED_FIELD:
 				setDefinedField((TStructField)null);
 				return;
+			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DECLARED_OPTIONAL:
+				setDeclaredOptional(DECLARED_OPTIONAL_EDEFAULT);
+				return;
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__EXPRESSION:
 				setExpression((Expression)null);
 				return;
@@ -400,6 +450,8 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 				return bogusTypeRef != null;
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DEFINED_FIELD:
 				return definedField != null;
+			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__DECLARED_OPTIONAL:
+				return declaredOptional != DECLARED_OPTIONAL_EDEFAULT;
 			case N4JSPackage.PROPERTY_NAME_VALUE_PAIR__EXPRESSION:
 				return expression != null;
 		}
@@ -498,6 +550,22 @@ public class PropertyNameValuePairImpl extends AnnotablePropertyAssignmentImpl i
 				return isValidName();
 		}
 		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (declaredOptional: ");
+		result.append(declaredOptional);
+		result.append(')');
+		return result.toString();
 	}
 
 } //PropertyNameValuePairImpl

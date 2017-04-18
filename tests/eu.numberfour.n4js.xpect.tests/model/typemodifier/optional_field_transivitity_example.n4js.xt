@@ -1,0 +1,28 @@
+ /* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP */
+
+class A {
+	public field?: string; // possible new syntax for this:  public field: string = undefined; OR use a dedicated annotation for this
+}
+
+class B {
+}
+
+class C {
+	public field: number;
+}
+
+let sa: ~A = new A();
+let sb: ~B = new B();
+let c: C = new C();
+
+//XPECT noerrors -->
+sa = {};
+
+//XPECT errors --> "~B is not a structural subtype of ~A: missing field field." at "sb"
+sa = sb;
+
+//XPECT errors --> "C is not a structural subtype of ~A: field failed: number is not equal to string." at "c"
+sa = c;
+
+//XPECT noerrors -->
+sb = c;

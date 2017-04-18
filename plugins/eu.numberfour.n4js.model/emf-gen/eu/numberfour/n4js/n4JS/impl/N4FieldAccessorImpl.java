@@ -65,6 +65,7 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure0;
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4FieldAccessorImpl#getBody <em>Body</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4FieldAccessorImpl#get_lok <em>lok</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4FieldAccessorImpl#getDeclaredName <em>Declared Name</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.impl.N4FieldAccessorImpl#isDeclaredOptional <em>Declared Optional</em>}</li>
  * </ul>
  *
  * @generated
@@ -99,6 +100,26 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 	 * @ordered
 	 */
 	protected LiteralOrComputedPropertyName declaredName;
+
+	/**
+	 * The default value of the '{@link #isDeclaredOptional() <em>Declared Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeclaredOptional()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean DECLARED_OPTIONAL_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isDeclaredOptional() <em>Declared Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeclaredOptional()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean declaredOptional = DECLARED_OPTIONAL_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -253,6 +274,27 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isDeclaredOptional() {
+		return declaredOptional;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDeclaredOptional(boolean newDeclaredOptional) {
+		boolean oldDeclaredOptional = declaredOptional;
+		declaredOptional = newDeclaredOptional;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.N4_FIELD_ACCESSOR__DECLARED_OPTIONAL, oldDeclaredOptional, declaredOptional));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isAbstract() {
 		return ((((this.eContainer() instanceof N4InterfaceDeclaration) && (this.getBody() == null)) && 
 			(!IterableExtensions.<Annotation>exists(this.getAnnotations(), new Function1<Annotation, Boolean>() {
@@ -320,6 +362,15 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isOptional() {
+		return this.isDeclaredOptional();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getName() {
 		LiteralOrComputedPropertyName _declaredName = this.getDeclaredName();
 		String _name = null;
@@ -327,6 +378,16 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 			_name=_declaredName.getName();
 		}
 		return _name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean hasComputedPropertyName() {
+		final LiteralOrComputedPropertyName declName = this.getDeclaredName();
+		return ((declName != null) && declName.hasComputedPropertyName());
 	}
 
 	/**
@@ -348,6 +409,15 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 			EcoreUtilN4.doWithDeliver(false, _function, this);
 		}
 		return this.get_lok();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isReturnValueOptional() {
+		return false;
 	}
 
 	/**
@@ -422,6 +492,8 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 				return get_lok();
 			case N4JSPackage.N4_FIELD_ACCESSOR__DECLARED_NAME:
 				return getDeclaredName();
+			case N4JSPackage.N4_FIELD_ACCESSOR__DECLARED_OPTIONAL:
+				return isDeclaredOptional();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -442,6 +514,9 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 				return;
 			case N4JSPackage.N4_FIELD_ACCESSOR__DECLARED_NAME:
 				setDeclaredName((LiteralOrComputedPropertyName)newValue);
+				return;
+			case N4JSPackage.N4_FIELD_ACCESSOR__DECLARED_OPTIONAL:
+				setDeclaredOptional((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -464,6 +539,9 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 			case N4JSPackage.N4_FIELD_ACCESSOR__DECLARED_NAME:
 				setDeclaredName((LiteralOrComputedPropertyName)null);
 				return;
+			case N4JSPackage.N4_FIELD_ACCESSOR__DECLARED_OPTIONAL:
+				setDeclaredOptional(DECLARED_OPTIONAL_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -482,6 +560,8 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 				return _lok != null;
 			case N4JSPackage.N4_FIELD_ACCESSOR__DECLARED_NAME:
 				return declaredName != null;
+			case N4JSPackage.N4_FIELD_ACCESSOR__DECLARED_OPTIONAL:
+				return declaredOptional != DECLARED_OPTIONAL_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -518,6 +598,7 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 		}
 		if (baseClass == eu.numberfour.n4js.n4JS.FieldAccessor.class) {
 			switch (derivedFeatureID) {
+				case N4JSPackage.N4_FIELD_ACCESSOR__DECLARED_OPTIONAL: return N4JSPackage.FIELD_ACCESSOR__DECLARED_OPTIONAL;
 				default: return -1;
 			}
 		}
@@ -556,6 +637,7 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 		}
 		if (baseClass == eu.numberfour.n4js.n4JS.FieldAccessor.class) {
 			switch (baseFeatureID) {
+				case N4JSPackage.FIELD_ACCESSOR__DECLARED_OPTIONAL: return N4JSPackage.N4_FIELD_ACCESSOR__DECLARED_OPTIONAL;
 				default: return -1;
 			}
 		}
@@ -603,6 +685,7 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 			switch (baseOperationID) {
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_NAME: return N4JSPackage.N4_FIELD_ACCESSOR___GET_NAME;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_LOCAL_ARGUMENTS_VARIABLE: return N4JSPackage.N4_FIELD_ACCESSOR___GET_LOCAL_ARGUMENTS_VARIABLE;
+				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___IS_RETURN_VALUE_OPTIONAL: return N4JSPackage.N4_FIELD_ACCESSOR___IS_RETURN_VALUE_OPTIONAL;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC: return N4JSPackage.N4_FIELD_ACCESSOR___IS_ASYNC;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR: return N4JSPackage.N4_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR;
 				default: return -1;
@@ -611,6 +694,7 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.N4_FIELD_ACCESSOR___GET_NAME;
+				case N4JSPackage.PROPERTY_NAME_OWNER___HAS_COMPUTED_PROPERTY_NAME: return N4JSPackage.N4_FIELD_ACCESSOR___HAS_COMPUTED_PROPERTY_NAME;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.N4_FIELD_ACCESSOR___IS_VALID_NAME;
 				default: return -1;
 			}
@@ -619,6 +703,7 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 			switch (baseOperationID) {
 				case N4JSPackage.FIELD_ACCESSOR___GET_DECLARED_TYPE_REF: return N4JSPackage.N4_FIELD_ACCESSOR___GET_DECLARED_TYPE_REF;
 				case N4JSPackage.FIELD_ACCESSOR___GET_DEFINED_ACCESSOR: return N4JSPackage.N4_FIELD_ACCESSOR___GET_DEFINED_ACCESSOR;
+				case N4JSPackage.FIELD_ACCESSOR___IS_OPTIONAL: return N4JSPackage.N4_FIELD_ACCESSOR___IS_OPTIONAL;
 				default: return -1;
 			}
 		}
@@ -641,10 +726,16 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 				return getDeclaredTypeRef();
 			case N4JSPackage.N4_FIELD_ACCESSOR___GET_DEFINED_ACCESSOR:
 				return getDefinedAccessor();
+			case N4JSPackage.N4_FIELD_ACCESSOR___IS_OPTIONAL:
+				return isOptional();
 			case N4JSPackage.N4_FIELD_ACCESSOR___GET_NAME:
 				return getName();
+			case N4JSPackage.N4_FIELD_ACCESSOR___HAS_COMPUTED_PROPERTY_NAME:
+				return hasComputedPropertyName();
 			case N4JSPackage.N4_FIELD_ACCESSOR___GET_LOCAL_ARGUMENTS_VARIABLE:
 				return getLocalArgumentsVariable();
+			case N4JSPackage.N4_FIELD_ACCESSOR___IS_RETURN_VALUE_OPTIONAL:
+				return isReturnValueOptional();
 			case N4JSPackage.N4_FIELD_ACCESSOR___IS_ASYNC:
 				return isAsync();
 			case N4JSPackage.N4_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR:
@@ -653,6 +744,22 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 				return appliesOnlyToBlockScopedElements();
 		}
 		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (declaredOptional: ");
+		result.append(declaredOptional);
+		result.append(')');
+		return result.toString();
 	}
 
 } //N4FieldAccessorImpl

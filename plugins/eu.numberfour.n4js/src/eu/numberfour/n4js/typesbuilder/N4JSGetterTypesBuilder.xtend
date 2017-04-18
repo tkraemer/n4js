@@ -28,14 +28,16 @@ package class N4JSGetterTypesBuilder extends AbstractFunctionDefinitionTypesBuil
 	@Inject extension N4JSTypesBuilderHelper
 
 	def package TGetter createGetter(N4GetterDeclaration n4Getter, TClassifier classifierType, boolean preLinkingPhase) {
-		if (n4Getter.name === null) {
+		if (n4Getter.name === null && !n4Getter.hasComputedPropertyName) {
 			return null
 		}
 		val getterType = TypesFactory::eINSTANCE.createTGetter
-		getterType.name = n4Getter.name
+		getterType.setMemberName(n4Getter);
+
 		getterType.declaredAbstract = n4Getter.abstract
 		getterType.declaredStatic = n4Getter.declaredStatic
 		getterType.declaredFinal = n4Getter.declaredFinal
+		getterType.optional = n4Getter.optional;
 		getterType.declaredOverride = AnnotationDefinition.OVERRIDE.hasAnnotation(n4Getter);
 
 		getterType.hasNoBody = n4Getter.body ===null&& !AnnotationDefinition.PROVIDES_DEFAULT_IMPLEMENTATION.hasAnnotation(n4Getter);

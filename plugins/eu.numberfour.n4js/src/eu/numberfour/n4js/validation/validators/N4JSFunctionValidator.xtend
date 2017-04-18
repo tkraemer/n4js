@@ -23,42 +23,42 @@ import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor
 import eu.numberfour.n4js.n4JS.GetterDeclaration
+import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.ReturnStatement
 import eu.numberfour.n4js.n4JS.SetterDeclaration
 import eu.numberfour.n4js.n4JS.ThrowStatement
+import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
-import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.types.TFunction
-import eu.numberfour.n4js.ts.types.TStructField
 import eu.numberfour.n4js.ts.types.TStructSetter
-import eu.numberfour.n4js.ts.types.UndefModifier
+import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.utils.N4JSLanguageHelper
 import eu.numberfour.n4js.utils.nodemodel.HiddenLeafAccess
 import eu.numberfour.n4js.utils.nodemodel.HiddenLeafs
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 import java.util.List
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
+import static eu.numberfour.n4js.validation.helper.FunctionValidationHelper.*
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.*
 import static eu.numberfour.n4js.validation.validators.StaticPolyfillValidatorExtension.*
 import static org.eclipse.xtext.util.Strings.toFirstUpper
@@ -66,13 +66,6 @@ import static org.eclipse.xtext.util.Strings.toFirstUpper
 import static extension com.google.common.base.Strings.*
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.EcoreUtilN4.*
-import org.eclipse.xtext.EcoreUtil2
-import eu.numberfour.n4js.n4JS.IdentifierRef
-import eu.numberfour.n4js.n4JS.VariableDeclaration
-
-
-
-import static extension eu.numberfour.n4js.validation.helper.FunctionValidationHelper.*;
 
 /**
  */
@@ -178,27 +171,8 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		if (!jsVariantHelper.requireCheckFunctionReturn(functionDefinition)) {
 			return; // cf. 13.1
 		}
-		holdsDeclaredReturnTypeRefDoesNotReferToNull(functionDefinition);
 		holdsFunctionReturn(functionDefinition as FunctionOrFieldAccessor);
 	}
-
-	/** IDEBUG-779  Return-Type Annotations without type but just an optional modifier are not allowed.
-	 */
-    private def boolean holdsDeclaredReturnTypeRefDoesNotReferToNull(FunctionDefinition funDef) {
-    	val declTypeRef = funDef.returnTypeRef;
-    	if( declTypeRef !== null ) {
-    		if( declTypeRef instanceof ParameterizedTypeRef ){
-	    		if( declTypeRef.declaredType === null )
-	    		{
-	    			val kind = if( funDef instanceof N4MethodDeclaration ) "Method" else "Function";
-	    			val message = IssueCodes.getMessageForFUN_RETURN_TYPE_MODIFIER_WITHOUT_TYPE(kind, funDef.name);
-	    			addIssue(message, funDef, N4JSPackage.Literals.FUNCTION_DEFINITION__RETURN_TYPE_REF, IssueCodes.FUN_RETURN_TYPE_MODIFIER_WITHOUT_TYPE );
-	    			return false;
-	    		}
-    		}
-    	}
-    	return true;
-    }
 
 	/**
      * Return-Type checking.
@@ -218,34 +192,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		val inferredType = ts.tau(functionOrFieldAccessor)
 		val TypeRef retTypeRef = switch inferredType {
 			// note: order is important, because FunctionTypeRef IS a ParameterizedTypeRef as well
-			FunctionTypeExprOrRef: {
-				var typeRef = inferredType?.returnTypeRef;
-				if(functionOrFieldAccessor instanceof FunctionDefinition) {
-					val tFun = functionOrFieldAccessor.definedType;
-					
-					if (functionOrFieldAccessor.isAsync) {
-						typeRef = functionOrFieldAccessor.returnTypeRef
-						if (TypeUtils.isUndefined(typeRef)) {
-							typeRef = newRuleEnvironment(functionOrFieldAccessor).voidTypeRef;
-						}
-					}
-					
-					if (functionOrFieldAccessor.isGenerator) {
-						if (tFun instanceof TFunction) {
-							val actualReturnTypeRef = tFun.returnTypeRef;
-							if (actualReturnTypeRef.typeArgs.length >= 2) {
-								val tReturn = actualReturnTypeRef.typeArgs.get(1);
-								val ruleEnv = newRuleEnvironment(functionOrFieldAccessor);
-								typeRef = ts.resolveType(ruleEnv, tReturn);
-								if (TypeUtils.isUndefined(typeRef)) {
-									typeRef = newRuleEnvironment(functionOrFieldAccessor).voidTypeRef;
-								}
-							}
-						}
-					}
-				}
-				typeRef;
-			}
+			FunctionTypeExprOrRef: getActualReturnTypeRef(functionOrFieldAccessor, inferredType)
 			ParameterizedTypeRef: inferredType
 			default: null
 		}
@@ -263,7 +210,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		val isVoid = TypeUtils.isOrContainsType(retTypeRef, _void);
 		val isNotVoid =  !isVoid ||
 			(retTypeRef instanceof ComposedTypeRef && (retTypeRef as ComposedTypeRef).typeRefs.size>1);
-		val isOptionalReturnType = retTypeRef.undefModifier == UndefModifier.OPTIONAL;
+		val isOptionalReturnType = functionOrFieldAccessor.isReturnValueOptional;
 
 
 		val FunctionFullReport analysis = returnOrThrowAnalysis.exitBehaviourWithFullReport(functionOrFieldAccessor.body?.statements)
@@ -290,6 +237,35 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		return holdsFunctionReturnsSomething(functionOrFieldAccessor, retTypeRef, analysis)
 	}
 
+	private def TypeRef getActualReturnTypeRef(FunctionOrFieldAccessor functionOrFieldAccessor, FunctionTypeExprOrRef inferredType) {
+		var typeRef = inferredType?.returnTypeRef;
+		if(functionOrFieldAccessor instanceof FunctionDefinition) {
+			val tFun = functionOrFieldAccessor.definedType;
+			if (functionOrFieldAccessor.isAsync) {
+				typeRef = getTypeArgumentOfReturnType(functionOrFieldAccessor, tFun, 0);
+			}
+			if (functionOrFieldAccessor.isGenerator) {
+				typeRef = getTypeArgumentOfReturnType(functionOrFieldAccessor, tFun, 1);
+			}
+		}
+		return typeRef;
+	}
+	
+	private def getTypeArgumentOfReturnType(FunctionOrFieldAccessor functionOrFieldAccessor, Type tFun, int idx) {
+		if (tFun instanceof TFunction) {
+			val actualReturnTypeRef = tFun.returnTypeRef;
+			if (actualReturnTypeRef.typeArgs.length > idx) {
+				val tReturn = actualReturnTypeRef.typeArgs.get(idx);
+				val ruleEnv = newRuleEnvironment(functionOrFieldAccessor);
+				var typeRef = ts.resolveType(ruleEnv, tReturn);
+				if (TypeUtils.isUndefined(typeRef)) {
+					typeRef = newRuleEnvironment(functionOrFieldAccessor).voidTypeRef;
+				}
+				return typeRef;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Given a function/method with returntype void, checking the lack of returns or presence of empty returns
@@ -585,7 +561,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Check
 	def void checkOptionalModifier(FormalParameter fpar) {
-		if(fpar.declaredTypeRef?.undefModifier === UndefModifier.OPTIONAL) {
+		if(fpar.declaredTypeRef!==null && fpar.declaredTypeRef.followedByQuestionMark) {
 			val String msg = getMessageForFUN_PARAM_OPTIONAL_WRONG_SYNTAX(fpar.name)
 			addIssue(msg, fpar, FUN_PARAM_OPTIONAL_WRONG_SYNTAX)
 		}
@@ -593,7 +569,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Check
 	def void checkOptionalModifierT(TFormalParameter fpar) {
-		if(fpar.typeRef?.undefModifier === UndefModifier.OPTIONAL) {
+		if(fpar.typeRef!==null && fpar.typeRef.followedByQuestionMark) {
 			val String msg = getMessageForFUN_PARAM_OPTIONAL_WRONG_SYNTAX(fpar.typeRef?.declaredType?.name)
 			addIssue(msg, fpar, FUN_PARAM_OPTIONAL_WRONG_SYNTAX)
 		}
@@ -623,11 +599,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	
 	private def void internalCheckOptionalsHaveType(TFormalParameter[] fpars) {
 		for (fp : fpars) {
-			// 1. check missing type declaration
-			if (fp.optional) {
-				fp.typeRef.addIssueIfNoDeclaredOrUsableType
-			}
-			// 2. only 'undefined' as identifier allowed
+			// only 'undefined' as identifier allowed
 			if (fp.hasASTInitializer && !"undefined".equals(fp.astInitializer)) {
 				addIssue( messageForFUN_PARAM_INITIALIZER_ONLY_UNDEFINED_ALLOWED, fp, FUN_PARAM_INITIALIZER_ONLY_UNDEFINED_ALLOWED )
 			}
@@ -644,7 +616,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		];
 		<FormalParameter>internalCheckFormalParameters(fun.fpars, [variadic], [hasInitializerAssignment], [name], issueConsumer);
 	}
-	
+
 	private def internalCheckInitializerBindings(FunctionDefinition fun) {
 		if (fun.body === null)
 			return;
@@ -662,22 +634,11 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 
-	/* IDEBUG-211 checking Undefined, Variadic and missing Typenames. */
-	@Check
-	def void checkStructuralTField(TStructField tfield) {
-		if(tfield.typeRef?.undefModifier == UndefModifier.OPTIONAL) {
-			if(tfield.typeRef.isMissing ) {
-				addIssue( messageForFUN_PARAM_MISSING_TYPE_NAME_FOR_OPTIONAL, tfield.typeRef, FUN_PARAM_MISSING_TYPE_NAME_FOR_OPTIONAL )
-			}
-		}
-	}
-
 
 	/** IDEBUG-211 invalid combination of undefined, variadic & omitting type */
 	def holdsModifierOfParamsHaveType(EList<FormalParameter> list) {
 		for(fp:list) {
 			if(fp.definedTypeElement.hasInitializerAssignment) {
-				fp.declaredTypeRef.addIssueIfNoDeclaredOrUsableType
 				if(fp.variadic) {
 					addIssue(messageForFUN_PARAM_VARIADIC_WITH_INITIALIZER, fp, FUN_PARAM_VARIADIC_WITH_INITIALIZER)
 				}
@@ -690,28 +651,11 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	def holdsModifierOfParamsHaveTType(List<TFormalParameter> list) {
 		for(fp:list) {
 			if(fp.hasInitializerAssignment) {
-				fp.typeRef.addIssueIfNoDeclaredOrUsableType
 				if(fp.variadic) {
 					addIssue(messageForFUN_PARAM_VARIADIC_WITH_INITIALIZER, fp, FUN_PARAM_VARIADIC_WITH_INITIALIZER)
 				}
 			}
 		}
-	}
-
-	/* Part of the holdsModifierOfParamsHaveXX test. Ensures a usable type information is donated by either a
-	 * declaredType, a union/intersection, a ThisTypeRefStructural or a FunctionTypeExpression.*/
-	private def addIssueIfNoDeclaredOrUsableType(TypeRef typeRef) {
-		if (typeRef===null || typeRef.isMissing) {
-			addIssue( messageForFUN_PARAM_MISSING_TYPE_NAME_FOR_OPTIONAL, typeRef, FUN_PARAM_MISSING_TYPE_NAME_FOR_OPTIONAL )
-		}
-	}
-
-	def boolean isMissing(TypeRef typeRef) {
-		!(typeRef instanceof FunctionTypeExpression)
-			&& !(typeRef instanceof ThisTypeRef)
-			&& !(typeRef instanceof ComposedTypeRef)
-			&& !(typeRef instanceof TypeTypeRef)
-			&& typeRef.declaredType === null
 	}
 
 	/**

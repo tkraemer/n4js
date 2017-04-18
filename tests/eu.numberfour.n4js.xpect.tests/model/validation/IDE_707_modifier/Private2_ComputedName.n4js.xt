@@ -24,6 +24,6 @@ class B extends N.A {
 function f(a : N.A) {
 	// XPECT errors --> "The field x is not visible." at "a['x']"
 	console.log(a['x'])
-	// XPECT errors --> "Member [z] not found." at "a['z']"
+	// XPECT errors --> "Member z not found." at "a['z']"
 	console.log(a['z'])
 }

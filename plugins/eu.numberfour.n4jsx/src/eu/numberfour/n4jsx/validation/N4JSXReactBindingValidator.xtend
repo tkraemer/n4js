@@ -275,7 +275,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		
 		// Type check each attribute in spreader operator against the corresponding props type's field/getter
 		attributesInSpreadOperatorType.forEach [ attributeInSpreadOperator |
-			val attributeInSpreadOperatorTypeRef = attributeInSpreadOperator.typeRefOfFieldOrGetter;
+			val attributeInSpreadOperatorTypeRef = reactHelper.typeRefOfFieldOrGetter(attributeInSpreadOperator, exprTypeResult.value);
 			val fieldOrGetterInProps = fieldsOrGettersInProps.findFirst[fieldOrGetter | attributeInSpreadOperator.name == fieldOrGetter.name];
 			
 			if (fieldOrGetterInProps !== null) {

@@ -30,9 +30,7 @@ import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
-import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemanticSequencer {
@@ -345,8 +343,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *
 	 * Constraint:
 	 *     (
-	 *         undefModifier=UndefModifierToken | 
-	 *         (declaredType=[Type|TypeReferenceName] (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? dynamic?='+'? undefModifier=UndefModifierToken?) | 
+	 *         (declaredType=[Type|TypeReferenceName] (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? dynamic?='+'? followedByQuestionMark?='?'?) | 
 	 *         (arrayTypeLiteral?='[' typeArgs+=TypeArgument)
 	 *     )
 	 */
@@ -430,11 +427,11 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *             declaredThisType=TypeRefFunctionTypeExpression? 
 	 *             (ownedTypeVars+=TypeVariable ownedTypeVars+=TypeVariable*)? 
 	 *             (
-	 *                 (returnTypeRef=TypeRef? undefModifier=UndefModifierToken?) | 
+	 *                 (returnTypeRef=TypeRef? followedByQuestionMark?='?'?) | 
 	 *                 (
 	 *                     fpars+=TAnonymousFormalParameter 
 	 *                     fpars+=TAnonymousFormalParameter* 
-	 *                     (returnTypeRef=PrimaryTypeExpression | (returnTypeRef=TypeRef? undefModifier=UndefModifierToken?))
+	 *                     (returnTypeRef=PrimaryTypeExpression | (returnTypeRef=TypeRef? followedByQuestionMark?='?'?))
 	 *                 )
 	 *             )
 	 *         )
@@ -474,7 +471,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *         (ownedTypeVars+=TypeVariable ownedTypeVars+=TypeVariable*)? 
 	 *         (fpars+=TAnonymousFormalParameter fpars+=TAnonymousFormalParameter*)? 
 	 *         returnTypeRef=TypeRef? 
-	 *         undefModifier=UndefModifierToken?
+	 *         followedByQuestionMark?='?'?
 	 *     )
 	 */
 	protected void sequence_FunctionTypeExpressionOLD_TAnonymousFormalParameterList_TypeRefWithModifiers(ISerializationContext context, FunctionTypeExpression semanticObject) {
@@ -503,7 +500,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TypeRefWithModifiers returns IntersectionTypeExpression
 	 *
 	 * Constraint:
-	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* undefModifier=UndefModifierToken?)
+	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* followedByQuestionMark?='?'?)
 	 */
 	protected void sequence_IntersectionTypeExpressionOLD_TypeRefWithModifiers(ISerializationContext context, IntersectionTypeExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -523,7 +520,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 * Constraint:
 	 *     (
 	 *         (typeRefs+=IntersectionTypeExpression_IntersectionTypeExpression_1_0 typeRefs+=PrimaryTypeExpression+) | 
-	 *         (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* undefModifier=UndefModifierToken?)
+	 *         (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* followedByQuestionMark?='?'?)
 	 *     )
 	 */
 	protected void sequence_IntersectionTypeExpression_IntersectionTypeExpressionOLD_TypeRefWithModifiers(ISerializationContext context, IntersectionTypeExpression semanticObject) {
@@ -551,10 +548,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TypeRefWithModifiers returns ParameterizedTypeRef
 	 *
 	 * Constraint:
-	 *     (
-	 *         undefModifier=UndefModifierToken | 
-	 *         (declaredType=[Type|TypeReferenceName] (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? dynamic?='+'? undefModifier=UndefModifierToken?)
-	 *     )
+	 *     (declaredType=[Type|TypeReferenceName] (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? dynamic?='+'? followedByQuestionMark?='?'?)
 	 */
 	protected void sequence_ParameterizedTypeRefNominal_TypeRefWithModifiers_TypeRefWithoutModifiers(ISerializationContext context, ParameterizedTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -612,7 +606,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *         (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? 
 	 *         astStructuralMembers+=TStructMember* 
 	 *         dynamic?='+'? 
-	 *         undefModifier=UndefModifierToken?
+	 *         followedByQuestionMark?='?'?
 	 *     )
 	 */
 	protected void sequence_ParameterizedTypeRefStructural_TStructMemberList_TypeRefWithModifiers_TypeRefWithoutModifiers(ISerializationContext context, ParameterizedTypeRefStructural semanticObject) {
@@ -662,7 +656,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TStructField returns TStructField
 	 *
 	 * Constraint:
-	 *     (name=IdentifierName typeRef=TypeRef?)
+	 *     (name=IdentifierName optional?='?'? typeRef=TypeRef?)
 	 */
 	protected void sequence_TStructField(ISerializationContext context, TStructField semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -675,7 +669,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TStructGetter returns TStructGetter
 	 *
 	 * Constraint:
-	 *     (name=IdentifierName declaredTypeRef=TypeRef?)
+	 *     (name=IdentifierName optional?='?'? declaredTypeRef=TypeRef?)
 	 */
 	protected void sequence_TStructGetter(ISerializationContext context, TStructGetter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -709,7 +703,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TypeArgument returns ThisTypeRefStructural
 	 *
 	 * Constraint:
-	 *     (definedTypingStrategy=TypingStrategyUseSiteOperator astStructuralMembers+=TStructMember* dynamic?='+'? undefModifier=UndefModifierToken?)
+	 *     (definedTypingStrategy=TypingStrategyUseSiteOperator astStructuralMembers+=TStructMember* dynamic?='+'? followedByQuestionMark?='?'?)
 	 */
 	protected void sequence_TStructMemberList_ThisTypeRefStructural_TypeRefWithModifiers_TypeRefWithoutModifiers(ISerializationContext context, ThisTypeRefStructural semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -734,19 +728,10 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TStructSetter returns TStructSetter
 	 *
 	 * Constraint:
-	 *     (name=IdentifierName fpar=TAnonymousFormalParameter)
+	 *     (name=IdentifierName optional?='?'? fpar=TAnonymousFormalParameter)
 	 */
 	protected void sequence_TStructSetter(ISerializationContext context, TStructSetter semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, TypesPackage.Literals.IDENTIFIABLE_ELEMENT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypesPackage.Literals.IDENTIFIABLE_ELEMENT__NAME));
-			if (transientValues.isValueTransient(semanticObject, TypesPackage.Literals.TSETTER__FPAR) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypesPackage.Literals.TSETTER__FPAR));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTStructSetterAccess().getNameIdentifierNameParserRuleCall_0_0_2_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getTStructSetterAccess().getFparTAnonymousFormalParameterParserRuleCall_2_0(), semanticObject.getFpar());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -778,7 +763,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TypeArgument returns ThisTypeRefNominal
 	 *
 	 * Constraint:
-	 *     (dynamic?='+'? undefModifier=UndefModifierToken?)
+	 *     (dynamic?='+'? followedByQuestionMark?='?'?)
 	 */
 	protected void sequence_ThisTypeRefNominal_TypeRefWithModifiers_TypeRefWithoutModifiers(ISerializationContext context, ThisTypeRefNominal semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -810,7 +795,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TypeArgument returns TypeTypeRef
 	 *
 	 * Constraint:
-	 *     (constructorRef?='constructor'? typeArg=TypeArgInTypeTypeRef undefModifier=UndefModifierToken?)
+	 *     (constructorRef?='constructor'? typeArg=TypeArgInTypeTypeRef followedByQuestionMark?='?'?)
 	 */
 	protected void sequence_TypeRefWithModifiers_TypeTypeRef(ISerializationContext context, TypeTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -823,7 +808,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TypeRefWithModifiers returns UnionTypeExpression
 	 *
 	 * Constraint:
-	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* undefModifier=UndefModifierToken?)
+	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* followedByQuestionMark?='?'?)
 	 */
 	protected void sequence_TypeRefWithModifiers_UnionTypeExpressionOLD(ISerializationContext context, UnionTypeExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -843,7 +828,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 * Constraint:
 	 *     (
 	 *         (typeRefs+=UnionTypeExpression_UnionTypeExpression_1_0 typeRefs+=IntersectionTypeExpression+) | 
-	 *         (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* undefModifier=UndefModifierToken?)
+	 *         (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* followedByQuestionMark?='?'?)
 	 *     )
 	 */
 	protected void sequence_TypeRefWithModifiers_UnionTypeExpression_UnionTypeExpressionOLD(ISerializationContext context, UnionTypeExpression semanticObject) {

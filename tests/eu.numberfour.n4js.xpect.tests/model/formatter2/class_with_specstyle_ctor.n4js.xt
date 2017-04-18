@@ -20,7 +20,7 @@ export public abstract class ImmutableDataObject extends DataObject {
 		let self: Object = this;
 		self[NAME_SLOT] = name;
 	}
-	public constructor(@Spec spec: ~i~this with {__name: string?;}) {
+	public constructor(@Spec spec: ~i~this with {__name?: string;}) {
 		if (spec != null) {
 			this.__name = spec.__name;
 		}
@@ -43,7 +43,7 @@ export public abstract class ImmutableDataObject extends DataObject {
     	let self:Object = this;
         self[NAME_SLOT] = name;
     }
-    public constructor(@Spec spec: ~i~this with {__name: string?;}) {
+    public constructor(@Spec spec: ~i~this with {__name?: string;}) {
         if (spec != null) {
             this.__name = spec.__name;
         }
@@ -72,7 +72,7 @@ export public abstract class ImmutableDataObject2
 		self[NAME_SLOT2] = name;
 	}
 
-	public constructor(@Spec spec: ~i~this with {__name: string?;}) {
+	public constructor(@Spec spec: ~i~this with {__name?: string;}) {
 		if (spec != null) {
 			this.__name = spec.__name;
 		}
@@ -142,9 +142,9 @@ const
                              with 
                              {
                                  __name
+                                 						?
                                    : 
                                       string
-                                      ?
                                         ;
                              }
                 )    

@@ -608,8 +608,8 @@ Contributors:
         </page>
 		<page
               category="eu.numberfour.n4js.N4JS"
-              class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.preferences.ExternalLibraryPreferencePage"
-              id="eu.numberfour.n4js.ui.preferences.ExternalLibraryPreferencePage"
+              class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.preferences.external.ExternalLibraryPreferencePage"
+              id="eu.numberfour.n4js.ui.preferences.external.ExternalLibraryPreferencePage"
               name="N4JS External Libraries">
            <keywordReference
                  id="eu.numberfour.n4js.ui.keyword_N4JS">

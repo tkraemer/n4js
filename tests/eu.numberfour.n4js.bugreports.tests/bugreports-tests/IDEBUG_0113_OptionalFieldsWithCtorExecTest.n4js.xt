@@ -17,7 +17,7 @@ class C {
 	public s : string;
 	n : number;
 	
-	constructor(spec : ~~this with {n: number?;}) {
+	constructor(spec : ~~this with {n?: number;}) {
 		this.s = spec.s;
 		if (spec.n) {
 			this.n = spec.n;

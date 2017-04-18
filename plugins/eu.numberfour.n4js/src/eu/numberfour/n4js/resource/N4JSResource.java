@@ -741,7 +741,8 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 			final URI targetResourceUri = targetUri.trimFragment();
 			final String targetFileExt = targetResourceUri.fileExtension();
 			if (N4JSGlobals.N4JS_FILE_EXTENSION.equals(targetFileExt)
-					|| N4JSGlobals.N4JSD_FILE_EXTENSION.equals(targetFileExt)) {
+					|| N4JSGlobals.N4JSD_FILE_EXTENSION.equals(targetFileExt)
+					|| N4JSGlobals.N4JSX_FILE_EXTENSION.equals(targetFileExt)) {
 				// proxy is pointing into an .n4js or .n4jsd file ...
 				final String targetFragment = targetUri.fragment();
 				final Resource targetResource = resSet.getResource(targetResourceUri, false);

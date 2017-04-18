@@ -7690,6 +7690,11 @@ rulePropertyAssignment
 					ruleLiteralOrComputedPropertyName
 				)
 			)
+			(
+				(
+					QuestionMark
+				)
+			)?
 			Colon
 		)
 		)=>
@@ -7916,6 +7921,11 @@ norm1_PropertyAssignment
 					norm1_LiteralOrComputedPropertyName
 				)
 			)
+			(
+				(
+					QuestionMark
+				)
+			)?
 			Colon
 		)
 		)=>
@@ -8429,20 +8439,28 @@ ruleAnnotatedPropertyAssignment
 					)
 				)
 			)
-			LeftParenthesisKeyword_1_2_1=LeftParenthesis
+			(
+				(
+					DeclaredOptionalQuestionMarkKeyword_1_2_1_0=QuestionMark
+					 {
+						announce($DeclaredOptionalQuestionMarkKeyword_1_2_1_0, grammarAccess.getAnnotatedPropertyAssignmentAccess().getDeclaredOptionalQuestionMarkKeyword_1_2_1_0());
+					}
+				)
+			)?
+			LeftParenthesisKeyword_1_2_2=LeftParenthesis
 			 {
-				announce($LeftParenthesisKeyword_1_2_1, grammarAccess.getAnnotatedPropertyAssignmentAccess().getLeftParenthesisKeyword_1_2_1());
+				announce($LeftParenthesisKeyword_1_2_2, grammarAccess.getAnnotatedPropertyAssignmentAccess().getLeftParenthesisKeyword_1_2_2());
 			}
 			(
 				(
-					FparFormalParameterParserRuleCall_1_2_2_0=ruleFormalParameter{
-						announce($FparFormalParameterParserRuleCall_1_2_2_0.start, $FparFormalParameterParserRuleCall_1_2_2_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getFparAssignment_1_2_2());
+					FparFormalParameterParserRuleCall_1_2_3_0=ruleFormalParameter{
+						announce($FparFormalParameterParserRuleCall_1_2_3_0.start, $FparFormalParameterParserRuleCall_1_2_3_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getFparAssignment_1_2_3());
 					}
 				)
 			)
-			RightParenthesisKeyword_1_2_3=RightParenthesis
+			RightParenthesisKeyword_1_2_4=RightParenthesis
 			 {
-				announce($RightParenthesisKeyword_1_2_3, grammarAccess.getAnnotatedPropertyAssignmentAccess().getRightParenthesisKeyword_1_2_3());
+				announce($RightParenthesisKeyword_1_2_4, grammarAccess.getAnnotatedPropertyAssignmentAccess().getRightParenthesisKeyword_1_2_4());
 			}
 			(
 				((
@@ -8450,8 +8468,8 @@ ruleAnnotatedPropertyAssignment
 				)
 				)=>
 				(
-					BodyBlockParserRuleCall_1_2_4_0=ruleBlock{
-						announce($BodyBlockParserRuleCall_1_2_4_0.start, $BodyBlockParserRuleCall_1_2_4_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getBodyAssignment_1_2_4());
+					BodyBlockParserRuleCall_1_2_5_0=ruleBlock{
+						announce($BodyBlockParserRuleCall_1_2_5_0.start, $BodyBlockParserRuleCall_1_2_5_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getBodyAssignment_1_2_5());
 					}
 				)
 			)
@@ -8889,20 +8907,28 @@ norm1_AnnotatedPropertyAssignment
 					)
 				)
 			)
-			LeftParenthesisKeyword_1_2_1=LeftParenthesis
+			(
+				(
+					DeclaredOptionalQuestionMarkKeyword_1_2_1_0=QuestionMark
+					 {
+						announce($DeclaredOptionalQuestionMarkKeyword_1_2_1_0, grammarAccess.getAnnotatedPropertyAssignmentAccess().getDeclaredOptionalQuestionMarkKeyword_1_2_1_0());
+					}
+				)
+			)?
+			LeftParenthesisKeyword_1_2_2=LeftParenthesis
 			 {
-				announce($LeftParenthesisKeyword_1_2_1, grammarAccess.getAnnotatedPropertyAssignmentAccess().getLeftParenthesisKeyword_1_2_1());
+				announce($LeftParenthesisKeyword_1_2_2, grammarAccess.getAnnotatedPropertyAssignmentAccess().getLeftParenthesisKeyword_1_2_2());
 			}
 			(
 				(
-					FparFormalParameterParserRuleCall_1_2_2_0=norm1_FormalParameter{
-						announce($FparFormalParameterParserRuleCall_1_2_2_0.start, $FparFormalParameterParserRuleCall_1_2_2_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getFparAssignment_1_2_2());
+					FparFormalParameterParserRuleCall_1_2_3_0=norm1_FormalParameter{
+						announce($FparFormalParameterParserRuleCall_1_2_3_0.start, $FparFormalParameterParserRuleCall_1_2_3_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getFparAssignment_1_2_3());
 					}
 				)
 			)
-			RightParenthesisKeyword_1_2_3=RightParenthesis
+			RightParenthesisKeyword_1_2_4=RightParenthesis
 			 {
-				announce($RightParenthesisKeyword_1_2_3, grammarAccess.getAnnotatedPropertyAssignmentAccess().getRightParenthesisKeyword_1_2_3());
+				announce($RightParenthesisKeyword_1_2_4, grammarAccess.getAnnotatedPropertyAssignmentAccess().getRightParenthesisKeyword_1_2_4());
 			}
 			(
 				((
@@ -8910,8 +8936,8 @@ norm1_AnnotatedPropertyAssignment
 				)
 				)=>
 				(
-					BodyBlockParserRuleCall_1_2_4_0=ruleBlock{
-						announce($BodyBlockParserRuleCall_1_2_4_0.start, $BodyBlockParserRuleCall_1_2_4_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getBodyAssignment_1_2_4());
+					BodyBlockParserRuleCall_1_2_5_0=ruleBlock{
+						announce($BodyBlockParserRuleCall_1_2_5_0.start, $BodyBlockParserRuleCall_1_2_5_0.stop, grammarAccess.getAnnotatedPropertyAssignmentAccess().getBodyAssignment_1_2_5());
 					}
 				)
 			)
@@ -9281,6 +9307,11 @@ rulePropertyNameValuePair
 					ruleLiteralOrComputedPropertyName
 				)
 			)
+			(
+				(
+					QuestionMark
+				)
+			)?
 			Colon
 		)
 		)=>
@@ -9299,9 +9330,17 @@ rulePropertyNameValuePair
 					}
 				)
 			)
-			ColonKeyword_0_0_3=Colon
+			(
+				(
+					DeclaredOptionalQuestionMarkKeyword_0_0_3_0=QuestionMark
+					 {
+						announce($DeclaredOptionalQuestionMarkKeyword_0_0_3_0, grammarAccess.getPropertyNameValuePairAccess().getDeclaredOptionalQuestionMarkKeyword_0_0_3_0());
+					}
+				)
+			)?
+			ColonKeyword_0_0_4=Colon
 			 {
-				announce($ColonKeyword_0_0_3, grammarAccess.getPropertyNameValuePairAccess().getColonKeyword_0_0_3());
+				announce($ColonKeyword_0_0_4, grammarAccess.getPropertyNameValuePairAccess().getColonKeyword_0_0_4());
 			}
 		)
 	)
@@ -9333,6 +9372,11 @@ norm1_PropertyNameValuePair
 					norm1_LiteralOrComputedPropertyName
 				)
 			)
+			(
+				(
+					QuestionMark
+				)
+			)?
 			Colon
 		)
 		)=>
@@ -9351,9 +9395,17 @@ norm1_PropertyNameValuePair
 					}
 				)
 			)
-			ColonKeyword_0_0_3=Colon
+			(
+				(
+					DeclaredOptionalQuestionMarkKeyword_0_0_3_0=QuestionMark
+					 {
+						announce($DeclaredOptionalQuestionMarkKeyword_0_0_3_0, grammarAccess.getPropertyNameValuePairAccess().getDeclaredOptionalQuestionMarkKeyword_0_0_3_0());
+					}
+				)
+			)?
+			ColonKeyword_0_0_4=Colon
 			 {
-				announce($ColonKeyword_0_0_3, grammarAccess.getPropertyNameValuePairAccess().getColonKeyword_0_0_3());
+				announce($ColonKeyword_0_0_4, grammarAccess.getPropertyNameValuePairAccess().getColonKeyword_0_0_4());
 			}
 		)
 	)
@@ -9742,20 +9794,28 @@ rulePropertySetterDeclaration
 			)
 		)
 	)
-	LeftParenthesisKeyword_1=LeftParenthesis
+	(
+		(
+			DeclaredOptionalQuestionMarkKeyword_1_0=QuestionMark
+			 {
+				announce($DeclaredOptionalQuestionMarkKeyword_1_0, grammarAccess.getPropertySetterDeclarationAccess().getDeclaredOptionalQuestionMarkKeyword_1_0());
+			}
+		)
+	)?
+	LeftParenthesisKeyword_2=LeftParenthesis
 	 {
-		announce($LeftParenthesisKeyword_1, grammarAccess.getPropertySetterDeclarationAccess().getLeftParenthesisKeyword_1());
+		announce($LeftParenthesisKeyword_2, grammarAccess.getPropertySetterDeclarationAccess().getLeftParenthesisKeyword_2());
 	}
 	(
 		(
-			FparFormalParameterParserRuleCall_2_0=ruleFormalParameter{
-				announce($FparFormalParameterParserRuleCall_2_0.start, $FparFormalParameterParserRuleCall_2_0.stop, grammarAccess.getPropertySetterDeclarationAccess().getFparAssignment_2());
+			FparFormalParameterParserRuleCall_3_0=ruleFormalParameter{
+				announce($FparFormalParameterParserRuleCall_3_0.start, $FparFormalParameterParserRuleCall_3_0.stop, grammarAccess.getPropertySetterDeclarationAccess().getFparAssignment_3());
 			}
 		)
 	)
-	RightParenthesisKeyword_3=RightParenthesis
+	RightParenthesisKeyword_4=RightParenthesis
 	 {
-		announce($RightParenthesisKeyword_3, grammarAccess.getPropertySetterDeclarationAccess().getRightParenthesisKeyword_3());
+		announce($RightParenthesisKeyword_4, grammarAccess.getPropertySetterDeclarationAccess().getRightParenthesisKeyword_4());
 	}
 	(
 		((
@@ -9763,8 +9823,8 @@ rulePropertySetterDeclaration
 		)
 		)=>
 		(
-			BodyBlockParserRuleCall_4_0=ruleBlock{
-				announce($BodyBlockParserRuleCall_4_0.start, $BodyBlockParserRuleCall_4_0.stop, grammarAccess.getPropertySetterDeclarationAccess().getBodyAssignment_4());
+			BodyBlockParserRuleCall_5_0=ruleBlock{
+				announce($BodyBlockParserRuleCall_5_0.start, $BodyBlockParserRuleCall_5_0.stop, grammarAccess.getPropertySetterDeclarationAccess().getBodyAssignment_5());
 			}
 		)
 	)
@@ -10001,20 +10061,28 @@ norm1_PropertySetterDeclaration
 			)
 		)
 	)
-	LeftParenthesisKeyword_1=LeftParenthesis
+	(
+		(
+			DeclaredOptionalQuestionMarkKeyword_1_0=QuestionMark
+			 {
+				announce($DeclaredOptionalQuestionMarkKeyword_1_0, grammarAccess.getPropertySetterDeclarationAccess().getDeclaredOptionalQuestionMarkKeyword_1_0());
+			}
+		)
+	)?
+	LeftParenthesisKeyword_2=LeftParenthesis
 	 {
-		announce($LeftParenthesisKeyword_1, grammarAccess.getPropertySetterDeclarationAccess().getLeftParenthesisKeyword_1());
+		announce($LeftParenthesisKeyword_2, grammarAccess.getPropertySetterDeclarationAccess().getLeftParenthesisKeyword_2());
 	}
 	(
 		(
-			FparFormalParameterParserRuleCall_2_0=norm1_FormalParameter{
-				announce($FparFormalParameterParserRuleCall_2_0.start, $FparFormalParameterParserRuleCall_2_0.stop, grammarAccess.getPropertySetterDeclarationAccess().getFparAssignment_2());
+			FparFormalParameterParserRuleCall_3_0=norm1_FormalParameter{
+				announce($FparFormalParameterParserRuleCall_3_0.start, $FparFormalParameterParserRuleCall_3_0.stop, grammarAccess.getPropertySetterDeclarationAccess().getFparAssignment_3());
 			}
 		)
 	)
-	RightParenthesisKeyword_3=RightParenthesis
+	RightParenthesisKeyword_4=RightParenthesis
 	 {
-		announce($RightParenthesisKeyword_3, grammarAccess.getPropertySetterDeclarationAccess().getRightParenthesisKeyword_3());
+		announce($RightParenthesisKeyword_4, grammarAccess.getPropertySetterDeclarationAccess().getRightParenthesisKeyword_4());
 	}
 	(
 		((
@@ -10022,8 +10090,8 @@ norm1_PropertySetterDeclaration
 		)
 		)=>
 		(
-			BodyBlockParserRuleCall_4_0=ruleBlock{
-				announce($BodyBlockParserRuleCall_4_0.start, $BodyBlockParserRuleCall_4_0.stop, grammarAccess.getPropertySetterDeclarationAccess().getBodyAssignment_4());
+			BodyBlockParserRuleCall_5_0=ruleBlock{
+				announce($BodyBlockParserRuleCall_5_0.start, $BodyBlockParserRuleCall_5_0.stop, grammarAccess.getPropertySetterDeclarationAccess().getBodyAssignment_5());
 			}
 		)
 	)
@@ -16770,20 +16838,28 @@ ruleAnnotatedN4MemberDeclaration
 					)
 				)
 			)
-			LeftParenthesisKeyword_1_1_1=LeftParenthesis
+			(
+				(
+					DeclaredOptionalQuestionMarkKeyword_1_1_1_0=QuestionMark
+					 {
+						announce($DeclaredOptionalQuestionMarkKeyword_1_1_1_0, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getDeclaredOptionalQuestionMarkKeyword_1_1_1_0());
+					}
+				)
+			)?
+			LeftParenthesisKeyword_1_1_2=LeftParenthesis
 			 {
-				announce($LeftParenthesisKeyword_1_1_1, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getLeftParenthesisKeyword_1_1_1());
+				announce($LeftParenthesisKeyword_1_1_2, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getLeftParenthesisKeyword_1_1_2());
 			}
 			(
 				(
-					FparFormalParameterParserRuleCall_1_1_2_0=ruleFormalParameter{
-						announce($FparFormalParameterParserRuleCall_1_1_2_0.start, $FparFormalParameterParserRuleCall_1_1_2_0.stop, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getFparAssignment_1_1_2());
+					FparFormalParameterParserRuleCall_1_1_3_0=ruleFormalParameter{
+						announce($FparFormalParameterParserRuleCall_1_1_3_0.start, $FparFormalParameterParserRuleCall_1_1_3_0.stop, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getFparAssignment_1_1_3());
 					}
 				)
 			)
-			RightParenthesisKeyword_1_1_3=RightParenthesis
+			RightParenthesisKeyword_1_1_4=RightParenthesis
 			 {
-				announce($RightParenthesisKeyword_1_1_3, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getRightParenthesisKeyword_1_1_3());
+				announce($RightParenthesisKeyword_1_1_4, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getRightParenthesisKeyword_1_1_4());
 			}
 			(
 				((
@@ -16791,15 +16867,15 @@ ruleAnnotatedN4MemberDeclaration
 				)
 				)=>
 				(
-					BodyBlockParserRuleCall_1_1_4_0=ruleBlock{
-						announce($BodyBlockParserRuleCall_1_1_4_0.start, $BodyBlockParserRuleCall_1_1_4_0.stop, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getBodyAssignment_1_1_4());
+					BodyBlockParserRuleCall_1_1_5_0=ruleBlock{
+						announce($BodyBlockParserRuleCall_1_1_5_0.start, $BodyBlockParserRuleCall_1_1_5_0.stop, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getBodyAssignment_1_1_5());
 					}
 				)
 			)?
 			(
-				SemicolonKeyword_1_1_5=Semicolon
+				SemicolonKeyword_1_1_6=Semicolon
 				 {
-					announce($SemicolonKeyword_1_1_5, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getSemicolonKeyword_1_1_5());
+					announce($SemicolonKeyword_1_1_6, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getSemicolonKeyword_1_1_6());
 				}
 			)?
 		)
@@ -17196,20 +17272,28 @@ norm1_AnnotatedN4MemberDeclaration
 					)
 				)
 			)
-			LeftParenthesisKeyword_1_1_1=LeftParenthesis
+			(
+				(
+					DeclaredOptionalQuestionMarkKeyword_1_1_1_0=QuestionMark
+					 {
+						announce($DeclaredOptionalQuestionMarkKeyword_1_1_1_0, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getDeclaredOptionalQuestionMarkKeyword_1_1_1_0());
+					}
+				)
+			)?
+			LeftParenthesisKeyword_1_1_2=LeftParenthesis
 			 {
-				announce($LeftParenthesisKeyword_1_1_1, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getLeftParenthesisKeyword_1_1_1());
+				announce($LeftParenthesisKeyword_1_1_2, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getLeftParenthesisKeyword_1_1_2());
 			}
 			(
 				(
-					FparFormalParameterParserRuleCall_1_1_2_0=norm1_FormalParameter{
-						announce($FparFormalParameterParserRuleCall_1_1_2_0.start, $FparFormalParameterParserRuleCall_1_1_2_0.stop, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getFparAssignment_1_1_2());
+					FparFormalParameterParserRuleCall_1_1_3_0=norm1_FormalParameter{
+						announce($FparFormalParameterParserRuleCall_1_1_3_0.start, $FparFormalParameterParserRuleCall_1_1_3_0.stop, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getFparAssignment_1_1_3());
 					}
 				)
 			)
-			RightParenthesisKeyword_1_1_3=RightParenthesis
+			RightParenthesisKeyword_1_1_4=RightParenthesis
 			 {
-				announce($RightParenthesisKeyword_1_1_3, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getRightParenthesisKeyword_1_1_3());
+				announce($RightParenthesisKeyword_1_1_4, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getRightParenthesisKeyword_1_1_4());
 			}
 			(
 				((
@@ -17217,15 +17301,15 @@ norm1_AnnotatedN4MemberDeclaration
 				)
 				)=>
 				(
-					BodyBlockParserRuleCall_1_1_4_0=norm1_Block{
-						announce($BodyBlockParserRuleCall_1_1_4_0.start, $BodyBlockParserRuleCall_1_1_4_0.stop, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getBodyAssignment_1_1_4());
+					BodyBlockParserRuleCall_1_1_5_0=norm1_Block{
+						announce($BodyBlockParserRuleCall_1_1_5_0.start, $BodyBlockParserRuleCall_1_1_5_0.stop, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getBodyAssignment_1_1_5());
 					}
 				)
 			)?
 			(
-				SemicolonKeyword_1_1_5=Semicolon
+				SemicolonKeyword_1_1_6=Semicolon
 				 {
-					announce($SemicolonKeyword_1_1_5, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getSemicolonKeyword_1_1_5());
+					announce($SemicolonKeyword_1_1_6, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getSemicolonKeyword_1_1_6());
 				}
 			)?
 		)
@@ -17362,22 +17446,30 @@ ruleFieldDeclarationImpl
 		)
 	)
 	(
-		ColonSepTypeRefParserRuleCall_3=ruleColonSepTypeRef{ announce($ColonSepTypeRefParserRuleCall_3.start, $ColonSepTypeRefParserRuleCall_3.stop, grammarAccess.getFieldDeclarationImplAccess().getColonSepTypeRefParserRuleCall_3()); }
+		(
+			DeclaredOptionalQuestionMarkKeyword_3_0=QuestionMark
+			 {
+				announce($DeclaredOptionalQuestionMarkKeyword_3_0, grammarAccess.getFieldDeclarationImplAccess().getDeclaredOptionalQuestionMarkKeyword_3_0());
+			}
+		)
 	)?
 	(
-		EqualsSignKeyword_4_0=EqualsSign
+		ColonSepTypeRefParserRuleCall_4=ruleColonSepTypeRef{ announce($ColonSepTypeRefParserRuleCall_4.start, $ColonSepTypeRefParserRuleCall_4.stop, grammarAccess.getFieldDeclarationImplAccess().getColonSepTypeRefParserRuleCall_4()); }
+	)?
+	(
+		EqualsSignKeyword_5_0=EqualsSign
 		 {
-			announce($EqualsSignKeyword_4_0, grammarAccess.getFieldDeclarationImplAccess().getEqualsSignKeyword_4_0());
+			announce($EqualsSignKeyword_5_0, grammarAccess.getFieldDeclarationImplAccess().getEqualsSignKeyword_5_0());
 		}
 		(
 			(
-				ExpressionExpressionParserRuleCall_4_1_0=norm1_Expression{
-					announce($ExpressionExpressionParserRuleCall_4_1_0.start, $ExpressionExpressionParserRuleCall_4_1_0.stop, grammarAccess.getFieldDeclarationImplAccess().getExpressionAssignment_4_1());
+				ExpressionExpressionParserRuleCall_5_1_0=norm1_Expression{
+					announce($ExpressionExpressionParserRuleCall_5_1_0.start, $ExpressionExpressionParserRuleCall_5_1_0.stop, grammarAccess.getFieldDeclarationImplAccess().getExpressionAssignment_5_1());
 				}
 			)
 		)
 	)?
-	SemiParserRuleCall_5=ruleSemi{ announce($SemiParserRuleCall_5.start, $SemiParserRuleCall_5.stop, grammarAccess.getFieldDeclarationImplAccess().getSemiParserRuleCall_5()); }
+	SemiParserRuleCall_6=ruleSemi{ announce($SemiParserRuleCall_6.start, $SemiParserRuleCall_6.stop, grammarAccess.getFieldDeclarationImplAccess().getSemiParserRuleCall_6()); }
 )
 ;
 
@@ -17403,22 +17495,30 @@ norm1_FieldDeclarationImpl
 		)
 	)
 	(
-		ColonSepTypeRefParserRuleCall_3=ruleColonSepTypeRef{ announce($ColonSepTypeRefParserRuleCall_3.start, $ColonSepTypeRefParserRuleCall_3.stop, grammarAccess.getFieldDeclarationImplAccess().getColonSepTypeRefParserRuleCall_3()); }
+		(
+			DeclaredOptionalQuestionMarkKeyword_3_0=QuestionMark
+			 {
+				announce($DeclaredOptionalQuestionMarkKeyword_3_0, grammarAccess.getFieldDeclarationImplAccess().getDeclaredOptionalQuestionMarkKeyword_3_0());
+			}
+		)
 	)?
 	(
-		EqualsSignKeyword_4_0=EqualsSign
+		ColonSepTypeRefParserRuleCall_4=ruleColonSepTypeRef{ announce($ColonSepTypeRefParserRuleCall_4.start, $ColonSepTypeRefParserRuleCall_4.stop, grammarAccess.getFieldDeclarationImplAccess().getColonSepTypeRefParserRuleCall_4()); }
+	)?
+	(
+		EqualsSignKeyword_5_0=EqualsSign
 		 {
-			announce($EqualsSignKeyword_4_0, grammarAccess.getFieldDeclarationImplAccess().getEqualsSignKeyword_4_0());
+			announce($EqualsSignKeyword_5_0, grammarAccess.getFieldDeclarationImplAccess().getEqualsSignKeyword_5_0());
 		}
 		(
 			(
-				ExpressionExpressionParserRuleCall_4_1_0=norm3_Expression{
-					announce($ExpressionExpressionParserRuleCall_4_1_0.start, $ExpressionExpressionParserRuleCall_4_1_0.stop, grammarAccess.getFieldDeclarationImplAccess().getExpressionAssignment_4_1());
+				ExpressionExpressionParserRuleCall_5_1_0=norm3_Expression{
+					announce($ExpressionExpressionParserRuleCall_5_1_0.start, $ExpressionExpressionParserRuleCall_5_1_0.stop, grammarAccess.getFieldDeclarationImplAccess().getExpressionAssignment_5_1());
 				}
 			)
 		)
 	)?
-	SemiParserRuleCall_5=ruleSemi{ announce($SemiParserRuleCall_5.start, $SemiParserRuleCall_5.stop, grammarAccess.getFieldDeclarationImplAccess().getSemiParserRuleCall_5()); }
+	SemiParserRuleCall_6=ruleSemi{ announce($SemiParserRuleCall_6.start, $SemiParserRuleCall_6.stop, grammarAccess.getFieldDeclarationImplAccess().getSemiParserRuleCall_6()); }
 )
 ;
 
@@ -17996,16 +18096,24 @@ ruleGetterHeader
 			}
 		)
 	)
-	LeftParenthesisKeyword_3=LeftParenthesis
+	(
+		(
+			DeclaredOptionalQuestionMarkKeyword_3_0=QuestionMark
+			 {
+				announce($DeclaredOptionalQuestionMarkKeyword_3_0, grammarAccess.getGetterHeaderAccess().getDeclaredOptionalQuestionMarkKeyword_3_0());
+			}
+		)
+	)?
+	LeftParenthesisKeyword_4=LeftParenthesis
 	 {
-		announce($LeftParenthesisKeyword_3, grammarAccess.getGetterHeaderAccess().getLeftParenthesisKeyword_3());
+		announce($LeftParenthesisKeyword_4, grammarAccess.getGetterHeaderAccess().getLeftParenthesisKeyword_4());
 	}
-	RightParenthesisKeyword_4=RightParenthesis
+	RightParenthesisKeyword_5=RightParenthesis
 	 {
-		announce($RightParenthesisKeyword_4, grammarAccess.getGetterHeaderAccess().getRightParenthesisKeyword_4());
+		announce($RightParenthesisKeyword_5, grammarAccess.getGetterHeaderAccess().getRightParenthesisKeyword_5());
 	}
 	(
-		ColonSepTypeRefParserRuleCall_5=ruleColonSepTypeRef{ announce($ColonSepTypeRefParserRuleCall_5.start, $ColonSepTypeRefParserRuleCall_5.stop, grammarAccess.getGetterHeaderAccess().getColonSepTypeRefParserRuleCall_5()); }
+		ColonSepTypeRefParserRuleCall_6=ruleColonSepTypeRef{ announce($ColonSepTypeRefParserRuleCall_6.start, $ColonSepTypeRefParserRuleCall_6.stop, grammarAccess.getGetterHeaderAccess().getColonSepTypeRefParserRuleCall_6()); }
 	)?
 )
 ;
@@ -18094,16 +18202,24 @@ norm1_GetterHeader
 			}
 		)
 	)
-	LeftParenthesisKeyword_3=LeftParenthesis
+	(
+		(
+			DeclaredOptionalQuestionMarkKeyword_3_0=QuestionMark
+			 {
+				announce($DeclaredOptionalQuestionMarkKeyword_3_0, grammarAccess.getGetterHeaderAccess().getDeclaredOptionalQuestionMarkKeyword_3_0());
+			}
+		)
+	)?
+	LeftParenthesisKeyword_4=LeftParenthesis
 	 {
-		announce($LeftParenthesisKeyword_3, grammarAccess.getGetterHeaderAccess().getLeftParenthesisKeyword_3());
+		announce($LeftParenthesisKeyword_4, grammarAccess.getGetterHeaderAccess().getLeftParenthesisKeyword_4());
 	}
-	RightParenthesisKeyword_4=RightParenthesis
+	RightParenthesisKeyword_5=RightParenthesis
 	 {
-		announce($RightParenthesisKeyword_4, grammarAccess.getGetterHeaderAccess().getRightParenthesisKeyword_4());
+		announce($RightParenthesisKeyword_5, grammarAccess.getGetterHeaderAccess().getRightParenthesisKeyword_5());
 	}
 	(
-		ColonSepTypeRefParserRuleCall_5=ruleColonSepTypeRef{ announce($ColonSepTypeRefParserRuleCall_5.start, $ColonSepTypeRefParserRuleCall_5.stop, grammarAccess.getGetterHeaderAccess().getColonSepTypeRefParserRuleCall_5()); }
+		ColonSepTypeRefParserRuleCall_6=ruleColonSepTypeRef{ announce($ColonSepTypeRefParserRuleCall_6.start, $ColonSepTypeRefParserRuleCall_6.stop, grammarAccess.getGetterHeaderAccess().getColonSepTypeRefParserRuleCall_6()); }
 	)?
 )
 ;
@@ -18353,20 +18469,28 @@ ruleN4SetterDeclaration
 			)
 		)
 	)
-	LeftParenthesisKeyword_1=LeftParenthesis
+	(
+		(
+			DeclaredOptionalQuestionMarkKeyword_1_0=QuestionMark
+			 {
+				announce($DeclaredOptionalQuestionMarkKeyword_1_0, grammarAccess.getN4SetterDeclarationAccess().getDeclaredOptionalQuestionMarkKeyword_1_0());
+			}
+		)
+	)?
+	LeftParenthesisKeyword_2=LeftParenthesis
 	 {
-		announce($LeftParenthesisKeyword_1, grammarAccess.getN4SetterDeclarationAccess().getLeftParenthesisKeyword_1());
+		announce($LeftParenthesisKeyword_2, grammarAccess.getN4SetterDeclarationAccess().getLeftParenthesisKeyword_2());
 	}
 	(
 		(
-			FparFormalParameterParserRuleCall_2_0=ruleFormalParameter{
-				announce($FparFormalParameterParserRuleCall_2_0.start, $FparFormalParameterParserRuleCall_2_0.stop, grammarAccess.getN4SetterDeclarationAccess().getFparAssignment_2());
+			FparFormalParameterParserRuleCall_3_0=ruleFormalParameter{
+				announce($FparFormalParameterParserRuleCall_3_0.start, $FparFormalParameterParserRuleCall_3_0.stop, grammarAccess.getN4SetterDeclarationAccess().getFparAssignment_3());
 			}
 		)
 	)
-	RightParenthesisKeyword_3=RightParenthesis
+	RightParenthesisKeyword_4=RightParenthesis
 	 {
-		announce($RightParenthesisKeyword_3, grammarAccess.getN4SetterDeclarationAccess().getRightParenthesisKeyword_3());
+		announce($RightParenthesisKeyword_4, grammarAccess.getN4SetterDeclarationAccess().getRightParenthesisKeyword_4());
 	}
 	(
 		((
@@ -18374,15 +18498,15 @@ ruleN4SetterDeclaration
 		)
 		)=>
 		(
-			BodyBlockParserRuleCall_4_0=ruleBlock{
-				announce($BodyBlockParserRuleCall_4_0.start, $BodyBlockParserRuleCall_4_0.stop, grammarAccess.getN4SetterDeclarationAccess().getBodyAssignment_4());
+			BodyBlockParserRuleCall_5_0=ruleBlock{
+				announce($BodyBlockParserRuleCall_5_0.start, $BodyBlockParserRuleCall_5_0.stop, grammarAccess.getN4SetterDeclarationAccess().getBodyAssignment_5());
 			}
 		)
 	)?
 	(
-		SemicolonKeyword_5=Semicolon
+		SemicolonKeyword_6=Semicolon
 		 {
-			announce($SemicolonKeyword_5, grammarAccess.getN4SetterDeclarationAccess().getSemicolonKeyword_5());
+			announce($SemicolonKeyword_6, grammarAccess.getN4SetterDeclarationAccess().getSemicolonKeyword_6());
 		}
 	)?
 )
@@ -18628,20 +18752,28 @@ norm1_N4SetterDeclaration
 			)
 		)
 	)
-	LeftParenthesisKeyword_1=LeftParenthesis
+	(
+		(
+			DeclaredOptionalQuestionMarkKeyword_1_0=QuestionMark
+			 {
+				announce($DeclaredOptionalQuestionMarkKeyword_1_0, grammarAccess.getN4SetterDeclarationAccess().getDeclaredOptionalQuestionMarkKeyword_1_0());
+			}
+		)
+	)?
+	LeftParenthesisKeyword_2=LeftParenthesis
 	 {
-		announce($LeftParenthesisKeyword_1, grammarAccess.getN4SetterDeclarationAccess().getLeftParenthesisKeyword_1());
+		announce($LeftParenthesisKeyword_2, grammarAccess.getN4SetterDeclarationAccess().getLeftParenthesisKeyword_2());
 	}
 	(
 		(
-			FparFormalParameterParserRuleCall_2_0=norm1_FormalParameter{
-				announce($FparFormalParameterParserRuleCall_2_0.start, $FparFormalParameterParserRuleCall_2_0.stop, grammarAccess.getN4SetterDeclarationAccess().getFparAssignment_2());
+			FparFormalParameterParserRuleCall_3_0=norm1_FormalParameter{
+				announce($FparFormalParameterParserRuleCall_3_0.start, $FparFormalParameterParserRuleCall_3_0.stop, grammarAccess.getN4SetterDeclarationAccess().getFparAssignment_3());
 			}
 		)
 	)
-	RightParenthesisKeyword_3=RightParenthesis
+	RightParenthesisKeyword_4=RightParenthesis
 	 {
-		announce($RightParenthesisKeyword_3, grammarAccess.getN4SetterDeclarationAccess().getRightParenthesisKeyword_3());
+		announce($RightParenthesisKeyword_4, grammarAccess.getN4SetterDeclarationAccess().getRightParenthesisKeyword_4());
 	}
 	(
 		((
@@ -18649,15 +18781,15 @@ norm1_N4SetterDeclaration
 		)
 		)=>
 		(
-			BodyBlockParserRuleCall_4_0=norm1_Block{
-				announce($BodyBlockParserRuleCall_4_0.start, $BodyBlockParserRuleCall_4_0.stop, grammarAccess.getN4SetterDeclarationAccess().getBodyAssignment_4());
+			BodyBlockParserRuleCall_5_0=norm1_Block{
+				announce($BodyBlockParserRuleCall_5_0.start, $BodyBlockParserRuleCall_5_0.stop, grammarAccess.getN4SetterDeclarationAccess().getBodyAssignment_5());
 			}
 		)
 	)?
 	(
-		SemicolonKeyword_5=Semicolon
+		SemicolonKeyword_6=Semicolon
 		 {
-			announce($SemicolonKeyword_5, grammarAccess.getN4SetterDeclarationAccess().getSemicolonKeyword_5());
+			announce($SemicolonKeyword_6, grammarAccess.getN4SetterDeclarationAccess().getSemicolonKeyword_6());
 		}
 	)?
 )
@@ -19579,30 +19711,19 @@ ruleTypeRefWithModifiers
 @init {
 }:
 (
+	TypeRefWithoutModifiersParserRuleCall_0=ruleTypeRefWithoutModifiers{ announce($TypeRefWithoutModifiersParserRuleCall_0.start, $TypeRefWithoutModifiersParserRuleCall_0.stop, grammarAccess.getTypeRefWithModifiersAccess().getTypeRefWithoutModifiersParserRuleCall_0()); }
 	(
-		TypeRefWithoutModifiersParserRuleCall_0_0=ruleTypeRefWithoutModifiers{ announce($TypeRefWithoutModifiersParserRuleCall_0_0.start, $TypeRefWithoutModifiersParserRuleCall_0_0.stop, grammarAccess.getTypeRefWithModifiersAccess().getTypeRefWithoutModifiersParserRuleCall_0_0()); }
-		(
-			((
-				ruleUndefModifierToken
-			)
-			)=>
-			(
-				UndefModifierUndefModifierTokenParserRuleCall_0_1_0=ruleUndefModifierToken{
-					announce($UndefModifierUndefModifierTokenParserRuleCall_0_1_0.start, $UndefModifierUndefModifierTokenParserRuleCall_0_1_0.stop, grammarAccess.getTypeRefWithModifiersAccess().getUndefModifierAssignment_0_1());
-				}
-			)
-		)?
-	)
-	    |
-	(
-		(
-			(
-				UndefModifierUndefModifierTokenParserRuleCall_1_1_0=ruleUndefModifierToken{
-					announce($UndefModifierUndefModifierTokenParserRuleCall_1_1_0.start, $UndefModifierUndefModifierTokenParserRuleCall_1_1_0.stop, grammarAccess.getTypeRefWithModifiersAccess().getUndefModifierAssignment_1_1());
-				}
-			)
+		((
+			QuestionMark
 		)
-	)
+		)=>
+		(
+			FollowedByQuestionMarkQuestionMarkKeyword_1_0=QuestionMark
+			 {
+				announce($FollowedByQuestionMarkQuestionMarkKeyword_1_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_0());
+			}
+		)
+	)?
 )
 ;
 
@@ -20524,14 +20645,22 @@ ruleTStructField
 		)
 	)
 	(
-		ColonKeyword_1_0=Colon
+		(
+			OptionalQuestionMarkKeyword_1_0=QuestionMark
+			 {
+				announce($OptionalQuestionMarkKeyword_1_0, grammarAccess.getTStructFieldAccess().getOptionalQuestionMarkKeyword_1_0());
+			}
+		)
+	)?
+	(
+		ColonKeyword_2_0=Colon
 		 {
-			announce($ColonKeyword_1_0, grammarAccess.getTStructFieldAccess().getColonKeyword_1_0());
+			announce($ColonKeyword_2_0, grammarAccess.getTStructFieldAccess().getColonKeyword_2_0());
 		}
 		(
 			(
-				TypeRefTypeRefParserRuleCall_1_1_0=ruleTypeRef{
-					announce($TypeRefTypeRefParserRuleCall_1_1_0.start, $TypeRefTypeRefParserRuleCall_1_1_0.stop, grammarAccess.getTStructFieldAccess().getTypeRefAssignment_1_1());
+				TypeRefTypeRefParserRuleCall_2_1_0=ruleTypeRef{
+					announce($TypeRefTypeRefParserRuleCall_2_1_0.start, $TypeRefTypeRefParserRuleCall_2_1_0.stop, grammarAccess.getTStructFieldAccess().getTypeRefAssignment_2_1());
 				}
 			)
 		)
@@ -20574,23 +20703,31 @@ ruleTStructGetter
 			)
 		)
 	)
-	LeftParenthesisKeyword_1=LeftParenthesis
+	(
+		(
+			OptionalQuestionMarkKeyword_1_0=QuestionMark
+			 {
+				announce($OptionalQuestionMarkKeyword_1_0, grammarAccess.getTStructGetterAccess().getOptionalQuestionMarkKeyword_1_0());
+			}
+		)
+	)?
+	LeftParenthesisKeyword_2=LeftParenthesis
 	 {
-		announce($LeftParenthesisKeyword_1, grammarAccess.getTStructGetterAccess().getLeftParenthesisKeyword_1());
+		announce($LeftParenthesisKeyword_2, grammarAccess.getTStructGetterAccess().getLeftParenthesisKeyword_2());
 	}
-	RightParenthesisKeyword_2=RightParenthesis
+	RightParenthesisKeyword_3=RightParenthesis
 	 {
-		announce($RightParenthesisKeyword_2, grammarAccess.getTStructGetterAccess().getRightParenthesisKeyword_2());
+		announce($RightParenthesisKeyword_3, grammarAccess.getTStructGetterAccess().getRightParenthesisKeyword_3());
 	}
 	(
-		ColonKeyword_3_0=Colon
+		ColonKeyword_4_0=Colon
 		 {
-			announce($ColonKeyword_3_0, grammarAccess.getTStructGetterAccess().getColonKeyword_3_0());
+			announce($ColonKeyword_4_0, grammarAccess.getTStructGetterAccess().getColonKeyword_4_0());
 		}
 		(
 			(
-				DeclaredTypeRefTypeRefParserRuleCall_3_1_0=ruleTypeRef{
-					announce($DeclaredTypeRefTypeRefParserRuleCall_3_1_0.start, $DeclaredTypeRefTypeRefParserRuleCall_3_1_0.stop, grammarAccess.getTStructGetterAccess().getDeclaredTypeRefAssignment_3_1());
+				DeclaredTypeRefTypeRefParserRuleCall_4_1_0=ruleTypeRef{
+					announce($DeclaredTypeRefTypeRefParserRuleCall_4_1_0.start, $DeclaredTypeRefTypeRefParserRuleCall_4_1_0.stop, grammarAccess.getTStructGetterAccess().getDeclaredTypeRefAssignment_4_1());
 				}
 			)
 		)
@@ -20633,20 +20770,28 @@ ruleTStructSetter
 			)
 		)
 	)
-	LeftParenthesisKeyword_1=LeftParenthesis
+	(
+		(
+			OptionalQuestionMarkKeyword_1_0=QuestionMark
+			 {
+				announce($OptionalQuestionMarkKeyword_1_0, grammarAccess.getTStructSetterAccess().getOptionalQuestionMarkKeyword_1_0());
+			}
+		)
+	)?
+	LeftParenthesisKeyword_2=LeftParenthesis
 	 {
-		announce($LeftParenthesisKeyword_1, grammarAccess.getTStructSetterAccess().getLeftParenthesisKeyword_1());
+		announce($LeftParenthesisKeyword_2, grammarAccess.getTStructSetterAccess().getLeftParenthesisKeyword_2());
 	}
 	(
 		(
-			FparTAnonymousFormalParameterParserRuleCall_2_0=ruleTAnonymousFormalParameter{
-				announce($FparTAnonymousFormalParameterParserRuleCall_2_0.start, $FparTAnonymousFormalParameterParserRuleCall_2_0.stop, grammarAccess.getTStructSetterAccess().getFparAssignment_2());
+			FparTAnonymousFormalParameterParserRuleCall_3_0=ruleTAnonymousFormalParameter{
+				announce($FparTAnonymousFormalParameterParserRuleCall_3_0.start, $FparTAnonymousFormalParameterParserRuleCall_3_0.stop, grammarAccess.getTStructSetterAccess().getFparAssignment_3());
 			}
 		)
 	)
-	RightParenthesisKeyword_3=RightParenthesis
+	RightParenthesisKeyword_4=RightParenthesis
 	 {
-		announce($RightParenthesisKeyword_3, grammarAccess.getTStructSetterAccess().getRightParenthesisKeyword_3());
+		announce($RightParenthesisKeyword_4, grammarAccess.getTStructSetterAccess().getRightParenthesisKeyword_4());
 	}
 )
 ;
@@ -20863,22 +21008,6 @@ ruleWildcardNewNotation
 		)
 	)
 )
-;
-
-// Entry rule entryRuleUndefModifierToken
-entryRuleUndefModifierToken
-	:
-	ruleUndefModifierToken
-	EOF;
-
-// Rule UndefModifierToken
-ruleUndefModifierToken
-@init {
-}
-:
-QuestionMarkKeyword=QuestionMark {
-	announce($QuestionMarkKeyword, grammarAccess.getUndefModifierTokenAccess().getQuestionMarkKeyword());
-}
 ;
 
 // Entry rule entryRuleBindingIdentifier

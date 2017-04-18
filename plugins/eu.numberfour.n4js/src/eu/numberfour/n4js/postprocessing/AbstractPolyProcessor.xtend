@@ -35,7 +35,6 @@ import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.TypeVariable
-import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
@@ -204,41 +203,12 @@ package abstract class AbstractPolyProcessor extends AbstractProcessor {
 		if (typeRef === null || solution === null || solution.empty) {
 			return typeRef; // note: returning 'null' if typeRef==null (broken AST, etc.)
 		}
-		// PART 1 OF TEMPORARY WORK-AROUND
-		val UndefModifier[] modifiers = if (typeRef instanceof FunctionTypeExprOrRef) {
-				typeRef.fpars.map[solution.get(it?.typeRef?.declaredType)?.undefModifier] +
-					#[typeRef.returnTypeRef.undefModifier]
-			} else {
-				null
-			};
-		// END OF PART 1
 		val Gx = G.wrap;
 		solution.entrySet.forEach[e|Gx.add(e.key, e.value)];
 		val result = ts.substTypeVariables(Gx, typeRef);
 		if (result.failed)
 			throw new IllegalArgumentException("substitution failed", result.ruleFailedException);
-		// PART 2 OF TEMPORARY WORK-AROUND
-		if (typeRef instanceof FunctionTypeExprOrRef) {
-			val resultValue = result.value;
-			if (resultValue instanceof FunctionTypeExprOrRef) {
-				val iMod = modifiers.iterator;
-				val iFpar = resultValue.fpars.iterator;
-				while (iFpar.hasNext && iMod.hasNext) {
-					mergeUndefModifierNullSafe(iFpar.next.typeRef, iMod.next);
-				}
-				if (iMod.hasNext) {
-					mergeUndefModifierNullSafe(resultValue.returnTypeRef, iMod.next);
-				}
-			}
-		}
-		// END OF PART 2
 		return result.value as TypeRef; // we put a TypeRef into 'substTypeVariables', so we always get back a TypeRef
-	}
-
-	def private void mergeUndefModifierNullSafe(TypeRef typeRef, UndefModifier modifier) {
-		if (typeRef !== null && modifier !== null) {
-			typeRef.undefModifier = TypeUtils.mergeUndefModifiers(typeRef.undefModifier, modifier);
-		}
 	}
 
 	def protected Map<InferenceVariable, TypeRef> createPseudoSolution(InferenceContext infCtx,

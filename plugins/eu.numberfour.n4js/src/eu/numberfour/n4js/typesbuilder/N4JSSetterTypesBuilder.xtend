@@ -26,20 +26,21 @@ package class N4JSSetterTypesBuilder {
 	@Inject extension N4JSFormalParameterTypesBuilder
 
 	def package TSetter createSetter(N4SetterDeclaration n4Setter, TClassifier classifierType, boolean preLinkingPhase) {
-		if (n4Setter.name === null) {
+		if (n4Setter.name === null && !n4Setter.hasComputedPropertyName) {
 			return null
 		}
 
 		val builtInTypeScope = BuiltInTypeScope.get(n4Setter.eResource.resourceSet)
 
 		val setterType = TypesFactory::eINSTANCE.createTSetter
-		setterType.name = n4Setter.name
+		setterType.setMemberName(n4Setter);
 		setterType.declaredAbstract = n4Setter.abstract
 		setterType.declaredStatic = n4Setter.declaredStatic
 		setterType.declaredFinal = n4Setter.declaredFinal
+		setterType.optional = n4Setter.optional;
 		setterType.declaredOverride = AnnotationDefinition.OVERRIDE.hasAnnotation(n4Setter);
 
-		setterType.hasNoBody = n4Setter.body ===null&& !AnnotationDefinition.PROVIDES_DEFAULT_IMPLEMENTATION.hasAnnotation(n4Setter);
+		setterType.hasNoBody = n4Setter.body===null && !AnnotationDefinition.PROVIDES_DEFAULT_IMPLEMENTATION.hasAnnotation(n4Setter);
 
 		setterType.setMemberAccessModifier(n4Setter)
 		setterType.addFormalParameters(n4Setter, builtInTypeScope, preLinkingPhase)

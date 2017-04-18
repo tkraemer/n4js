@@ -34,7 +34,6 @@ import eu.numberfour.n4js.ts.types.TStructMember
 import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.TypesFactory
 import eu.numberfour.n4js.ts.types.TypingStrategy
-import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.SuperTypesList
 import eu.numberfour.n4js.ts.utils.TypeCompareHelper
 import eu.numberfour.n4js.ts.utils.TypeHelper
@@ -623,6 +622,8 @@ class JoinComputer extends TypeSystemHelperStrategy {
 			joinedFunctionTypeExpr.setReturnTypeRef(
 				TypeUtils.copyIfContained(join(G, f1.returnTypeRef, f2.returnTypeRef)));
 		}
+		joinedFunctionTypeExpr.returnValueMarkedOptional = f1.returnValueOptional || f2.returnValueOptional;
+
 		val maxParSize = Math.max(f1.fpars.size, f2.fpars.size);
 		var i = 0;
 		var varOrOpt1 = false;
@@ -661,7 +662,7 @@ class JoinComputer extends TypeSystemHelperStrategy {
 				if (par1.variadic && par2.variadic) {
 					fpar.setVariadic(true);
 				} else if (par1.variadicOrOptional && par2.variadicOrOptional) {
-					parType.setUndefModifier(UndefModifier.OPTIONAL)
+					fpar.hasInitializerAssignment=true;
 				}
 			}
 			joinedFunctionTypeExpr.fpars.add(fpar);

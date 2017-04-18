@@ -11,11 +11,17 @@
 package eu.numberfour.n4js.validation.validators
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.AnnotationDefinition
+import eu.numberfour.n4js.compileTime.CompileTimeEvaluationError
+import eu.numberfour.n4js.compileTime.CompileTimeEvaluator.UnresolvedPropertyAccessError
+import eu.numberfour.n4js.compileTime.CompileTimeValue
+import eu.numberfour.n4js.compileTime.CompileTimeValue.ValueInvalid
 import eu.numberfour.n4js.n4JS.AdditiveExpression
 import eu.numberfour.n4js.n4JS.AdditiveOperator
 import eu.numberfour.n4js.n4JS.Argument
 import eu.numberfour.n4js.n4JS.ArrayElement
 import eu.numberfour.n4js.n4JS.ArrayLiteral
+import eu.numberfour.n4js.n4JS.ArrowFunction
 import eu.numberfour.n4js.n4JS.AssignmentExpression
 import eu.numberfour.n4js.n4JS.AwaitExpression
 import eu.numberfour.n4js.n4JS.BinaryLogicalExpression
@@ -29,6 +35,7 @@ import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.IndexedAccessExpression
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
@@ -41,6 +48,7 @@ import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.ParenExpression
 import eu.numberfour.n4js.n4JS.PostfixExpression
 import eu.numberfour.n4js.n4JS.PromisifyExpression
+import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.RelationalExpression
 import eu.numberfour.n4js.n4JS.RelationalOperator
 import eu.numberfour.n4js.n4JS.Script
@@ -52,6 +60,7 @@ import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions
+import eu.numberfour.n4js.postprocessing.ASTMetaInfoCacheHelper
 import eu.numberfour.n4js.scoping.accessModifiers.MemberVisibilityChecker
 import eu.numberfour.n4js.scoping.accessModifiers.VisibilityAwareCtorScope
 import eu.numberfour.n4js.scoping.members.MemberScopingHelper
@@ -130,7 +139,6 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.n4JS.ArrowFunction
 
 /**
  */
@@ -153,6 +161,8 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject private PromisifyHelper promisifyHelper;
 
 	@Inject private JavaScriptVariantHelper jsVariantHelper;
+
+	@Inject private ASTMetaInfoCacheHelper astMetaInfoCacheHelper;
 
 	/**
 	 * NEEEDED
@@ -1374,8 +1384,11 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		if (!jsVariantHelper.requireCheckIndexedAccessExpression(indexedAccess)) {
 			return
 		}
-		val index = indexedAccess?.index;
-		if (index===null) {
+
+		// prepare target and index
+		val target = indexedAccess.target;
+		val index = indexedAccess.index;
+		if (target===null || index===null) {
 			return; // broken AST
 		}
 		if (index instanceof IdentifierRef) {
@@ -1388,73 +1401,52 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 				return; // avoid duplicate error messages
 			}
 		}
-		if (indexedAccess.target instanceof SuperLiteral) {
+		if (target instanceof SuperLiteral) {
 			return; // avoid duplicate error messages
 		}
+
+		// prepare types of target and index
 		val G = indexedAccess.newRuleEnvironment;
-		val receiverTypeRefRaw = ts.type(G, indexedAccess.target).value;
-		if (receiverTypeRefRaw === null || receiverTypeRefRaw instanceof UnknownTypeRef) {
-			return; // error otherwise or corrupt AST
+		val targetTypeRefRaw = ts.type(G, target).value;
+		if (targetTypeRefRaw === null || targetTypeRefRaw instanceof UnknownTypeRef) {
+			return; // saw an UnknownTypeRef -> so we are expected to suppress all follow-up errors
 		}
-		val receiverTypeRef = ts.resolveType(G, receiverTypeRefRaw);
-		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(index);
-		val accessedStaticType = if(receiverTypeRef instanceof TypeTypeRef) tsh.getStaticType(G, receiverTypeRef);
-		val isComputedName = !(index instanceof NumericLiteral) && accessedBuiltInSymbol===null && N4JSLanguageUtils.isValidIndexExpression(G, index);
-		if (accessedBuiltInSymbol !== null
-			&& (receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef instanceof ThisTypeRef)) {
-			// we have something like: myObj[Symbol.iterator]
-			internalCheckIndexedAccessWithSymbol(G, indexedAccess, receiverTypeRef,
-				accessedBuiltInSymbol);
-		} else if (receiverTypeRef.declaredType instanceof TN4Classifier) { // Constraints 69.1
-			if (isComputedName) {
-				// custom error message for computed-name access
-				internalCheckComputedIndexedAccess(G, indexedAccess, receiverTypeRef)
-			} else {
-				if (!receiverTypeRef.isDynamic()) {
-					addIssue(
-						getMessageForEXP_INDEXED_ACCESS_N4CLASSIFIER(receiverTypeRef.declaredType.keyword),
-						indexedAccess, EXP_INDEXED_ACCESS_N4CLASSIFIER);
-				}
-			}
-			return
-		} else if (accessedStaticType instanceof TEnum) { // Constraints 69.2
-			addIssue(messageForEXP_INDEXED_ACCESS_ENUM, indexedAccess, EXP_INDEXED_ACCESS_ENUM);
-		} else if (receiverTypeRef.dynamic) {
+		val targetTypeRef = ts.resolveType(G, targetTypeRefRaw);
+		val indexTypeRef = ts.type(G, index).value;
+		if (indexTypeRef === null || indexTypeRef instanceof UnknownTypeRef) {
+			return; // saw an UnknownTypeRef -> so we are expected to suppress all follow-up errors
+		}
+
+		// prepare some information about the particular form of index access we have
+		val targetDeclType = targetTypeRef.declaredType;
+		val targetIsLiteralOfStringBasedEnum = targetDeclType instanceof TEnum && AnnotationDefinition.STRING_BASED.hasAnnotation(targetDeclType);
+		val accessedBuiltInSymbol = N4JSLanguageUtils.getAccessedBuiltInSymbol(G, index);
+		val accessedStaticType = if(targetTypeRef instanceof TypeTypeRef) tsh.getStaticType(G, targetTypeRef);
+		val indexIsNumeric = ts.subtypeSucceeded(G, indexTypeRef, G.numberTypeRef);
+		val indexValue = astMetaInfoCacheHelper.getCompileTimeValue(index);
+
+		// create issues depending on the collected information
+		if (targetTypeRef.dynamic) {
 			// allowed: indexing into dynamic receiver
-			return
-		} else if (#[G.arrayType, G.argumentsType].contains(receiverTypeRef.declaredType)) { // Constraints 69.3
-			// allowed: index into array-like provided index is numeric
-			val foundIndexType = getInvalidIndexType(G, indexedAccess);
-			if (null !== foundIndexType) {
-				addIssue(
-					getMessageForEXP_INDEXED_ACCESS_ARRAY(receiverTypeRef.declaredType.name,
-						foundIndexType),
-					index,
-					EXP_INDEXED_ACCESS_ARRAY
-				);
-			}
-		} else if (ts.subtypeSucceeded(G, receiverTypeRef, G.stringTypeRef)
-			|| ts.subtypeSucceeded(G, receiverTypeRef, G.stringObjectTypeRef)) { // Constraints 69.4, IDE-837
-			// allowed: index into string-like provided index is numeric
-			val foundIndexType = getInvalidIndexType(G, indexedAccess);
-			if (null !== foundIndexType) {
-				addIssue(
-					getMessageForEXP_INDEXED_ACCESS_STRING(receiverTypeRef.declaredType.name,
-						foundIndexType),
-					index,
-					EXP_INDEXED_ACCESS_STRING
-				);
-			}
-		} else if (G.objectType === receiverTypeRef.declaredType
-			&& !(receiverTypeRef.useSiteStructuralTyping)) {
+		} else if (G.objectType === targetDeclType && !(targetTypeRef.useSiteStructuralTyping)) {
 			// allowed: index into exact-type Object instance (not subtype thereof)
-			return
-		} else if (isComputedName) {
-			internalCheckComputedIndexedAccess(G, indexedAccess, receiverTypeRef)
-			return
+		} else if (accessedStaticType instanceof TEnum) { // Constraints 69.2
+			// disallowed: index access into an enum
+			addIssue(messageForEXP_INDEXED_ACCESS_ENUM, indexedAccess, EXP_INDEXED_ACCESS_ENUM);
+		} else if (indexIsNumeric && (targetTypeRef.isArrayLike || targetIsLiteralOfStringBasedEnum)) { // Constraints 69.3
+			// allowed: index into array-like with a numeric index
+		} else if (accessedBuiltInSymbol !== null) {
+			// we have something like: myObj[Symbol.iterator]
+			// -> delegate to special method
+			internalCheckIndexedAccessWithSymbol(G, indexedAccess, targetTypeRef, accessedBuiltInSymbol);
 		} else {
-			addIssue(messageForEXP_INDEXED_ACCESS_FORBIDDEN, indexedAccess,
-				EXP_INDEXED_ACCESS_FORBIDDEN);
+			// all other cases:
+			// treat this as an ordinary member access where the member name is given as a compile-time expression
+			if (indexValue.valid) {
+				internalCheckComputedIndexedAccess(G, indexedAccess, targetTypeRef, indexValue, indexIsNumeric)
+			} else {
+				createIssuesForEvalErrors((indexValue as ValueInvalid).errors);
+			}
 		}
 	}
 
@@ -1464,8 +1456,9 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	 * @return true if allowed, false otherwise.
 	 */
 	def private void internalCheckComputedIndexedAccess(RuleEnvironment G, IndexedAccessExpression indexedAccess,
-		TypeRef receiverTypeRef) {
-		val memberName = N4JSLanguageUtils.getMemberNameForIndexExpression(G, indexedAccess.index);
+		TypeRef receiverTypeRef, CompileTimeValue indexValue, boolean indexIsNumeric) {
+
+		val memberName = N4JSLanguageUtils.derivePropertyNameFromCompileTimeValue(indexValue);
 		if (ComputedPropertyNameValueConverter.SYMBOL_ITERATOR_MANGLED == memberName) {
 			// Implementation restriction: member name clashes with compiler-internal, synthetic, mangled name.
 			addIssue(getMessageForEXP_INDEXED_ACCESS_IMPL_RESTRICTION(), indexedAccess,
@@ -1481,26 +1474,16 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		val scope = memberScopingHelper.createMemberScopeFor(receiverTypeRef, indexedAccess,
 			checkVisibility, staticAccess)
 		if (memberScopingHelper.isNonExistentMember(scope, memberName, staticAccess)) {
-			addIssue(getMessageForEXP_INDEXED_ACCESS_COMPUTED_NOTFOUND(memberName), indexedAccess,
-				EXP_INDEXED_ACCESS_COMPUTED_NOTFOUND);
+			if (indexIsNumeric) {
+				addIssue(messageForEXP_INDEXED_ACCESS_FORBIDDEN, indexedAccess, EXP_INDEXED_ACCESS_FORBIDDEN);
+			} else {
+				addIssue(getMessageForEXP_INDEXED_ACCESS_COMPUTED_NOTFOUND(memberName), indexedAccess,
+					EXP_INDEXED_ACCESS_COMPUTED_NOTFOUND);
+			}
 			return
 		}
 		val erroneous = memberScopingHelper.getErrorsForMember(scope, memberName, staticAccess)
 		erroneous.forEach[d|addIssue(d.message, indexedAccess, d.issueCode)]
-	}
-
-	/**
-	 * In case the index-expression can be determined to be non-numeric, return its type; null otherwise.
-	 */
-	def private String getInvalidIndexType(RuleEnvironment G, IndexedAccessExpression indexedAccess) {
-		val indexType = ts.type(G, indexedAccess.index).value
-		if (indexType !== null) {
-			val rs = ts.subtype(G, indexType, G.numberTypeRef);
-			if (rs.failed) {
-				return trimTypesystemMessage(rs)
-			}
-		}
-		return null
 	}
 
 	def private boolean internalCheckIndexedAccessWithSymbol(RuleEnvironment G,
@@ -1640,6 +1623,70 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 					return;
 				}
 			}
+		}
+	}
+
+	@Check
+	def void checkMandatoryCompileTimeExpression(Expression expr) {
+		if(expr.eContainer instanceof IndexedAccessExpression) {
+			// special case: index access expressions
+			// -> this is handled in a more fine-grained manner above by method #checkIndexedAccessExpression()
+			return;
+		}
+		if(N4JSLanguageUtils.isMandatoryCompileTimeExpression(expr)) {
+			val evalResult = astMetaInfoCacheHelper.getCompileTimeValue(expr);
+			if(evalResult instanceof ValueInvalid) {
+				if(isExpressionOfComputedPropertyNameInObjectLiteral(expr)) {
+					// special case: in object literals, anything goes
+					// (but show a warning)
+					addIssue(IssueCodes.getMessageForEXP_COMPUTED_PROP_NAME_DISCOURAGED, expr,
+						IssueCodes.EXP_COMPUTED_PROP_NAME_DISCOURAGED);
+					return;
+				}
+				createIssuesForEvalErrors(evalResult.errors);
+			}
+		}
+	}
+	def private boolean isExpressionOfComputedPropertyNameInObjectLiteral(Expression expr) {
+		val exprParent = expr.eContainer;
+		return exprParent instanceof LiteralOrComputedPropertyName
+			&& exprParent.eContainer instanceof PropertyAssignment
+			&& exprParent.eContainer.eContainer instanceof ObjectLiteral;
+	}
+	def private void createIssuesForEvalErrors(CompileTimeEvaluationError... errors) {
+		for(error : errors) {
+			createIssueForEvalError(error);
+		}
+	}
+	def private void createIssueForEvalError(CompileTimeEvaluationError error) {
+		val message = if(error instanceof UnresolvedPropertyAccessError) {
+			// special case:
+			// property of a ParameterizedPropertyAccessExpression was not found while evaluating the compile-time
+			// expression (see location in CompileTimeExpressionProcessor where UnresolvedPropertyAccessError is created)
+			// -> in this case, CompileTimeExpressionProcessor could not provide a detailed error message, so we have
+			// to come up with our own message:
+			val propAccessExpr = error.astNodeCasted;
+			val prop = propAccessExpr.property;
+			if(prop===null || prop.eIsProxy) {
+				// property does not exist, which will cause the usual "Couldn't resolve ..." error
+				// -> no additional error message required, here
+				null
+			} else {
+				// at this point, still quite a few cases are left, but to distinguish between them would require
+				// additional information in the TModule, which is not worth it; so we go with a fairly generic
+				// message, here:
+				"reference must point to a directly owned field (i.e. not inherited, consumed, or polyfilled) and the field must not have a computed name"
+			}
+		} else {
+			// standard case:
+			// -> CompileTimeExpressionProcessor provided an error message
+			error.message
+		};
+		val astNode = error.astNode;
+		val feature = error.feature;
+		if(message!==null && astNode!==null) { // feature may be null, that is ok!
+			val msgFull = getMessageForEXP_COMPILE_TIME_MANDATORY(message);
+			addIssue(msgFull, astNode, feature, IssueCodes.EXP_COMPILE_TIME_MANDATORY);
 		}
 	}
 }

@@ -1,0 +1,32 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+
+@StringBased
+enum Color {
+	RED
+}
+
+let color: Color = Color.RED;
+// XPECT type of 'color[0]' --> string
+// XPECT noerrors -->
+let v01 = color[0];
+
+// XPECT type of 'color[color.length - 1]' --> string
+// XPECT noerrors -->
+let v02 = color[color.length - 1];
+
+
+console.log(v01);
+console.log(v02);
+
+
+/* XPECT output ---
+<==
+stdout:
+R
+D
+stderr:
+==>
+--- */
+

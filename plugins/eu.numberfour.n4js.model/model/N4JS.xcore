@@ -34,6 +34,7 @@ import eu.numberfour.n4js.ts.types.TEnumLiteral
 import eu.numberfour.n4js.ts.types.TExportableElement
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFormalParameter
+import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
@@ -54,7 +55,6 @@ import java.util.Collections
 import java.util.Iterator
 import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.emf.ecore.EObject
-import eu.numberfour.n4js.ts.types.TFunction
 
 type IteratorOfExpression wraps Iterator<Expression>
 type IteratorOfYieldExpression wraps Iterator<YieldExpression>
@@ -423,6 +423,10 @@ abstract class FunctionOrFieldAccessor extends AnnotableElement, VariableEnviron
 		return _lok;
 	}
 
+	op boolean isReturnValueOptional() {
+		return false;
+	}
+
 	/**
 	 * Default implementation, always returns false (since accessors cannot be async), overridden in FunctionDefinition
 	 */
@@ -446,6 +450,16 @@ abstract class FunctionOrFieldAccessor extends AnnotableElement, VariableEnviron
  */
 abstract class FunctionDefinition extends FunctionOrFieldAccessor, TypeDefiningElement {
 	contains FormalParameter[] fpars
+	/*
+	 * Tells if the return value is optional.
+	 */
+	op boolean isReturnValueOptional() {
+		return (definedFunction!==null && definedFunction.returnValueOptional) // see (*) below
+			|| (returnTypeRef!==null && returnTypeRef.followedByQuestionMark);
+		// regarding (*) above: in case of arrow functions, the optionality of the return value can be "inferred" from a
+		// type expectation and in this case the 'returnValueOptional' flag will be true only in the defined function in
+		// the TModule; hence, it is important to check for an existing defined function here.
+	}
 	/*
 	 * Developer-provided hint for the return type of this FunctionDefinition.
 	 * In case it's not provided, this reference remains null.
@@ -482,6 +496,9 @@ abstract class FunctionDefinition extends FunctionOrFieldAccessor, TypeDefiningE
  * Base class for getters and setter, of either object literals (PropertyG/SetterDeclaration) or classes (N4G/SetterDeclaration).
  */
 abstract class FieldAccessor extends FunctionOrFieldAccessor, TypeProvidingElement, PropertyNameOwner { // note: super-class is TypableElement
+
+	boolean declaredOptional
+
 	/*
      * The declared type of the field accessor, which is either the return type of the getter or the type of the formal parameter in case of a setter
      */
@@ -492,6 +509,10 @@ abstract class FieldAccessor extends FunctionOrFieldAccessor, TypeProvidingEleme
 	 * Returns the defined FieldAccessor in the TModule, either a TGetter or a TSetter.
 	 */
 	op eu.numberfour.n4js.ts.types.FieldAccessor getDefinedAccessor()
+
+	op boolean isOptional() {
+		return declaredOptional;
+	}
 }
 
 // TODO jvp: probably need operation getTypeRef(), should be similarly handled as variables
@@ -1029,8 +1050,14 @@ abstract class PropertyAssignment extends AnnotableElement, VariableEnvironmentE
  */
 abstract class PropertyNameOwner extends NamedElement {
 	contains LiteralOrComputedPropertyName declaredName
+	/* Convenience method; same as {@link LiteralOrComputedPropertyName#getName()}. */
 	op String getName() {
 		return declaredName?.name;
+	}
+	/* Convenience method; same as {@link LiteralOrComputedPropertyName#hasComputedPropertyName()}. */
+	op boolean hasComputedPropertyName() {
+		val declName = declaredName;
+		return declName!==null && declName.hasComputedPropertyName;
 	}
 	/**
 	 * Used to detect early errors according the the ES6 spec.
@@ -1044,13 +1071,24 @@ class LiteralOrComputedPropertyName {
 	/* The literal name given in the source code or <code>null</code> if this is a computed property name. */
 	String literalName
 	/*
-	 * Iff this is a computed property name and the expression is one of the special cases that are statically
-	 * evaluated, then this will be set to the value of the expression, i.e. the computed name.
+	 * Iff this is a computed property name and the expression is one of the special cases that can be evaluated at
+	 * compile time, then during post-processing this will be set to the value of the expression, i.e. the computed name.
+	 * @see ComputedNameProcessor
 	 */
 	transient String computedName
 	/* The expression provided in the source code for computing the property name, or <code>null</code>. */
 	contains Expression expression
 
+	/* Tells if this element has a name computed from an expression instead of a literal name given in the source code. */
+	op boolean hasComputedPropertyName() {
+		return kind===PropertyNameKind.COMPUTED && expression!==null;
+	}
+
+	/*
+	 * Returns either the literal name given in the source code or the computed name.
+	 * In case of computed names, this method will return <code>null</code> if the expression is invalid (e.g.
+	 * not a constant expression) or if it has not yet been evaluated (this happens during post-processing).
+	 */
 	op String getName() {
 		return literalName ?: computedName;
 	}
@@ -1107,6 +1145,7 @@ enum PropertyNameKind {
 
 class PropertyNameValuePair extends AnnotablePropertyAssignment, TypedElement, TypableElement {
 	refers transient TStructField definedField
+	boolean declaredOptional
 	/*
 	 * The (initial) value of the property.
 	 */
@@ -1937,6 +1976,7 @@ class N4MemberAnnotationList extends AbstractAnnotationList, N4MemberDeclaration
 
 class N4FieldDeclaration extends AnnotableN4MemberDeclaration, TypedElement, ThisArgProvider, PropertyNameOwner {
 	refers transient TField definedField
+	boolean declaredOptional
 	/*
 	 * Initializer expression.
 	 */

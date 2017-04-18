@@ -1,0 +1,18 @@
+ /* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP */
+
+interface ~I {
+	public retrieveSomething?: {function(): int}
+}
+
+function foo(p: ~~I): string {
+	return "";
+}
+
+let v = { name: "N4" }
+
+// XPECT errors --> "~Object with { name: string } is not a structural subtype of ~~I: missing field retrieveSomething." at "v"
+foo(v);
+
+
+// XPECT noerrors -->
+foo({ name: "N4"});

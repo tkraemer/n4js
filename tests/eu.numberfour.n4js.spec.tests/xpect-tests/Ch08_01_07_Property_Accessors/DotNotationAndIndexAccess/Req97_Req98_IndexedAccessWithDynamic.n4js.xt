@@ -19,18 +19,18 @@ function f(): string {return ""}
 objN.vvv;
 // XPECT noerrors
 objN["vvv"];
-// XPECT errors --> "Indexed access is not allowed for class instances." at "objN[cvx]"
+// XPECT noerrors
 objN[cvx];
 
 // XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'zzz'." at "zzz"
 objN.zzz = "zzz";
 // XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'zzz'." at "zzz"
 objN.zzz;
-// XPECT errors --> "Member [zzz] not found." at "objN["zzz"]" 
+// XPECT errors --> "Member zzz not found." at "objN["zzz"]" 
 objN["zzz"];
-// XPECT errors --> "Indexed access is not allowed for class instances." at "objN[zzz]"
+// XPECT errors --> "Not a compile-time expression: variable zzz is not const." at "zzz"
 objN[zzz];
-// XPECT errors --> "Indexed access is not allowed for class instances." at "objN[f()]"
+// XPECT errors --> "Not a compile-time expression: a call expression is never a compile-time expression." at "f()"
 objN[f()];
 
 // dynamic

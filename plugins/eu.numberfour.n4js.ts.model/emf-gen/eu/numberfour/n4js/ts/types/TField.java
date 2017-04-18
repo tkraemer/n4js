@@ -21,41 +21,15 @@ package eu.numberfour.n4js.ts.types;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.types.TField#isConst <em>Const</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TField#isHasExpression <em>Has Expression</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TField#isOptional <em>Optional</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.ts.types.TypesPackage#getTField()
  * @model
  * @generated
  */
-public interface TField extends TMemberWithAccessModifier, TTypedElement {
-	/**
-	 * Returns the value of the '<em><b>Const</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Const</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Const</em>' attribute.
-	 * @see #setConst(boolean)
-	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTField_Const()
-	 * @model unique="false"
-	 * @generated
-	 */
-	boolean isConst();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TField#isConst <em>Const</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Const</em>' attribute.
-	 * @see #isConst()
-	 * @generated
-	 */
-	void setConst(boolean value);
-
+public interface TField extends TMemberWithAccessModifier, TTypedElement, TConstableElement {
 	/**
 	 * Returns the value of the '<em><b>Has Expression</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -83,16 +57,30 @@ public interface TField extends TMemberWithAccessModifier, TTypedElement {
 	void setHasExpression(boolean value);
 
 	/**
+	 * Returns the value of the '<em><b>Optional</b></em>' attribute.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Optional</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  Convenience method, returns true if typeRef undef modifier is optional. If type ref is not set, false is returned.
-	 * <!-- end-model-doc -->
-	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getTypeRef() != null) && (this.getTypeRef().getUndefModifier() == <%eu.numberfour.n4js.ts.types.UndefModifier%>.OPTIONAL));'"
+	 * @return the value of the '<em>Optional</em>' attribute.
+	 * @see #setOptional(boolean)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTField_Optional()
+	 * @model unique="false"
 	 * @generated
 	 */
 	boolean isOptional();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TField#isOptional <em>Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Optional</em>' attribute.
+	 * @see #isOptional()
+	 * @generated
+	 */
+	void setOptional(boolean value);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -142,7 +130,7 @@ public interface TField extends TMemberWithAccessModifier, TTypedElement {
 	 * colon separated type if declared. Overrides TMember's method.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%java.lang.StringBuilder%> strb = new <%java.lang.StringBuilder%>();\n<%java.lang.String%> _name = this.getName();\nstrb.append(_name);\n<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef = this.getTypeRef();\nboolean _tripleNotEquals = (_typeRef != null);\nif (_tripleNotEquals)\n{\n\t<%java.lang.StringBuilder%> _append = strb.append(\": \");\n\t<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef_1 = this.getTypeRef();\n\t<%java.lang.String%> _typeRefAsString = _typeRef_1.getTypeRefAsString();\n\t_append.append(_typeRefAsString);\n}\nreturn strb.toString();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%java.lang.StringBuilder%> strb = new <%java.lang.StringBuilder%>();\n<%java.lang.String%> _name = this.getName();\nstrb.append(_name);\nboolean _isOptional = this.isOptional();\nif (_isOptional)\n{\n\tstrb.append(\"?\");\n}\n<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef = this.getTypeRef();\nboolean _tripleNotEquals = (_typeRef != null);\nif (_tripleNotEquals)\n{\n\t<%java.lang.StringBuilder%> _append = strb.append(\": \");\n\t<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef_1 = this.getTypeRef();\n\t<%java.lang.String%> _typeRefAsString = _typeRef_1.getTypeRefAsString();\n\t_append.append(_typeRefAsString);\n}\nreturn strb.toString();'"
 	 * @generated
 	 */
 	String getMemberAsString();

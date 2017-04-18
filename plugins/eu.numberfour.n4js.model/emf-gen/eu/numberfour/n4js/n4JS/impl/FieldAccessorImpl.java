@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FieldAccessorImpl#getDeclaredName <em>Declared Name</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.impl.FieldAccessorImpl#isDeclaredOptional <em>Declared Optional</em>}</li>
  * </ul>
  *
  * @generated
@@ -52,6 +53,26 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 	 * @ordered
 	 */
 	protected LiteralOrComputedPropertyName declaredName;
+
+	/**
+	 * The default value of the '{@link #isDeclaredOptional() <em>Declared Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeclaredOptional()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean DECLARED_OPTIONAL_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isDeclaredOptional() <em>Declared Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeclaredOptional()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean declaredOptional = DECLARED_OPTIONAL_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -120,6 +141,27 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isDeclaredOptional() {
+		return declaredOptional;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDeclaredOptional(boolean newDeclaredOptional) {
+		boolean oldDeclaredOptional = declaredOptional;
+		declaredOptional = newDeclaredOptional;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.FIELD_ACCESSOR__DECLARED_OPTIONAL, oldDeclaredOptional, declaredOptional));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TypeRef getDeclaredTypeRef() {
 		return null;
 	}
@@ -140,6 +182,15 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isOptional() {
+		return this.isDeclaredOptional();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getName() {
 		LiteralOrComputedPropertyName _declaredName = this.getDeclaredName();
 		String _name = null;
@@ -147,6 +198,16 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 			_name=_declaredName.getName();
 		}
 		return _name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean hasComputedPropertyName() {
+		final LiteralOrComputedPropertyName declName = this.getDeclaredName();
+		return ((declName != null) && declName.hasComputedPropertyName());
 	}
 
 	/**
@@ -184,6 +245,8 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 		switch (featureID) {
 			case N4JSPackage.FIELD_ACCESSOR__DECLARED_NAME:
 				return getDeclaredName();
+			case N4JSPackage.FIELD_ACCESSOR__DECLARED_OPTIONAL:
+				return isDeclaredOptional();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -198,6 +261,9 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 		switch (featureID) {
 			case N4JSPackage.FIELD_ACCESSOR__DECLARED_NAME:
 				setDeclaredName((LiteralOrComputedPropertyName)newValue);
+				return;
+			case N4JSPackage.FIELD_ACCESSOR__DECLARED_OPTIONAL:
+				setDeclaredOptional((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -214,6 +280,9 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 			case N4JSPackage.FIELD_ACCESSOR__DECLARED_NAME:
 				setDeclaredName((LiteralOrComputedPropertyName)null);
 				return;
+			case N4JSPackage.FIELD_ACCESSOR__DECLARED_OPTIONAL:
+				setDeclaredOptional(DECLARED_OPTIONAL_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -228,6 +297,8 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 		switch (featureID) {
 			case N4JSPackage.FIELD_ACCESSOR__DECLARED_NAME:
 				return declaredName != null;
+			case N4JSPackage.FIELD_ACCESSOR__DECLARED_OPTIONAL:
+				return declaredOptional != DECLARED_OPTIONAL_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -312,6 +383,7 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.FIELD_ACCESSOR___GET_NAME;
+				case N4JSPackage.PROPERTY_NAME_OWNER___HAS_COMPUTED_PROPERTY_NAME: return N4JSPackage.FIELD_ACCESSOR___HAS_COMPUTED_PROPERTY_NAME;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.FIELD_ACCESSOR___IS_VALID_NAME;
 				default: return -1;
 			}
@@ -331,12 +403,32 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 				return getDeclaredTypeRef();
 			case N4JSPackage.FIELD_ACCESSOR___GET_DEFINED_ACCESSOR:
 				return getDefinedAccessor();
+			case N4JSPackage.FIELD_ACCESSOR___IS_OPTIONAL:
+				return isOptional();
 			case N4JSPackage.FIELD_ACCESSOR___GET_NAME:
 				return getName();
+			case N4JSPackage.FIELD_ACCESSOR___HAS_COMPUTED_PROPERTY_NAME:
+				return hasComputedPropertyName();
 			case N4JSPackage.FIELD_ACCESSOR___IS_VALID_NAME:
 				return isValidName();
 		}
 		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (declaredOptional: ");
+		result.append(declaredOptional);
+		result.append(')');
+		return result.toString();
 	}
 
 } //FieldAccessorImpl

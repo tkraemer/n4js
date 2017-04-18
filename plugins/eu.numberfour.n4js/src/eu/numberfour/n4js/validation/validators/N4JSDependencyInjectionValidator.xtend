@@ -730,7 +730,7 @@ class N4JSDependencyInjectionValidator extends AbstractN4JSDeclarativeValidator 
 			}
 
 			val retTR = tMethod.returnTypeRef
-			val isVoidOrOptional = TypeUtils.isVoid(retTR) || TypeUtils.isOptional(retTR)
+			val isVoidOrOptional = TypeUtils.isVoid(retTR) || tMethod.isReturnValueOptional;
 			if(isVoidOrOptional) {
 				addIssue(messageForDI_ANN_PROVIDES_METHOD_MUST_RETURN_VALUE,
 					methodDecl, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, DI_ANN_PROVIDES_METHOD_MUST_RETURN_VALUE);

@@ -45,15 +45,11 @@ public class BinariesValidator {
 	 */
 	public IStatus validate(final Binary binary) {
 
+		IStatus simpleValidation = validateBinaryFile(binary);
+		if (!simpleValidation.isOK())
+			return simpleValidation;
+
 		final File file = new File(binary.getBinaryAbsolutePath());
-		if (!file.exists()) {
-			return error(binary, "'" + binary.getLabel() + "' binary does not exist at " + file
-					+ ". Please check your preferences.");
-		}
-		if (!file.isFile()) {
-			return error(binary, "Invalid '" + binary.getLabel() + "' configuration. Expected file at: " + file
-					+ ". Got a directory instead.");
-		}
 		if (!file.canExecute()) {
 			return error(binary, "Cannot execute '" + binary.getLabel() + "' binary at: " + file + ".");
 		}
@@ -85,6 +81,28 @@ public class BinariesValidator {
 			}
 			return OK_STATUS;
 		}
+
+	}
+
+	/**
+	 * Does simple validation, checking if a file of the binary exits.
+	 *
+	 * @param binary
+	 *            the binary to validate.
+	 * @return a status representing the outcome of the validation process.
+	 */
+	public IStatus validateBinaryFile(final Binary binary) {
+
+		final File file = new File(binary.getBinaryAbsolutePath());
+		if (!file.exists()) {
+			return error(binary, "'" + binary.getLabel() + "' binary does not exist at " + file
+					+ ". Please check your preferences.");
+		}
+		if (!file.isFile()) {
+			return error(binary, "Invalid '" + binary.getLabel() + "' configuration. Expected file at: " + file
+					+ ". Got a directory instead.");
+		}
+		return OK_STATUS;
 
 	}
 

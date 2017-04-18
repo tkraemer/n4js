@@ -12,7 +12,7 @@ Contributors:
 ////
 
 The built-in ECMAScript Objects
-cite:[ECMA11a(S15,pp.102)] are supported and their properties are annotated with types as described in this chapter. The semantics of these properties do not change. The short description is copied from cite:[ECMA11a] repeated here for convenience.
+cite:[ECMA11a(S15,p.102)] are supported and their properties are annotated with types as described in this chapter. The semantics of these properties do not change. The short description is copied from cite:[ECMA11a] repeated here for convenience.
 
 [.language-n4js]
 == Object

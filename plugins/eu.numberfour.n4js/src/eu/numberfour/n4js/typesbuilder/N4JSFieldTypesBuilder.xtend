@@ -25,14 +25,15 @@ package class N4JSFieldTypesBuilder {
 	@Inject extension N4JSTypesBuilderHelper
 
 	def package createField(N4FieldDeclaration n4Field, TClassifier classifierType, boolean preLinkingPhase) {
-		if (n4Field.name === null)
-			return null
+		if (n4Field.name === null && !n4Field.hasComputedPropertyName)
+			return null;
 
 		val field = TypesFactory::eINSTANCE.createTField();
-		field.name = n4Field.name;
+		field.setMemberName(n4Field);
 		field.const = n4Field.const
 		field.declaredStatic = n4Field.declaredStatic;
 		field.declaredFinal = n4Field.declaredFinal;
+		field.optional = n4Field.declaredOptional;
 		field.declaredOverride = AnnotationDefinition.OVERRIDE.hasAnnotation(n4Field);
 
 		val providesInitializer = AnnotationDefinition.PROVIDES_INITIALZER.hasAnnotation(n4Field);

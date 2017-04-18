@@ -53,11 +53,35 @@ class NodeTestRunner  {
             } as TestInfos;
         }
 
-        if (options.filter && options.filter.length) {
-            testCatalog.testDescriptors = testCatalog.testDescriptors.filter(info => {
-                return options.filter.some(f => info.fqn.indexOf(f) >= 0);
-            });
+        if (options.filter && options.filter.length) { // filter out tests
+            const filters = options.filter.slice(0).sort();
+            const descriptors: Array<TestInfo> = [];
+
+            for (let info of testCatalog.testDescriptors) {
+                let methods = new Set<string>();
+                for (let filter of filters) {
+                    const [fqnFilter, methodFilter] = filter.split("#");
+                    if (!fqnFilter || info.fqn.indexOf(fqnFilter) >= 0) {
+                        if (methodFilter) { // filter methods
+                            for (let method of info.testMethods) {
+                                if (method.indexOf(methodFilter) >= 0) {
+                                    methods.add(method);
+                                }
+                            }
+                        } else {
+                            methods = new Set<string>(info.testMethods); // take all
+                            break;
+                        }
+                    }
+                }
+                if (methods.size > 0) {
+                    info.testMethods = Array.from(methods);
+                    descriptors.push(info);
+                }
+            }
+            testCatalog.testDescriptors = descriptors;
         }
+
         this.consoleReporter.cliColor = cli_color_.default;
         let reporters: Array<ITestReporter> = [this.consoleReporter];
         if (options.xunitReportFile) {

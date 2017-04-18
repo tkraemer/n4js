@@ -210,8 +210,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 */
 	public TypeRef[] collectLowerBounds(InferenceVariable infVar, boolean onlyProper, boolean resolveRawTypes) {
 		return collectBounds(infVar, onlyProper, resolveRawTypes,
-				b -> (b.variance == CONTRA || b.variance == INV)
-						&& !(b.variance == CONTRA && b.right.isBottomType() && !TypeUtils.isOptional(b.right)));
+				b -> (b.variance == CONTRA || b.variance == INV) && !(b.variance == CONTRA && b.right.isBottomType()));
 	}
 
 	/**
@@ -220,8 +219,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 	 */
 	public TypeRef[] collectUpperBounds(InferenceVariable infVar, boolean onlyProper, boolean resolveRawTypes) {
 		return collectBounds(infVar, onlyProper, resolveRawTypes,
-				b -> (b.variance == CO || b.variance == INV)
-						&& !(b.variance == CO && b.right.isTopType() && !TypeUtils.isOptional(b.right)));
+				b -> (b.variance == CO || b.variance == INV) && !(b.variance == CO && b.right.isTopType()));
 	}
 
 	private TypeRef[] collectBounds(InferenceVariable infVar, boolean onlyProper, boolean resolveRawTypes,

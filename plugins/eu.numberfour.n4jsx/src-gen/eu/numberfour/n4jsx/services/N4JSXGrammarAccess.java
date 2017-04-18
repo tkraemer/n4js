@@ -1728,7 +1728,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	//	declaredName=LiteralOrComputedPropertyName<Yield> ':') expression=AssignmentExpression<In=true,Yield> | =>
 	//	({PropertyGetterDeclaration.annotationList=current} GetterHeader<Yield>) body=Block<Yield=false> | =>
 	//	({PropertySetterDeclaration.annotationList=current}
-	//	'set' -> declaredName=LiteralOrComputedPropertyName<Yield>) '(' fpar=FormalParameter<Yield> ')'
+	//	'set' -> declaredName=LiteralOrComputedPropertyName<Yield>) declaredOptional?='?'? '(' fpar=FormalParameter<Yield> ')'
 	//	body=Block<Yield=false> | => ({PropertyMethodDeclaration.annotationList=current} TypeVariables?
 	//	returnTypeRef=TypeRefWithModifiers? (generator?='*' declaredName=LiteralOrComputedPropertyName<Yield> ->
 	//	MethodParamsAndBody <Generator=true> | declaredName=LiteralOrComputedPropertyName<Yield> -> MethodParamsAndBody
@@ -1757,7 +1757,8 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//PropertyNameValuePair <Yield>:
-	//	=> ({PropertyNameValuePair} declaredTypeRef=TypeRefWithModifiers? declaredName=LiteralOrComputedPropertyName<Yield>
+	//	=> ({PropertyNameValuePair} declaredTypeRef=TypeRefWithModifiers?
+	//	declaredName=LiteralOrComputedPropertyName<Yield> declaredOptional?='?'?
 	//	':') expression=AssignmentExpression<In=true,Yield>;
 	public N4JSGrammarAccess.PropertyNameValuePairElements getPropertyNameValuePairAccess() {
 		return gaN4JS.getPropertyNameValuePairAccess();
@@ -1794,7 +1795,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	//PropertySetterDeclaration <Yield>:
 	//	=> ({PropertySetterDeclaration}
 	//	'set'
-	//	-> declaredName=LiteralOrComputedPropertyName<Yield>)
+	//	-> declaredName=LiteralOrComputedPropertyName<Yield>) declaredOptional?='?'?
 	//	'(' fpar=FormalParameter<Yield> ')' body=Block<Yield=false>;
 	public N4JSGrammarAccess.PropertySetterDeclarationElements getPropertySetterDeclarationAccess() {
 		return gaN4JS.getPropertySetterDeclarationAccess();
@@ -3027,8 +3028,8 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	//	N4MemberAnnotationList (=> ({N4GetterDeclaration.annotationList=current} declaredModifiers+=N4Modifier*
 	//	GetterHeader<Yield>) body=Block<Yield>? ';'?
 	//	| => ({N4SetterDeclaration.annotationList=current} declaredModifiers+=N4Modifier* 'set' ->
-	//	declaredName=LiteralOrComputedPropertyName<Yield>)
-	//	'(' fpar=FormalParameter<Yield> ')' body=Block<Yield>? ';'?
+	//	declaredName=LiteralOrComputedPropertyName<Yield>) declaredOptional?='?'? '(' fpar=FormalParameter<Yield> ')'
+	//	body=Block<Yield>? ';'?
 	//	| => ({N4MethodDeclaration.annotationList=current} declaredModifiers+=N4Modifier* TypeVariables? BogusTypeRefFragment?
 	//	(generator?='*' declaredName=LiteralOrComputedPropertyName<Yield> -> MethodParamsReturnAndBody <Generator=true> |
 	//	AsyncNoTrailingLineBreak declaredName=LiteralOrComputedPropertyName<Yield> -> MethodParamsReturnAndBody
@@ -3044,7 +3045,9 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//fragment FieldDeclarationImpl <Yield> *:
 	//	declaredModifiers+=N4Modifier* BogusTypeRefFragment?
-	//	declaredName=LiteralOrComputedPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)? Semi;
+	//	declaredName=LiteralOrComputedPropertyName<Yield> declaredOptional?='?'?
+	//	ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)?
+	//	Semi;
 	public N4JSGrammarAccess.FieldDeclarationImplElements getFieldDeclarationImplAccess() {
 		return gaN4JS.getFieldDeclarationImplAccess();
 	}
@@ -3121,7 +3124,8 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//fragment GetterHeader <Yield> *:
-	//	BogusTypeRefFragment? 'get' -> declaredName=LiteralOrComputedPropertyName<Yield> '(' ')' ColonSepTypeRef?;
+	//	BogusTypeRefFragment? 'get' -> declaredName=LiteralOrComputedPropertyName<Yield> declaredOptional?='?'? '(' ')'
+	//	ColonSepTypeRef?;
 	public N4JSGrammarAccess.GetterHeaderElements getGetterHeaderAccess() {
 		return gaN4JS.getGetterHeaderAccess();
 	}
@@ -3133,7 +3137,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	//N4SetterDeclaration <Yield>:
 	//	=> ({N4SetterDeclaration} declaredModifiers+=N4Modifier*
 	//	'set'
-	//	-> declaredName=LiteralOrComputedPropertyName<Yield>)
+	//	-> declaredName=LiteralOrComputedPropertyName<Yield>) declaredOptional?='?'?
 	//	'(' fpar=FormalParameter<Yield> ')' body=Block<Yield>? ';'?;
 	public N4JSGrammarAccess.N4SetterDeclarationElements getN4SetterDeclarationAccess() {
 		return gaN4JS.getN4SetterDeclarationAccess();
@@ -3237,8 +3241,6 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		return getElisionAccess().getRule();
 	}
 	
-	//// TODO GH-206: the following rules duplicate the corresponding rules in TypeExpressions.xtext and should be removed
-	//// (having these rules here, is a temporary work-around for the problem described in GH-206)
 	//LiteralOrComputedPropertyName <Yield>:
 	//	literalName=IdentifierName
 	//	| literalName=STRING
@@ -3329,7 +3331,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TypeRefWithModifiers StaticBaseTypeRef:
-	//	TypeRefWithoutModifiers => undefModifier=UndefModifierToken? | {ParameterizedTypeRef} undefModifier=UndefModifierToken
+	//	TypeRefWithoutModifiers => followedByQuestionMark?='?'?
 	public TypeExpressionsGrammarAccess.TypeRefWithModifiersElements getTypeRefWithModifiersAccess() {
 		return gaTypeExpressions.getTypeRefWithModifiersAccess();
 	}
@@ -3605,7 +3607,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TStructField:
-	//	name=IdentifierName (':' typeRef=TypeRef)?;
+	//	name=IdentifierName optional?='?'? (':' typeRef=TypeRef)?;
 	public TypeExpressionsGrammarAccess.TStructFieldElements getTStructFieldAccess() {
 		return gaTypeExpressions.getTStructFieldAccess();
 	}
@@ -3617,7 +3619,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	//TStructGetter:
 	//	=> ({TStructGetter}
 	//	'get'
-	//	name=IdentifierName)
+	//	name=IdentifierName) optional?='?'?
 	//	'(' ')' (':' declaredTypeRef=TypeRef)?;
 	public TypeExpressionsGrammarAccess.TStructGetterElements getTStructGetterAccess() {
 		return gaTypeExpressions.getTStructGetterAccess();
@@ -3630,7 +3632,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	//TStructSetter:
 	//	=> ({TStructSetter}
 	//	'set'
-	//	name=IdentifierName)
+	//	name=IdentifierName) optional?='?'?
 	//	'(' fpar=TAnonymousFormalParameter ')';
 	public TypeExpressionsGrammarAccess.TStructSetterElements getTStructSetterAccess() {
 		return gaTypeExpressions.getTStructSetterAccess();
@@ -3706,16 +3708,6 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getWildcardNewNotationRule() {
 		return getWildcardNewNotationAccess().getRule();
-	}
-	
-	//UndefModifierToken UndefModifier:
-	//	'?'
-	public TypeExpressionsGrammarAccess.UndefModifierTokenElements getUndefModifierTokenAccess() {
-		return gaTypeExpressions.getUndefModifierTokenAccess();
-	}
-	
-	public ParserRule getUndefModifierTokenRule() {
-		return getUndefModifierTokenAccess().getRule();
 	}
 	
 	//TypeVariableWithDefSiteVariance TypeVariable:

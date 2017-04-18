@@ -10,18 +10,24 @@
  */
 package eu.numberfour.n4js.utils;
 
-import java.util.Objects;
-import java.util.function.Consumer;
+import static java.util.Objects.requireNonNull;
+
 import java.util.function.Supplier;
 
 /**
  * A lazily initialized optional value. The value is initialized using a supplier that is called at most once when
  * {@link #get()} is called for the first time. Subsequent calls to {@link #get()} will never call the supplier again
- * even if the supplier returned <code>null</code>.
+ * even if the supplier returned <code>null</code>. After a call supplier reference is set to <code>null</code>.
+ *
+ * Obtaining the value from the supplier should be thread safe.
+ *
+ * @see <a href="https://shipilev.net/blog/2016/close-encounters-of-jmm-kind/">JavaMemoryModel</a>
+ * @see <a href="http://minborgsjavapot.blogspot.de/2016/01/be-lazy-with-java-8.html">lazy with java 8</a>
  */
 public class Lazy<T> {
-	private T value;
-	private Supplier<T> supplier;
+	private volatile T value;
+	private volatile boolean initialized = false;
+	private volatile Supplier<T> supplier;
 
 	/**
 	 * Creates a new instance using the given supplier. This is just a convenience method.
@@ -42,7 +48,7 @@ public class Lazy<T> {
 	 *            the supplier to use
 	 */
 	public Lazy(Supplier<T> supplier) {
-		this.supplier = Objects.requireNonNull(supplier);
+		this.supplier = requireNonNull(supplier);
 	}
 
 	/**
@@ -51,7 +57,7 @@ public class Lazy<T> {
 	 * @return <code>true</code> if this value has been initialized and false otherwise
 	 */
 	public boolean isInitialized() {
-		return supplier == null;
+		return initialized;
 	}
 
 	/**
@@ -60,21 +66,17 @@ public class Lazy<T> {
 	 * @return the lazily initialized value, which may be <code>null</code>
 	 */
 	public T get() {
-		if (!isInitialized()) {
+		return initialized ? value : compute();
+	}
+
+	/** Computes {@link Lazy#value}, sets {@link Lazy#initialized} flag and throws away the {@link Lazy#supplier}. */
+	private synchronized T compute() {
+		if (!initialized) {
 			value = supplier.get();
+			initialized = true;
 			supplier = null;
 		}
 		return value;
 	}
 
-	/**
-	 * Apply the given function to the value if it has been initialized, otherwise do nothing.
-	 *
-	 * @param consumer
-	 *            the function to apply
-	 */
-	public void ifPresent(Consumer<T> consumer) {
-		if (isInitialized())
-			consumer.accept(value);
-	}
 }

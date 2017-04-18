@@ -35,7 +35,7 @@ enum Ea {
 	one,two
 }
 // Annotated class.
-@N4JS class An4 {}
+@Final class An4 {}
 
 
 var ta : TA;

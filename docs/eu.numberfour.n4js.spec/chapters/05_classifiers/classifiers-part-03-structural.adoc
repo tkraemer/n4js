@@ -30,8 +30,8 @@ In this case, $T$ is, therefore, always a structural subtype of _pass:[~T]_.
 [.language-n4js]
 Sometimes it is convenient to refer only to the fields of a classifier, for example when the initial field values are to be provided in a variable passed to the constructor.
 In that case, the type can be modified with ``pass:[~~]`` (two tildes). This is only possible on use-site, i.e. on type references.
-Furthermore, only on the use-site, it is possible to consider only either readable or writable or fields by using the read-only ``pass:[r~]`` or write-only ``pass:[w~]`` structural field typing.
-For initialization blocks, it is even possible to use structural initializer field typing via the ``pass:[i~]`` operator.
+Furthermore, only on the use-site, it is possible to consider only either readable or writable or fields by using the read-only ``pass:[~r~]`` or write-only ``pass:[~w~]`` structural field typing.
+For initialization blocks, it is even possible to use structural initializer field typing via the ``pass:[~i~]`` operator.
 
 [.language-n4js]
 == Syntax
@@ -464,7 +464,7 @@ $    \hspace{1em} \lor\ \exists m' \in X.fields \cup X.setters:$
 $    \hspace{3em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name $
 $    \hspace{3em} \land \tee m': T_m \land \tee m: T_{m'} \land T_m=T_{m'}$
 $       \infer{\lspc \tee X \subtype \tsWoFld T \lspc}{\hspace{3em} \land m'.assignability\geq m.assignability}$
-10. A type $X$ is a subtype of a structural field version of a type $\tsFld this$, if it contains all public, non-static and non-optional fields,
+10. A type $X$ is a subtype of a structural field version of a type $\tsFld{this}$, if it contains all public, non-static and non-optional fields,
 either defined via data fields or field get accessors, of the inferred type of `this`. +
 _All fields which have an initializer are handled as if they were optional._
 +

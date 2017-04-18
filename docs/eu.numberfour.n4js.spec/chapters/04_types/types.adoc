@@ -162,6 +162,9 @@ Exceptions in the cases of object literals or destructuring are explained later 
 The following two listings show the very same code and type annotations are provided on
 the left hand side. For simplicity, `string` is always used as type expression.footnote:[In the N4JS IDE, type annotations are highlighted differently than ordinary code.]
 
+[cols=2,frame=none,grid=none]
+|===
+a|
 [source,n4js]
 ----
 var x: string;
@@ -184,6 +187,8 @@ class C {
 }
 ----
 
+a|
+
 [source,n4js]
 ----
 var x;
@@ -205,6 +210,7 @@ class C {
     }
 }
 ----
+|===
 
 The code on the right hand side is almost all valid ECMAScript 2015, with the exception of field declarations in the class.
 These are moved into the constructor by the N4JS transpiler.
@@ -675,12 +681,12 @@ We define type conformance for non-primitive type references as follows:
 +
 [math]
 ++++
-\infer{ T^0 < : S^0}{S^0 \in T^0.sup^* \cup T^0.interfaces^* }
+\infer{ T^0 < : S^0}{S^0 \in T^{0}.sup^* \cup T^{0}.interfaces^* }
 ++++
 * For two parameterized types $T<T_1,\dots,T_n>$ and $S<S_1,\dots,S_m>$
 +
 [%hardbreaks]
-$\infer{\hspace{10em}T \subtype S\hspace{10em}}{{T^0 \subtype S^0}
+$\infer{\hspace{10em}T \subtype S\hspace{10em}}{T^0 \subtype S^0}$
 ${(n=0 \lor m=0 \lor (n=m \rightarrow \forall i:} $
 $\hspace{2em} {T_i.upperBound \subtype S_i.upperBound} $
 $\hspace{1em} \land {T_i.lowerBound :> S_i.lowerBound}))}$
@@ -1198,9 +1204,9 @@ The N4JS primitive types `pathSelector<T>`, `i18nKey` and `pathSelector<T>` are 
 Thus, they are completely interchangeable with string types:
 
 [%hardbreaks]
-$ \infer{\type{typeName&lt;T&gt;} \subtype \type{string}}{} \spc  \infer{\type{string} \subtype \type{typeName&lt;T&gt;}}{}$
+$ \infer{\type{typeName}<\type{T}> \subtype \type{string}}{} \spc  \infer{\type{string} \subtype \type{typeName}<\type{T}>}{}$
 $ \infer{\type{i18nKey} \subtype \type{string}}{} \spc \infer{\type{string} \subtype \type{i18nKey}}{} $
-$ \infer{\type{pathSelector&lt;T&gt;} \subtype \type{string}}{} \spc \infer{\type{string} \subtype \type{pathSelector&gt;T&gt;}}{}$
+$ \infer{\type{pathSelector}<\type{T}> \subtype \type{string}}{} \spc \infer{\type{string} \subtype \type{pathSelector}<\type{T}>}{}$
 
 As special literals for these N4JS types do not exist, the type has to be explicitly specified in order to enable the additional validation.
 Note that this validation cannot be applied for more complicated expressions with parts which cannot be evaluated at compile time.
@@ -1217,13 +1223,13 @@ The object types have the same name as their corresponding primitive type, but s
 The following types, derived from certain ECMAScript predefined objects and constructs, are supported by means of built-in types as they are required by certain expressions.
 
 
-*  `Object`   cite:[ECMA11a(p111)];
-*  `Function`  cite:[ECMA11a(p117)]; representing functions and function objects <<_function-type>> but also methods (<<_methods>>)
-*  `Array`    cite:[ECMA11a(1p122)], representing array objects, see <<_array-object-type>>
-*  `String` cite:[ECMA11a(p141)]
-*  `Boolean` cite:[ECMA11a(p141)]
-*  `Number` cite:[ECMA11a(p141)]
-*  `RegExp` cite:[ECMA11a(p180)]; they can be constructed by means of special literals (cf. <<Literals>>)
+*  `Object`   cite:[ECMA11a(p.111)];
+*  `Function`  cite:[ECMA11a(p.117)]; representing functions and function objects <<_function-type>> but also methods (<<_methods>>)
+*  `Array`    cite:[ECMA11a(p.122)], representing array objects, see <<_array-object-type>>
+*  `String` cite:[ECMA11a(p.141)]
+*  `Boolean` cite:[ECMA11a(p.141)]
+*  `Number` cite:[ECMA11a(p.141)]
+*  `RegExp` cite:[ECMA11a(p.180)]; they can be constructed by means of special literals (cf. <<Literals>>)
 *  global object type
 *  `Symbol`
 *  `Promise`
@@ -1433,6 +1439,54 @@ For constraints on using the optional modifier, see <<_function-object-type>>.
 == Union and Intersection Type (Composed Types)
 
 Given two or more existing types, it is possible to compose a new type by forming either the union or intersection of the base types.
+The following example gives a small overview of common use cases of union and intersection types.
+
+.Composed types
+[example]
+--
+This example shows how union and intersection types affect the types of their field members in case the fields have different types.
+It is for illustration purposes only.
+The type of the composed field depends on the access type:
+When reading, the field type of an intersection/union also resolves to the intersection/union.
+In contrast, when writing a field, the field type of an intersection/union resolves to the union/intersection respectively.
+
+[source,n4js]
+----
+interface A { f : int = 1; }
+interface B { f : string = "h"; }
+
+class CA implements A {}
+class CB implements B {}
+
+let aub : A|B; // union type
+let aib : A&B; // intersection type
+
+function u() {
+    aub = (catIsAlive)? new CA() : new CB(); // catIsAlive is boolean
+    let x = aub.f; // x = {1 | "h"}
+    aub.f = undefined; // undefined can be assigned to int and string types
+}
+function i() {
+    let a = aib as A;
+    let b = aib as B;
+    a.f = 23;
+    b.f = "text";
+    let x = aib.f; // x = {23 & "text"} which is impossible
+}
+// type of 'aub.f' --> int|string
+let fu = aub.f;
+// type of 'aub.f' --> int&string
+aub.f = undefined;
+// type of 'aib.f' --> int&string
+let fi = aib.f;
+// type of 'aib.f' --> int|string
+aib.f = undefined;
+----
+
+Note that no instance `aib` of intersection type `A&B` can be instantiated, since the instance's class would have to define a field `f` which would have to comply to both of the interfaces `A` and `B`.
+Still the function `i()` shows in general how variables of intersection types can be casted and accessed.
+--
+
 The following sections define these _union_ and _intersection types_ in detail.
 
 === Union Type
@@ -1464,11 +1518,11 @@ Due to interfaces, a variable may conform to multiple types.
 --
 For a given union type $ U= union\{ T_1, \dots ,T_n \}$, the following conditions must hold:
 
-1.  Non-empty: At least one element has to be specified:
+1.  Non-empty: At least one element has to be specified: +
 $U.typeRefs \neq \emptyset$ ($n\geq 1)$
-2.  Non-dynamic: The union type itself must not be declared dynamic:
+2.  Non-dynamic: The union type itself must not be declared dynamic: +
 $\lnot U.dynamic$
-3.  Non-optional elements:
+3.  Non-optional elements: +
 $ \forall T \in U.typeRefs \rightarrow \lnot T.opt  $
 --
 
@@ -1730,6 +1784,10 @@ contain class or interface types which are a subtype of another class or interfa
 
 --
 
+
+
+
+
 === Intersection Type
 task:IDE-142[] task:IDE-385[] task:IDE-383[]
 
@@ -1762,8 +1820,12 @@ This virtual subclass also explains why only one single class may be contained i
 --
 For a given intersection type $I$, the following conditions must hold:
 
-1.  The intersection must contain at least one type:+
-$I.typeRefs \neq \emptyset$
+1.  The intersection must contain at least one type:
++
+[math]
+++++
+I.typeRefs \neq \emptyset
+++++
 2.  Only one class must be contained in the intersection type:
 +
 [math]
@@ -1773,8 +1835,8 @@ $I.typeRefs \neq \emptyset$
 //`
 +
 For the time being, only a warning is produced when more than one class is contained in the intersection type task:IDE-2302[].
-3.  Non-optional elements:
-+
+3. Non-optional elements:
+
 [math]
 ++++
 \forall T \in I.typeRefs \rightarrow \lnot T.opt
@@ -1971,7 +2033,8 @@ The following sections define which properties are accessible.
 
 ==== Properties of Union Type
 
-As an (unfortunately oversimplified) rule of thumb, the properties of a union type $U=T_1|T_2$ are simply the intersection of the properties $U.properties = T_{1}.properties \cap T_{2}.properties$.
+As an (oversimplified) rule of thumb, the properties of a union type $U=T_1|T_2$ are simply the intersection of the properties $U.properties = T_{1}.properties \cap T_{2}.properties$.
+In other words, a property 'p' in the union type is the least common denominator of all 'p' in T_{1} and T_{2}.
 It is not quite that simple, however, as the question of "equality" with regards to properties has to be answered.
 
 .Members of an Union Type
@@ -1990,6 +2053,9 @@ $\forall\ a \in U.attributes:$
 &\land a.typeRef = a_{1}.typeRef = a_{2}.typeRef
 \endalign
 ++++
+
+
+
 
 $\forall\ m \in U.methods:$
 
@@ -2040,7 +2106,25 @@ $\hspace{2em} p_{i}.var  = true $
 
 ---
 
-Remarks on union type’s members:
+The following table shows how non-method members of union types are merged.
+The resulting member type depends on whether the member is being accessed during a read \(R) or write (W) operation.
+The type of a field, of a getter or of the parameter of a setter is indicated in brackets.
+
+.Merged Members of Unions
+[cols="^h,^,^,^,^", options="header"]
+|===
+| Members                2+|   S=T   2+|                S≠T
+|                        h| R  h|  W  h|     R          h|    W
+
+|field:S  \| field:T   2+| field:S  | getter:S\|T    | setter:S&T
+|getter:S \| getter:T  | getter:S |-| getter:S\|T    | -
+|setter:S \| setter:T  |-| setter:S | -              | setter:S&T
+|field:S  \| getter:T  | getter:S |-| getter:S\|T    | -
+|field:S  \| setter:T  |-| setter:S | -              | setter:S&T
+|getter:S \| setter:T  | -    |-    | -              | -
+|===
+
+===== Remarks on union type’s members:
 
 * Fields of the same type are merged to a composed field with the same type.
 Fields of different types are merged to a getter and setter.
@@ -2059,7 +2143,8 @@ In the third case above, types are combined independently for read- and write-ac
 
 ==== Properties of Intersection Type
 
-As an (unfortunately oversimplified) rule of thumb, the properties of an intersection type $I=T_1\&T_2$ are the union of properties $I.properties = T_{1}.properties \cup T_{2}.properties$.
+As an (oversimplified) rule of thumb, the properties of an intersection type $I=T_1\&T_2$ are the union of properties $I.properties = T_{1}.properties \cup T_{2}.properties$.
+In other words, a property 'p' in the union type is the greates common denominator of all 'p' in T_{1} and T_{2}.
 It is not quite that simple, however, as the question of "equality” with regards to properties has to be answered.
 
 .Members of an Intersection Type
@@ -2091,6 +2176,7 @@ $\forall a \in I.attributes:$
         \end{cases}
 \endalign
 ++++
+
 
 
 <<<
@@ -2154,9 +2240,26 @@ $\hspace{2em} p_i.var  = true$
 
 --
 
+The following table shows how non-method members of intersection types are merged.
+The resulting member type depends on whether the member is being accessed during a read \(R) or write (W) operation.
+The type of a field, of a getter or of the parameter of a setter is indicated in brackets.
+
+.Merged Members of Intersections
+[cols="^h,^,^,^,^", options="header"]
+|===
+| Members                2+|   S=T   2+|                S≠T
+|                        h| R  h|  W  h|     R          h|    W
+
+|field:S   & field:T   2+| field:S  | getter:S&T     | setter:S\|T
+|getter:S  & getter:T  | getter:S |-| getter:S&T     | -
+|setter:S  & setter:T  |-| setter:S | -               | setter:S\|T
+|field:S   & getter:T  2+| field:S  | getter:S&T     | setter:S
+|field:S   & setter:T  2+| field:S  | getter:S       | setter:S\|T
+|getter:S  & setter:T  2+| field:S  | getter:S       | setter:T
+|===
 
 
-Remarks on intersection type’s methods:
+===== Remarks on intersection type’s methods:
 
 * The name of a method’s parameter is only used for error or warning messages and cannot be referenced otherwise.
 * The return type of a method is the _intersection_ type of the return types of the merged methods.
@@ -2220,7 +2323,7 @@ This subtype relation for the constructor type is enforced if the constructor of
 \infer{\tee C: \lstnfjs{constructor[C]}}{\mu(C) \in \{ {classifierDefinition} \} }
 ++++
 . A class cannot be called as a function in ECMAScript.
-Thus, the constructor and type type are only subtype of :
+Thus, the constructor and type type are only subtype of `Object`:
 +
 [%hardbreaks]
 $\forall T: $

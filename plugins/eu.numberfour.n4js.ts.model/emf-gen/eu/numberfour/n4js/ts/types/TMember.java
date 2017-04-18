@@ -20,6 +20,7 @@ package eu.numberfour.n4js.ts.types;
  *   <li>{@link eu.numberfour.n4js.ts.types.TMember#isDeclaredFinal <em>Declared Final</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TMember#isDeclaredStatic <em>Declared Static</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TMember#isDeclaredOverride <em>Declared Override</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TMember#isHasComputedName <em>Has Computed Name</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.ts.types.TypesPackage#getTMember()
@@ -104,6 +105,32 @@ public interface TMember extends IdentifiableElement, TAnnotableElement, SyntaxR
 	 * @generated
 	 */
 	void setDeclaredOverride(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Has Computed Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Has Computed Name</em>' attribute.
+	 * @see #setHasComputedName(boolean)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTMember_HasComputedName()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isHasComputedName();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TMember#isHasComputedName <em>Has Computed Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Has Computed Name</em>' attribute.
+	 * @see #isHasComputedName()
+	 * @generated
+	 */
+	void setHasComputedName(boolean value);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -223,6 +250,10 @@ public interface TMember extends IdentifiableElement, TAnnotableElement, SyntaxR
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Tells whether the entire member is optional. Applies only to data fields and field accessors (not methods).
+	 * Don't confuse this with optional return types of methods, see {@link TFunction#isReturnValueOptional()}.
+	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return false;'"
 	 * @generated
@@ -301,7 +332,7 @@ public interface TMember extends IdentifiableElement, TAnnotableElement, SyntaxR
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
-	 * Convenience method returns true, if containing type is either a dynamic or static polyfill and therefor
+	 * Convenience method returns true, if containing type is either a dynamic or static polyfill and therefore
 	 * this member has been poly-filled.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"

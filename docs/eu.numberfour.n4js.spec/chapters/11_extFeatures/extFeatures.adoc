@@ -1183,29 +1183,41 @@ For a polyfill class $P$ annotated with `@Polyfill` or  `@StaticPolyfill`, that 
 
 .  $P$ must extend a class $F$, $F$ is called the filled class:
 +
-$P.super = F$
-. $P$’s name equals the name of the filled class and is contained in a module with same qualified name (specifier or global):
+[math]
+++++
+P.super = F
+++++
+. $P$’s name equals the name of the filled class and is contained in a module with same qualified name (specifier or global): +
 +
 [math]
 ++++
-& P.name = F.name \\
-    & \land P.containedModule.global=F.containedModule.global \\
-    & \land (P.containedModule.global \\
-        & \hspace{3em} \lor P.containedModule.specifier=F.containedModule.specifier) \\
+\beginalign
+\spc P.name = F.name \\
+    \spc \land P.containedModule.global=F.containedModule.global \\
+    \spc \land (P.containedModule.global \\
+        \spc \hspace{3em} \lor P.containedModule.specifier=F.containedModule.specifier) \\
+\endalign
 ++++
 . Both the polyfill and filled class must be top-level declarations (i.e., no class expression): +
-$& P.topLevel = \TRUE \land F.topLevel = \TRUE$
-. $P$ must not implement any interfaces:
-$P.implementedInterfaces=\emptyset$
 +
+[math]
+++++
+P.topLevel = \TRUE \land F.topLevel = \TRUE
+++++
+. $P$ must not implement any interfaces:
++
+[math]
+++++
+P.implementedInterfaces=\emptyset
+++++
 . $P$ must have the same access modifier (access, abstract, final) as the filled class: +
 +
 [math]
 ++++
 \beginalign
-& P.accessModifier=F.accessModifier \\
-& P.abstract = F.abstract \\
-& P.final = F.final
+P.accessModifier=F.accessModifier \\
+P.abstract = F.abstract \\
+P.final = F.final
 \endalign
 ++++
 .  If $P$ declares a constructor, it must be override compatible with the constructor of the filled class:
@@ -1218,9 +1230,11 @@ $P.implementedInterfaces=\emptyset$
 +
 [math]
 ++++
-& \forall i, 0 \leq i<|P.typePars|:\\
-&   \hspace{3em} P.typePars_i=F.typePars_i \\
-&   \hspace{3em} \land P.typePars_i.name=P.super.typeArgs_i.name \\
+\beginalign
+ \forall i, 0 \leq i<|P.typePars|:\\
+   \hspace{3em} P.typePars_i=F.typePars_i \\
+   \hspace{3em} \land P.typePars_i.name=P.super.typeArgs_i.name \\
+\endalign
 ++++
 . All constraints related to member redefinition (cf. <<_redefinition-of-members>>) have to hold.
 In the case of polyfills, this is true for constructors (cf. <<Req-IDE-72>>) and private members.
@@ -1243,8 +1257,10 @@ For a runtime-polyfill class $P$ annotated with `@Polyfill`, that is $P.staticpo
 1.  Both the polyfill and filled class are provided by the runtime
 (annotated with `@ProvidedByRuntime`): footnote:[This restriction has two reasons: Firstly, user-defined types with implementations would require to ’bootstrap’ the polyfill, which is impossible to do automatically without serious constraints on bootstrap code in general. Secondly, instead of filling user-defined types, they can be subclasses. Mechanisms such as dependency injection could then solve almost all remaining problems.]
 
-$& P.providedByRuntime = \TRUE \land F.providedByRuntime = \TRUE$
-
+[math]
+++++
+ P.providedByRuntime = \TRUE \land F.providedByRuntime = \TRUE
+++++
 --
 
 .Applying Polyfills
@@ -1291,24 +1307,35 @@ For a static polyfill class $P$ annotated with `@StaticPolyfill`, that is $P.sta
 [math]
 ++++
 \beginalign
-& P.name = F.name \\
-    & \land P.containedModule.specifier=F.containedModule.specifier \\
+P.name = F.name \\
+    \land P.containedModule.specifier=F.containedModule.specifier \\
 \endalign
 ++++
 2.  Both the static polyfill and the filled class are part of the same project:
-$& P.project = F.project$
 +
+[math]
+++++
+P.project = F.project
+++++
 3.  The filled class must be contained in a module annotated with `@StaticPolyfillAware`:
-$& F.containedModule.staticPolyfillAware = \TRUE$
 +
+[math]
+++++
+F.containedModule.staticPolyfillAware = \TRUE
+++++
 4.  The static polyfill and the filled type must both be declared in an n4js file or both in an n4jsd file.
-// TODO missing notation below
-5.  The filling class must be contained in a module annotated with : +
-$& P.containedModule.staticPolyfillModule = \TRUE $
+5.  The filling class must be contained in a module annotated with `@StaticPolyfillModule`:
 +
+[math]
+++++
+P.containedModule.staticPolyfillModule = \TRUE
+++++
 6. For a statically-filled class $F$ there is at most one static polyfill:
 +
-$(P_1 \texttt{ is static polyfill of } F \land P_2 \texttt{ is static polyfill of } F) \rightarrow P_1=P_2$
+[math]
+++++
+(P_1 \texttt{ is static polyfill of } F \land P_2 \texttt{ is static polyfill of } F) \rightarrow P_1=P_2
+++++
 --
 
 
@@ -1322,7 +1349,7 @@ For a static polyfilling module $M_P$ the following must hold:
 +
 [math]
 ++++
-& \infer{T.staticPolyfill = \TRUE}{\forall T \in M_P \land T.topLevel = \TRUE}
+\infer{T.staticPolyfill = \TRUE}{\forall T \in M_P \land T.topLevel = \TRUE}
 ++++
 2.  It exists exactly one filled module $M_F$ annotated with $staticPolyfillAware$ in the same project.
 3.  It is an error if two static polyfill modules for the same filled module exist in the same project:
