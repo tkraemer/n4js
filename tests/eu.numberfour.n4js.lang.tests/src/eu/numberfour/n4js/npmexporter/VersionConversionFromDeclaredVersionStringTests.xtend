@@ -74,4 +74,3 @@ class VersionConversionFromDeclaredVersionStringTests {
 		assertEquals(String.join(",", expected), String.join(",", input.toString.parseDeclaredVersion.errors))
 	}
 }
-

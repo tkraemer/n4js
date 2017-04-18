@@ -248,4 +248,3 @@ class IndentHandlingTextReplaceMerger extends TextReplacerMerger {
 	}
 	
 }
-

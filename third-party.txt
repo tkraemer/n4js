@@ -23,8 +23,8 @@ plugins/eu.numberfour.n4js.transpiler/src/eu/numberfour/n4js/transpiler/sourcema
 
 
 ## code from items AG copied and adjusted by items consultants for NumberFour AG
-testhelpers/eu.numberfour.n4js.tests.helper/src/eu/numberfour/n4js/xpect/scoping/N4JSCommaSeparatedValuesExpectation.java
-testhelpers/eu.numberfour.n4js.tests.helper/src/eu/numberfour/n4js/xpect/scoping/ScopeXpectMethod.java
+plugins/eu.numberfour.n4js.xpect/src/eu/numberfour/n4js/xpect/methods/scoping/N4JSCommaSeparatedValuesExpectation.java
+plugins/eu.numberfour.n4js.xpect/src/eu/numberfour/n4js/xpect/methods/scoping/ScopeXpectMethod.java
 testhelpers/eu.numberfour.n4js.ui.tests.helper/src/eu/numberfour/n4js/tests/builder/AbstractBuilderTest.java
 testhelpers/eu.numberfour.n4js.ui.tests.helper/src/eu/numberfour/n4js/tests/builder/BuilderUtil.java
 testhelpers/eu.numberfour.n4js.ui.tests.helper/src/eu/numberfour/n4js/tests/builder/DelegatingBuilderParticipant.java
@@ -52,12 +52,12 @@ plugins/eu.numberfour.n4js.environments/src-env/env/builtin_js.n4ts
 
 ## files in bootstrap code
 plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/encoding/LICENSE
-plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/dist/es6-module-loader-dev.js
-plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/dist/es6-module-loader.js
-plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/Gruntfile.js
-plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/LICENSE-MIT
-plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/package.json
-plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/README.md
+#plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/dist/es6-module-loader-dev.js
+#plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/dist/es6-module-loader.js
+#plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/Gruntfile.js
+#plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/LICENSE-MIT
+#plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/package.json
+#plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/README.md
 plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/iconv-lite/LICENSE
 plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/node-fetch/LICENSE.md
 plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/systemjs/LICENSE

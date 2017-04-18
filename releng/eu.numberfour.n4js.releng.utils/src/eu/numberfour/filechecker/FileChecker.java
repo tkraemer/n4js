@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -132,6 +133,20 @@ public class FileChecker {
 			} else {
 				if (charLast != '\n' || char2ndToLast == '\n') {
 					report.problems.add("does not end with a single empty line");
+
+					if (content.length() > 0) {
+						int endIndex = content.length();
+						while (endIndex > 0 && content.charAt(endIndex - 1) == '\n') {
+							--endIndex;
+						}
+						content = content.substring(0, endIndex) + '\n';
+						try {
+							writeFile(path, content);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 				}
 				if (containsTrailingWhiteSpace(content)) {
 					report.problems.add("must not contain lines with trailing white-space");
@@ -143,6 +158,7 @@ public class FileChecker {
 					report.problems.add("must not contain author tags");
 				}
 			}
+
 		} else {
 
 			// checks for all other files
@@ -226,7 +242,7 @@ public class FileChecker {
 
 						try {
 
-							final String content = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+							final String content = readFile(path);
 							final Report report = check(path, content, thirdPartyFiles.contains(path));
 							(report.problems.isEmpty() ? validFiles : invalidFiles).put(path, report);
 
@@ -379,5 +395,14 @@ public class FileChecker {
 			if (pathStr.contains("/" + folderName + "/"))
 				return true;
 		return false;
+	}
+
+	private static String readFile(Path path) throws IOException {
+		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+	}
+
+	@SuppressWarnings("unused")
+	private static void writeFile(Path path, String content) throws IOException {
+		Files.write(path, content.getBytes(StandardCharsets.UTF_8), StandardOpenOption.TRUNCATE_EXISTING);
 	}
 }

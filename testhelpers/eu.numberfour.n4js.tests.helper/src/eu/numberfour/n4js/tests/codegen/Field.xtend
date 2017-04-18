@@ -40,4 +40,3 @@ class Field extends Member<Field> {
 	«IF !fieldType.nullOrEmpty»«fieldType» «ENDIF»«name»«IF !defaultValue.nullOrEmpty» = «defaultValue»«ENDIF»;
 	'''
 }
-
