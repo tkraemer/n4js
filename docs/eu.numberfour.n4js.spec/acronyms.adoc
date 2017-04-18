@@ -1,6 +1,3 @@
-
-[appendix]
-= Acronyms
 ////
 Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
@@ -11,6 +8,9 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
 ////
+
+[appendix]
+= Acronyms
 
 [[AC]]
 

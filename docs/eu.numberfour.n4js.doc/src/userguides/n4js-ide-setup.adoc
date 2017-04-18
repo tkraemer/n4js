@@ -1,3 +1,14 @@
+////
+Copyright (c) 2016 NumberFour AG.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+  NumberFour AG - Initial API and implementation
+////
+
 :doctype: book
 :toc: right
 :toc-title: Jump to topic:
@@ -200,5 +211,3 @@ errors.
 After creating a project and running some sample code, the next step we can have a look at is
 exporting our project as an npm package followed by running it from the command line and
 publishing to the npm registry. This is covered in the <<npm-export-guide#_npm_export_guide, export to npm>> guide.
-
-
