@@ -95,12 +95,12 @@ class MeetComputer extends TypeSystemHelperStrategy {
 		} else {
 			intersectTRs.addAll(getSubtypesOnly(G, flattenedTypeRefs));
 		}
-		
+
 		if (intersectTRs.size() == 1) {
 			val tR = intersectTRs.get(0)
 			return TypeUtils.copyIfContained(tR);
 		}
-		
+
 		val intersection = TypeRefsFactory.eINSTANCE.createIntersectionTypeExpression();
 		for (s : intersectTRs) {
 			intersection.typeRefs.add(TypeUtils.copyIfContained((s)));

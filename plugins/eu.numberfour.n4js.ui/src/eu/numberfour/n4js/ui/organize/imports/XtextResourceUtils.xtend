@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -23,7 +23,7 @@ class XtextResourceUtils {
 	 * If resource is {@link N4JSResource) it will use its api to get script. If it is some other {@link XtextResource} then and its contents
 	 * are not empty it will return first element casted to {@link Script}.
 	 * In all other cases return null.
-	 * 
+	 *
 	 * @param xtextResource
 	 *            the resource to process.
 	 * @return Script instance or null

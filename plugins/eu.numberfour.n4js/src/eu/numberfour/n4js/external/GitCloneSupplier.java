@@ -94,7 +94,7 @@ public class GitCloneSupplier implements Supplier<File> {
 
 	/**
 	 * Tries to clone type definitions again. If repository exists on the disk, only hard reset is performed.
-	 * 
+	 *
 	 * @return true if refreshed type definitions reside in the same location as before
 	 */
 	public synchronized boolean repairTypeDefinitions() {

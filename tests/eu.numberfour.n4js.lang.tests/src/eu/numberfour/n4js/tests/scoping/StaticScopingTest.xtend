@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -39,7 +39,7 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 
 /**
  * Tests for static scoping, combined with type system test.
- * 
+ *
  * @see AT_185_ThisScopingTest
  * @see ThisScopingTest
  * @see MemberScope
@@ -61,30 +61,30 @@ class StaticScopingTest {
 			class Callee {
 			   private static myPrivateStaticField: string = "myPrivateStaticField";
 			   private myPrivateNonStaticField: string = "myPrivateNonStaticField";
-			
+
 			   static get myPrivateStaticAccessor() {
 					return this.myPrivateStaticField;
 					 }
-			
+
 			   static set myPrivateStaticAccessor(myPrivateStaticParam: string) {
 					/*this*/Callee.myPrivateStaticField = myPrivateStaticParam;
 					 }
-			
+
 			   get myPrivateNonStaticAccessor() {
 					return this.myPrivateNonStaticField;
 					 }
-			
+
 			   set myPrivateNonStaticAccessor(myPrivateParam: string) {
 					this.myPrivateNonStaticField = myPrivateParam;
 					 }
-			
+
 			}
 			class Caller {
-			
+
 				call() {
 					Callee.myPrivateStaticAccessor = "a"
 					var a = Callee.myPrivateStaticAccessor
-			
+
 					var callee: Callee = null;
 					callee.myPrivateNonStaticAccessor = "a"
 					a = callee.myPrivateNonStaticAccessor
@@ -128,7 +128,7 @@ class StaticScopingTest {
 		val typeName2 = parameterizedTypeRef.declaredType.name
 		Assert.assertEquals("A", typeName2)
 	}
-	
+
 	@Test
 	def void testTyping() {
 		val script = '''

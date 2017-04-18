@@ -21,12 +21,12 @@ import eu.numberfour.n4js.utils.beans.PropertyChangeSupport
  * A data model to hold the information of a {@link N4JSNewInterfaceWizard}.
  */
 @PropertyChangeSupport
-class N4JSInterfaceWizardModel extends N4JSClassifierWizardModel 
+class N4JSInterfaceWizardModel extends N4JSClassifierWizardModel
 	implements InterfacesContainingModel, AccessModifiableModel, NamedModel, DefinitionFileModel {
 
 	@Override
 	override getClassifierName() {
 		return 'interface';
 	}
-	
+
 }

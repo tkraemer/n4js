@@ -46,7 +46,7 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 
 /**
  * {@link PolyProcessor} delegates here for processing array literals.
- * 
+ *
  * @see PolyProcessor#inferType(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,ASTMetaInfoCache)
  * @see PolyProcessor#processExpr(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,TypeRef,InferenceContext,ASTMetaInfoCache)
  */
@@ -110,7 +110,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 				val tMember = TypeUtils.copy(pa.definedMember);
 				if (tMember !== null) {
 					tMembers += tMember;
-					
+
 					if (pa.isPoly) {
 						if (!(tMember instanceof TMethod)) {
 							processNonMethodProperties(G, cache, infCtx, tMember, pa,
@@ -195,7 +195,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Add a constraint for each getter/setter pair reflecting the relation between the getter's and setter's type.
 	 * Required to make the getter obtain its implicit type from the corresponding setter, and vice versa.
@@ -219,7 +219,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 			}
 		}
 	}
-	
+
 	/**
 	 * Writes final types to cache
 	 */
@@ -236,12 +236,12 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 				memberInTModule.typeOfMember = TypeUtils.copy(memberTypeSane);
 			], memberInTModule);
 		}
-		
+
 		val resultFinal = TypeUtils.createParameterizedTypeRefStructural(G.objectType, TypingStrategy.STRUCTURAL,
 			objLit.definedType as TStructuralType);
 		resultFinal.typeOfObjectLiteral = true;
 		cache.storeType(objLit, resultFinal);
-		
+
 		for (currAss : objLit.propertyAssignments) {
 			if (currAss.definedMember !== null) {
 				if (currAss instanceof PropertyMethodDeclaration) {
@@ -254,7 +254,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 			}
 		}
 	}
-	
+
 	private def TypeRef getMemberType(RuleEnvironment G, Optional<Map<InferenceVariable, TypeRef>> solution,
 		boolean quickMode, Pair<PropertyAssignment, ? extends Versionable> prop2InfVarOrFallbackType
 	) {
@@ -269,12 +269,12 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 				} else {
 					memberType = TypeUtils.copy(fallbackType).applySolution(G, solution.get)
 				}
-				
+
 			} else {
 				// success case (standard mode):
 				val infVar = prop2InfVarOrFallbackType.value as InferenceVariable; // value is an infVar
 				val fromSolution = solution.get.get(infVar);
-				
+
 				if (propAssignm instanceof PropertyNameValuePair) {
 					val fromCache = if (propAssignm.expression instanceof ObjectLiteral) {
 							getFinalResultTypeOfNestedPolyExpression(propAssignm.expression)
@@ -302,7 +302,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 				memberType = G.anyTypeRef
 			}
 		}
-		
+
 		return memberType;
 	}
 }

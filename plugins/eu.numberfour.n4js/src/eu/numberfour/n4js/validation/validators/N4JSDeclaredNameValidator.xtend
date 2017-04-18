@@ -87,7 +87,7 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject IN4JSCore n4jsCore;
 
 	@Inject SourceElementExtensions sourceElementExtensions;
-	
+
 	@Inject
 	private JavaScriptVariantHelper jsVariantHelper;
 
@@ -261,8 +261,8 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 							// null-node will happen if artificially enriched AST,
 							// for example instance of {@link LocalArgumentsVariable} is encountered.
 							return if( n1===null || n2===null ) { 0 } else { n1.getOffset() - n2.getOffset() };
-						]); 
-					val ListIterator<EObject> iter = lstEO.listIterator(); 
+						]);
+					val ListIterator<EObject> iter = lstEO.listIterator();
 					val EObject baseEO = iter.next();
 					iter.forEachRemaining(
 						[ dupeEO |
@@ -565,7 +565,7 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 	def private Iterable<String> getDeclaredNames(VariableEnvironmentElement scope) {
 		scope.nameDeclarations.map[declaredName]
 	}
-	
+
 	/**
 	 * Returns list of names declared in scope 'scope' without(!) considering nested scopes for comparison in global scope.
 	 */
@@ -621,7 +621,7 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 
 		return null
 	}
-	
+
 	def protected String getDeclaredNameForGlobalScopeComparision(EObject eo) {
 		return eo.declaredName
 	}

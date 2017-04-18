@@ -105,7 +105,7 @@ class N4_06_04_01_AsynchronousFunctions extends AbstractParserTest {
 
 	}
 
-	@Test @Ignore // invalid test expectation 
+	@Test @Ignore // invalid test expectation
 	def void test_AsyncMethodDeclarationErrorDueToTrailingEOL() {
 		val script = '''
 			class C {

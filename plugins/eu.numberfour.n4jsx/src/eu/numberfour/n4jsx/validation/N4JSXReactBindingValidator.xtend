@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -40,7 +40,7 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 /**
- * Validation of React bindings including naming convention (components in upper case and HTML tags in lower case) 
+ * Validation of React bindings including naming convention (components in upper case and HTML tags in lower case)
  */
 class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject private N4JSTypeSystem ts;
@@ -49,29 +49,29 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 
 	// Source: http://www.w3schools.com/tags/
 	private static final List<String> htmlTags = Arrays.asList(
-		"a","abbr",	"address", "area", "article", "aside", "audio", 	
+		"a","abbr",	"address", "area", "article", "aside", "audio",
 		"b", "base", "bdi", "bdo", "blockquote", "body", "br", "button",
-		"canvas", "caption", "cite", "code", "col", "colgroup", 
-		"datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "dt", 
-		"em", "embed", 
+		"canvas", "caption", "cite", "code", "col", "colgroup",
+		"datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "dt",
+		"em", "embed",
 		"fieldset", "figcaption", "figure", "footer", "form",
 		"h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hr", "html",
-		"i", "iframe", "img", "input", "ins", 
-		"kbd", "keygen", 
-		"label", "legend", "li", "link", 
+		"i", "iframe", "img", "input", "ins",
+		"kbd", "keygen",
+		"label", "legend", "li", "link",
 		"main", "map", "mark", "menu", "menuitem", "meta", "meter",
-		"nav", "noscript", 
-		"object", "ol", "optgroup", "option", 
-		"p", "param", "pre", "progress", "q", "rp", "rt", "ruby", 
+		"nav", "noscript",
+		"object", "ol", "optgroup", "option",
+		"p", "param", "pre", "progress", "q", "rp", "rt", "ruby",
 		"s", "samp", "script", "section", "select", "small", "source", "span",
-		"strong", "style", "sub", "summary", "sup", "svg", 
+		"strong", "style", "sub", "summary", "sup", "svg",
 		"table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track",
 		"u", "ul", "use", "var", "video", "wbr"
 	)
 
 	/**
 	 * NEEEDED
-	 * 
+	 *
 	 * when removed check methods will be called twice once by N4JSValidator, and once by
 	 * AbstractDeclarativeN4JSValidator
 	 */
@@ -113,7 +113,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		if (!isFunction && !isClass) {
 			val String refName = expr.refName
 			if ((refName !== null) && Character::isLowerCase(refName.charAt(0))) {
-				// See Req. IDE-241118 
+				// See Req. IDE-241118
 				// If the JSX element name starts with lower case, warning if it is unknown HTML tag
 				if (!htmlTags.contains(refName)) {
 					val message = IssueCodes.getMessageForHTMLTAG_UNKNOWN(refName);
@@ -126,7 +126,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 				}
 			} else {
 				// JSX element name starts with an upper case, error because it does not bind to a class or function
-				// See Req. IDE-241115 
+				// See Req. IDE-241115
 				val message = IssueCodes.
 					getMessageForREACT_ELEMENT_NOT_FUNCTION_OR_CLASS_ERROR(exprTypeRef.typeRefAsString);
 				addIssue(message, expr, IssueCodes.REACT_ELEMENT_NOT_FUNCTION_OR_CLASS_ERROR);
@@ -150,7 +150,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * Check that a React function/class component should start with an upper case
-	 * See Req. 241101 
+	 * See Req. 241101
 	 */
 	def private void checkReactComponentShouldStartWithUppercase(JSXElement jsxElem, boolean isFunctionalComponent) {
 		val expr = jsxElem.jsxElementName.expression;
@@ -178,7 +178,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * The JSX element binds to a function or function expression, check that the return type is a subtype of React.Element
-	 * See Req. IDE-241116 
+	 * See Req. IDE-241116
 	 */
 	def private void checkFunctionTypeExprOrRef(JSXElement jsxElem, FunctionTypeExprOrRef exprTypeRef) {
 		val elementClassTypeRef = reactHelper.lookUpReactElement(jsxElem);
@@ -201,7 +201,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * The JSX element binds to a class, check that the class type is a subtype of React.Component
-	 * See Req. IDE-241116 
+	 * See Req. IDE-241116
 	 */
 	def private void checkTypeTypeRefConstructor(JSXElement jsxElem, TypeTypeRef exprTypeRef) {
 		val componentClassTypeRef = reactHelper.lookUpReactComponent(jsxElem);
@@ -218,7 +218,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 			addIssue(message, expr, IssueCodes.REACT_ELEMENT_CLASS_NOT_REACT_ELEMENT_ERROR);
 		}
 	}
-	
+
 	@Check
 	def public void checkUnknownJSXPropertyAttribute(JSXPropertyAttribute propertyAttribute) {
 		val jsxElem = propertyAttribute.eContainer as JSXElement;
@@ -228,14 +228,14 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		if (!isFunction && !isClass) {
 			return;
 		}
-					
+
 		val G = propertyAttribute.newRuleEnvironment;
 		val Result<TypeRef> result = ts.type(G, propertyAttribute.property);
-		//TODO: it's not nice that we get an UnknownTypeRef, here; 
+		//TODO: it's not nice that we get an UnknownTypeRef, here;
 		//they are mainly intended for error cases, not valid code. Probably it should be any+ instead.
 		//This requires refactoring else where
 		if (result.value instanceof UnknownTypeRef) {
-			val message = IssueCodes.getMessageForJSXSPROPERTYATTRIBUTE_NOT_DECLARED_IN_PROPS(propertyAttribute.propertyAsText, 
+			val message = IssueCodes.getMessageForJSXSPROPERTYATTRIBUTE_NOT_DECLARED_IN_PROPS(propertyAttribute.propertyAsText,
 				jsxElem?.jsxElementName?.expression?.refName);
 					addIssue(
 						message,
@@ -255,9 +255,9 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		val expr = spreadAttribute?.expression;
 		val jsxElem =  spreadAttribute?.eContainer as JSXElement;
 		val propsType = jsxElem?.propsType
-		if (propsType === null) 
+		if (propsType === null)
 			return;
-		
+
 		val G = spreadAttribute.newRuleEnvironment
 		// Retrieve fields or getters in props type
 		val fieldsOrGettersInProps = tsh.structuralTypesHelper.collectStructuralMembers(G, propsType,
@@ -266,18 +266,18 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		val exprTypeResult = ts.type(G, expr);
 		if (exprTypeResult.failed)
 			return;
-		// Retrieve attributes (either field or getter) in spread operator type	
+		// Retrieve attributes (either field or getter) in spread operator type
 		val attributesInSpreadOperatorType = tsh.structuralTypesHelper.collectStructuralMembers(G, exprTypeResult.value,
 				TypingStrategy.STRUCTURAL).filter[m | (m instanceof TField) || (m instanceof TGetter)];
-		
+
 		//commented out but not deleted for now since the Stdlib team is still arguing about if this check makes sense
 		//spreadAttribute.checkUnknownAttributeInSpreadOperator(jsxElem, attributesInSpreadOperatorType, fieldsOrGettersInProps);
-		
+
 		// Type check each attribute in spreader operator against the corresponding props type's field/getter
 		attributesInSpreadOperatorType.forEach [ attributeInSpreadOperator |
 			val attributeInSpreadOperatorTypeRef = reactHelper.typeRefOfFieldOrGetter(attributeInSpreadOperator, exprTypeResult.value);
 			val fieldOrGetterInProps = fieldsOrGettersInProps.findFirst[fieldOrGetter | attributeInSpreadOperator.name == fieldOrGetter.name];
-			
+
 			if (fieldOrGetterInProps !== null) {
 				//Reason for using tau: Consider type arguments by calculating the property of within the context of "props" type
 				val fieldOrGetterInPropsTypeRef = ts.tau(fieldOrGetterInProps, propsType);
@@ -295,7 +295,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 			}
 		];
 	}
-	
+
 	/**
 	 * Check if there is any attribute in spread operator that is not declared in props
 	 * Notes: this is commented out but not deleted for now since the Stdlib team is still arguing about if this check makes sense
@@ -305,7 +305,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 //			//Look for the field/getter in props that corresponding the spread operator's attribute
 //			val fieldOrGetterInProps = fieldsOrGettersInProps.findFirst[fieldOrGetter | attributeInSpreadOperator.name == fieldOrGetter.name];
 //			if (fieldOrGetterInProps === null) {
-//				val message = IssueCodes.getMessageForJSXSPREADATTRIBUTE_NOT_DECLARED_IN_PROPS(attributeInSpreadOperator.name, 
+//				val message = IssueCodes.getMessageForJSXSPREADATTRIBUTE_NOT_DECLARED_IN_PROPS(attributeInSpreadOperator.name,
 //					 	jsxElem?.jsxElementName?.expression?.refName
 //					 );
 //						addIssue(
@@ -313,14 +313,14 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 //							spreadAttribute,
 //							N4JSXPackage.Literals.JSX_SPREAD_ATTRIBUTE__EXPRESSION,
 //							IssueCodes.JSXSPREADATTRIBUTE_NOT_DECLARED_IN_PROPS
-//						);	
+//						);
 //			}
-//			
+//
 //		];
-//			
+//
 //	}
-	
-	
+
+
 
 	/**
 	 * Check that non-optional fields of "props" should be specified in JSX element
@@ -328,7 +328,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	def private void checkAllNonOptionalFieldsAreSpecified(JSXElement jsxElem, TypeRef exprTypeRef) {
 		val jsxPropertyAttributes = jsxElem.jsxAttributes;
-		// First, collect all normal properties in JSX element 
+		// First, collect all normal properties in JSX element
 		val allAttributesInJSXElement = Lists.newArrayList(jsxPropertyAttributes.filter(typeof(JSXPropertyAttribute)).map[a | a.property]);
 		val propsType = jsxElem.propsType;
 		if (propsType === null)
@@ -347,13 +347,13 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 			}
 		]).flatten;
 		allAttributesInJSXElement.addAll(attributesInSpreadOperator)
-		
+
 		// Retrieve all non-optional fields or getters in "props" type
-		val nonOptionalFieldsOrGettersInProps = 
-				tsh.structuralTypesHelper.collectStructuralMembers(G, propsType, TypingStrategy.STRUCTURAL).filter[m | 
+		val nonOptionalFieldsOrGettersInProps =
+				tsh.structuralTypesHelper.collectStructuralMembers(G, propsType, TypingStrategy.STRUCTURAL).filter[m |
 					(m instanceof TField || m instanceof TGetter) && !m.isOptional
 				];
-		//Calculate the set of unspecified non-optional properties 	
+		//Calculate the set of unspecified non-optional properties
 		val String missingFieldsStringRep = nonOptionalFieldsOrGettersInProps.filter [ fieldOrGetter |
 			!(allAttributesInJSXElement.exists[attribute | attribute.name == fieldOrGetter.name])
 		].map [ fieldOrGetter |	fieldOrGetter.name ].join(",");

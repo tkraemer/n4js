@@ -42,7 +42,7 @@ Workflow {
 				preferXtendStubs = true
 			}
 		}
-		
+
 		language = XtextGeneratorLanguage {
 			generateXtendStubs = false
 			name = "eu.numberfour.n4js.n4mf.N4MF"

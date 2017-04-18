@@ -39,7 +39,7 @@ import static eu.numberfour.n4js.transpiler.TranspilerBuilderBlocks.*
  * </ul>
  */
 class SanitizeImportsTransformation extends Transformation {
-	
+
 	@Inject
 	JSXBackendHelper jsx;
 
@@ -64,7 +64,7 @@ class SanitizeImportsTransformation extends Transformation {
 		removeUnusedImports();
 		patchJSX();
 	}
-	
+
 	/**
 	 * Adds import for JSX backend, if necessary, i.e.
 	 * import was not present or import was unused (in consequence it is removed).
@@ -192,11 +192,11 @@ class SanitizeImportsTransformation extends Transformation {
 			} else if(importSpec instanceof NamespaceImportSpecifier) {
 				findSymbolTableEntryForNamespaceImport(importSpec)
 			};
-			
+
 			if(ste === null && JSXBackendHelper.isJsxBackendImportSpecifier(importSpec)){
 				return true
 			}
-			
+
 			// note: here it is not enough to return !ste.referencingElements.empty, because for performance reasons
 			// transformations are not required to remove obsolete entries from that list
 			val hasReference = ste.referencingElements.exists[TranspilerUtils.isIntermediateModelElement(it)];

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -108,7 +108,7 @@ class LocallyKnownTypesScopingHelper {
 	}
 
 	/**
-	 * Creates a map based scope for the locally known types in the given module and with the given import (parent) 
+	 * Creates a map based scope for the locally known types in the given module and with the given import (parent)
 	 * scope. This method may be overridden in sub classes.
 	 */
 	protected def IScope buildMapBasedScope(IScope importScope, TModule localModule) {

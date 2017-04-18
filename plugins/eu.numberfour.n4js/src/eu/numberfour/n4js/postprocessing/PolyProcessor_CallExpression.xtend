@@ -31,7 +31,7 @@ import java.util.Map
 
 /**
  * {@link PolyProcessor} delegates here for processing array literals.
- * 
+ *
  * @see PolyProcessor#inferType(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,ASTMetaInfoCache)
  * @see PolyProcessor#processExpr(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,TypeRef,InferenceContext,ASTMetaInfoCache)
  */
@@ -83,7 +83,7 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 		// return temporary type of callExpr (i.e. may contain inference variables)
 		return resultTypeRef;
 	}
-	
+
 	/**
 	 * Processes all parameters and derives constraints from their bounds and matching types.
 	 */
@@ -135,7 +135,7 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 		//
 		// --> not required here (will be done by caller)
 	}
-	
+
 	/**
 	 * Writes final types to cache.
 	 */

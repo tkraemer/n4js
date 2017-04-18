@@ -10,9 +10,9 @@ abstract class TypeExpressionsFormatter extends AbstractFormatter2 {
 }
 
 public class TypeExpressionFormatterNoOp extends TypeExpressionsFormatter {
-	
+
 	override format(Object obj, IFormattableDocument document) {
 		throw new UnsupportedOperationException("TypeExpressionFormatter should not be used directly.")
 	}
-	
+
 }

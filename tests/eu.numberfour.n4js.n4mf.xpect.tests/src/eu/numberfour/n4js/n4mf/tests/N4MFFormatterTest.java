@@ -93,7 +93,7 @@ public class N4MFFormatterTest {
 				regionAccessBuilderProvider.get().forNodeModel(resource).create());
 
 		int totalLength = rootNode.getTotalLength();
-		
+
 		if (offset >= 0 && to > offset) {
 			request.setRegions(Collections.singleton(new TextRegion(offset, to - offset)));
 		} else {

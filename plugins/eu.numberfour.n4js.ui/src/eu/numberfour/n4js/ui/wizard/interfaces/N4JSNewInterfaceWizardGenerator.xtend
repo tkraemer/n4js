@@ -27,7 +27,7 @@ class N4JSNewInterfaceWizardGenerator extends N4JSNewClassifierWizardGenerator<N
 
 	@Inject
 	private extension WizardGeneratorHelper generatorUtils;
-	
+
 	/**
 	 *  Generates the interface code.
 	 */
@@ -40,21 +40,21 @@ class N4JSNewInterfaceWizardGenerator extends N4JSNewClassifierWizardGenerator<N
 		»«model.accessModifier.toCodeRepresentation.addSpace»interface «model.name»«
 		IF model.interfaces.length > 0 » extends «ENDIF»«FOR iface : model.interfaces  SEPARATOR ", " »«
 		iface.realOrAliasName(aliasBindings)»«ENDFOR» {
-			
+
 		}
 		'''
-	
+
 	override protected getReferencedProjects(N4JSInterfaceWizardModel model) {
 		model.interfaces.map[uri.projectOfUri];
 	}
-	
+
 	/** Return the import requirement of a N4JSInterfaceWizardModel */
 	override protected def List<ImportRequirement> getImportRequirements(N4JSInterfaceWizardModel model) {
 		var demandedImports = new ArrayList<ImportRequirement>();
-	
+
 		if ( !model.interfaces.empty)
 			demandedImports.addAll(N4JSImportRequirementResolver.classifierReferencesToImportRequirements(model.interfaces));
-		
+
 		demandedImports
 	}
 }

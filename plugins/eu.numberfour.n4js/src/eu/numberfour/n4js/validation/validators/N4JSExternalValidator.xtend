@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -71,7 +71,7 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * NEEEDED
-	 * 
+	 *
 	 * when removed check methods will be called twice once by N4JSValidator, and once by
 	 * AbstractDeclarativeN4JSValidator
 	 */
@@ -407,7 +407,7 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 	/**
 	 * Returns with {@code true} if the type argument is a subtype of Error. Could be direct or implicit subtype as well.
 	 * 13.1 ExternalDeclarations, Constraints 144/c (External allowed occurrences)
-	 * 
+	 *
 	 * @see IDEBUG-512
 	 */
 	def private isSubtypeOfError(Type type) {

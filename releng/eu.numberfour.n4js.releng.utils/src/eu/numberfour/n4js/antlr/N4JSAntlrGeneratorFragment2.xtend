@@ -28,18 +28,18 @@ import static eu.numberfour.n4js.antlr.replacements.Replacements.applyReplacemen
  */
 @Log
 class N4JSAntlrGeneratorFragment2 extends N4AntlrGeneratorFragment2 {
-	
+
 	@Inject GrammarNaming productionNaming
-	
+
 	override protected generateProductionGrammar() {
 		super.generateProductionGrammar()
-		
+
 		val extension naming = productionNaming
 		val absoluteParserFileName = projectConfig.runtime.srcGen.path + '/' + grammar.getParserGrammar.grammarFileName
-		
+
 		massageGrammar(absoluteParserFileName, codeConfig.encoding)
 	}
-	
+
 	def private void massageGrammar(String absoluteParserFileName, String encoding) {
 		try {
 			val javaFile = absoluteParserFileName.replaceAll("\\.g$", getParserFileNameSuffix());
@@ -70,7 +70,7 @@ class N4JSAntlrGeneratorFragment2 extends N4AntlrGeneratorFragment2 {
 	def protected String getLexerFileNameSuffix() {
 		return ".java";
 	}
-	
+
 	/**
 	 * This is part of the {@link NoLineTerminatorHandlingInjector}, fixing a problem with line-ending aware tokens like
 	 * 'async'.
@@ -96,7 +96,7 @@ class N4JSAntlrGeneratorFragment2 extends N4AntlrGeneratorFragment2 {
 	 * </ol>
 	 * Some remarks on debugging: Note that the stack trace (and the debugger) have a limit of 64k lines. Then, the
 	 * counter starts again! So breakpoints and stepping may be useless if you want to debug code after 64k lines.
-	 * 
+	 *
 	 * TODO IDE-2406 clarify/document design decision
 	 */
 	def private String fixIdentifierAsKeywordWithEOLAwareness(String normalizedContent) {

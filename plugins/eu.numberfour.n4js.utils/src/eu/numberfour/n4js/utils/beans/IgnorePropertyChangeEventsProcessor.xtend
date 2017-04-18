@@ -23,7 +23,7 @@ class IgnorePropertyChangeEventsProcessor extends AbstractFieldProcessor {
 	override doValidate(FieldDeclaration field, extension ValidationContext context) {
 
 		val clazz = field.declaringType;
-		
+
 		val annotations = clazz.annotations.filter[annotationTypeDeclaration.qualifiedName == PropertyChangeSupport.name];
 		if (annotations.nullOrEmpty) {
 			field.addError('''Declaring type is not annotated with @«PropertyChangeSupport.simpleName».''');
@@ -39,12 +39,12 @@ class IgnorePropertyChangeEventsProcessor extends AbstractFieldProcessor {
 			field.addError('''Cannot enable property change support on final field.''');
 			return;
 		}
-		
+
 		if (null !== field.type && field.type.inferred) {
 			field.addError('''Cannot enable property change support on fields with inferred types.''');
 			return;
 		}
-		
+
 	}
-	
+
 }

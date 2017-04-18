@@ -68,13 +68,13 @@ class N4JSVariableValidator extends AbstractN4JSDeclarativeValidator {
 			}
 		}
 	}
-	
+
 	@Check
 	def void checkUnusedVariables(VariableDeclaration varDecl) {
 		if (varDecl instanceof ExportedVariableDeclaration) {
 			return;
 		}
-		
+
 		if (astMetaInfoCacheHelper.getLocalVariableReferences(varDecl).empty) {
 			val message = IssueCodes.getMessageForAST_LOCAL_VAR_UNUSED(varDecl.name);
 			addIssue(message, varDecl, findNameFeature(varDecl).value, IssueCodes.AST_LOCAL_VAR_UNUSED);

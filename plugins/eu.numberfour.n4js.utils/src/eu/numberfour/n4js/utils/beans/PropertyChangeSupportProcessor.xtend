@@ -27,20 +27,20 @@ import org.eclipse.xtend.lib.macro.declaration.MutableClassDeclaration
 import org.eclipse.xtend.lib.macro.declaration.Visibility
 
 /**
- * Class transformation processor for generating {@link PropertyChangeSupport} for all 
- * non-final non-static fields within a class annotated with {@link eu.numberfour.n4js.utils.beans.PropertyChangeSupport} annotation. 
+ * Class transformation processor for generating {@link PropertyChangeSupport} for all
+ * non-final non-static fields within a class annotated with {@link eu.numberfour.n4js.utils.beans.PropertyChangeSupport} annotation.
  */
 class PropertyChangeSupportProcessor extends AbstractClassProcessor {
-	
+
 	@Override
 	override doTransform(MutableClassDeclaration clazz, extension TransformationContext context) {
-		
+
 		val annotations = clazz.annotations.filter[annotationTypeDeclaration.qualifiedName == eu.numberfour.n4js.utils.beans.PropertyChangeSupport.name];
-		
+
 		if (annotations.nullOrEmpty) {
 			return;
 		}
-		
+
 		if (annotations.size > 1) {
 			clazz.addError(
 				'''Duplicate annotation of non-repeatable type @«eu.numberfour.n4js.utils.beans.PropertyChangeSupport.simpleName».
@@ -55,18 +55,18 @@ class PropertyChangeSupportProcessor extends AbstractClassProcessor {
 					static = true;
 					final = true;
 					type = Logger.newTypeReference;
-					it.initializer = '''«Logger».getLogger(«clazz».class)''';	
+					it.initializer = '''«Logger».getLogger(«clazz».class)''';
 				];
 			}
-		
-		
+
+
 		val fields = clazz.declaredFields.filter[
-			null !== type 
-			&& !final 
-			&& !static 
+			null !== type
+			&& !final
+			&& !static
 			&& !hasAnnotation(IgnorePropertyChangeEvents)
 		];
-		
+
 		val inferredFields = fields.filter[type.inferred];
 		if (!inferredFields.nullOrEmpty) {
 			inferredFields.forEach[addError('''The type of field must be explicitly declared to enable the property change support.''')];
@@ -81,7 +81,7 @@ class PropertyChangeSupportProcessor extends AbstractClassProcessor {
 				type = PropertyChangeSupport.newTypeReference;
 				initializer = '''new «PropertyChangeSupport»(this)''';
 			];
-			
+
 			clazz.addMethod('internalGetPropertyChangeSupport') [
 				visibility = Visibility.PROTECTED;
 				static = false;
@@ -92,7 +92,7 @@ class PropertyChangeSupportProcessor extends AbstractClassProcessor {
 				'''
 			];
 		}
-		
+
 		if (!hasSuperAddPropertyChangeListener(clazz, context)) {
 			clazz.addMethod('addPropertyChangeListener') [
 				returnType = primitiveVoid
@@ -106,7 +106,7 @@ class PropertyChangeSupportProcessor extends AbstractClassProcessor {
 				'''
 			];
 		}
-		
+
 		if (!hasSuperRemovePropertyChangeListener(clazz, context)) {
 			clazz.addMethod('removePropertyChangeListener') [
 				returnType = primitiveVoid
@@ -120,12 +120,12 @@ class PropertyChangeSupportProcessor extends AbstractClassProcessor {
 				'''
 			];
 		}
-		
+
 		fields.forEach[ field |
-			
+
 			val propertyName = '''«CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, field.simpleName)»_PROPERTY''';
 			val fieldTypeRef = if (null === field.type) object else field.type;
-			
+
 			// Generate constant property for the field.
 			clazz.addField(propertyName) [
 				visibility = Visibility.PUBLIC;
@@ -140,7 +140,7 @@ class PropertyChangeSupportProcessor extends AbstractClassProcessor {
 			if (accessorUtil.shouldAddGetter(field)) {
 				accessorUtil.addGetter(field, Visibility.PUBLIC);
 			}
-			
+
 			// Generate setter that invokes the property change support.
 			clazz.addMethod(accessorUtil.getSetterName(field)) [
 				returnType = primitiveVoid
@@ -155,50 +155,50 @@ class PropertyChangeSupportProcessor extends AbstractClassProcessor {
 				''';
 				it.visibility = Visibility.PUBLIC;
 			];
-			
+
 			if (context.newTypeReference(Collection).isAssignableFrom(fieldTypeRef)) {
-				
+
 				clazz.addMethod('''add«field.simpleName.toFirstUpper»''') [
 					returnType = primitiveVoid
 					val typeRef = fieldTypeRef.actualTypeArguments.head?: object;
 					val param = addParameter('''element«field.simpleName.toFirstUpper»''', typeRef);
 					body = '''
 						internalGetPropertyChangeSupport().firePropertyChange(
-							«propertyName», 
-							new «ArrayList.name»(this.«field.simpleName»), 
+							«propertyName»,
+							new «ArrayList.name»(this.«field.simpleName»),
 							this.«field.simpleName».add(«param.simpleName») ? this.«field.simpleName» : this.«field.simpleName»);
 					''';
 					it.visibility = Visibility.PUBLIC;
 				];
-				
+
 				clazz.addMethod('''remove«field.simpleName.toFirstUpper»''') [
 					returnType = primitiveVoid
 					val typeRef = fieldTypeRef.actualTypeArguments.head?: object;
 					val param = addParameter('''element«field.simpleName.toFirstUpper»''', typeRef);
 					body = '''
 						internalGetPropertyChangeSupport().firePropertyChange(
-							«propertyName», 
-							new «ArrayList.name»(this.«field.simpleName»), 
+							«propertyName»,
+							new «ArrayList.name»(this.«field.simpleName»),
 							this.«field.simpleName».remove(«param.simpleName») ? this.«field.simpleName» : this.«field.simpleName»);
 					''';
 					it.visibility = Visibility.PUBLIC;
 				];
 
 			}
-			 
+
 		]
 
 	}
 
 	private def hasPropertyChangeSupportGetter(ClassDeclaration it, TransformationContext context) {
 		declaredMethods.exists [
-			simpleName == 'internalGetPropertyChangeSupport' 
+			simpleName == 'internalGetPropertyChangeSupport'
 				&& returnType == context.newTypeReference(PropertyChangeSupport)
 				&& parameters.size == 0
 				&& (visibility === Visibility.PROTECTED || visibility === Visibility.PUBLIC)
 		];
 	}
-	
+
 	private def hasSuperPropertyChangeSupportGetter(ClassDeclaration cls, TransformationContext context) {
 		var superClass = (cls.extendedClass.type as ClassDeclaration)
 		while (null !== superClass) {
@@ -209,16 +209,16 @@ class PropertyChangeSupportProcessor extends AbstractClassProcessor {
 		}
 		return false;
 	}
-	
+
 	private def hasAnnotation(AnnotationTarget it, Class<? extends Annotation> annotation) {
 		annotations.exists[annotationTypeDeclaration.qualifiedName == annotation.name];
 	}
-	
+
 	private def hasAddPropertyChangeListener(ClassDeclaration it, TransformationContext context) {
 		declaredMethods.exists [
-			simpleName == 'addPropertyChangeListener' 
+			simpleName == 'addPropertyChangeListener'
 				&& returnType == context.primitiveVoid
-				&& parameters.size == 1 
+				&& parameters.size == 1
 				&& parameters.head.type == context.newTypeReference(PropertyChangeListener)
 		];
 	}
@@ -233,12 +233,12 @@ class PropertyChangeSupportProcessor extends AbstractClassProcessor {
 		}
 		return false;
 	}
-	
+
 	private def hasRemovePropertyChangeListener(ClassDeclaration it, TransformationContext context) {
 		declaredMethods.exists [
-			simpleName == 'removePropertyChangeListener' 
+			simpleName == 'removePropertyChangeListener'
 				&& returnType == context.primitiveVoid
-				&& parameters.size == 1 
+				&& parameters.size == 1
 				&& parameters.head.type == context.newTypeReference(PropertyChangeListener)
 		];
 	}
@@ -253,6 +253,6 @@ class PropertyChangeSupportProcessor extends AbstractClassProcessor {
 		}
 		return false;
 	}
-	
-	
+
+
 }

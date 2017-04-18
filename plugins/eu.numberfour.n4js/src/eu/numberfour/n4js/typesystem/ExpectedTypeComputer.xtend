@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -45,7 +45,7 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 	 * <p>
 	 * This method will not check that the given expression is actually an expression that will, at runtime, provide
 	 * the return value of a function. This has to be ensured by the client code.
-	 * 
+	 *
 	 * @return the expected type or <code>null</code> if there is no type expectation or some error occurred (e.g. broken AST).
 	 */
 	def TypeRef getExpectedTypeOfReturnValueExpression(RuleEnvironment G, Expression returnValueExpr) {
@@ -57,10 +57,10 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 		if (funDef !== null) {
 			if (funDef.isAsync) {
 		        return getExpectedTypeOfReturnValueExpressionForAsyncFunction(G, funDef);
-				
+
 		    } else if (funDef.isGenerator()) {
 		        return getExpectedTypeOfReturnValueExpressionForGeneratorFunction(G, funDef);
-				
+
 		    } else {
 		        // this is the normal case
 				val fType = ts.type(G2, funDef).value;
@@ -68,7 +68,7 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 					return ts.substTypeVariablesInTypeRef(G2, fType.returnTypeRef);
 				}
 		    }
-			
+
 		} else {
 			// funDef === null, so maybe we are in a getter:
 			val getterDef = EcoreUtil2.getContainerOfType(returnValueExpr, GetterDeclaration);
@@ -76,7 +76,7 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 		}
 		return null; // null means: no type expectation
 	}
-	
+
 	private def TypeRef getExpectedTypeOfReturnValueExpressionForAsyncFunction(RuleEnvironment G, FunctionDefinition funDef) {
 		// we have an async function:
 		// in case it does not already have a return type of Promise, N4JSFunctionDefinitionTypesBuilder sets
@@ -90,14 +90,14 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 					return ts.upperBound(G, firstTypeArg).value; // take upper bound to get rid of Wildcard, etc.
 			}
 		}
-		
+
 		if (funDef.returnTypeRef !== null) {
 			return funDef.returnTypeRef;
 		}
-		
+
 		return null;
 	}
-	
+
 	private def TypeRef getExpectedTypeOfReturnValueExpressionForGeneratorFunction(RuleEnvironment G, FunctionDefinition funDef) {
 		// we have a generator function:
 		// in case it does not already have a return type of Generator, N4JSFunctionDefinitionTypesBuilder
@@ -109,16 +109,16 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 				return tsh.getGeneratorTReturn(G, actualReturnTypeRef);
 			}
 		}
-		
+
 		if (funDef.returnTypeRef !== null) {
 			return funDef.returnTypeRef;
 		}
-		
+
 		return null;
 	}
-	
+
 	/**
-	 * Returns the expected type of the yield value. It is retrieved from the type TYield of the actual function return type 
+	 * Returns the expected type of the yield value. It is retrieved from the type TYield of the actual function return type
 	 * (with regard to {@code Generator<TYield,TReturn,TNext>}). In case the yield expression is recursive (features a star),
 	 * the expected type must conform to {@code Generator<? extends TYield,any,? super TNext>}.
 	 */
@@ -129,9 +129,9 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 		val myThisTypeRef = ts.thisTypeRef(G, expression).value;
 		G2.addThisType(myThisTypeRef); // takes the real-this type even if it is a type{this} reference.
 
-		if (funDef === null || !funDef.isGenerator) 
+		if (funDef === null || !funDef.isGenerator)
 			return null; // yields only occur in generator functions
-		
+
 		val tFun = funDef.definedFunction;
 		if (tFun !== null) {
 			val actualReturnTypeRef = tFun.returnTypeRef;
@@ -158,8 +158,8 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 				}
 			}
 		}
-		
+
 		return null; // null means: no type expectation
 	}
-	
+
 }

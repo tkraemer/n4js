@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -34,7 +34,7 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 
 /**
  * {@link PolyProcessor} delegates here for processing array literals.
- * 
+ *
  * @see PolyProcessor#inferType(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,ASTMetaInfoCache)
  * @see PolyProcessor#processExpr(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,TypeRef,InferenceContext,ASTMetaInfoCache)
  */
@@ -86,9 +86,9 @@ if(isValueToBeDestructured) {
 			for (arrElem : nonNullElems) {
 				elemTypeRefs += polyProcessor.processExpr(G, arrElem.expression, null, infCtx, cache);
 			}
-			
+
 			infCtx.onSolved [ solution | handleOnSolvedPerformanceTweak(G, cache, arrLit, expectedElemTypeRefs) ];
-			
+
 			val unionOfElemTypes = if (!elemTypeRefs.empty) tsh.createUnionType(G, elemTypeRefs) else G.anyTypeRef;
 			return G.arrayTypeRef(unionOfElemTypes);
 		}
@@ -106,7 +106,7 @@ if(isValueToBeDestructured) {
 		// return temporary type of arrLit (i.e. may contain inference variables)
 		return resultTypeRef;
 	}
-	
+
 	/**
 	 * The return value is as follows:
 	 * <ul>
@@ -123,7 +123,7 @@ if(isValueToBeDestructured) {
 			return newArrayList // no or invalid type expectation
 		}
 	}
-	
+
 	/**
 	 * Makes a best effort for building a type in case something went awry. It's only non-trivial in case we have an
 	 * expectation of IterableN.
@@ -179,20 +179,20 @@ if(isValueToBeDestructured) {
 				}
 				typeArgs.set(i, typeRef);
 			}
-			
+
 			if (elemTypeRefs.size > resultLen) {
 				// replace last entry in 'typeArgs' with union of all remaining in elemTypeRefs
 				val remaining = Arrays.copyOfRange(elemTypeRefs, resultLen - 1, elemTypeRefs.size);
 				typeArgs.set(resultLen - 1, tsh.createUnionType(G, remaining));
 			}
-			
+
 			return G.iterableNTypeRef(resultLen, typeArgs);
 		} else {
 			val unionOfElemTypes = if (!elemTypeRefs.empty) tsh.createUnionType(G, elemTypeRefs) else G.anyTypeRef;
 			return G.arrayTypeRef(unionOfElemTypes);
 		}
 	}
-	
+
 	/**
 	 * choose correct number of type arguments in our to-be-created resultTypeRef
 	 * (always 1 for Array<T> or Iterable<T> but N for IterableN<..>, e.g. 3 for Iterable3<T1,T2,T3>)
@@ -203,19 +203,19 @@ if(isValueToBeDestructured) {
 				expectedElemTypeRefs.size, // use number of type arguments provided by type expectation as a basis
 				numOfElems // ... but never more than we have elements in the array literal
 			);
-		
+
 		val lenB = Math.min(
 				lenA,
 				BuiltInTypeScope.ITERABLE_N__MAX_LEN // ... and never more than the max. allowed number of type arguments for IterableN
 			);
-		
+
 		val resultLen = Math.max(
 			lenB,
 			1 // ... but at least 1 (even if numOfElems is 0, for example)
 		);
 		return resultLen;
 	}
-	
+
 	/**
 	 * Creates temporary type (i.e. may contain inference variables):
 	 * <ul>
@@ -231,7 +231,7 @@ if(isValueToBeDestructured) {
 		val TypeRef resultTypeRef = TypeUtils.createTypeRef(declaredType, typeArgs);
 		return resultTypeRef;
 	}
-	
+
 	/**
 	 * for each array element, add a constraint to ensure that its corresponding infVar in result type will be
 	 * a super type of the array element's expression
@@ -255,7 +255,7 @@ if(isValueToBeDestructured) {
 			}
 		}
 	}
-	
+
 	/**
 	 * Writes final types to cache.
 	 */
@@ -266,11 +266,11 @@ if(isValueToBeDestructured) {
 			.filter[ expression !== null ]
 			.map[ getFinalResultTypeOfNestedPolyExpression(expression) ]
 			.toList;
-		
+
 		val fallbackTypeRef = buildFallbackTypeForArrayLiteral(false, 1, betterElemTypeRefs, expectedElemTypeRefs, G);
 		cache.storeType(arrLit, fallbackTypeRef);
 	}
-	
+
 	/**
 	 * Writes final types to cache.
 	 */

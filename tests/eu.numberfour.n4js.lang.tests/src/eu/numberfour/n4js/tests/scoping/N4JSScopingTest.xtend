@@ -262,7 +262,7 @@ class N4JSScopingTest {
 		assertFalse((typeRefA.declaredType as TClass).ownedMembers.empty);
 	}
 
-	
+
 	@Test
 	def void testImportExportAliasedType() {
 
@@ -383,7 +383,7 @@ class N4JSScopingTest {
 
 		assertEquals("one EResourceDescription", 2/* exported with one name  + BuiltInTypesScopeFilter.EXPECTED_PREDEFINED_TYPES*/,
 			eoDescs.size)
-			
+
 		assertEquals("Stored user data",
 			'''
 				<?xml version="1.0" encoding="ASCII"?>

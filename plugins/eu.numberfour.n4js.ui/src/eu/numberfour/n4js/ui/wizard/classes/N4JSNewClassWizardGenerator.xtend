@@ -24,10 +24,10 @@ import org.eclipse.emf.common.util.URI
  * A file generator for {@link N4JSClassWizardModel}
  */
 class N4JSNewClassWizardGenerator extends N4JSNewClassifierWizardGenerator<N4JSClassWizardModel> {
-	
+
 	@Inject
 	private extension WizardGeneratorHelper generatorUtils;
-	
+
 	override protected generateClassifierCode(N4JSClassWizardModel model, Map<URI, String> aliasBindings) '''
 		«IF model.isFinalAnnotated»@Final«ENDIF»
 		«IF model.isN4jsAnnotated»@N4JS«ENDIF»
@@ -41,17 +41,17 @@ class N4JSNewClassWizardGenerator extends N4JSNewClassifierWizardGenerator<N4JSC
 
 		}
 		'''
-	
+
 	override protected getReferencedProjects(N4JSClassWizardModel model) {
 		var referencedProjects = new ArrayList<IN4JSProject>(model.interfaces.map[uri.projectOfUri]);
 
 		if (model.superClass.isComplete) {
 			referencedProjects.add(model.superClass.uri.projectOfUri);
 		}
-		
+
 		return referencedProjects;
 	}
-	
+
 	override protected getImportRequirements(N4JSClassWizardModel model) {
 		var demandedImports = new ArrayList<ImportRequirement>();
 
@@ -63,5 +63,5 @@ class N4JSNewClassWizardGenerator extends N4JSNewClassifierWizardGenerator<N4JSC
 		}
 		demandedImports
 	}
-	
+
 }

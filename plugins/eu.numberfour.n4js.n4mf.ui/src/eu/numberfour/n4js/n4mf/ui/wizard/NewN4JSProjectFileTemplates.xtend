@@ -20,7 +20,7 @@ class NewN4JSProjectFileTemplates {
 
 	/**
 	 * Returns the contents of the greeter class module for given projectName
-	 * 
+	 *
 	 * @param projectName The name of the project
 	 * @param safeProjectName The name of the project transformed to be safe to use as class identifier
 	 */
@@ -37,17 +37,17 @@ class NewN4JSProjectFileTemplates {
 		greeter.greet();
 		//right click this module and select "Run As -> Launch in Node.js" to see
 		//"Hello World from '«projectName»'!"
-		
+
 	'''
-	
-	/** 
+
+	/**
 	 * Returns the contents of the greeter test class module for given projectName
-	 * 
+	 *
 	 * @param safeProjectName The name of the project transformed to be safe to use as class identifier
 	 */
 	static def getSourceFileWithTestGreeter(String safeProjectName) '''
 		import { Assert } from "n4/mangel/assert/Assert"
-		
+
 		export public class Test_«safeProjectName» {
 
 			@Test
@@ -100,7 +100,7 @@ class NewN4JSProjectFileTemplates {
 			FOR String api : implementedProjects SEPARATOR ","»«"\n"»    «api»«ENDFOR»
 		}«ENDIF»
 		'''
-	
+
 	private static def testManifestFragment(List<String> testedProjects) {
 		'''
 		«IF testedProjects !== null && !testedProjects.empty
@@ -119,7 +119,7 @@ class NewN4JSProjectFileTemplates {
 	}
 
 	/**
-	 * Returns the manifest contents for the given project info 
+	 * Returns the manifest contents for the given project info
 	 */
 	static def getManifestContents(N4MFProjectInfo projectInfo)
 		'''

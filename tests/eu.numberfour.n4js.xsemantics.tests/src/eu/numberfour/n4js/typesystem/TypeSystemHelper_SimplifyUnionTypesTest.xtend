@@ -42,7 +42,7 @@ class TypeSystemHelper_SimplifyUnionTypesTest extends AbstractTypeSystemHelperTe
 	def void assertSimplify(String expectedType, String typeExpressionsToBeSimplified) {
 		assertSimplify(expectedType, typeExpressionsToBeSimplified, #[]);
 	}
-	
+
 	def void assertSimplify(String expectedType, String typeExpressionsToBeSimplified, String[] expectedIssueMsg) {
 		val G = assembler.prepareScriptAndCreateRuleEnvironment(expectedIssueMsg, typeExpressionsToBeSimplified)
 		var typeRef = assembler.getTypeRef(typeExpressionsToBeSimplified)
@@ -50,7 +50,7 @@ class TypeSystemHelper_SimplifyUnionTypesTest extends AbstractTypeSystemHelperTe
 		val simplified = TypeUtils.copy(tsh.simplify(G, typeRef as UnionTypeExpression));
 		assertEquals(expectedType, simplified.typeRefAsString);
 	}
-	
+
 
 	/*
 	 * Test some assumptions.

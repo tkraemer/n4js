@@ -16,19 +16,19 @@ import org.xpect.xtext.lib.setup.InjectorSetup
 
 /**
  * An xpect setup root which allows to configure a {@link SuppressIssuesSetup}.
- * 
+ *
  * Also see {@link IssueConfiguration}.
  */
 @XpectSetupRoot
 @XpectImport( # [ IssueConfiguration, IssueCode, InjectorSetup] )
 class SuppressIssuesSetupRoot {
 	private IssueConfiguration issueConfiguration;
-	
+
 	def add(IssueConfiguration configuration) {
 		issueConfiguration = configuration;
 	}
-	
+
 	def getIssueConfiguration() {
 		return issueConfiguration;
 	}
-} 
+}

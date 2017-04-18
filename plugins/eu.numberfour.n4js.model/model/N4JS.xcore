@@ -670,7 +670,7 @@ class Block extends Statement, VariableEnvironmentElement {
 	op boolean hasNonVoidYield() {
 		!(allNonVoidYieldExpressions.isEmpty)
 	}
-	
+
 	/*
 	 * Returns all statements that belong to this block. This includes statements of nested blocks
 	 * but excludes statements in nested classes, nested functions, etc.

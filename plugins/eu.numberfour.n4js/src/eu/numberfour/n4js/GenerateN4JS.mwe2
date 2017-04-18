@@ -44,7 +44,7 @@ Workflow {
 				preferXtendStubs = false
 			}
 		}
-		
+
 		language = XtextGeneratorLanguage {
 			name = "eu.numberfour.n4js.N4JS"
 			fileExtensions = "n4js,js,n4jsd"
@@ -56,17 +56,17 @@ Workflow {
 			referencedResource = "platform:/resource/eu.numberfour.n4js.ts.model/model/Types.xcore"
 			referencedResource = "platform:/resource/eu.numberfour.n4js.ts.model/model/TypeRefs.xcore"
 			referencedResource = "platform:/resource/eu.numberfour.n4js.model/model/N4JS.xcore"
-			
+
 			fragment = grammarAccess.GrammarAccessFragment2 {}
 
 			fragment = ecore.EMFGeneratorFragment2 {}
-			
+
 			fragment = serializer.SerializerFragment2 {
 				generateStub = false
 			}
-			
+
 			fragment = resourceFactory.ResourceFactoryFragment2 {}
-			
+
 			fragment = eu.numberfour.n4js.antlr.N4JSAntlrGeneratorFragment2 {
 				combinedGrammar = false
 				debugGrammar = true
@@ -77,7 +77,7 @@ Workflow {
 				antlrParam = "-Xconversiontimeout"
 				antlrParam = "30000"
 			}
-			
+
 			// Xtend-based API for validation
 			fragment = validation.ValidatorFragment2 auto-inject {
 				inheritImplementation = false
@@ -85,61 +85,61 @@ Workflow {
 				//    composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
 				//    composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
 			}
-			
+
 			// scoping and exporting API
 			// actually not needed since the scoping is deeply customized via custom bindings
 			// fragment = scoping.ImportURIScopingFragment2 {
 			//	generateStub = false
 			// }
-			
+
 			fragment = exporting.SimpleNamesFragment2 {}
-			
+
 			fragment = builder.BuilderIntegrationFragment2 {}
-			
+
 			// generator API
 			fragment = generator.GeneratorFragment2 {
 				generateMwe = false
 				generateJavaMain = false
 				generateStub = false
 			}
-			
+
 			// formatter API
 			fragment = formatting.Formatter2Fragment2 {
 				generateXtendStub = true
 			}
-			
+
 			// labeling API
 			fragment = ui.labeling.LabelProviderFragment2 {
 				generateXtendStub = true
 			}
-			
+
 			// outline API
 			fragment = ui.outline.OutlineTreeProviderFragment2 {
 				generateXtendStub = true
 			}
-			
+
 			fragment = ui.outline.QuickOutlineFragment2 {}
-			
+
 			// quickfix API
 			fragment = ui.quickfix.QuickfixProviderFragment2 {
 				inheritImplementation = false
 				generateXtendStub = true
 			}
-			
+
 			// content assist API
 			fragment = ui.contentAssist.ContentAssistFragment2 {
 				generateXtendStub = true
 			}
-			
+
 			// rename refactoring
 			fragment = ui.refactoring.RefactorElementNameFragment2 {}
-			
+
 			// provides a preference page for template proposals
 			fragment = ui.templates.CodetemplatesGeneratorFragment2 {}
-			
+
 			// provides a compare view
 			fragment = ui.compare.CompareFragment2 {}
-			
+
 			// create a parser that will perform token id rewrites to treat keywords as ids in some situations
 			fragment = eu.numberfour.n4js.antlr.syntaxcoloring.N4JSHighlightingParserGeneratorFragment2 auto-inject {
 				antlrParam = "-Xconversiontimeout"
@@ -149,7 +149,7 @@ Workflow {
 					keptBitSetsPattern = "FOLLOW_norm1_Expression_in_ruleExpressionStatement.*"
 				}
 			}
-			
+
 			fragment = eu.numberfour.n4js.antlr.compressor.ParserCompressorFragment2 auto-inject {
 				grammarFile = "${runtimeProjectPath}.ui/src-gen/eu/numberfour/n4js/ui/editor/syntaxcoloring/InternalN4JSParser.java"
 				grammarFile = "${runtimeProjectPath}/src-gen/eu/numberfour/n4js/parser/antlr/internal/InternalN4JSParser.java"

@@ -18,17 +18,17 @@ class Field extends Member<Field> {
 
 	/**
 	 * Sets the field type.
-	 * 
+	 *
 	 * @param fieldType the field type
 	 */
 	public def Field setFieldType(String fieldType) {
 		this.fieldType = fieldType;
 		return this;
 	}
-	
+
 	/**
 	 * Sets the default value or expression.
-	 * 
+	 *
 	 * @param defaultValue the default value
 	 */
 	public def Field setDefaultValue(String defaultValue) {

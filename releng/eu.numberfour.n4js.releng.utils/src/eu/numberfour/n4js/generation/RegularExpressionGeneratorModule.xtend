@@ -24,14 +24,14 @@ import org.eclipse.xtext.xtext.generator.model.project.IXtextProjectConfig
  * into the (new) Xtext language generator.
  */
 class RegularExpressionGeneratorModule extends DefaultGeneratorModule {
-	
+
 	def configureXtextGeneratorNaming(Binder binder) {
 		binder.bind(XtextGeneratorNaming).to(RegularExpressionGeneratorNaming)
 	}
 }
 
 class RegularExpressionGeneratorNaming extends XtextGeneratorNaming {
-	
+
 	@Inject
 	IXtextProjectConfig projectConfig
 

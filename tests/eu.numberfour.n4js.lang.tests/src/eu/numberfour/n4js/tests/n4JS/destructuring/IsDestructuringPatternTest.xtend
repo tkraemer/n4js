@@ -50,7 +50,7 @@ class IsDestructuringPatternTest {
 			arr = [1,2,3];
 
 		'''.parseAndValidate;
-		
+
 		script.assertNoIssues;
 
 		val arrLit0 = script.eAllContents.filter(ArrayLiteral).toList.get(0);
@@ -78,7 +78,7 @@ class IsDestructuringPatternTest {
 			for([a,b,c] = [1,2,3] ; ; ) {}
 
 		'''.parseAndValidate;
-		
+
 		script.assertNoIssuesExcept(IssueCodes.AST_LOCAL_VAR_UNUSED);
 
 		val arrLit0 = script.eAllContents.filter(ArrayLiteral).toList.get(0);
@@ -102,7 +102,7 @@ class IsDestructuringPatternTest {
 			for([a,b,c] of [[1,2,3]]) {}
 
 		'''.parseAndValidate;
-		
+
 		script.assertNoIssuesExcept(IssueCodes.AST_LOCAL_VAR_UNUSED);
 
 		val arrLit0 = script.eAllContents.filter(ForStatement).head.initExpr;
@@ -132,7 +132,7 @@ class IsDestructuringPatternTest {
 			obj = {prop1:0,prop2:0,prop3:0};
 
 		'''.parseAndValidate;
-		
+
 		script.assertNoIssues;
 
 		val objLit0 = script.eAllContents.filter(ObjectLiteral).toList.get(0);
@@ -160,7 +160,7 @@ class IsDestructuringPatternTest {
 			for({prop1:a,prop2:b} = {prop1:1,prop2:2} ; ; ) {}
 
 		'''.parseAndValidate;
-		
+
 		script.assertNoIssues;
 
 		val objLit0 = script.eAllContents.filter(ObjectLiteral).toList.get(0);
@@ -184,7 +184,7 @@ class IsDestructuringPatternTest {
 			for({prop1:a,prop2:b} of [{prop1:1,prop2:2}]) {}
 
 		'''.parseAndValidate;
-		
+
 		script.assertNoIssues;
 
 		val objLit0 = script.eAllContents.filter(ForStatement).head.initExpr;

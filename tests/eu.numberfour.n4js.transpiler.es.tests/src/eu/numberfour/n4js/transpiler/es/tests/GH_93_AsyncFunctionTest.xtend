@@ -124,7 +124,7 @@ class GH_93_AsyncFunctionTest extends AbstractTranspilerTest {
 «««	The following 2 lines
 «««						(yield undefined);
 «««						return;
-««« are completely removed !!!;  not even replaced by 1 line: 
+««« are completely removed !!!;  not even replaced by 1 line:
 «««						(return undefined);
 					}.apply(this, arguments));
 				};

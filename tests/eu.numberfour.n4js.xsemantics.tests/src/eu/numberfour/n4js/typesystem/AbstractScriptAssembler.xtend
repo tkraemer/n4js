@@ -82,22 +82,22 @@ class AbstractScriptAssembler {
 		}
 	}
 
-	protected def setupScript(CharSequence scriptSrc, JavaScriptVariant variant, int expectedIssueCount) {		
+	protected def setupScript(CharSequence scriptSrc, JavaScriptVariant variant, int expectedIssueCount) {
 		return setupScript(scriptSrc, variant, null, expectedIssueCount);
 	}
 
-	protected def setupScript(CharSequence scriptSrc, JavaScriptVariant variant, String[] expectedMessages) {	
-		return setupScript(scriptSrc, variant, expectedMessages, -1);		
+	protected def setupScript(CharSequence scriptSrc, JavaScriptVariant variant, String[] expectedMessages) {
+		return setupScript(scriptSrc, variant, expectedMessages, -1);
 	}
-	
+
 	protected def setupScript(CharSequence scriptSrc, JavaScriptVariant variant, String[] expectedMessages, int expectedIssueCount) {
 		script = createScript(scriptSrc, variant)
 		val issues = script.validate();
-		
-		if (expectedMessages === null) {			
+
+		if (expectedMessages === null) {
 			assertEquals(Arrays.toString(issues.toArray) + "\nin\n" + scriptSrc, expectedIssueCount, issues.size);
 		} else {
-			assertEquals(String.join(",", expectedMessages), issues.map[code].join(","));			
+			assertEquals(String.join(",", expectedMessages), issues.map[code].join(","));
 		}
 
 		// newly created top level vars and

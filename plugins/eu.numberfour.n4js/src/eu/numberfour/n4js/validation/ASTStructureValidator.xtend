@@ -101,7 +101,7 @@ import static extension eu.numberfour.n4js.validation.helper.FunctionValidationH
 
 /**
  * A utility that validates the structure of the AST in one pass.
- * 
+ *
  * Note:
  * The validations here are important for using plain JavaScript,
  * especially the EcmaScript test suite relies on validations here.
@@ -118,7 +118,7 @@ class ASTStructureValidator {
 
 	@Inject
 	private N4JSLanguageHelper languageHelper;
-	
+
 	@Inject
 	private JavaScriptVariantHelper jsVariantHelper;
 
@@ -857,7 +857,7 @@ class ASTStructureValidator {
 		var allowYieldInInit = false
 		if (container instanceof FunctionDefinition) {
 			allowYieldInInit = !container.isGenerator
-			
+
 			val issueConsumer = [String msg, String id, EObject eObj |
 				producer.node = NodeModelUtils.findActualNodeFor(eObj);
 				producer.addDiagnostic(new DiagnosticMessage(msg, IssueCodes.getDefaultSeverity(id), id));
@@ -870,7 +870,7 @@ class ASTStructureValidator {
 				issueConsumer
 			);
 		}
-		
+
 		_validateASTStructure(
 			model as Variable,
 			producer,
@@ -1481,7 +1481,7 @@ class ASTStructureValidator {
 		Constraints constraints
 	) {
 		// no need to assert model.expression!==null (it is enforced by the grammar)
-		
+
 		recursiveValidateASTStructure(
 			model,
 			producer,

@@ -7,9 +7,9 @@
  *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
- * 
+ *
  * References:
- * 
+ *
  * [ECM15] 	ECMAScript 2015 Language Specification / ISO/IEC (ECMA-262, 6th Edition).
  * 			International Standard.
  * 			http://www.ecma-international.org/publications/ files/ECMA-ST/Ecma-262.pdf
@@ -48,17 +48,17 @@ UnionTypeExpression returns TypeRef:
 
 IntersectionTypeExpression returns TypeRef:
 	PrimaryTypeExpression ({IntersectionTypeExpression.typeRefs+=current} ("&" typeRefs+=PrimaryTypeExpression)+)?;
-	
+
 PrimaryTypeExpression returns TypeRef:
 	( =>({FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>') returnTypeRef=PrimaryTypeExpression
 	| ArrayTypeRef
 	| TypeRefWithModifiers
 	| "(" TypeRef ")"
 	);
-	
+
 BogusTypeRef returns TypeRef:
 	TypeRefWithModifiers;
-	
+
 TypeRefWithModifiers returns StaticBaseTypeRef:
 	TypeRefWithoutModifiers =>followedByQuestionMark?='?'?;
 
@@ -68,7 +68,7 @@ TypeRefWithoutModifiers returns StaticBaseTypeRef:
 	| FunctionTypeExpressionOLD
 	| UnionTypeExpressionOLD
 	| IntersectionTypeExpressionOLD;
-	
+
 TypeRefFunctionTypeExpression returns StaticBaseTypeRef:
 	  ParameterizedTypeRef
 	| ArrayTypeRef
@@ -113,7 +113,7 @@ FunctionTypeExpressionOLD returns FunctionTypeExpression:
 	'(' TAnonymousFormalParameterList ')'
 	(':' returnTypeRef=TypeRef)?
 	'}';
-	
+
 ArrowFunctionTypeExpression returns FunctionTypeExpression:
 	{FunctionTypeExpression} '(' TAnonymousFormalParameterList ')' '=>' returnTypeRef=PrimaryTypeExpression;
 
@@ -184,7 +184,7 @@ TStructMember:
 	| TStructMethod
 	| TStructField;
 
-TStructMethod: 
+TStructMethod:
 	=>
 	({TStructMethod}
 		('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
@@ -257,7 +257,7 @@ TypeVariableWithDefSiteVariance returns TypeVariable:
  */
 BindingIdentifier <Yield>:
 	IDENTIFIER
-	// yield as identifier as of [ECM15] (11.6.2, pp. 165) 
+	// yield as identifier as of [ECM15] (11.6.2, pp. 165)
 	| <!Yield> 'yield'
 	| N4Keyword
 ;

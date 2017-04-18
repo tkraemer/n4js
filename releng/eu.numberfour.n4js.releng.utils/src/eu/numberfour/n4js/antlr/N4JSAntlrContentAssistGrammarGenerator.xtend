@@ -18,7 +18,7 @@ import org.eclipse.xtext.xtext.generator.parser.antlr.AntlrOptions
  * Customized content assist grammar generation.
  */
 class N4JSAntlrContentAssistGrammarGenerator extends AntlrContentAssistGrammarGenerator {
-	
+
 	/**
 	 * Replace specified extensions with custom implementation for unicode keyword lexer rules
 	 */

@@ -399,7 +399,7 @@ class ES_07_09_AutomaticSemicolonInsertionASTTest {
 			y
 		''')
 	}
-	
+
 	@Test
 	def void testSemiBetweenFields() {
 		'''
@@ -414,7 +414,7 @@ class ES_07_09_AutomaticSemicolonInsertionASTTest {
 			}
 		''')
 	}
-	
+
 	@Test
 	def void testSemiAfterField() {
 		'''

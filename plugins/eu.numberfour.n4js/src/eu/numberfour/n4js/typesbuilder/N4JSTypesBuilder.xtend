@@ -124,7 +124,7 @@ public class N4JSTypesBuilder {
 			script.buildNamespacesTypesFromModuleImports(result,preLinkingPhase);
 
 			result.n4jsdModule = jsVariantHelper.isExternalMode(script);
- 
+
 			// Setting Polyfill property.
 			result.staticPolyfillModule = result.isContainedInStaticPolyfillModule;
 			result.staticPolyfillAware = result.isContainedInStaticPolyfillAware;

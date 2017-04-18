@@ -40,7 +40,7 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 
 /**
  * {@link PolyProcessor} delegates here for processing array literals.
- * 
+ *
  * @see PolyProcessor#inferType(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,ASTMetaInfoCache)
  * @see PolyProcessor#processExpr(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,TypeRef,InferenceContext,ASTMetaInfoCache)
  */
@@ -100,7 +100,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 		// return temporary type of funExpr (i.e. may contain inference variables)
 		return resultTypeRef;
 	}
-	
+
 	/**
 	 * Process formal parameters and also introduce inference variables for types of fpars, where needed.
 	 */
@@ -109,7 +109,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 	) {
 		val fun = funExpr.definedType as TFunction; // types builder will have created this already
 		val expectedFunctionTypeExprOrRef = if (expectedTypeRef instanceof FunctionTypeExprOrRef) { expectedTypeRef };
-		
+
 		// first, new type refs for each formal parameter are created
 		val len = Math.min(funExpr.fpars.size, fun.fpars.size);
 		val Map<FormalParameter,TFormalParameter> typeRefMap = new HashMap();
@@ -119,17 +119,17 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 			val fparTCopy = TypeUtils.copy(fparT); // use the TFormalParameter created by the types builder as a basis
 			funTE.fpars += fparTCopy;
 			typeRefMap.put(fparAST, fparTCopy);
-			
+
 			if (fparAST.declaredTypeRef === null) {
 				assertTrueIfRigid(cache, "type of formal parameter in TModule should be a DeferredTypeRef",
 					fparTCopy?.typeRef instanceof DeferredTypeRef);
-				
+
 				// Deferred type refs have to be resolved here
 				val iv = infCtx.newInferenceVariable;
 				fparTCopy.typeRef = TypeUtils.createTypeRef(iv); // <-- set new inference variable as type
 			}
 		}
-		
+
 		// Now, go through the map and check for deferred types.
 		// If any, include them into the constraint problem.
 		for (Map.Entry<FormalParameter,TFormalParameter> fparPair : typeRefMap.entrySet) {
@@ -153,7 +153,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 		if (fparAST.hasInitializerAssignment) {
 			// Check if the initializer refers to other fpars
 			val allFPars = (fparAST.eContainer as FunctionDefinition).fpars;
-			
+
 			val fparInitializer = fparAST.initializer;
 			var refIsInitializer = false;
 			val isPostponed = cache.postponedSubTrees.contains(fparInitializer);
@@ -161,7 +161,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 				val id = fparInitializer.getId();
 				refIsInitializer = allFPars.contains(id);
 			}
-			
+
 			if (refIsInitializer) {
 				// example: f(a, b = a) {}
 				val iRef = fparInitializer as IdentifierRef;
@@ -179,7 +179,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 			}
 		}
 	}
-	
+
 	/**
 	 * if the corresponding fpar in the type expectation is optional, we make the fpar in the
 	 * function expression optional as well
@@ -201,7 +201,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 			}
 		}
 	}
-	
+
 	/**
 	 * Processes return type (also introduce inference variable for return type, if needed)
 	 */
@@ -285,5 +285,5 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 			], fun);
 		}
 	}
-	
+
 }

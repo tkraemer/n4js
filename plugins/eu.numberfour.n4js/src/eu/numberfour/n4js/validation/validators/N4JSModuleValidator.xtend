@@ -57,7 +57,7 @@ class N4JSModuleValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject IQualifiedNameConverter qualifiedNameConverter
 
 	@Inject IN4JSCore n4jscore;
-	
+
 	@Inject
 	private JavaScriptVariantHelper jsVariantHelper;
 

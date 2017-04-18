@@ -313,7 +313,7 @@ class ClassConstructorAssistant extends TransformationAssistant {
 
 		for(implementedIfcSTE : implementedIfcSTEs) {
 			// InterfaceName.$fieldInit.call(this, ...) to bind this in field initializer correctly
-			result += _ExprStmnt(				
+			result += _ExprStmnt(
 				_CallExpr(
 					__NSSafe_PropertyAccessExpr(implementedIfcSTE, $fieldInitSTE, steFor_call()),
 					_ThisLiteral,

@@ -109,7 +109,7 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
 	private ContainerTypesHelper containerTypesHelper;
-	
+
 	@Inject
 	private JavaScriptVariantHelper jsVariantHelper;
 
@@ -573,8 +573,8 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		}
 		false;
 	}
-	
-	
+
+
 	/**
 	 * This validates a warning in chapter 4.10.1:<br/>
 	 * <i>The use of the any type in a union type produces a warning.</i>
@@ -583,8 +583,8 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	def void checkUnionTypeContainsNoAny(UnionTypeExpression ute) {
 		checkComposedTypeRefContainsNoAny(ute, messageForUNI_ANY_USED, UNI_ANY_USED, true);
 	}
-	
-	
+
+
 	/**
 	 * This validates a warning in chapter 4.10.2:<br/>
 	 * <i>The use of the any type in an intersection type produces a warning.</i>
@@ -593,20 +593,20 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	def void checkIntersectionTypeContainsNoAny(IntersectionTypeExpression ite) {
 		checkComposedTypeRefContainsNoAny(ite, messageForINTER_ANY_USED, INTER_ANY_USED, false);
 	}
-	
+
 	def private void checkComposedTypeRefContainsNoAny(ComposedTypeRef ctr, String msg, String issueCode, boolean soleVoidAllowesAny) {
 		val G = ctr.newRuleEnvironment;
 		val anyType = G.anyType;
 		val voidType = G.voidType;
 		val EList<TypeRef> typeRefs = ctr.getTypeRefs();
 		val Iterable<TypeRef> anyTypeRefs = typeRefs.filter[it.getDeclaredType()===anyType]; // identity check on typeRefs is OK here
-		
+
 		var boolean dontShowWarning = false;
 		if (soleVoidAllowesAny) {
 			val boolean containsVoid = typeRefs.exists[it.getDeclaredType()===voidType]; // identity check on typeRefs is OK here
 			dontShowWarning = containsVoid && anyTypeRefs.size() == 1;
 		}
-		
+
 		if (!dontShowWarning) {
 			for (TypeRef anyTR : anyTypeRefs) {
 				addIssue(msg, anyTR, issueCode);
@@ -625,11 +625,11 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		val G = ute.newRuleEnvironment;
 		val anyType = G.anyType;
 		tRefs.removeIf[it.getDeclaredType === anyType]; // identity check on typeRefs is OK here
-		
+
 		if (tRefs.size() > 1) {
 			val List<TypeRef> intersectionTR = tsh.getSuperTypesOnly(G, tRefs);
 			tRefs.removeAll(intersectionTR);
-			
+
 			for (TypeRef tClassR : tRefs) {
 				val message = messageForUNI_REDUNDANT_SUBTYPE;
 				addIssue(message, tClassR, UNI_REDUNDANT_SUBTYPE);
@@ -644,11 +644,11 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def void checkIntersectionType(IntersectionTypeExpression ite) {
 		val List<TypeRef> tClassRefs = extractNonStructTypeRefs(ite);
-		
+
 		if (tClassRefs.size() > 1) {
 			val G = ite.newRuleEnvironment;
 			val List<TypeRef> intersectionTR = tsh.getSubtypesOnly(G, tClassRefs);
-			
+
 			checkIntersectionTypeContainsMaxOneClass(ite, G, tClassRefs, intersectionTR);
 			checkIntersectionHasUnnecessarySupertype(ite, G, tClassRefs, intersectionTR);
 		}

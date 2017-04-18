@@ -45,23 +45,23 @@ type ParameterizedTypeRefIterable wraps Iterable<ParameterizedTypeRef>
  * Base class for all things that can provide a version. The returned value will be 0 in any language that does not
  * support versions. In those languages that do support versions, the return value depends on the semantics of the
  * actual subclass and how it implements the getVersion method.
- * 
+ *
  * All type references and all types extend this class. In addition, some AST nodes such as IdentifierRef and
  * N4IDLClassDeclaration also extend this class.
- * 
+ *
  * Type references generally delegate a call to getVersion to the type that they reference (via declaredType).
  * Exceptions are BoundThisTypeRef, which delegates to actualThisTypeRef, and ParameterizedTypeRef, which will return
  * the requested version if the user provided one.
- * 
+ *
  * Types usually return 0 unless they are explicitly versionable, in which case they return the declared version.
- * In N4IDL, this only applies to TClassifier, which returns the version that was declared by the user (as set by the 
+ * In N4IDL, this only applies to TClassifier, which returns the version that was declared by the user (as set by the
  * types builder).
- * 
+ *
  * For AST nodes, the return value depends highly on the type of the node itself. For example, the IdentifierRef returns
- * the explicitly requested version if the user provided one, otherwise it returns 0. For an N4IDLClassDeclaration, 
+ * the explicitly requested version if the user provided one, otherwise it returns 0. For an N4IDLClassDeclaration,
  * getVersion returns the version that was declared by the user for that class.
- * 
- * It was decided that TypeRef and Type should extend Versionable to avoid switching on the type of a the Type or 
+ *
+ * It was decided that TypeRef and Type should extend Versionable to avoid switching on the type of a the Type or
  * TypeRef instance under consideration. This is possible since 0 is a sensible default for unversioned objects.
  */
 abstract class Versionable {
@@ -204,7 +204,7 @@ abstract class TypeRef extends TypeArgument, Versionable {
 	op TypingStrategy getTypingStrategy() {
 		return TypingStrategy.NOMINAL
 	}
-	
+
 	/**
 	 * Convenience method, returns empty list for simply reference by default.
 	 * Overridden in {@link ParameterizedTypeRefStructural}
@@ -469,7 +469,7 @@ class BoundThisTypeRef extends ThisTypeRef, StructuralTypeRef {
 		return (if (structuralType !== null) structuralType.ownedMembers else if (!astStructuralMembers.empty) astStructuralMembers else genStructuralMembers).
 			unmodifiableView;
 	}
-	
+
 	/*
 	 * Override VersionedElement#getVersion() to return the version of the actual this type reference.
 	 */
@@ -529,7 +529,7 @@ class ParameterizedTypeRef extends BaseTypeRef {
 		} else {
 			"<" + typeArgs.map[typeRefAsString].join(",") + ">"
 		})
-		+ getModifiersAsString(); 
+		+ getModifiersAsString();
 	}
 	/*
 	 * Convenience method, returns true if type reference contains type arguments.
@@ -823,7 +823,7 @@ class TypeTypeRef extends BaseTypeRef {
 		val refName = if (null === getTypeArg) '' else getTypeArg.typeRefAsString;
 		return kwd + "{" + refName + "}" + getModifiersAsString();
 	}
-	
+
 	// note: operation getStaticType moved to TypeSystemHelper#getStaticType()
 }
 
@@ -921,7 +921,7 @@ class Wildcard extends TypeArgument {
 	/*
 	 * Tells if an implicit upper bound is in effect for the given wildcard, i.e. the wildcards does not have declared
 	 * bounds (upper or lower) and obtains an implicit bound from the corresponding type parameter.
-	 * 
+	 *
 	 * @see #getDeclaredOrImplicitUpperBounds()
 	 */
 	op boolean isImplicitUpperBoundInEffect() {

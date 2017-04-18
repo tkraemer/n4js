@@ -46,12 +46,12 @@ Workflow {
 				preferXtendStubs = true
 			}
 		}
-		
+
 		language = XtextGeneratorLanguage {
 			name = "eu.numberfour.n4js.regex.RegularExpression"
 			fileExtensions = "regex"
 			generateXtendStubs = false
-			
+
 			// Java API to access grammar elements (required by several other fragments)
 			// fragment = eu.numberfour.n4js.antlr.grammarAccess.WindowsAwareGrammarAccessFragment auto-inject {}
 			fragment = grammarAccess.GrammarAccessFragment2 {}

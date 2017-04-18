@@ -223,7 +223,7 @@ public class TranspilerBuilderBlocks
 		result.arguments += arguments.filterNull.map[_Argument];
 		return result;
 	}
-	
+
 	public static def Argument _Argument(Expression expression) {
 		return _Argument(false, expression);
 	}
@@ -618,7 +618,7 @@ public class TranspilerBuilderBlocks
 		result.rawValue = rawValue;
 		return result;
 	}
-	
+
 	public static def StringLiteral _StringLiteral(String s) {
 		val result = N4JSFactory.eINSTANCE.createStringLiteral;
 		result.value = s;
@@ -628,7 +628,7 @@ public class TranspilerBuilderBlocks
 	public static def StringLiteral _StringLiteralForSTE(SymbolTableEntry symbolTableEntry) {
 		return _StringLiteralForSTE(symbolTableEntry, false);
 	}
-	
+
 	public static def StringLiteral _StringLiteralForSTE(SymbolTableEntry symbolTableEntry, boolean useExportedName) {
 		val result = ImFactory.eINSTANCE.createStringLiteralForSTE;
 		result.entry = symbolTableEntry;

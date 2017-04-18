@@ -83,7 +83,7 @@ class TranspilerDebugUtils {
 			}
 		}
 	}
-	
+
 	def private static allowedCrossRefToOutside(EObject it) {
 		//TODO IDE-2416 added for JSX workarounds, if possible remove, only SymbolTableEntry should be allowed
 		switch it {

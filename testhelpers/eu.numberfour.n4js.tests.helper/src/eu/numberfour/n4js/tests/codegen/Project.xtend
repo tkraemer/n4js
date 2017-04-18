@@ -76,7 +76,7 @@ public class Project {
 			modules.add(Objects.requireNonNull(module));
 			return this;
 		}
-			
+
 		/**
 		 * Creates this source folder within the given parent directory, which must exist.
 		 *
@@ -125,7 +125,7 @@ public class Project {
 
 	/**
 	 * Returns the project ID.
-	 * 
+	 *
 	 * @return the project ID
 	 */
 	public def String getProjectId() {
@@ -134,17 +134,17 @@ public class Project {
 
 	/**
 	 * Sets the project type.
-	 * 
+	 *
 	 * @param projectType the project type to set
 	 */
 	public def Project setType(ProjectType projectType) {
 		this.projectType = projectType;
 		return this;
 	}
-	
+
 	/**
 	 * Sets the project version.
-	 * 
+	 *
 	 * @param projectVersion the project version
 	 */
 	public def Project setVersion(String projectVersion) {
@@ -154,19 +154,19 @@ public class Project {
 
 	/**
 	 * Sets the output folder.
-	 * 
+	 *
 	 * @param outputFolder the output folder to set
-	 */	
+	 */
 	public def Project setOutputFolder(String outputFolder) {
 		this.outputFolder = outputFolder;
 		return this;
 	}
-	
+
 	/**
 	 * Creates a source folder with the given name to this project.
-	 * 
+	 *
 	 * @param name the name of the source folder to add
-	 * 
+	 *
 	 * @return the added source folder
 	 */
 	public def SourceFolder createSourceFolder(String name) {
@@ -174,11 +174,11 @@ public class Project {
 		addSourceFolder(result);
 		return result;
 	}
-	
-	
+
+
 	/**
 	 * Adds a source folder to this project.
-	 * 
+	 *
 	 * @param sourceFolder the source folder to add
 	 */
 	public def Project addSourceFolder(SourceFolder sourceFolder) {
@@ -187,10 +187,10 @@ public class Project {
 		sourceFolders.add(Objects.requireNonNull(sourceFolder));
 		return this;
 	}
-	
+
 	/**
 	 * Adds a project dependency to this project.
-	 * 
+	 *
 	 * @param projectDependency the project dependency to add
 	 */
 	public def Project addProjectDependency(Project projectDependency) {
@@ -233,12 +233,12 @@ public class Project {
 	 * This method first creates a directory with the same name as the {@link #projectId} within
 	 * the given parent directory. If there already exists a file or directory with that name
 	 * within the given parent directory, that file or directory will be (recursively) deleted.
-	 * 
+	 *
 	 * Afterward, the manifest file and the source folders are created within the newly created
 	 * project directory.
-	 * 
+	 *
 	 * @param parentDirectoryPath the path to the parent directory
-	 * 
+	 *
 	 * @return the project directory
 	 */
 	public def create(Path parentDirectoryPath) {
@@ -255,7 +255,7 @@ public class Project {
 
 		createManifest(projectDirectory);
 		createModules(projectDirectory);
-		
+
 		return projectDirectory;
 	}
 

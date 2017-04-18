@@ -28,7 +28,7 @@ import org.eclipse.xtext.validation.CancelableDiagnostician
 /**
  */
 public class AbstractMessageAdjustingN4JSValidator extends AbstractN4JSValidator {
-	
+
 	/**
 	 * This class introduces for reuse the utility method {@link #isCanceled}
 	 */
@@ -111,7 +111,7 @@ public class AbstractMessageAdjustingN4JSValidator extends AbstractN4JSValidator
 
 		}
 	}
-	
+
 	override protected List<EPackage> getEPackages() {
 		val List<EPackage> result = super.EPackages;
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.numberfour.eu/ide/utils/Validation"));

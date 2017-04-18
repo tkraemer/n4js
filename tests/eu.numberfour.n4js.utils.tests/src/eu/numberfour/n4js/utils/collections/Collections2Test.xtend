@@ -28,21 +28,21 @@ class Collections2Test {
 	def void testNullRHSExpectNPE() {
 		newLinkedList().concatUnique(null);
 	}
-	
+
 	@Test
 	def void testEmptyLHS() {
 		val lhs = newLinkedList();
 		val rhs = newLinkedList("a", "c", "b");
 		lhs.concatUnique(rhs).assertEquals(rhs);
 	}
-	
+
 	@Test
 	def void testEmptyRHS() {
 		val lhs = newLinkedList("a", "c", "b");
 		val rhs = newLinkedList();
 		lhs.concatUnique(rhs).assertEquals(lhs);
 	}
-	
+
 	@Test
 	def void testNonEmptyListsWithoutDuplicates() {
 		val lhs = newLinkedList("a", "c", "b");
@@ -50,7 +50,7 @@ class Collections2Test {
 		val res = newLinkedList("a", "c", "b", "g", "f", "e")
 		lhs.concatUnique(rhs).assertEquals(res);
 	}
-	
+
 	@Test
 	def void testNonEmptyListsWithDuplicatesInLHS() {
 		val lhs = newLinkedList("a", "b", "b");
@@ -58,7 +58,7 @@ class Collections2Test {
 		val res = newLinkedList("a", "b", "g", "f", "e")
 		lhs.concatUnique(rhs).assertEquals(res);
 	}
-	
+
 	@Test
 	def void testNonEmptyListsWithDuplicatesInRHS() {
 		val lhs = newLinkedList("a", "c", "b");
@@ -66,7 +66,7 @@ class Collections2Test {
 		val res = newLinkedList("a", "c", "b", "g", "f")
 		lhs.concatUnique(rhs).assertEquals(res);
 	}
-	
+
 	@Test
 	def void testNonEmptyListsWithDuplicatesInLHSAndRHS() {
 		val lhs = newLinkedList("a", "b", "b");
@@ -74,7 +74,7 @@ class Collections2Test {
 		val res = newLinkedList("a", "b", "g", "f")
 		lhs.concatUnique(rhs).assertEquals(res);
 	}
-	
+
 	@Test
 	def void testNonEmptyListsWithDuplicatesInLHSAndAcrossRHS() {
 		val lhs = newLinkedList("g", "b", "b");

@@ -83,8 +83,8 @@ class N4MFResourceDescriptionStrategy extends DefaultResourceDescriptionStrategy
 	public static val REQUIRED_RUNTIME_LIBRARY_IDS_KEY = 'requiredRuntimeLibraryIds';
 
 	/**
-	 * Key for storing the unique project identifier of the extended runtime environment. If the project does not 
-	 * extend any runtime environment, then this value will not exist in the user data. 
+	 * Key for storing the unique project identifier of the extended runtime environment. If the project does not
+	 * extend any runtime environment, then this value will not exist in the user data.
 	 */
 	public static val EXTENDED_RUNTIME_ENVIRONMENT_ID_KEY = 'extendedRuntimeEnvironmentId';
 
@@ -146,11 +146,11 @@ class N4MFResourceDescriptionStrategy extends DefaultResourceDescriptionStrategy
 		val extRuntimeEnvironment = extendedRuntimeEnvironment?.extendedRuntimeEnvironment;
 		if (extRuntimeEnvironment !== null) {
 			builder.put(EXTENDED_RUNTIME_ENVIRONMENT_ID_KEY, Collections.singleton(extRuntimeEnvironment).asString);
-		} 
+		}
 
 		return builder.build;
 	}
-	
+
 	private def asString(Iterable<? extends ProjectReference> it) {
 		map[project].filterNull.map[projectId].filterNull.join(SEPARATOR)
 	}

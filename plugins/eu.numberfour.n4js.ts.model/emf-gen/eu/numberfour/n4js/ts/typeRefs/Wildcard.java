@@ -150,8 +150,7 @@ public interface Wildcard extends TypeArgument {
 	 * <!-- begin-model-doc -->
 	 * Tells if an implicit upper bound is in effect for the given wildcard, i.e. the wildcards does not have declared
 	 * bounds (upper or lower) and obtains an implicit bound from the corresponding type parameter.
-	 * 
-	 * @see #getDeclaredOrImplicitUpperBounds()
+	 * 	 * @see #getDeclaredOrImplicitUpperBounds()
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (((this.getDeclaredUpperBound() == null) && (this.getDeclaredLowerBound() == null)) && (this.getDeclaredOrImplicitUpperBound() != null));'"

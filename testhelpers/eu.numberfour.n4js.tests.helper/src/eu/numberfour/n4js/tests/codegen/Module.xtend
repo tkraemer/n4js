@@ -76,13 +76,13 @@ class Module {
 	public def Module addImport(String importedType, String sourceModule) {
 		if (imports === null)
 			imports = newHashMap();
-			
+
 		var List<String> importedTypesForModule = imports.get(Objects.requireNonNull(sourceModule));
 		if (importedTypesForModule === null) {
 			importedTypesForModule = newLinkedList();
 			imports.put(sourceModule, importedTypesForModule);
 		}
-		
+
 		importedTypesForModule.add(Objects.requireNonNull(importedType))
 		return this;
 	}

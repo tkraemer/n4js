@@ -76,17 +76,17 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
 	private ReturnOrThrowAnalysis returnOrThrowAnalysis
-	
+
 	@Inject
 	private HiddenLeafAccess hla;
-	
+
 	@Inject
 	private N4JSLanguageHelper languageHelper;
-	
+
 	@Inject
 	private JavaScriptVariantHelper jsVariantHelper;
-	
-	
+
+
 	/**
 	 * NEEEDED
 	 *
@@ -250,7 +250,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		}
 		return typeRef;
 	}
-	
+
 	private def getTypeArgumentOfReturnType(FunctionOrFieldAccessor functionOrFieldAccessor, Type tFun, int idx) {
 		if (tFun instanceof TFunction) {
 			val actualReturnTypeRef = tFun.returnTypeRef;
@@ -513,15 +513,15 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 				val firstNode = NodeModelUtils.findActualNodeFor(functionDeclaration);
 				val lastNode = NodeModelUtils.findActualNodeFor(functionDeclaration.body);
 				val HiddenLeafs hLeafs = hla.getHiddenLeafsBefore(lastNode);
-				
+
 				val off = firstNode.offset;
 				val len = hLeafs.offset - firstNode.offset;
 				addIssue(messageForFUN_NAME_MISSING,functionDeclaration,off,len,FUN_NAME_MISSING);
-			} else { 
-			  	// mark complete function.	
+			} else {
+			  	// mark complete function.
 				addIssue(messageForFUN_NAME_MISSING,functionDeclaration,FUN_NAME_MISSING);
 			}
-			
+
 		}
 	}
 
@@ -547,7 +547,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		val hasInitializerAssignment = if( fun?.fpar !== null ) { fun.fpar.hasInitializerAssignment } else { false }
 		internalCheckSetterParameters(fun.fpar, isVariadic, hasInitializerAssignment);
 	}
-	
+
 	private def <T extends EObject> internalCheckSetterParameters(T fpar, boolean isVariadic, boolean hasInitializerAssignment){
 		if (isVariadic) {
 			val String msg = messageForFUN_SETTER_CANT_BE_VARIADIC
@@ -596,7 +596,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		];
 		<TFormalParameter>internalCheckFormalParameters(fun.fpars, [variadic], [hasInitializerAssignment], [typeRef?.declaredType?.name], issueConsumer);
 	}
-	
+
 	private def void internalCheckOptionalsHaveType(TFormalParameter[] fpars) {
 		for (fp : fpars) {
 			// only 'undefined' as identifier allowed
@@ -620,10 +620,10 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	private def internalCheckInitializerBindings(FunctionDefinition fun) {
 		if (fun.body === null)
 			return;
-		
+
 		val idRefs = fun.fpars.map[EcoreUtil2.eAllOfType(it, IdentifierRef)].flatten.iterator;
 		val varDeclNamesInBody = EcoreUtil2.eAllOfType(fun.body, VariableDeclaration).map[it.name];
-		
+
 		while (idRefs.hasNext) {
 			val idRef = idRefs.next();
 			if (varDeclNamesInBody.contains(idRef.id.name)) {
@@ -696,7 +696,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	def checkFunctionDeclarationInStaticPolyfillModule(FunctionDeclaration functionDeclaration) {
 		internalCheckNotInStaticPolyfillModule(functionDeclaration, this)
 	}
-	
+
 	/**
 	 * GH-234 add warning for unused type variables in function declarations.
 	 */
@@ -704,7 +704,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	def checkNoUnusedTypeParameters(FunctionDeclaration functionDeclaration) {
 		internalCheckNoUnusedTypeParameters(functionDeclaration);
 	}
-	
+
 	/**
 	 * GH-234 add warning for unused type variables in function expressions.
 	 */
@@ -713,7 +713,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		internalCheckNoUnusedTypeParameters(functionExpression);
 	}
 
-	
+
 	/**
 	 * GH-234 add warning for unused type variables in function type expressions.
 	 */

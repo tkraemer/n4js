@@ -31,21 +31,21 @@ import org.eclipse.xtext.xtext.generator.parser.antlr.AntlrOptions
  * Customized production ANTLR grammar generator.
  */
 class N4JSAntlrGrammarGenerator extends AntlrGrammarGenerator {
-	
+
 	@Inject
 	AutomaticSemicolonInjector semicolonInjector
-	
+
 	@Inject
 	RegExDisambiguationInjector regExDisambiguationInjector
-	
+
 	@Inject
 	TemplateLiteralDisambiguationInjector templateLiteralDisambiguationInjector
-	
+
 	@Inject
 	NoLineTerminatorHandlingInjector noLineTerminatorHandlingInjector
-	
+
 	List<CodeIntoGrammarInjector> steps
-	
+
 	@Inject
 	def initialize() {
 		steps = #[
@@ -55,26 +55,26 @@ class N4JSAntlrGrammarGenerator extends AntlrGrammarGenerator {
 			noLineTerminatorHandlingInjector
 		]
 	}
-		
+
 	/**
 	 * Replace specified extensions with custom implementation for unicode keyword lexer rules
 	 */
 	override protected toAntlrKeywordRule(String keyword, AntlrOptions options) {
 		UnicodeKeywordHelper.toUnicodeKeyword(keyword)
 	}
-		
+
 	override generate(Grammar it, AntlrOptions options, IXtextGeneratorFileSystemAccess fsa) {
 		super.generate(it, options, fsa)
 		injectCode(fsa)
 	}
-	
+
 	def public void injectCode(Grammar it, IXtextGeneratorFileSystemAccess fsa) {
 		val outletPath = fsa.path + '/'
 		val lexerGrammarFileName = outletPath + grammarNaming.getLexerGrammar(it).grammarFileName
 		val parserGrammarFileName = outletPath + grammarNaming.getParserGrammar(it).grammarFileName
 		injectCode(lexerGrammarFileName, parserGrammarFileName)
 	}
-	
+
 	def public void injectCode(String lexerGrammarFileName, String parserGrammarFileName) {
 		if (lexerGrammarFileName !== null) {
 			try {

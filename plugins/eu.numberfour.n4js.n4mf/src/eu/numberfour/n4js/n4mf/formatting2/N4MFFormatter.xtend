@@ -16,7 +16,7 @@ import org.eclipse.xtext.formatting2.IFormattableDocument
 import org.eclipse.xtext.formatting2.IHiddenRegionFormatter
 
 class N4MFFormatter extends AbstractFormatter2 {
-	
+
 	static val (IHiddenRegionFormatter)=>void NO_SPACE = [noSpace]
 	static val (IHiddenRegionFormatter)=>void ONE_SPACE = [oneSpace]
 	static val (IHiddenRegionFormatter)=>void NO_NEW_LINES = [newLines = 0]
@@ -29,7 +29,7 @@ class N4MFFormatter extends AbstractFormatter2 {
 		(#[ it ] + eAllContents.toIterable).forEach[
 			commonFormat(document)
 		]
-		
+
 		allSemanticRegions.filter[ grammarElement.eContainer instanceof Assignment].forEach[
 			switch k : nextSemanticRegion.grammarElement {
 				Keyword case k.value.length > 1 && k !== moduleFilterSpecifierAccess.inKeyword_1_0:
@@ -50,10 +50,10 @@ class N4MFFormatter extends AbstractFormatter2 {
 				INDENT
 			)
 		]
-		
+
 		region.keywords(".", "-").forEach[ surround(NO_SPACE) ]
 		region.keywords(",", ":").filter[ grammarElement !== simpleProjectDescriptionAccess.colonKeyword_0_1 ].forEach[ prepend(NO_SPACE).append(ONE_SPACE) ]
-		
+
 		region.keywords(",").filter[ grammarElement !== versionConstraintAccess.commaKeyword_0_2_0_0].forEach[ append(NEW_LINE) ]
 		region.keywords("(", "[").forEach[ append(NO_SPACE) ]
 		region.keywords(")", "]").forEach[ prepend(NO_SPACE) ]

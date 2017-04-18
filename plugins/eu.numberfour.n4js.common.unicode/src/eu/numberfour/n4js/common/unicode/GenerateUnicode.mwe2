@@ -38,7 +38,7 @@ Workflow {
 				preferXtendStubs = true
 			}
 		}
-		
+
 		language = XtextGeneratorLanguage {
 			name = "eu.numberfour.n4js.common.unicode.Unicode"
 			grammarUri = "platform:/resource/${runtimeProjectName}/grammar-gen/eu/numberfour/n4js/common/unicode/Unicode.xtext"

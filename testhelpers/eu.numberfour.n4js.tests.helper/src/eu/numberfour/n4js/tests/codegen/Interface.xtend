@@ -19,9 +19,9 @@ class Interface extends Classifier<Interface> {
 
 	/**
 	 * Adds a super interface to this interface
-	 * 
+	 *
 	 * @param implementedInterface the interface to add
-	 * 
+	 *
 	 * @return this builder
 	 */
 	public def Interface addSuperInterface(Interface implementedInterface) {
@@ -30,7 +30,7 @@ class Interface extends Classifier<Interface> {
 
 	/**
 	 * Adds a super interface to this interface
-	 * 
+	 *
 	 * @param implementedInterface the name of the interface to add
 	 */
 	public def Interface addSuperInterface(String implementedInterface) {

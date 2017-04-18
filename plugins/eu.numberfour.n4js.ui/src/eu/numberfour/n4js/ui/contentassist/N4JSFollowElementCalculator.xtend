@@ -26,5 +26,5 @@ class N4JSFollowElementCalculator extends FollowElementCalculator {
 		if (!parserRule.getName().startsWith("Bogus"))
 			return super.caseParserRule(parserRule);
 		return Boolean.FALSE;
-	}	
+	}
 }

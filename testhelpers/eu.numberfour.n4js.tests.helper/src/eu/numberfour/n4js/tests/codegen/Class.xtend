@@ -11,7 +11,7 @@ class Class extends Classifier<Class> {
 
 	/**
 	 * Creates a new instance with the given parameters.
-	 * 
+	 *
 	 * @param name the name of the class
 	 */
 	public new(String name) {
@@ -20,7 +20,7 @@ class Class extends Classifier<Class> {
 
 	/**
 	 * Sets the super class.
-	 * 
+	 *
 	 * @param superClass the super class or interface.
 	 */
 	public def Class setSuperClass(Class superClass) {
@@ -29,7 +29,7 @@ class Class extends Classifier<Class> {
 
 	/**
 	 * Sets the super class.
-	 * 
+	 *
 	 * @param superClass the name of the super class or interface.
 	 */
 	public def Class setSuperClass(String superClass) {
@@ -39,9 +39,9 @@ class Class extends Classifier<Class> {
 
 	/**
 	 * Adds an interface implemented by the class to be built.
-	 * 
+	 *
 	 * @param implementedInterface the name of the interface to implement
-	 * 
+	 *
 	 * @return this builder
 	 */
 	public def Class addInterface(Interface implementedInterface) {
@@ -50,7 +50,7 @@ class Class extends Classifier<Class> {
 
 	/**
 	 * Adds an interface implemented by the class to be built.
-	 * 
+	 *
 	 * @param implementedInterface the interface to implement
 	 */
 	public def Class addInterface(String implementedInterface) {
@@ -63,8 +63,8 @@ class Class extends Classifier<Class> {
 	override protected def generateType() '''class '''
 
 	override protected def CharSequence generateTypeRelations() '''«generateSuperClass()»«generateImplementedInterfaces()»'''
-	
+
 	private def CharSequence generateSuperClass() '''«IF !superClass.nullOrEmpty» extends «superClass»«ENDIF»'''
-	
+
 	private def CharSequence generateImplementedInterfaces() '''«IF !implementedInterfaces.nullOrEmpty»«FOR i : implementedInterfaces BEFORE ' implements ' SEPARATOR ', '»«i»«ENDFOR»«ENDIF»'''
 }

@@ -199,7 +199,7 @@ class N4JSClassValidator extends AbstractN4JSDeclarativeValidator {
 			if (holdsSuperClass(n4Class)) { // avoid consequential errors
 				holdsNoCyclicInheritance(n4Class);
 			}
-			
+
 			internalCheckPolyFilledClassWithAdditionalInterface(n4Class,this);
 			internalCheckImplementedInterfaces(n4Class);
 			internalCheckSpecAnnotation(n4Class);

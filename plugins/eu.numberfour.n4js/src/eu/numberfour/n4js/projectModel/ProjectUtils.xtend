@@ -444,7 +444,7 @@ public class ProjectUtils {
 		//for main modules we check containing project
 		val targetProject = n4jsCore.findProject(eoDescription.EObjectURI).orNull;
 		val currentProject = n4jsCore.findProject(eObject.eResource.URI).orNull;
-		
+
 		return	targetProject == currentProject;
 	}
 }

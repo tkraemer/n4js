@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -51,7 +51,7 @@ import org.eclipse.xtext.validation.ComposedChecks
 //import org.eclipse.xtext.validation.Check
 /**
  * This class contains custom validation rules.
- * 
+ *
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 @ComposedChecks(validators=#[

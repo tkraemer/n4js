@@ -217,8 +217,8 @@ class ExpressionTransformation extends Transformation {
 			}
 		];
 	}
-	
-	/** put raw into double quote and escape all existing double-quotes {@code '"' -> '\"' } and newlines {@code '\n' -> '\\n'}. */ 
+
+	/** put raw into double quote and escape all existing double-quotes {@code '"' -> '\"' } and newlines {@code '\n' -> '\\n'}. */
 	def private static String wrapAndQuote(String raw){
 		'"'+raw.replace('"','\\"').replace('\n','\\n')+'"'
 	}

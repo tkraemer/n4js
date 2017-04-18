@@ -24,14 +24,14 @@ import org.eclipse.xtext.xtext.generator.model.project.IXtextProjectConfig
  * into the (new) Xtext language generator.
  */
 class TypesGeneratorModule extends DefaultGeneratorModule {
-	
+
 	def configureXtextGeneratorNaming(Binder binder) {
 		binder.bind(XtextGeneratorNaming).to(N4TSGeneratorNaming)
 	}
 }
 
 class N4TSGeneratorNaming extends XtextGeneratorNaming {
-	
+
 	@Inject
 	IXtextProjectConfig projectConfig
 

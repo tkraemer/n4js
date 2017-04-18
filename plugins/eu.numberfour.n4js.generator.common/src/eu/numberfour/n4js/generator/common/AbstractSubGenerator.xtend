@@ -39,17 +39,17 @@ import eu.numberfour.n4js.resource.XpectAwareFileExtensionCalculator
  */
 @Log
 abstract class AbstractSubGenerator implements ISubGenerator {
-	
+
 	@Accessors
 	private CompilerDescriptor compilerDescriptor = null
 
-	@Inject 
+	@Inject
 	ProjectUtils projectUtils
-	
-	@Inject 
+
+	@Inject
 	IN4JSCore core
 
-	@Inject 
+	@Inject
 	CompilerUtils compilerUtils
 
 	@Inject
@@ -61,13 +61,13 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 	@Inject
 	IGeneratorMarkerSupport genMarkerSupport
 
-	@Inject 
+	@Inject
 	extension ExceptionHandler
 
 	@Inject
 	extension N4JSPreferenceAccess
-	
-	@Inject 
+
+	@Inject
 	extension XpectAwareFileExtensionCalculator
 
 	override getCompilerDescriptor() {
@@ -93,7 +93,7 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 	 */
 	override doGenerate(Resource input, IFileSystemAccess fsa) {
 		try {
-			
+
 			// remove error-marker
 			genMarkerSupport.deleteMarker(input)
 
@@ -134,15 +134,15 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 		val autobuildEnabled = isActive(input)
 		val isXPECTMode = N4JSGlobals.XT_FILE_EXTENSION == input.URI.fileExtension.toLowerCase;
 		val fileExtension = input.URI.xpectAwareFileExtension;
-		
+
 		return (autobuildEnabled
 			&& (input.hasValidFileExtension || "n4jsx".equals(fileExtension) || "jsx".equals(fileExtension)) // TODO IDE-2416
 			&& projectUtils.isSource(input.URI)
-			&& (projectUtils.isNoValidate(input.URI) 
-				|| projectUtils.isExternal(input.URI) 
+			&& (projectUtils.isNoValidate(input.URI)
+				|| projectUtils.isExternal(input.URI)
 				// if platform is running (but not in XPECT mode) the generator is called from the builder, hence cannot have any validation errors
 				// (note: XPECT swallows errors hence we cannot rely on Eclipse in case of .xt files)
-				|| ((EMFPlugin.IS_ECLIPSE_RUNNING && !isXPECTMode) || hasNoErrors(input, monitor)) 
+				|| ((EMFPlugin.IS_ECLIPSE_RUNNING && !isXPECTMode) || hasNoErrors(input, monitor))
 			))
 			&& (!input.isStaticPolyfillingModule) // compile driven by filled type
 			&& hasNoPolyfillErrors(input,monitor)
@@ -230,7 +230,7 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 
 	// TODO is it possible to add a filter before even activating this generator?
 	// background: currently also n4mf files are passed to the generator
-	/** 
+	/**
 	 * Checking if a resource will be as source to the generator.
 	 */
 	def hasValidFileExtension(Resource resource) {

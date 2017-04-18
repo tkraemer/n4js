@@ -36,7 +36,7 @@ class ES_07_09_AutomaticSemicolonInsertionParserTest extends AbstractParserTest 
 
 	@Inject
 	private IWhitespaceInformationProvider wp
-	@Inject 
+	@Inject
 	private N4JSDocumentationProvider documenationProvider
 
 	def void hasChildren(Script p, int count) {
@@ -539,13 +539,13 @@ class ES_07_09_AutomaticSemicolonInsertionParserTest extends AbstractParserTest 
 		val node = NodeModelUtils.findActualNodeFor(script)
 		assertEquals(3, node.children.size) // hidden (empty as in 'no children, length=0'), var, x
 	}
-	
+
 	/** ASI must not swallow jsdoc-comments. Problem occured for ML-comments on same line as ASI.
 	 * GH-103*/
-	@Test 
+	@Test
 	def void testJsdoc_Directive_sameLine() {
 		var script ='''
-			"use strict"/** 
+			"use strict"/**
 			docu of C */
 			class C {}
 		'''.parseSuccessfully
@@ -553,14 +553,14 @@ class ES_07_09_AutomaticSemicolonInsertionParserTest extends AbstractParserTest 
 		val docu = documenationProvider.getDocumentation(script.scriptElements.get(1))
 		assertEquals("docu of C",docu)
 	}
-	
-	/** Here no conflict between jsdoc and ASI are expected, since the ML-comment starts in a new line. 
+
+	/** Here no conflict between jsdoc and ASI are expected, since the ML-comment starts in a new line.
 	 * GH-103*/
-	@Test 
+	@Test
 	def void testJsdoc_Directive_differentLine() {
 		var script ='''
 			"use strict"
-			/** 
+			/**
 			docu of C */
 			class C {}
 		'''.parseSuccessfully
@@ -568,11 +568,11 @@ class ES_07_09_AutomaticSemicolonInsertionParserTest extends AbstractParserTest 
 		val docu = documenationProvider.getDocumentation(script.scriptElements.get(1))
 		assertEquals("docu of C",docu)
 	}
-	
+
 	/** Single line comments should not contribute to documentation.
 	 * GH-103
 	 */
-	@Test 
+	@Test
 	def void testNonJsdoc_Directive_differentLine() {
 		var script ='''
 			"use strict"
@@ -583,11 +583,11 @@ class ES_07_09_AutomaticSemicolonInsertionParserTest extends AbstractParserTest 
 		val docu = documenationProvider.getDocumentation(script.scriptElements.get(1))
 		assertNull(docu)
 	}
-	
-	/** Single line comments should not contribute to documentation. 
+
+	/** Single line comments should not contribute to documentation.
 	 * GH-103
 	 */
-	@Test 
+	@Test
 	def void testNonJsdoc_Directive_sameLine() {
 		var script ='''
 			"use strict"//**docu of C */
@@ -597,9 +597,9 @@ class ES_07_09_AutomaticSemicolonInsertionParserTest extends AbstractParserTest 
 		val docu = documenationProvider.getDocumentation(script.scriptElements.get(1))
 		assertNull(docu)
 	}
-	
-	/** <b>This test will notify programmers, if the ASI-implementation is changed.</b> At the time of writing, 
-	 * ASI replaced a HiddenLeaf node of MultiLine-comments by a {@code LeafNodeWithSyntaxError}. This behavior required some workarounds. 
+
+	/** <b>This test will notify programmers, if the ASI-implementation is changed.</b> At the time of writing,
+	 * ASI replaced a HiddenLeaf node of MultiLine-comments by a {@code LeafNodeWithSyntaxError}. This behavior required some workarounds.
 	 * If this test fails, then the above assumed behavior changed and YOU - as programmer - should look at:
 	 * <ul>
 	 * <li>N4JSDocumentationsProvider</li>
@@ -608,42 +608,42 @@ class ES_07_09_AutomaticSemicolonInsertionParserTest extends AbstractParserTest 
 	 * </ul>
 	 * GH-103
 	 */
-	@Test 
+	@Test
 	def void testJsdoc_InvestigateChangedASIbehaviour() {
 		var script ='''
-			"use strict"/** 
+			"use strict"/**
 			docu of C */
 			class C {}
 		'''.parseSuccessfully
-		
+
 		assertEquals(2,script.scriptElements.size);
-		
+
 		// Find ASI-Nodes:
 		val leafNodesWithSyntaxError = NodeModelUtils.getNode(script).leafNodes.filter(LeafNodeWithSyntaxError);
 		assertEquals("Only one node of type LeafNodeWithSyntaxError expected.",1,leafNodesWithSyntaxError.size);
 		val theLNWSE = leafNodesWithSyntaxError.get(0);
 		assertEquals("",  InternalSemicolonInjectingParser.SEMICOLON_INSERTED,  theLNWSE.syntaxErrorMessage.issueCode);
-		
+
 		val completeText= theLNWSE.text.trim;
-		
+
 		'''
-			/** 
+			/**
 			docu of C */
 		'''.toString.trim.assertEquals(completeText);
-		
+
 	}
-	/** Compare-test without ASI. C.f. {@link #testJsdoc_InvestigateChangedASIbehaviour()} 
+	/** Compare-test without ASI. C.f. {@link #testJsdoc_InvestigateChangedASIbehaviour()}
 	 * GH-103 */
-	@Test 
+	@Test
 	def void testJsdoc_InvestigateChangedASIbehaviour_Comparison() {
 		var script ='''
-			"use strict";/** 
+			"use strict";/**
 			docu of C */
 			class C {}
 		'''.parseSuccessfully
-		
+
 		assertEquals(2,script.scriptElements.size);
-		
+
 		val classElement = script.scriptElements.get(1);
 		val completeNode = NodeModelUtils.getNode( classElement );
 		val collectedHiddenText = new StringBuffer;
@@ -657,17 +657,17 @@ class ES_07_09_AutomaticSemicolonInsertionParserTest extends AbstractParserTest 
 				}
 			}
 		}
-		
+
 		val completeText = collectedHiddenText.toString.trim;
-		
+
 		'''
-			/** 
+			/**
 			docu of C */
 		'''.toString.trim.assertEquals(completeText);
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 }

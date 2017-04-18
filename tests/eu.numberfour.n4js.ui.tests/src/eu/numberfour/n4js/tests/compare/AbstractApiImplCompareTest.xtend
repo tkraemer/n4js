@@ -96,8 +96,8 @@ abstract class AbstractApiImplCompareTest extends Assert {
 		comparison.assertCorrectChildEntries("x/y/M", "DD",
 			"method" -> Status.EQUAL -> null
 		)
-		
-		comparison.assertCorrectTypeEntry("x/y/M", 
+
+		comparison.assertCorrectTypeEntry("x/y/M",
 			"TypeVariableTest1" -> Status.ERROR -> "the number of type variables doesn't match",
 			"TypeVariableTest2" -> Status.EQUAL -> null,
 			"TypeVariableTest21" -> Status.ERROR -> "the upper bound of type variable Other isn't compatible with the API",

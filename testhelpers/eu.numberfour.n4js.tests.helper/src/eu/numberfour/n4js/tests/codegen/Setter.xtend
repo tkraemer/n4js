@@ -17,7 +17,7 @@ class Setter extends Member<Setter> {
 
 	/**
 	 * Sets the field type of this setter.
-	 * 
+	 *
 	 * @param fieldType the field type
 	 */
 	public def Setter setFieldType(String fieldType) {

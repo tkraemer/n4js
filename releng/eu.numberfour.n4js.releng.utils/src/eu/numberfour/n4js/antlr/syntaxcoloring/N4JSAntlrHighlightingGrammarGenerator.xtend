@@ -42,11 +42,11 @@ class N4JSAntlrHighlightingGrammarGenerator extends AbstractAntlrGrammarWithActi
 	@Inject CodeConfig codeConfig
 	@Inject extension N4JSHighlightingGrammarNaming naming
 	@Inject extension GrammarAccessExtensions grammarUtil
-	
+
 	protected override getGrammarNaming() {
 		naming
 	}
-	
+
 	override protected compileParser(Grammar it, AntlrOptions options) '''
 		«codeConfig.fileHeader»
 		parser grammar «grammarNaming.getParserGrammar(it).simpleName»;
@@ -61,7 +61,7 @@ class N4JSAntlrHighlightingGrammarGenerator extends AbstractAntlrGrammarWithActi
 	 * just returns null since no lexer need to be generated,
 	 *  although non-combined grammar configuration is active.
 	 * can be removed once https://github.com/eclipse/xtext-core/issues/158
-	 * is resolved and the solution is leveraged here. 
+	 * is resolved and the solution is leveraged here.
 	 */
 	override protected compileLexer(Grammar it, AntlrOptions options) {
 		null
@@ -80,11 +80,11 @@ class N4JSAntlrHighlightingGrammarGenerator extends AbstractAntlrGrammarWithActi
 		import «grammarAccess»;
 		import eu.numberfour.n4js.ui.editor.syntaxcoloring.AbstractInternalHighlightingAntlrParser;
 	'''
-	
+
 	protected override compileParserMembers(Grammar it, AntlrOptions options) '''
-		
+
 		@members {
-		
+
 		«IF options.backtrack»
 		/*
 		  This grammar contains a lot of empty actions to work around a bug in ANTLR.
@@ -98,7 +98,7 @@ class N4JSAntlrHighlightingGrammarGenerator extends AbstractAntlrGrammarWithActi
 		        this(input);
 		        this.grammarAccess = grammarAccess;
 		    }
-		    
+
 			protected boolean forcedRewind(int marker) { return true; } // overridden in subtype
 			protected void promoteEOL() {} // overridden in subtype
 			protected boolean hasDisallowedEOL() { return false; } // overridden in subtype
@@ -118,26 +118,26 @@ class N4JSAntlrHighlightingGrammarGenerator extends AbstractAntlrGrammarWithActi
 		    }
 		}
 	'''
-	
+
 	override protected compileRules(Grammar it, AntlrOptions options) '''
 		«FOR rule: (allParserRules).filter[rule | rule.isCalled(it)]»
-			
+
 			«rule.compileRule(it, options)»
 		«ENDFOR»
 		«FOR rule: (allEnumRules).filter[rule | rule.isCalled(it)]»
-			
+
 			«rule.compileRule(it, options)»
 		«ENDFOR»
 	'''
-	
+
 	protected override _compileRule(ParserRule it, Grammar grammar, AntlrOptions options) '''
 		«IF isValidEntryRule()»
 			«compileEntryRule(grammar, options)»
 		«ENDIF»
-		
+
 		«compileEBNF(options)»
 	'''
-	
+
 	protected def String compileEntryRule(ParserRule it, Grammar grammar, AntlrOptions options) '''
 		// Entry rule «originalElement.entryRuleName»
 		«originalElement.entryRuleName»
@@ -161,7 +161,7 @@ class N4JSAntlrHighlightingGrammarGenerator extends AbstractAntlrGrammarWithActi
 		;
 		«compileFinally(options)»
 	'''
-	
+
 	protected override compileInit(AbstractRule it, AntlrOptions options) {
 		switch it {
 			ParserRule: '''
@@ -206,22 +206,22 @@ class N4JSAntlrHighlightingGrammarGenerator extends AbstractAntlrGrammarWithActi
 			!(it instanceof Action)
 		]
 	}
-	
+
 	protected override String _ebnf2(Alternatives it, AntlrOptions options, boolean supportActions) '''
 		«FOR element:elements.withoutActions SEPARATOR '\n    |'»«element.ebnf(options, supportActions)»«ENDFOR»
 	'''
-	
+
 	protected override String _ebnf2(Group it, AntlrOptions options, boolean supportActions) '''
 		«FOR element:elements.withoutActions»«element.ebnf(options, supportActions)»«ENDFOR»
 	'''
-	
+
 	protected override String _ebnf2(EnumLiteralDeclaration it, AntlrOptions options, boolean supportActions) '''
 		«IF supportActions»«literal.originalElement.gaElementIdentifier»=«ENDIF»«keywordHelper.getRuleName(literal.value)»«
 		 IF supportActions» {
 			announce($«literal.originalElement.gaElementIdentifier», grammarAccess.«originalElement.gaRuleElementAccessor()»);
 		}«ENDIF»
 	'''
-	
+
 	protected override String _dataTypeEbnf2(Alternatives it, boolean supportActions) '''
 		«FOR e:elements.withoutActions SEPARATOR '\n    |'»«e.dataTypeEbnf(supportActions)»«ENDFOR»
 	'''
@@ -237,7 +237,7 @@ class N4JSAntlrHighlightingGrammarGenerator extends AbstractAntlrGrammarWithActi
 			 keywordHelper.getRuleName(value)»«
 			 IF supportActions» {
 				announce($«originalElement.gaElementIdentifier», grammarAccess.«originalElement.gaRuleElementAccessor()»);
-			}«ENDIF» 
+			}«ENDIF»
 			| EOF
 			| RULE_EOL
 			| RULE_ML_COMMENT
@@ -248,14 +248,14 @@ class N4JSAntlrHighlightingGrammarGenerator extends AbstractAntlrGrammarWithActi
 			 IF supportActions» {
 				announce($«originalElement.gaElementIdentifier», grammarAccess.«originalElement.gaRuleElementAccessor()»);
 			}«ENDIF»
-		«ENDIF» 
+		«ENDIF»
 		'''
 	}
-	
+
 	protected override String _dataTypeEbnf2(RuleCall it, boolean supportActions) {
 		rule.ruleName()
 	}
-	
+
 	override protected crossrefEbnf(AbstractRule it, RuleCall call, CrossReference ref, boolean supportActions) {
 		switch it {
 			EnumRule:
@@ -280,11 +280,11 @@ class N4JSAntlrHighlightingGrammarGenerator extends AbstractAntlrGrammarWithActi
 				'''
 		}
 	}
-	
+
 	override protected _assignmentEbnf(AbstractElement it, Assignment assignment, AntlrOptions options, boolean supportActions) {
 		ebnf(options, supportActions)
 	}
-	
+
 	override protected _assignmentEbnf(RuleCall it, Assignment assignment, AntlrOptions options, boolean supportActions) {
 		switch rule {
 			EnumRule:
@@ -311,15 +311,15 @@ class N4JSAntlrHighlightingGrammarGenerator extends AbstractAntlrGrammarWithActi
 				'''
 		}
 	}
-	
+
 	override protected _assignmentEbnf(CrossReference it, Assignment assignment, AntlrOptions options, boolean supportActions) {
 		terminal.crossrefEbnf(it, supportActions)
 	}
-	
+
 	protected override String _ebnf2(Action it, AntlrOptions options, boolean supportActions) {
 		''
 	}
-	
+
 	protected override String _ebnf2(Keyword it, AntlrOptions options, boolean supportActions) '''
 		«IF supportActions»«originalElement.gaElementIdentifier()»=«ENDIF»«
 		 keywordHelper.getRuleName(value)»
@@ -336,7 +336,7 @@ class N4JSAntlrHighlightingGrammarGenerator extends AbstractAntlrGrammarWithActi
 		«ENDIF»«
 		 ENDIF»
 	'''
-	
+
 	override protected _ebnf2(RuleCall it, AntlrOptions options, boolean supportActions) '''
 		«IF "TypeRef" == rule.originalElement.name && AbstractRule.isInstance(eContainer().originalElement) && "TypeRefNoTrailingLineBreak" == (eContainer().originalElement as AbstractRule).name»
 			«IF supportActions»«originalElement.gaElementIdentifier»=«ENDIF»«rule.ruleName()» {
@@ -368,5 +368,5 @@ class N4JSAntlrHighlightingGrammarGenerator extends AbstractAntlrGrammarWithActi
 				{ announce($«originalElement.gaElementIdentifier».start, $«originalElement.gaElementIdentifier».stop, grammarAccess.«originalElement.gaRuleElementAccessor()»); }
 			«ENDIF»
 		«ENDIF»
-	''' 
+	'''
 }

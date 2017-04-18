@@ -29,7 +29,7 @@ public class StaticPolyfillValidatorExtension {
 
    /** §143 (Restriction on static-polyfilling): §143.1 only classes in staticPolyfillModule allowed. */
 	public static def internalCheckNotInStaticPolyfillModule(N4InterfaceDeclaration n4InterfaceDeclaration, N4JSInterfaceValidator host) {
-		if (n4InterfaceDeclaration.isContainedInStaticPolyfillModule) { 
+		if (n4InterfaceDeclaration.isContainedInStaticPolyfillModule) {
 			val msg = IssueCodes.messageForPOLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES;
 			host.addIssue(msg, n4InterfaceDeclaration, N4JSPackage.Literals.N4_TYPE_DECLARATION__NAME,
 				IssueCodes.POLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES);
@@ -39,7 +39,7 @@ public class StaticPolyfillValidatorExtension {
 
    /** §143 (Restriction on static-polyfilling): §143.1 only classes in staticPolyfillModule allowed. */
 	public static def internalCheckNotInStaticPolyfillModule(N4EnumDeclaration n4EnumDecl, N4JSEnumValidator host) {
-		if (n4EnumDecl.isContainedInStaticPolyfillModule) { 
+		if (n4EnumDecl.isContainedInStaticPolyfillModule) {
 			val msg = IssueCodes.messageForPOLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES;
 			host.addIssue(msg, n4EnumDecl, N4JSPackage.Literals.N4_TYPE_DECLARATION__NAME,
 				IssueCodes.POLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES);
@@ -53,7 +53,7 @@ public class StaticPolyfillValidatorExtension {
 		while ( cont instanceof ExportDeclaration ) cont = cont.eContainer;
 		if( cont instanceof Script)
 		{
-			if ( functionDeclaration.isContainedInStaticPolyfillModule ) { 
+			if ( functionDeclaration.isContainedInStaticPolyfillModule ) {
 				val msg = IssueCodes.messageForPOLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES;
 				host.addIssue(msg, functionDeclaration, N4JSPackage.Literals.FUNCTION_DECLARATION__NAME,
 					IssueCodes.POLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES);
@@ -64,11 +64,11 @@ public class StaticPolyfillValidatorExtension {
  	 /** §143 (Restriction on static-polyfilling): §143.4 P must not implement any interfaces */
 	public static def internalCheckPolyFilledClassWithAdditionalInterface(N4ClassDeclaration classDeclaration, N4JSClassValidator host) {
 		if( classDeclaration.isStaticPolyfill ) {
-			if( ! classDeclaration.implementedInterfaceRefs.isEmpty ) { 
+			if( ! classDeclaration.implementedInterfaceRefs.isEmpty ) {
 				val msg = IssueCodes.messageForPOLY_IMPLEMENTING_INTERFACE_NOT_ALLOWED;
 				host.addIssue(msg, classDeclaration, N4JSPackage.Literals.N4_CLASS_DEFINITION__IMPLEMENTED_INTERFACE_REFS,
 					IssueCodes.POLY_IMPLEMENTING_INTERFACE_NOT_ALLOWED);
-					
+
 			}
 		}
 	}

@@ -134,22 +134,31 @@ public class FileChecker {
 				if (charLast != '\n' || char2ndToLast == '\n') {
 					report.problems.add("does not end with a single empty line");
 
-					if (content.length() > 0) {
-						int endIndex = content.length();
-						while (endIndex > 0 && content.charAt(endIndex - 1) == '\n') {
-							--endIndex;
-						}
-						content = content.substring(0, endIndex) + '\n';
-						try {
-							writeFile(path, content);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
+					// if (content.length() > 0) {
+					// int endIndex = content.length();
+					// while (endIndex > 0 && content.charAt(endIndex - 1) == '\n') {
+					// --endIndex;
+					// }
+					// content = content.substring(0, endIndex) + '\n';
+					// try {
+					// writeFile(path, content);
+					// } catch (IOException e) {
+					// // TODO Auto-generated catch block
+					// e.printStackTrace();
+					// }
+					// }
 				}
 				if (containsTrailingWhiteSpace(content)) {
 					report.problems.add("must not contain lines with trailing white-space");
+
+					content = trimTrailingWhiteSpace(content);
+
+					try {
+						writeFile(path, content);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				if (!isRegisteredAsThirdParty && !content.startsWith(COPYRIGHT_HEADER_JOINED)) {
 					report.problems.add("does not contain correct copyright header");
@@ -395,6 +404,11 @@ public class FileChecker {
 			if (pathStr.contains("/" + folderName + "/"))
 				return true;
 		return false;
+	}
+
+	@SuppressWarnings("unused")
+	private static String trimTrailingWhiteSpace(String content) {
+		return content.replaceAll("[ \\t\\x0B\\f\\r]+\\n", "\n");
 	}
 
 	private static String readFile(Path path) throws IOException {

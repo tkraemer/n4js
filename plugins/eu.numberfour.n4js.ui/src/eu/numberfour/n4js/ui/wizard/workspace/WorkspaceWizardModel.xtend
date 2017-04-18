@@ -38,7 +38,7 @@ class WorkspaceWizardModel {
 	 *            The model
 	 * @param selection
 	 *            The selection
-	 * @param extractModuleFile 
+	 * @param extractModuleFile
 	 *            {@code true} if the module file should be filled in as well, {@code false} otherwise
 	 * @param n4jsCore
 	 *            IN4JSCore implementation
@@ -79,7 +79,7 @@ class WorkspaceWizardModel {
 						if (!moduleSpecifier.isEmpty()) {
 							model.setModuleSpecifier(moduleSpecifier + "/");
 						}
-						
+
 						// If extractModuleFile is true and the selection is a file
 						if (extractModuleFile && firstElement instanceof IFile) {
 							model.moduleSpecifier = model.moduleSpecifier + firstElement.fullPath.removeFileExtension.lastSegment;
