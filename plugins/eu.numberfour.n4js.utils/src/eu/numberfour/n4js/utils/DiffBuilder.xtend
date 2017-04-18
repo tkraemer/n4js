@@ -132,4 +132,3 @@ abstract class DiffBuilder<F, T> {
 	protected def abstract Function<F, T[]> getAllOldItemsFunction();
 
 }
-

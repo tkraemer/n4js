@@ -131,8 +131,9 @@ public class FileChecker {
 			if (content.contains("\r")) {
 				report.problems.add("contains invalid line endings (i.e. contains carriage return: '\\r')");
 			} else {
-				if (charLast != '\n' || char2ndToLast == '\n') {
+				if (len > 0 && (charLast != '\n' || char2ndToLast == '\n')) {
 					report.problems.add("does not end with a single empty line");
+					// writeFile(path, fixFileEnding(content));
 				}
 				if (containsTrailingWhiteSpace(content)) {
 					report.problems.add("must not contain lines with trailing white-space");
@@ -381,6 +382,18 @@ public class FileChecker {
 			if (pathStr.contains("/" + folderName + "/"))
 				return true;
 		return false;
+	}
+
+	@SuppressWarnings("unused")
+	private static String fixFileEnding(String content) {
+		if (content.length() > 0) {
+			int endIndex = content.length();
+			while (endIndex > 0 && content.charAt(endIndex - 1) == '\n') {
+				--endIndex;
+			}
+			content = content.substring(0, endIndex) + '\n';
+		}
+		return content;
 	}
 
 	@SuppressWarnings("unused")

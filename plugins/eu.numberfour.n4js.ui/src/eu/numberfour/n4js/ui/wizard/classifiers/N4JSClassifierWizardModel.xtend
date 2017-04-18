@@ -66,4 +66,3 @@ abstract class N4JSClassifierWizardModel extends WorkspaceWizardModel {
 	public def abstract String getClassifierName();
 
 }
-
