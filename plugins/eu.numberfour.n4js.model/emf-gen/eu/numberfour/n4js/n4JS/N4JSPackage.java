@@ -4,6 +4,9 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
  */
 package eu.numberfour.n4js.n4JS;
 
@@ -41,7 +44,7 @@ import org.eclipse.emf.ecore.EReference;
  * <!-- end-model-doc -->
  * @see eu.numberfour.n4js.n4JS.N4JSFactory
  * @model kind="package"
- *        annotation="http://www.eclipse.org/emf/2002/GenModel fileExtensions='n4js' rootExtendsClass='eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl' modelDirectory='/eu.numberfour.n4js.model/emf-gen' forceOverwrite='true' updateClasspath='false' literalsInterface='true' loadInitialization='false' complianceLevel='8.0' copyrightFields='false' copyrightText='Copyright (c) 2016 NumberFour AG.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html' language='' basePackage='eu.numberfour.n4js'"
+ *        annotation="http://www.eclipse.org/emf/2002/GenModel fileExtensions='n4js' rootExtendsClass='eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl' modelDirectory='/eu.numberfour.n4js.model/emf-gen' forceOverwrite='true' updateClasspath='false' literalsInterface='true' loadInitialization='false' complianceLevel='8.0' copyrightFields='false' copyrightText='Copyright (c) 2016 NumberFour AG.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html\n\nContributors:\n  NumberFour AG - Initial API and implementation' language='' basePackage='eu.numberfour.n4js'"
  * @generated
  */
 public interface N4JSPackage extends EPackage {
