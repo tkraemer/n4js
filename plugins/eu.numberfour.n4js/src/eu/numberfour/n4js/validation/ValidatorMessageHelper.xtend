@@ -337,7 +337,7 @@ class ValidatorMessageHelper {
 					}
 				}
 			}
-			
+
 			val ptr = tfunction.returnTypeRef as ParameterizedTypeRef;
 			val asyncReturnType = ptr.typeArgs.get(0);
 			if (asyncReturnType !== null) {
