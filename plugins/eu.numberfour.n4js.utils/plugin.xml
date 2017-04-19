@@ -11,10 +11,6 @@ Contributors:
 -->
 <?eclipse version="3.0"?>
 
-<!--
- Copyright (c) 2014 NumberFour AG (http://www.numberfour.eu).
- All rights reserved.
--->
 <!-- 
 The eclipse version must be specified in order for id to be able to contain dots '.'
 See: http://help.eclipse.org/kepler/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/misc/plugin_manifest.html
