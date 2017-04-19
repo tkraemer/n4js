@@ -74,7 +74,7 @@ class JSXWithOutFreeTextTest extends AbstractN4JSXParserTest {
 	def void testOpenCloseTagWithNestedExpression() {
 		val script = '''
 			class Foo{}
-			<div>{`Hello
+			<div>{`Hello «»
 			World`}</div>
 			function bar() {}
 		'''.parseSuccessfully
