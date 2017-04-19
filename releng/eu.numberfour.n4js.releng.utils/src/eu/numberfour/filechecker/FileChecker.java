@@ -60,12 +60,20 @@ public class FileChecker {
 			"tools/eu.numberfour.n4js.hlc/target/wsp", // temporary test data under git-ignore, so not in repository
 			// temporarily ignored folders FIXME remove the following folders!!!!
 			"n4js/n4js-libraries",
-			"plugins/eu.numberfour.n4js.external.libraries",
-			"plugins/eu.numberfour.n4js.runner/res"
+			"n4js/plugins/eu.numberfour.n4js.external.libraries",
+			"n4js/plugins/eu.numberfour.n4js.runner/res"
 	};
 
 	/** Words disallowed outside of copyright headers. Each word should start with a single capitalized letter. */
-	private static final String[] BANNED_WORDS = { "Copyright", "License" };
+	private static final String[] BANNED_WORDS = {
+			"Copyright",
+			"License"
+			// FIXME add more banned words (at least temporarily to prepare initial contribution):
+			// "NumberFour",
+			// "Number Four",
+			// "numberfour.jira.com",
+			// "jira.numberfour.eu"
+	};
 
 	/** Optional file in the root of a git repository that declares some files as third-party files. */
 	private static final String THIRD_PARTY_FILE_NAME = "third-party.txt";
@@ -126,7 +134,7 @@ public class FileChecker {
 	private Report check(Path path, String content, boolean isRegisteredAsThirdParty) {
 		final Report report = new Report(path);
 
-		if (hasExtension(path, ".xml")) {
+		if (hasExtension(path, ".xml")) { // FIXME apply ordinary checks to .xml files (by removing this special case)
 
 			// special case: .xml files
 
