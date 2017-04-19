@@ -109,3 +109,11 @@ testhelpers/eu.numberfour.n4js.tester.tests.helper/rest-assured-2.4.0.jar
 
 ## Apache 2.0
 testhelpers/eu.numberfour.n4js.tester.tests.helper/tagsoup-1.2.1.jar
+
+
+
+## NEW STUFF:
+
+# Torsten (copied from items AG)
+plugins/eu.numberfour.n4js.ui/src/eu/nmberfour/n4js/ui/logging/EclipseLogAppender.java
+

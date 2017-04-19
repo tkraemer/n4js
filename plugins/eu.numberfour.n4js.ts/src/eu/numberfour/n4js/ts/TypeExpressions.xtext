@@ -7,12 +7,6 @@
  *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
- *
- * References:
- *
- * [ECM15] 	ECMAScript 2015 Language Specification / ISO/IEC (ECMA-262, 6th Edition).
- * 			International Standard.
- * 			http://www.ecma-international.org/publications/ files/ECMA-ST/Ecma-262.pdf
  */
 grammar eu.numberfour.n4js.ts.TypeExpressions with eu.numberfour.n4js.common.unicode.Unicode hidden(WS, ML_COMMENT,
 SL_COMMENT, EOL)
@@ -23,6 +17,13 @@ import "http://www.numberfour.eu/ide/ts/TypeRefs"
 
 // ****************************************************************************************************
 // N4JS versions of type references and expressions, also used by Types.xtext
+//
+// References:
+//
+// [ECM15]	ECMAScript 2015 Language Specification / ISO/IEC (ECMA-262, 6th Edition).
+//			International Standard.
+//			http://www.ecma-international.org/publications/ files/ECMA-ST/Ecma-262.pdf
+//
 // ****************************************************************************************************
 
 /*
