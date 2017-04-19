@@ -103,7 +103,7 @@ class ModuleToModuleProxyPluginTest extends AbstractBuilderParticipantTest {
 		// (1) load file B from index
 		val resourceB = createNewResourceSetAndLoadFileFromIndex(uriB)
 		val resourceSet = resourceB.resourceSet
-		
+
 		// A.n4js should not be loaded yet
 		assertEquals(#["B.n4js"], resourceSet.resources.map[URI.lastSegment])
 
@@ -201,15 +201,15 @@ class ModuleToModuleProxyPluginTest extends AbstractBuilderParticipantTest {
 			val classB = resourceB.module.topLevelTypes.head as TClass
 			val classA = classB.superClassRef.declaredType as TClass
 			assertFalse(classA.eIsProxy)
-	
+
 			// now, A.n4js should be loaded
 			assertEquals(#["B.n4js", "A.n4js"], resourceSet.resources.map[URI.lastSegment])
 			val resourceA = resourceSet.resources.get(1) as N4JSResource
-	
+
 			// make sure it was loaded from the file on disk (not from the index)
 			assertFalse(resourceA.loadedFromDescription)
 			assertFalse(resourceA.script.eIsProxy)
-	
+
 			// make sure it was post-processed
 			assertTrue(resourceA.isFullyProcessed)
 			assertFalse(classA.ctor.returnTypeRef instanceof DeferredTypeRef)

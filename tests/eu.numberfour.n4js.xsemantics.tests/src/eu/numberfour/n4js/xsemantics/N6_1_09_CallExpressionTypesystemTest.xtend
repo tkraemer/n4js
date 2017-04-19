@@ -32,10 +32,10 @@ class N6_1_09_CallExpressionTypesystemTest extends AbstractCallExpressionTypesys
 	def prepareScript() {
 		assembler.setScriptPrefix(
 			'''
-				interface A{} 
-				interface B extends A{} 
+				interface A{}
+				interface B extends A{}
 				interface C extends B{}
-				interface D{} 
+				interface D{}
 				interface E{}
 			''')
 	}

@@ -161,7 +161,7 @@ class SubtypeComputer extends TypeSystemHelperStrategy {
 						rightFunType.returnValueOptional
 					else
 						right.isReturnValueOptional;
-				
+
 				if (leftReturnTypeRef.declaredType !== G.voidType) {
 					// both are non-void
 					if (left.isReturnValueOptional && !isRightReturnOptional) {

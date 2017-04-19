@@ -44,7 +44,7 @@ Workflow {
 				preferXtendStubs = true
 			}
 		}
-		
+
 		language = XtextGeneratorLanguage {
 			name = "eu.numberfour.n4jsx.N4JSX"
 			fileExtensions = "n4jsx,jsx"
@@ -57,17 +57,17 @@ Workflow {
 			referencedResource = "platform:/resource/eu.numberfour.n4js.ts.model/model/TypeRefs.xcore"
 			referencedResource = "platform:/resource/eu.numberfour.n4js.model/model/N4JS.xcore"
 			referencedResource = "platform:/resource/eu.numberfour.n4jsx.model/model/N4JSX.xcore"
-			
+
 			fragment = grammarAccess.GrammarAccessFragment2 {}
 
 			fragment = ecore.EMFGeneratorFragment2 {}
-			
+
 			fragment = serializer.SerializerFragment2 {
 				generateStub = false
 			}
-			
+
 			fragment = resourceFactory.ResourceFactoryFragment2 {}
-			
+
 			fragment = eu.numberfour.n4js.antlr.N4JSAntlrGeneratorFragment2 {
 				combinedGrammar = false
 				debugGrammar = true
@@ -78,16 +78,16 @@ Workflow {
 				antlrParam = "-Xconversiontimeout"
 				antlrParam = "30000"
 			}
-			
+
 			// Xtend-based API for validation
 			fragment = validation.ValidatorFragment2 {
 				inheritImplementation = false
 			}
-			
+
 			fragment = exporting.SimpleNamesFragment2 {}
-			
+
 			fragment = builder.BuilderIntegrationFragment2 {}
-			
+
 			// generator API
 			fragment = generator.GeneratorFragment2 {
 				generateMwe = false
@@ -97,33 +97,33 @@ Workflow {
 
 			// formatter API
 			fragment = formatting.Formatter2Fragment2 {}
-			
+
 			// labeling API
 			fragment = ui.labeling.LabelProviderFragment2 {}
-			
+
 			// outline API
 			fragment = ui.outline.OutlineTreeProviderFragment2 {}
-			
+
 			fragment = ui.outline.QuickOutlineFragment2 {}
-			
+
 			// quickfix API
 			fragment = ui.quickfix.QuickfixProviderFragment2 {
 				inheritImplementation = false
 				generateXtendStub = true
 			}
-			
+
 			// content assist API
 			fragment = ui.contentAssist.ContentAssistFragment2 {}
-			
+
 			// rename refactoring
 			fragment = ui.refactoring.RefactorElementNameFragment2 {}
-			
+
 			// provides a preference page for template proposals
 			fragment = ui.templates.CodetemplatesGeneratorFragment2 {}
-			
+
 			// provides a compare view
 			fragment = ui.compare.CompareFragment2 {}
-			
+
 			// create a parser that will perform token id rewrites to treat keywords as ids in some situations
 			fragment = eu.numberfour.n4js.antlr.syntaxcoloring.N4JSHighlightingParserGeneratorFragment2 auto-inject {
 				antlrParam = "-Xconversiontimeout"
@@ -133,7 +133,7 @@ Workflow {
 					keptBitSetsPattern = "FOLLOW_norm1_Expression_in_ruleExpressionStatement.*"
 				}
 			}
-			
+
 			fragment = eu.numberfour.n4js.antlr.compressor.ParserCompressorFragment2 auto-inject {
 				grammarFile = "${runtimeProjectPath}.ui/src-gen/eu/numberfour/n4jsx/ui/editor/syntaxcoloring/InternalN4JSXParser.java"
 				grammarFile = "${runtimeProjectPath}/src-gen/eu/numberfour/n4jsx/parser/antlr/internal/InternalN4JSXParser.java"

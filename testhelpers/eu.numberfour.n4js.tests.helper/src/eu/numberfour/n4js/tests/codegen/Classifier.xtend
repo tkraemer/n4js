@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
 package eu.numberfour.n4js.tests.codegen
 
 import java.util.List
@@ -24,10 +34,10 @@ abstract class Classifier<T extends Classifier<T>> extends Fragment<T> {
 		/**
 		 * Builds a classifier name from the given name and visibility by appending an appropriate string
 		 * to the given name.
-		 * 
+		 *
 		 * @param visibility the visibility value
 		 * @param the classifier name prefix
-		 * 
+		 *
 		 * @return the newly created classifier name
 		 */
 		static def String makeName(Visibility visibility, String classifierName) {
@@ -36,9 +46,9 @@ abstract class Classifier<T extends Classifier<T>> extends Fragment<T> {
 
 		/**
 		 * Returns an appropriate classifier name extension depending on the given visibility.
-		 * 
+		 *
 		 * @param visibility the visibility value
-		 * 
+		 *
 		 * @return the name extension
 		 */
 		static def String getNameExtension(Visibility visibility) {
@@ -52,9 +62,9 @@ abstract class Classifier<T extends Classifier<T>> extends Fragment<T> {
 
 		/**
 		 * Builds an appropriate code fragment for the given classifier visibility.
-		 * 
+		 *
 		 * @param visibility the visibility value
-		 * 
+		 *
 		 * @return the code fragment
 		 */
 		static def String generate(Visibility visibility) {
@@ -73,7 +83,7 @@ abstract class Classifier<T extends Classifier<T>> extends Fragment<T> {
 
 	/**
 	 * Creates a new classifier instance with the given name.
-	 * 
+	 *
 	 * @param name the name of the new classifier
 	 */
 	protected new(String name) {
@@ -82,7 +92,7 @@ abstract class Classifier<T extends Classifier<T>> extends Fragment<T> {
 
 	/**
 	 * Returns the name of this classifier.
-	 * 
+	 *
 	 * @return the name of this classifier
 	 */
 	public def String getName() {
@@ -112,7 +122,7 @@ abstract class Classifier<T extends Classifier<T>> extends Fragment<T> {
 
 	/**
 	 * Set the visibility.
-	 * 
+	 *
 	 * @param visibility the visibility to set
 	 */
 	public def T setVisibility(Visibility visibility) {
@@ -122,7 +132,7 @@ abstract class Classifier<T extends Classifier<T>> extends Fragment<T> {
 
 	/**
 	 * Add the given member to this builder.
-	 * 
+	 *
 	 * @param member the member to add
 	 */
 	public def T addMember(Member<?> member) {
@@ -141,14 +151,14 @@ abstract class Classifier<T extends Classifier<T>> extends Fragment<T> {
 
 	/**
 	 * Generate an appropriate code fragment for this classifier's visibility.
-	 * 
+	 *
 	 * @return the generated visibility code fragment
 	 */
 	protected def generateVisibility() '''«VisibilityExtensions.generate(visibility)» '''
 
 	/**
 	 * Generate the code fragments for each of this classifier's members.
-	 * 
+	 *
 	 * @return the generated member code fragment
 	 */
 	protected def generateMembers() '''
@@ -159,7 +169,7 @@ abstract class Classifier<T extends Classifier<T>> extends Fragment<T> {
 
 	/**
 	 * Generates a code fragment for the actual type of this classifier.
-	 * 
+	 *
 	 * @return the generated code fragment
 	 */
 	protected abstract def CharSequence generateType()
@@ -173,7 +183,7 @@ abstract class Classifier<T extends Classifier<T>> extends Fragment<T> {
 	private def boolean hasMembers() {
 		members !== null && !members.empty
 	}
-	
+
 	override public def String toString() {
 		return generate().toString();
 	}

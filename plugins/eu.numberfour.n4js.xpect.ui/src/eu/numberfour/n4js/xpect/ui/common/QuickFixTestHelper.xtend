@@ -192,7 +192,7 @@ public class QuickFixTestHelper {
 		val aLines = after.split(delim)
 
 		val ChangeInfo ci = new ChangeInfo()
-		
+
 		var bo = 0
 		var ao = 0
 

@@ -27,7 +27,7 @@ import org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragmen
  *  without a dedicated lexer, reuses the production lexer.
  */
 class N4JSHighlightingParserGeneratorFragment2 extends XtextAntlrGeneratorFragment2 {
-	
+
 	// /*extension see comment in {@link doGenerate()}*/ @Inject extension GrammarAccessExtensions grammarUtil
 	@Inject GrammarNaming productionNaming
 	@Inject extension N4JSHighlightingGrammarNaming highlightingNaming
@@ -38,29 +38,29 @@ class N4JSHighlightingParserGeneratorFragment2 extends XtextAntlrGeneratorFragme
 		// The following 2 lines are deactivated as they would attempt to install
 		//  adapters on the grammar AST. This already done by the production parser
 		//  generator fragment, but is requirement once that fragment is deactivated,
-		//  e.g. for testing purposes.  
+		//  e.g. for testing purposes.
 		// new KeywordHelper(grammar, options.ignoreCase, grammarUtil)
 		// new CombinedGrammarMarker(false).attachToEmfObject(grammar)
 
 		generateHighlightingGrammar()
 	}
-	
+
 	/**
 	 * TODO IDE-2406:Can be removed once https://github.com/eclipse/xtext-core/issues/158
 	 *  is resolved and the solution is leveraged in N4JSAntlrHighlightingGrammarGenerator.
 	 */
 	@FinalFieldsConstructor
 	static class GuardedXtextGeneratorFileSystemAccess implements IXtextGeneratorFileSystemAccess {
-		
+
 		@Delegate
 		val IXtextGeneratorFileSystemAccess delegate
 	}
-		
+
 	protected def generateHighlightingGrammar() {
 		val fsa = projectConfig.eclipsePlugin.srcGen
-		
+
 		highlightingGenerator.generate(grammar, options, new GuardedXtextGeneratorFileSystemAccess(fsa) {
-			
+
 			/**
 			 * Via this customization the generation of an additional lexer grammar is suppressed,
 			 *  since the production lexer is re-used.
@@ -72,29 +72,29 @@ class N4JSHighlightingParserGeneratorFragment2 extends XtextAntlrGeneratorFragme
 					super.generateFile(fileName, contents)
 			}
 		})
-		
+
 		runAntlr(grammar.parserGrammar, null, fsa)
-		
+
 		simplifyUnorderedGroupPredicatesIfRequired(grammar, fsa, grammar.internalParserClass)
 		splitParserAndLexerIfEnabled(fsa, grammar.internalParserClass, /* grammar.lexerClass // we didn't generate a lexer, so... */ null)
 		normalizeTokens(fsa, grammar.parserGrammar.tokensFileName)
 		suppressWarnings(fsa, grammar.internalParserClass /*, grammar.lexerClass // we didn't generate a lexer! */)
 		normalizeLineDelimiters(fsa, grammar.internalParserClass /*, grammar.lexerClass // we didn't generate a lexer! */)
 	}
-	
+
 	protected override runAntlr(AntlrGrammar parserGrammar, AntlrGrammar lexerGrammar, IXtextGeneratorFileSystemAccess fsa) {
 		val src_gen = projectConfig.runtime.srcGen
 		val src_gen_ui = projectConfig.eclipsePlugin.srcGen
-		
+
 		val theLexerGrammar = productionNaming.getLexerGrammar(grammar)
-		
+
 		val encoding = codeConfig.encoding
 		val lexerGrammarFile = '''«src_gen.path»/«theLexerGrammar.grammarFileName»'''
 		val lexerOutputDir = lexerGrammarFile.substring(0, lexerGrammarFile.lastIndexOf('/'))
-		
+
 		val parserGrammarFile = '''«src_gen_ui.path»/«parserGrammar.grammarFileName»'''
 		val parserAntlrParams = newArrayList(antlrParams)
-		parserAntlrParams += "-fo" 
+		parserAntlrParams += "-fo"
 		parserAntlrParams += parserGrammarFile.substring(0, parserGrammarFile.lastIndexOf('/'))
 		parserAntlrParams += "-lib"
 		parserAntlrParams += lexerOutputDir
@@ -105,7 +105,7 @@ class N4JSHighlightingParserGeneratorFragment2 extends XtextAntlrGeneratorFragme
 	override protected splitLexerClassFile(IXtextGeneratorFileSystemAccess fsa, TypeReference lexer) {
 		// we don't have a corresponding lexer, so do nothing here
 	}
-	
+
 	/**
 	 * Needed to copy this method from the super class
 	 * {@link AbstractAntlrGeneratorFragment2 AbstractAntlrGeneratorFragment2}

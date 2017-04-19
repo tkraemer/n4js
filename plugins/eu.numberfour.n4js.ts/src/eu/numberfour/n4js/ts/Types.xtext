@@ -126,7 +126,7 @@ VoidOrBindingIdentifier:
 ;
 
 // These keywords are specific to the types language when comparing with N4JS
-TypesSpecificKeywords: 
+TypesSpecificKeywords:
 	// Types keywords
 	'any'
 	// no ECMAScript keywords, used in certain [ECM13] and N4JS contexts

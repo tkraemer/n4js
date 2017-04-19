@@ -62,7 +62,7 @@ class N4JSOutlineWorkbenchPluginUITest extends AbstractOutlineWorkbenchTest {
 		val model = '''
 		interface I1<T1,T2,T3> {}
 		interface I2 {}
-		
+
 		class OutlineTest {
 			field : intersection{I1<int, int, int>, I2}
 			fieldWithLongTypeDescription : union{int, intersection{int, union{int, string}}}
@@ -73,7 +73,7 @@ class N4JSOutlineWorkbenchPluginUITest extends AbstractOutlineWorkbenchTest {
 			e(param : {function(union{int, string}) : int}) : void {}
 			f(param : (intersection{I1<string, string, string>, I2}) => int) {}
 		}
-		
+
 		function a(param : union{int, string}) {}
 		function <B extends I2> b(param0: int, param : intersection{I1<B, union{string, int}, string>, I2}, param2 : number) {}
 		function c(param : type{I1}) {}
@@ -81,16 +81,16 @@ class N4JSOutlineWorkbenchPluginUITest extends AbstractOutlineWorkbenchTest {
 		function e(param : {function(union{int, string}) : int}) {}
 		function f(param : (union{int, string, intersection{number,int, string}, int}) => union{int, string, intersection{number,int, string}, int}) : union{int, string, intersection{number,int, string}, int}{return 1;}
 		function g(param : union{int, string, intersection{number,int, string}, int}) : union{int, string, intersection{int, string, number}, int} { return 3; }
-		function g1(param : union{int, string, intersection{number,int, string},number}) : union{int, string, intersection{int, string, number}, string} { return 3; }	
+		function g1(param : union{int, string, intersection{number,int, string},number}) : union{int, string, intersection{int, string, number}, string} { return 3; }
 		function none(fct : () => void) {}
 		export public var fct = 3;
 		export var c : constructor{? super OutlineTest}
 		'''
 		val rootNode = assertNoException(model);
 		assertEquals("There is only one top level node", rootNode.children.length, 1);
-		
+
 		val documentNode = rootNode.children.get(0);
-		
+
 		// test document level nodes
 		assertNodeChildrenText(documentNode, #[
 			"I1<T1, T2, T3>",
@@ -108,7 +108,7 @@ class N4JSOutlineWorkbenchPluginUITest extends AbstractOutlineWorkbenchTest {
 			"fct : int",
 			"c : constructor{? super OutlineTest}"
 		]);
-		
+
 		// test class level nodes
 		assertNodeChildrenText(documentNode.children.get(2), #[
 			"field : intersection{I1, I2}",
@@ -121,17 +121,17 @@ class N4JSOutlineWorkbenchPluginUITest extends AbstractOutlineWorkbenchTest {
 			"f((intersection{I1, I2}) => int) : void"
 		])
 	}
-	
+
 	def void assertNodeChildrenText(IOutlineNode parentNode, List<String> textExpectations) {
 		val nodeChildren = parentNode.children;
-		
+
 		assertEquals("The number of children wasn't correct.", textExpectations.length, nodeChildren.length);
-		
+
 		textExpectations.forEach[expectation, index|
 			assertEquals(expectation, nodeChildren.get(index).text.toString);
 		]
 	}
-	
+
 	@Test
 	def void testClassWithTypedField() throws Exception {
 		val model = '''

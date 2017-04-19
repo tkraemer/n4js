@@ -58,7 +58,7 @@ public class N4JSResourceDescription extends DefaultResourceDescription {
 	private final IDefaultResourceDescriptionStrategy strategy;
 
 	private Iterable<QualifiedName> lazyImportedNames;
-	
+
 	/**
 	 * Creates a new description for the given resource.
 	 */

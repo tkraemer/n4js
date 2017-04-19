@@ -16,12 +16,12 @@ import org.xpect.setup.XpectSetupComponent
 import eu.numberfour.n4js.xpect.validation.suppression.IssueConfiguration
 
 /**
- * An xpect setup element which allows to 
+ * An xpect setup element which allows to
  * configure issue to be skipped during validation.
- * 
+ *
  * The IssueCode element only be used inside of a {@link IssueConfiguration} element.
  * Only valid IssueCodes to be found in {@link IssueCodes} are allowed.
- * 
+ *
  * Example:
  * <p>
  * 	IssueCode "AST_LOCAL_VAR_UNUSED" {enabled=true}
@@ -32,23 +32,23 @@ import eu.numberfour.n4js.xpect.validation.suppression.IssueConfiguration
 class IssueCode {
 	private String name
 	private var enabled = false;
-	
+
 	new(String name) throws IllegalArgumentException {
 		this.name = name;
-		
+
 		if (IssueCodes.fields.filter[field | field.name == name].empty) {
 			throw new IllegalArgumentException("Unknown issue code " + name);
 		}
 	}
-	
+
 	def getName() {
 		return this.name;
 	}
-	
+
 	def setEnabled(boolean state) {
 		enabled = state;
 	}
-	
+
 	def isEnabled() {
 		return enabled;
 	}

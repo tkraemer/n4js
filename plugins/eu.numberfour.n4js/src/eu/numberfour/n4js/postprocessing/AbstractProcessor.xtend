@@ -141,7 +141,7 @@ package abstract class AbstractProcessor {
 			}
 		}
 	}
-	
+
 	def protected static String getObjectInfo(EObject obj) {
 		if (obj === null) {
 			"<null>"

@@ -23,7 +23,7 @@ import static extension org.eclipse.xtext.GrammarUtil.*
  * Customized grammar naming applied in {@link N4JSAntlrHighlightingGrammarGenerator}.
  */
 class N4JSHighlightingGrammarNaming extends GrammarNaming {
-	
+
 	@Inject
 	extension XtextGeneratorNaming
 
@@ -40,9 +40,9 @@ class N4JSHighlightingGrammarNaming extends GrammarNaming {
 	override getParserGrammar(Grammar it) {
 		new AntlrGrammar(parserPackage, '''Internal«simpleName»Parser''')
 	}
-	
+
 	override getInternalParserSuperClass(Grammar it) {
 		new TypeReference("eu.numberfour.n4js.ui.editor.syntaxcoloring.AbstractInternalHighlightingAntlrParser")
 	}
-	
+
 }

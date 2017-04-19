@@ -46,7 +46,7 @@ class N4JSImportRequirementResolver {
 
 	@Inject
 	private N4JSScopeProvider scopeProvider;
-	
+
 	@Inject
 	private ImportsRegionHelper hImportsRegion;
 
@@ -150,33 +150,33 @@ class N4JSImportRequirementResolver {
 	/**
 	 * Resolves name conflicts inside the import requirements list, which are name conflicts between elements of the list.
 	 * Additional conditions are checked through the isUsedNamePredicate to allow for example advanced scope checking.
-	 * 
+	 *
 	 * The method returns a map of alias bindings which is a possible solution to resolve the naming conflicts.
-	 * 
+	 *
 	 * <p>Note: If isUsedNamePredicate is null only inner list name conflicts are resolved</p>
-	 * 
+	 *
 	 * @param importRequirements A list of import requirements
 	 * @param isUsedNamePredicate Predicate for advanced name checking. May be null.
-	 * 
+	 *
 	 * @return The alias bindings.
 	 */
 	public def Map<URI,String> resolveImportNameConflicts(Collection<ImportRequirement> importRequirements, (String)=>boolean isUsedNamePredicate ) {
 		val HashMap<String,Boolean> usedNames = new HashMap<String,Boolean>();
 
-		//Save used alias bindings 
+		//Save used alias bindings
 		var aliasBindings = new HashMap<URI,String>();
-		
+
 		for (requirement : importRequirements) {
 			if ( requirement.alias.empty ) {
 				var alias = requirement.typeName;
-				
+
 				//As long as the name check function returns false or the name already was used add another "Alias"-prefix
 				while ( (isUsedNamePredicate !== null && isUsedNamePredicate.apply(alias) ) ||
 						usedNames.containsKey(alias) ||
 						aliasBindings.containsValue(alias) ) {
 					alias = "Alias" + alias;
 				}
-				
+
 				if ( !requirement.typeName.equals(alias) ) {
 					requirement.alias = alias;
 					aliasBindings.put(requirement.typeUri,alias);
@@ -203,7 +203,7 @@ class N4JSImportRequirementResolver {
 	private def ImportSpecifier findFulfillingImportSpecifier(ImportDeclaration declaration, ImportRequirement requirement) {
 		// Use EcoreUtil to handle unresolved proxies
 		val declarationModuleURI = EcoreUtil.getURI(declaration.module).toContainingModuleURI;
-		
+
 		if (!declarationModuleURI.equals(requirement.typeUri.toContainingModuleURI)) {
 			return null
 		}
@@ -219,9 +219,9 @@ class N4JSImportRequirementResolver {
 		}
 		null
 	}
-	
+
 	/**
-	 * Returns an absolute URI which consists of the resource part and the 
+	 * Returns an absolute URI which consists of the resource part and the
 	 * path inside of the resource separated with a '#' character.
 	 */
 	private def URI uriOfEObject(EObject object) {
@@ -235,7 +235,7 @@ class N4JSImportRequirementResolver {
 	private def URI toContainingModuleURI(URI uri) {
 		URI.createURI(uri.toString.split("#").get(0));
 	}
-	
+
 	/**
 	 * Return the {@link IAtomicChange} to insert the import statement for requirements into the the resource.
 	 *
@@ -257,14 +257,14 @@ class N4JSImportRequirementResolver {
 						importStatements
 		);
 	}
-	
+
 	/**
 	 * Returns the offset of import statements in the given resource.
 	 */
 	public def int getImportStatementOffset(XtextResource resource) {
 		hImportsRegion.getImportOffset(resource);
 	}
-	
+
 	/**
 	 * Generate the code for the given importRequirements
 	 * */

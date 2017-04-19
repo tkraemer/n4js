@@ -42,13 +42,13 @@ class ES_13_FunctionDefinitionTest extends AbstractParserTest {
 	def void testFunctionDeclarationInToplevelBlock() {
 		val script = '{ function testcase() {} }'.parseSuccessfully;
 		assertTrue(script.eResource.errors.join('\n'), script.eResource.errors.isEmpty);
-		
+
 		val seleHead = script.scriptElements.head;
 		assertTrue( seleHead instanceof Block);
-		
+
 		val blockStmtsHead = (seleHead as Block).statements.head;
 		assertTrue( blockStmtsHead instanceof FunctionDeclaration);
-		
+
 		assertEquals("testcase", (blockStmtsHead as FunctionDeclaration).name)
 	}
 
@@ -79,7 +79,7 @@ class ES_13_FunctionDefinitionTest extends AbstractParserTest {
 		assertTrue(expression.expression instanceof FunctionExpression)
 	}
 
-	@Test 
+	@Test
 	def void testNamelessFunctionDeclaration() {
 		val script = '''
 		(@Dummy function testcase() {
@@ -90,6 +90,6 @@ class ES_13_FunctionDefinitionTest extends AbstractParserTest {
 		val seleHead = script.scriptElements.head;
 		val fe = ((seleHead as ExpressionStatement).expression as ParenExpression).expression as FunctionExpression;
 		val fstmtsHead = fe.body.statements.head;
-		assertTrue(fstmtsHead instanceof FunctionDeclaration);		 		
+		assertTrue(fstmtsHead instanceof FunctionDeclaration);
 	}
 }

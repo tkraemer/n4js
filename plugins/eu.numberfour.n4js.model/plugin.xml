@@ -11,11 +11,6 @@ Contributors:
 -->
 <?eclipse version="3.0"?>
 
-<!--
- Copyright (c) 2013 NumberFour AG (http://www.numberfour.eu).
- All rights reserved.
--->
-
 <plugin>
 
    <extension point="org.eclipse.emf.ecore.generated_package">

@@ -31,7 +31,7 @@ class DotPathUtils {
 			if (delimiterSeparatedString.nullOrEmpty) {
 				return "";
 			}
-			
+
 			val lastSegment = lastDotSegment(delimiterSeparatedString);
 			if (lastSegment.length == delimiterSeparatedString.length) {
 				return "";
@@ -41,7 +41,7 @@ class DotPathUtils {
 
 		/**
 		 * Returns the last {@link N4JSQualifiedNameConverter#DELIMITER delimiter} separated segment.
-		 * 
+		 *
 		 * <p>Note: Returns an empty string if no dot is found in the string.</p>
 		 *
 		 * @param delimiterSeparatedString

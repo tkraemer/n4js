@@ -19,7 +19,7 @@
 	loadInitialization="false",
 	complianceLevel="8.0",
 	copyrightFields="false",
-	copyrightText="Copyright (c) 2016 NumberFour AG.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html",
+	copyrightText="Copyright (c) 2016 NumberFour AG.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html\n\nContributors:\n  NumberFour AG - Initial API and implementation",
 	language="")
 
 package eu.numberfour.n4js.n4JS
@@ -670,7 +670,7 @@ class Block extends Statement, VariableEnvironmentElement {
 	op boolean hasNonVoidYield() {
 		!(allNonVoidYieldExpressions.isEmpty)
 	}
-	
+
 	/*
 	 * Returns all statements that belong to this block. This includes statements of nested blocks
 	 * but excludes statements in nested classes, nested functions, etc.

@@ -28,7 +28,7 @@ import org.eclipse.xtext.EcoreUtil2
 import eu.numberfour.n4js.transpiler.im.Script_IM
 
 /**
- * 
+ *
  */
 class JSXTransformation extends Transformation {
 
@@ -48,7 +48,7 @@ class JSXTransformation extends Transformation {
 	 * 1) direct child JSXElements will be handled together with their parent JSXElement
 	 * 2) indirect children that are contained in nested expressions will be handled via a separate invocation to
 	 * method #transformJSXElement(JSXElement)
-	 * 
+	 *
 	 * Example for case 1:
 	 * <pre>
 	 * let elem1 = &lt;div>&lt;a>&lt;/a>&lt;/div>; // &lt;a> is a direct child
@@ -62,7 +62,7 @@ class JSXTransformation extends Transformation {
 	 * let elem3 = &lt;div>{&lt;a>&lt;/a>}&lt;/div>;
 	 * let elem4 = &lt;div prop={&lt;a>&lt;/a>}>&lt;/div>;
 	 * </pre>
-	 * 
+	 *
 	 */
 	override transform() {
 		// note: we are passing 'true' to #collectNodes(), i.e. we are searching for nested elements
@@ -71,7 +71,7 @@ class JSXTransformation extends Transformation {
 
 	def private void transformJSXElement(JSXElement elem) {
 		// IMPORTANT: 'elem' might be a direct or indirect child, but if it is a direct child, it was already
-		// transformed when this method was invoked with its ancestor JSXElement as argument 
+		// transformed when this method was invoked with its ancestor JSXElement as argument
 		if(EcoreUtil2.getContainerOfType(elem, Script_IM)===null) {
 			// 'elem' was already processed -> simply ignore it
 			return;

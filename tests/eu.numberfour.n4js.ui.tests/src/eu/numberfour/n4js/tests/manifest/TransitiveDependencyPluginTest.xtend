@@ -280,7 +280,7 @@ class TransitiveDependencyPluginTest extends AbstractBuilderParticipantTest {
 		waitForAutoBuild
 		assertMarkers("file should have an error", c, 1);
 	}
-	
+
 	@Test
 	def void testModifyTransitiveDependency3() throws Exception {
 		val d = createTestFile(srcD, "D",

@@ -59,7 +59,7 @@ abstract class DiffBuilder<F, T> {
 		oldItems = oldItemsFunction.apply(this.input);
 		oldAllItems = allOldItemsFunction.apply(this.input);
 		Preconditions.checkState(
-			oldAllItems.containsAll(oldItems), 
+			oldAllItems.containsAll(oldItems),
 			'''Not all old items is not a subset of all old items. Old items: «oldItems». All old items: «oldAllItems».'''
 		);
 		addedItems = newArrayList();
@@ -132,4 +132,3 @@ abstract class DiffBuilder<F, T> {
 	protected def abstract Function<F, T[]> getAllOldItemsFunction();
 
 }
-	

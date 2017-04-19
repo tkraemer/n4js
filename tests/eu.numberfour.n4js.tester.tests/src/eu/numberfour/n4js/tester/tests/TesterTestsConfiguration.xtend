@@ -24,14 +24,14 @@ import static eu.numberfour.n4js.tester.tests.TesterConstants.*
  *
  */
 class TesterTestsConfiguration {
-	
+
 	@Inject
 	private HttpServerManager serverManager;
-	
+
 	// the actual port for the testServer, will be computed in #before()
 	private int port;
-	private Map<String,Object> valid_config;	
-	
+	private Map<String,Object> valid_config;
+
 	/** computes available port and stores the value into #port, also create a minimal valid map for tests -stored in valid_config */
 	public def Map<String,Object> computePortAndValidConfig() {
 		port = (serverManager as JettyManager).ensurePortIsAvailable(DEFAULT_PORT);
@@ -39,17 +39,17 @@ class TesterTestsConfiguration {
 		valid_config = ImmutableMap.<String, Object> builder()
 			.put(HTTP_PORT, port)
 		 	.build();
-		return valid_config; 	
+		return valid_config;
 	}
-	
+
 	def int getPORT() { return port; }
-	
+
 	def Map<String, Object> getVALID_CONFIG() { return valid_config; }
-	
+
 	def String getURL() {
 		HOST_AND_PORT + CONTEXT_ROOT + CONTEXT_PATH;
 	}
-	
+
 	def String HOST_AND_PORT() {
 		"http://" + HOST + ":" + PORT
 	}

@@ -42,10 +42,10 @@ abstract class N4JSNewClassifierWizardGenerator<M extends N4JSClassifierWizardMo
 
 	@Inject
 	private extension WizardGeneratorHelper generatorHelper;
-	
+
 	@Inject
 	private N4JSImportRequirementResolver requirementResolver;
-	
+
 	override generateContentPreview(M model) {
 		val modulePath = model.computeFileLocation;
 
@@ -54,59 +54,59 @@ abstract class N4JSNewClassifierWizardGenerator<M extends N4JSClassifierWizardMo
 			// Retrieve resource
 			val resource = getResource(URI.createPlatformResourceURI(modulePath.toString, true));
 			val requirements = model.importRequirements;
-			
+
 			val importAnalysis = requirementResolver.analyzeImportRequirements(requirements, resource);
-			
+
 			// Retrieve file content
-			val workspaceRoot = ResourcesPlugin.workspace.root;	
+			val workspaceRoot = ResourcesPlugin.workspace.root;
 			val file = workspaceRoot.getFile(modulePath);
-			
-			val fileContent = try { 
+
+			val fileContent = try {
 				readFileAsString(file)
 			} catch (Exception e) {
 				LOGGER.error("Failed to create a content preview by overlaying existing module " + modulePath.toString);
 				return emptyList;
 			}
-			
+
 			// Generate contents
 			val importStatements = requirementResolver.generateImportStatements(importAnalysis.importRequirements);
 			val classCode = generateClassifierCode(model, importAnalysis.aliasBindings);
-			
+
 			val importStatementOffset = requirementResolver.getImportStatementOffset(resource);
-			
+
 			val importStatementFileContent = fileContent.substring(0, importStatementOffset);
-			
-			// Allow for empty body files  
-			val bodyFileContent = if (fileContent.length > 0) { 
+
+			// Allow for empty body files
+			val bodyFileContent = if (fileContent.length > 0) {
 				fileContent.substring(importStatementOffset, fileContent.length).addLineBreak
 			} else {
 				""
 			}
-			
-			// Return to be inserted content as highlighted and 
+
+			// Return to be inserted content as highlighted and
 			// the existing file content as unhighlighted.
 			return #[
 				ContentBlock.unhighlighted(importStatementFileContent),
 				ContentBlock.highlighted(importStatements.addLineBreak),
 				ContentBlock.unhighlighted(bodyFileContent),
 				ContentBlock.highlighted(classCode)
-			] 
+			]
 		} else { // For new target module files
 			//Collect the import requirements
 			val importRequirements = model.importRequirements;
-			
+
 			//Resolve occurring name conflicts
 			val aliasBindings = requirementResolver.resolveImportNameConflicts(importRequirements, null)
 			var importStatements = requirementResolver.generateImportStatements(importRequirements);
-			
+
 			if (!importStatements.empty) {
 				importStatements += WizardGeneratorHelper.LINEBREAK + WizardGeneratorHelper.LINEBREAK;
 			}
-			
-			return #[ ContentBlock.highlighted(importStatements + generateClassifierCode(model, aliasBindings)) ];	
+
+			return #[ ContentBlock.highlighted(importStatements + generateClassifierCode(model, aliasBindings)) ];
 		}
 	}
-	
+
 
 	/**
 	 * Writes the new classifier specified by the model to a file.
@@ -128,7 +128,7 @@ abstract class N4JSNewClassifierWizardGenerator<M extends N4JSClassifierWizardMo
 			} else {
 				//Collect the import requirements
 				val importRequirements = model.importRequirements;
-				
+
 				//Resolve occurring name conflicts
 				val aliasBindings = requirementResolver.resolveImportNameConflicts(importRequirements, null)
 
@@ -150,7 +150,7 @@ abstract class N4JSNewClassifierWizardGenerator<M extends N4JSClassifierWizardMo
 		}
 	}
 
-	
+
 	/**
 	 * Performs the manifest changes required by the classifier specified by the model.
 	 *
@@ -161,24 +161,24 @@ abstract class N4JSNewClassifierWizardGenerator<M extends N4JSClassifierWizardMo
 	 */
 	override performManifestChanges(M model, IProgressMonitor monitor) throws WorkspaceWizardGeneratorException {
 		monitor.subTask("Performing manifest changes");
-		
+
 		val project = n4jsCore.findProject(URI.createPlatformResourceURI(model.computeFileLocation.toString, true));
 
 		if (!project.present) {
 			throw new WorkspaceWizardGeneratorException("The target project couldn't be found.");
 		}
-		
+
 		val manifestLocation = project.get().manifestLocation;
 		val manifest = getResource(manifestLocation.get());
-			
+
 		// Gather referenced projects
 		val referencedProjects = getReferencedProjects(model);
-			
+
 		// Create manifest changes
 		val moduleURI = URI.createPlatformResourceURI(model.computeFileLocation.toString, true);
 		val manifestChanges = manifest.manifestChanges(model, referencedProjects, moduleURI);
-		
-			
+
+
 		// Only perform non-empty changes. (To prevent useless history entries)
 		if (manifestChanges.length > 0) {
 			if (!manifest.applyChanges(manifestChanges)) {
@@ -194,7 +194,7 @@ abstract class N4JSNewClassifierWizardGenerator<M extends N4JSClassifierWizardMo
 
 	/**
 	 * Returns all projects referenced by the given model.
-	 * 
+	 *
 	 * This includes uses of interfaces or super classes from other projects.
 	 */
 	abstract protected def List<IN4JSProject> getReferencedProjects(M model);
@@ -203,7 +203,7 @@ abstract class N4JSNewClassifierWizardGenerator<M extends N4JSClassifierWizardMo
 	 * Returns the import requirements of the model.
 	 */
 	abstract protected def List<ImportRequirement> getImportRequirements(M model);
-	
+
 	private def void insertIntoFile(IFile file, M model) throws CoreException {
 		//Retrieve XtextResource
 		val moduleURI = URI.createPlatformResourceURI(model.computeFileLocation.toString, true);

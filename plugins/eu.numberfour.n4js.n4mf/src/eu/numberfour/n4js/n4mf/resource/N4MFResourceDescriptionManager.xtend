@@ -49,19 +49,19 @@ class N4MFResourceDescriptionManager extends DefaultResourceDescriptionManager {
 					referencedProjectIds.add(extRuntimeEnvironmentId);
 				}
 			];
-			
-			// Here we consider only direct project dependencies because this implementation is aligned to the 
+
+			// Here we consider only direct project dependencies because this implementation is aligned to the
 			// N4JS based resource description manager's #isAffected logic. In the N4JS implementation we consider
 			// only direct project dependencies when checking whether a candidate is affected or not.
 			//
-			// See: N4JSResourceDescriptionManager#basicIsAffected and N4JSResourceDescriptionManager#hasDependencyTo 
+			// See: N4JSResourceDescriptionManager#basicIsAffected and N4JSResourceDescriptionManager#hasDependencyTo
 			for (referencedProjectId : referencedProjectIds) {
 				if (changedProjectIds.contains(referencedProjectId)) {
 					return true;
 				}
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -71,10 +71,10 @@ class N4MFResourceDescriptionManager extends DefaultResourceDescriptionManager {
 	 * Since this method accepts only N4 manifest URIs it is guaranteed to get the container project name as the second URI
 	 * segment from the end. We cannot simply grab and return with the first segment as the project name, because external
 	 * projects have a file URI with an absolute path that can be any arbitrary location on the file system.
-	 * 
+	 *
 	 * The ultimate solution would be to look up the container N4JS project from the nested URI argument and simply get
 	 * the project ID of the project but due to plug-in dependency issues N4JS core service is not available from here.
-	 * 
+	 *
 	 */
 	private def getProjectIdFromManifestUri(URI it) {
 		checkArgument(isManifest, '''Expected only URI that has «N4MF_MANIFEST» as last segment. Was: «it»''');

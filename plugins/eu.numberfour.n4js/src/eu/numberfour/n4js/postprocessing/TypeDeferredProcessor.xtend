@@ -132,7 +132,7 @@ package class TypeDeferredProcessor extends AbstractProcessor {
 			}
 		}
 	}
-	
+
 	private def <T extends TypableElement & TypedElement> void setTypeRef(T typedElem, TTypedElement tte, boolean useContext,
 		RuleEnvironment G, ASTMetaInfoCache cache
 	) {
@@ -140,11 +140,11 @@ package class TypeDeferredProcessor extends AbstractProcessor {
 			if (tte !== null) { // note: tte===null happens if obj.name===null (see types builder)
 				assertTrueIfRigid(cache, "return type of "+ typedElem.class.name +" in TModule should be a DeferredTypeRef",
 					tte.typeRef instanceof DeferredTypeRef);
-				
+
 				var RuleEnvironment G2 = G;
 				if (useContext) {
 					var ParameterizedTypeRef context = null;
-					if (tte.eContainer instanceof ContainerType<?>) 
+					if (tte.eContainer instanceof ContainerType<?>)
 						context = TypeUtils.createTypeRef(tte.eContainer as ContainerType<?>);
 					G2 = ts.createRuleEnvironmentForContext(context, G.contextResource);
 				}

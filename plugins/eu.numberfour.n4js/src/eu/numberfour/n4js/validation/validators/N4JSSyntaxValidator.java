@@ -368,7 +368,7 @@ public class N4JSSyntaxValidator extends AbstractN4JSDeclarativeValidator {
 	/**
 	 * Ensures that a catch variable has not type annotation. This is supported by the parser to enable better error
 	 * messages.
-	 * 
+	 *
 	 * @see "Spec, 9.1.8"
 	 * @see <a href="https://github.com/NumberFour/n4js/issues/179">GH-179</a>
 	 */

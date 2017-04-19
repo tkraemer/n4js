@@ -18,7 +18,7 @@
 	updateClasspath="false",
 	complianceLevel="8.0",
 	copyrightFields="false",
-	copyrightText="Copyright (c) 2016 NumberFour AG.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html",
+	copyrightText="Copyright (c) 2016 NumberFour AG.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html\n\nContributors:\n  NumberFour AG - Initial API and implementation",
 	language="")
 package eu.numberfour.n4js.ts.types
 
@@ -626,7 +626,7 @@ abstract class ContainerType<MT extends TMember> extends Type {
 	 * type parameters of generic types
 	 */
 	contains TypeVariable[] typeVars
-	
+
 	/**
 	 * Convenience method returning the owned constructor or <code>null</code> if not available.
 	 */
@@ -797,7 +797,7 @@ abstract class TClassifier extends ContainerType<TMember>, SyntaxRelatedTElement
 	 * The declared version of the type. This is not used by N4JS at the moment but only
 	 * in derived languages such as N4IDL. It needs to be stored in the type model though as
 	 * it is required to be cached (i.e. stored in the Xtext index) for scoping etc.
-	 * 
+	 *
 	 * This is set by the N4IDL types builder.
 	 */
 	int declaredVersion
@@ -847,7 +847,7 @@ abstract class TClassifier extends ContainerType<TMember>, SyntaxRelatedTElement
 	op boolean isFinal() {
 		return false;
 	}
-	
+
 	/*
 	 * Overrides default implementation of type, returns the actually declared version (which
 	 * is 0 in N4JS as it cannot be set there). Only used for derived languages such as N4IDL.
@@ -1255,7 +1255,7 @@ class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRel
 	op boolean hasASTInitializer() {
 		return astInitializer !== null;
 	}
-	
+
 	/* Convenience method, returns true if this or one of the preceding parameters have an initializer. */
 	op boolean isOptional() {
 		val EList<TFormalParameter> fpars = switch (eContainer) {
@@ -1263,7 +1263,7 @@ class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRel
             FunctionTypeExprOrRef:	(eContainer as FunctionTypeExprOrRef).fpars
             default: return false
         };
-		
+
 		for (var i=fpars.indexOf(this); i>=0; i--) {
 			val fpar = fpars.get(i);
 			if (fpar.isVariadic || fpar.hasInitializerAssignment) {
@@ -1496,7 +1496,7 @@ class TEnum extends DeclaredTypeWithAccessModifier, SyntaxRelatedTElement {
  */
 class TEnumLiteral extends SyntaxRelatedTElement, IdentifiableElement {
 	String value
-	
+
 	op String getValueOrName() {
 		return value ?: name;
 	}
@@ -1515,7 +1515,7 @@ abstract class SyntaxRelatedTElement {
  * An element that may be declared 'const', i.e. a variable or field.
  */
 abstract class TConstableElement {
-	
+
 	boolean const
 
 	/**

@@ -39,22 +39,22 @@ class ImportsRegionHelper {
 
 	@Inject
 	private TypeExpressionsGrammarAccess typeExpressionGrammmarAccess;
-	
+
 	/** Calculates import region offset by analyzing provided resource. */
 	public def int getImportOffset(XtextResource resource) {
 		getImportRegion(resource).offset;
 	}
-	
+
 	/**
 	 * Calculate destination region in Document for imports. If the offset is not 0,
 	 * then it has to be advanced by current line feed length
 	 *
 	 * Note reduced visibility - it is internal method used only by helpers related to organizing imports.
 	 *
-	 * Using first position after script-annotation ("@@") and after any directive in the prolog section, that is 
-	 * just before the first statement or, in cases where the first statement is js-style documented, before the jsdoc-style 
+	 * Using first position after script-annotation ("@@") and after any directive in the prolog section, that is
+	 * just before the first statement or, in cases where the first statement is js-style documented, before the jsdoc-style
 	 * documentation.
-	 * 
+	 *
 	 * Examples:
 	 * <pre>
 	 *  // (A)
@@ -68,19 +68,19 @@ class ImportsRegionHelper {
 	 *  /&#42; non-jsdoc comment (G) &#42;/
 	 *  // (H)
 	 *  export public class A { // (I)
-	 *     method(): B { 
+	 *     method(): B {
 	 *        return new B(); // requires import
-	 *    } 
-	 *  } 
+	 *    }
+	 *  }
 	 * </pre>
-	 * Will put the insertion-point in front of line (F), since this is the active jsdoc for class A. 
-	 * {@link InsertionPoint#isBeforeJsdocDocumentation} will be set to true. Lowest possible insertion 
-	 * is the begin of line (D), stored in {@link InsertionPoint#notBeforeTotalOffset}. If the directive <code>"use strict";</code> 
-	 * between lines (C) and (D) is omitted, then the lowest insertion point would be in front of line (C). In any case the insertion of 
+	 * Will put the insertion-point in front of line (F), since this is the active jsdoc for class A.
+	 * {@link InsertionPoint#isBeforeJsdocDocumentation} will be set to true. Lowest possible insertion
+	 * is the begin of line (D), stored in {@link InsertionPoint#notBeforeTotalOffset}. If the directive <code>"use strict";</code>
+	 * between lines (C) and (D) is omitted, then the lowest insertion point would be in front of line (C). In any case the insertion of
 	 * the import must be in front of the <code>export</code> keyword line (I).
-	 * 
+	 *
 	 * <p>Region has length 0.
-	 * 
+	 *
 	 * @param xtextResource
 	 *            n4js resource
 	 * @return region for import statements, length 0
@@ -107,7 +107,7 @@ class ImportsRegionHelper {
 			// ChangeManager has information of current line feed length.
 			}
 
-			// Searching for directives (string-statements at the beginning, e.g. "use strict") 
+			// Searching for directives (string-statements at the beginning, e.g. "use strict")
 			// and the first real statement, ignoring imports:
 			val elements = script.scriptElements;
 			var lastSeenDirective = -1;
@@ -185,7 +185,7 @@ class ImportsRegionHelper {
 									lastComment = curr;
 								} else if (curr.grammarElement == typeExpressionGrammmarAccess.EOLRule) {
 									if (firstEOL === null) {
-										// store 
+										// store
 										firstEOL = curr;
 									} else if (afterFirstEOL === null) {
 										// store insertion point.
@@ -263,8 +263,8 @@ class ImportsRegionHelper {
 		return insertionPoint;
 	}
 
-	
-		/** Goes from the beginning of the RootNode up to the passed in node. Looks only at hidden leafs and at ASI-LeafNodes. 
+
+		/** Goes from the beginning of the RootNode up to the passed in node. Looks only at hidden leafs and at ASI-LeafNodes.
 	 * @return {@code false} if any comment is encountered on the way.
 	 */
 	private def boolean hasNoCommentUpTo(ILeafNode node) {
@@ -286,7 +286,7 @@ class ImportsRegionHelper {
 				}
 			}
 		}
-		// should never be reached. 
+		// should never be reached.
 		throw new IllegalStateException("Iteration over-stepped the passed in node.");
 	}
 }

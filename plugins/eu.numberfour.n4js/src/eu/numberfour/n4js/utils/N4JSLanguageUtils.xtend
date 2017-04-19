@@ -397,7 +397,7 @@ class N4JSLanguageUtils {
 				if(vFactor===null) {
 					val currFixed = curr; // only required to allow using 'curr' in closures
 					vFactor = switch(parent) {
-					ComposedTypeRef case parent.typeRefs.contains(curr): 
+					ComposedTypeRef case parent.typeRefs.contains(curr):
 						Variance.CO
 					TypeTypeRef case parent.typeArg===curr:
 						if (parent.isConstructorRef) {
@@ -522,48 +522,48 @@ class N4JSLanguageUtils {
 		}
 		return false;
 	}
-	
-	/** Checks presence of {@link AnnotationDefinition#POLYFILL} annotation. See also {@link N4JSLanguageUtils#isStaticPolyfill(AnnotableElement) }*/	
+
+	/** Checks presence of {@link AnnotationDefinition#POLYFILL} annotation. See also {@link N4JSLanguageUtils#isStaticPolyfill(AnnotableElement) }*/
 	def static boolean isPolyfill(AnnotableElement astElement) {
 		return AnnotationDefinition.POLYFILL.hasAnnotation( astElement );
 	}
 
-	/** Checks presence of {@link AnnotationDefinition#STATIC_POLYFILL} annotation. See also {@link N4JSLanguageUtils#isPolyfill(AnnotableElement) }*/	
+	/** Checks presence of {@link AnnotationDefinition#STATIC_POLYFILL} annotation. See also {@link N4JSLanguageUtils#isPolyfill(AnnotableElement) }*/
 	def static boolean isStaticPolyfill(AnnotableElement astElement) {
 		return AnnotationDefinition.STATIC_POLYFILL.hasAnnotation( astElement );
 	}
-	
-	/** Checks presence of {@link AnnotationDefinition#STATIC_POLYFILL_MODULE} annotation on the containing module. 
-	 * See also {@link N4JSLanguageUtils#isContainedInStaticPolyfillAware(AnnotableElement) }*/	
+
+	/** Checks presence of {@link AnnotationDefinition#STATIC_POLYFILL_MODULE} annotation on the containing module.
+	 * See also {@link N4JSLanguageUtils#isContainedInStaticPolyfillAware(AnnotableElement) }*/
 	def static boolean isContainedInStaticPolyfillModule(AnnotableElement astElement) {
 		return AnnotationDefinition.STATIC_POLYFILL_MODULE.hasAnnotation( astElement ); // transitively inherited
 	}
 
-	/** Checks presence of {@link AnnotationDefinition#STATIC_POLYFILL_MODULE} annotation on the containing module. 
-	 * See also {@link N4JSLanguageUtils#isContainedInStaticPolyfillAware(TAnnotableElement) }*/	
+	/** Checks presence of {@link AnnotationDefinition#STATIC_POLYFILL_MODULE} annotation on the containing module.
+	 * See also {@link N4JSLanguageUtils#isContainedInStaticPolyfillAware(TAnnotableElement) }*/
 	def static boolean isContainedInStaticPolyfillModule(TAnnotableElement tsElement) {
 		return AnnotationDefinition.STATIC_POLYFILL_MODULE.hasAnnotation( tsElement ); // transitively inherited
 	}
 
-	/** Checks presence of {@link AnnotationDefinition#STATIC_POLYFILL_AWARE} annotation on the containing module. 
-	 * See also {@link N4JSLanguageUtils#isContainedInStaticPolyfillModule(AnnotableElement) }*/	
+	/** Checks presence of {@link AnnotationDefinition#STATIC_POLYFILL_AWARE} annotation on the containing module.
+	 * See also {@link N4JSLanguageUtils#isContainedInStaticPolyfillModule(AnnotableElement) }*/
 	def static boolean isContainedInStaticPolyfillAware(AnnotableElement astElement) {
 		return AnnotationDefinition.STATIC_POLYFILL_AWARE.hasAnnotation( astElement ); // transitively inherited
 	}
 
-	/** Checks presence of {@link AnnotationDefinition#STATIC_POLYFILL_AWARE} annotation on the containing module. 
-	 * See also {@link N4JSLanguageUtils#isContainedInStaticPolyfillModule(TAnnotableElement) }*/	
+	/** Checks presence of {@link AnnotationDefinition#STATIC_POLYFILL_AWARE} annotation on the containing module.
+	 * See also {@link N4JSLanguageUtils#isContainedInStaticPolyfillModule(TAnnotableElement) }*/
 	def static boolean isContainedInStaticPolyfillAware(TAnnotableElement tsElement) {
 		return AnnotationDefinition.STATIC_POLYFILL_AWARE.hasAnnotation( tsElement ); // transitively inherited
 	}
-	
+
 	/** checks if the qualifiedName has a last segment named 'default' {@link N4JSLanguageConstants#EXPORT_DEFAULT_NAME} */
 	def static boolean isDefaultExport(QualifiedName qualifiedName) {
 		return  ( qualifiedName !== null
 				&& qualifiedName.getSegmentCount() > 1
 				&& qualifiedName.getLastSegment() == N4JSLanguageConstants.EXPORT_DEFAULT_NAME );
 	}
-	
+
 	/** Returns the semantically important last part of a qualified name. This is commonly the last segment except for 'default' exports, where it is the second last segment. */
 	def static String lastSegmentOrDefaultHost(QualifiedName qualifiedName) {
 		if( isDefaultExport(qualifiedName) ) return  qualifiedName.getSegment(qualifiedName.getSegmentCount() - 2)
@@ -571,25 +571,25 @@ class N4JSLanguageUtils {
 	}
 	/**
 	 * Returns <code>true</code> if the character {@code c} is a valid JS identifier start.
-	 * 
+	 *
 	 * Moved from {@link IdentifierValueConverter}.
 	 */
 	def static boolean isValidIdentifierStart(char c) {
 		return CharTypes.isLetter(c) || c.isChar('_') || c.isChar('$');
 	}
-	
+
 	/**
 	 * Returns <code>true</code> if the character {@code c} is a valid JS identifier part.
-	 * 
+	 *
 	 * Moved from {@link IdentifierValueConverter}.
 	 */
 	def static boolean isValidIdentifierPart(char c) {
 		return N4JSLanguageUtils.isValidIdentifierStart(c) || CharTypes.isDigit(c) || CharTypes.isConnectorPunctuation(c)
 				|| CharTypes.isCombiningMark(c) || c.isChar('\u200C') || c.isChar('\u200D');
 	}
-	
-	/** 
-	 * Returns <code>true</code> if the given identifier is a valid N4JS identifier.  
+
+	/**
+	 * Returns <code>true</code> if the given identifier is a valid N4JS identifier.
 	 */
 	def static boolean isValidIdentifier(String identifier) {
 		val characters = identifier.chars.toArray;
@@ -601,7 +601,7 @@ class N4JSLanguageUtils {
 			} else {
 				if (!isValidIdentifierPart(c))
 					return false;
-			}	
+			}
 		}
 		return true;
 	}
@@ -665,7 +665,7 @@ class N4JSLanguageUtils {
 	 */
 	def static TClass findCovariantConstructorDeclarator(TClass tClass) {
 		// NOTE: ignoring implicit super types, because none of them declares @CovariantConstructor
-		return new ExtendedClassesIterable(tClass).findFirst[declaredCovariantConstructor]; 
+		return new ExtendedClassesIterable(tClass).findFirst[declaredCovariantConstructor];
 	}
 
 	/**
@@ -788,7 +788,7 @@ class N4JSLanguageUtils {
 
 		return false;
 	}
-	
+
 	/**
 	 * Checks whether the given expression is a new expression, an expression of a final and nominal type,
 	 * or references these expressions transitively through a const variable.
@@ -801,7 +801,7 @@ class N4JSLanguageUtils {
 	def static boolean isConstTransitiveNewExpressionOrFinalNominalClassInstance(TypableElement expr, TypeRef typeRef) {
 		if (expr instanceof NewExpression)
 			return true;
-		
+
 		if (typeRef !== null) {
 			val declType = typeRef.declaredType;
 			if (declType !== null && declType.isFinal && typeRef.typingStrategy == TypingStrategy.NOMINAL) {

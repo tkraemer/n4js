@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -166,7 +166,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * NEEEDED
-	 * 
+	 *
 	 * when removed check methods will be called twice once by N4JSValidator, and once by
 	 * AbstractDeclarativeN4JSValidator
 	 */
@@ -181,7 +181,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			val message = IssueCodes.getMessageForEXP_MISPLACED_AWAIT_EXPRESSION("await", "async");
 			addIssue(message, awaitExpression, IssueCodes.EXP_MISPLACED_AWAIT_EXPRESSION);
 		}
-		
+
 		if( awaitExpression.getExpression() === null ){
 			// broken AST.
 			return;
@@ -271,20 +271,20 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * Fixes IDE-1048, Method Assignment: Methods can't be assigned to variables.
-	 * 
+	 *
 	 * <p>
 	 * If allowed, that variable could be used later
 	 * to invoke the function it holds with a wrong this-instance
 	 * (for example, with an instance of a superclass while the function,
 	 * defined in a subclass, requires members private to that subclass).
-	 * 
+	 *
 	 * <p>
 	 * To be safe, we warn on expressions out of which a method reference might escape
 	 * and become assigned to a variable. An example where a method reference is consumed
 	 * before escaping is <code>typeof method-ref-expr</code>, for which no warning is raised.
 	 *
 	 * @see N4JSSpec, 5.2.1
-	 * 
+	 *
 	 */
 	private def void internalCheckMethodReference(ParameterizedPropertyAccessExpression propAccessExpression) {
 		if (!jsVariantHelper.checkMethodReference(propAccessExpression)) {
@@ -299,11 +299,11 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return
 		}
 		val TMethod method = prop as TMethod
-		
+
 		if ( !method.static && "constructor"==method.name ) {
 			return; // constructor cannot be detached, cf. GH-224
 		}
-		
+
 		val enclosing = propAccessExpression.eContainer
 		/*
 		 * Unless we find a good reason not to, we'll warn.
@@ -347,7 +347,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		// If the containing type is final all its method are assumed final too
 		// Attention: containing type may be a UnionUypeExpression and thus the "containingType" method will return null
 		if (containingType!==null && containingType.isFinal) {
-			return true; 
+			return true;
 		}
 		return false;
 	}
@@ -539,7 +539,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * Constraints 51 (Name restriction in method-bodies):
-	 * 
+	 *
 	 * checks, that in case the trgt refers to a plain function (not a method) and ends with "___n4",
 	 * it will not be contained in Method.
 	 */
@@ -950,7 +950,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	/**
 	 * IDE-731 / IDE-773
 	 * Cf. 6.1.17. Equality Expression
-	 * 
+	 *
 	 * In N4JS mode, a warning is created, if for a given expression lhs(’===’|’!==’) rhs,
 	 * neither Γ |- upper(lhs) <: upper(rhs) nor Γ |- upper(rhs) <: upper(lhs), as the result is constant in these cases.
 	 */
@@ -1105,7 +1105,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	 * Constraints 79 (Binary Logical Expression Constraints):
 	 * For a given binary logical expression e with e.lhs.type : L
 	 * and e.rhs.type : R the following constraints must hold:
-	 * 
+	 *
 	 * <li> In N4JS mode L must not be undefined or null.
 	 * IDE-775
 	 */
@@ -1139,10 +1139,10 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * Checking Constraint 80: <br>
-	 * 
+	 *
 	 * In N4JS mode a warning will be issued if e.expression evaluates to a constant value,
 	 * that is e.expression in { false, true, null, undefined} or C in {void, undefined}
-	 * 
+	 *
 	 * IDE-776
 	 */
 	@Check
@@ -1299,7 +1299,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 					if (to === ptrT.typeArgs.size) {
 						var int i = 0;
 						while (i < to && (
-								
+
 							ts.subtypeSucceeded(G, ptrT.typeArgs.get(i), ptrS.typeArgs.get(i))
 							)
 							) {
@@ -1452,7 +1452,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * In general computed-names are not allowed as index, unless it denotes a visible member by means of a string-literal.
-	 * 
+	 *
 	 * @return true if allowed, false otherwise.
 	 */
 	def private void internalCheckComputedIndexedAccess(RuleEnvironment G, IndexedAccessExpression indexedAccess,
@@ -1592,12 +1592,12 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def checkThisLiteral(ThisLiteral thisLiteral) {
 		var context = EcoreUtil2.getContainerOfType(thisLiteral, ThisArgProvider);
-		
+
 		// cf. GH-348
 		while (context instanceof ArrowFunction) {
 			context = EcoreUtil2.getContainerOfType(context.eContainer, ThisArgProvider);
-		} 
-		
+		}
+
 		// 1) not in static members of interfaces
 		if(context instanceof N4MemberDeclaration) {
 			val tMember = context.definedTypeElement;

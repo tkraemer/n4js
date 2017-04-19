@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
 package eu.numberfour.n4js.tests.codegen
 
 import java.util.List
@@ -39,19 +49,19 @@ class Method extends Member<Method> {
 		super(name);
 	}
 
-	/** 
+	/**
 	 * Sets the return type of this method.
-	 * 
+	 *
 	 * @param returnType the return type
 	 */
 	public def Method setReturnType(String returnType) {
 		this.returnType = returnType;
 		return this;
 	}
-	
+
 	/**
 	 * Adds a parameter to this method.
-	 * 
+	 *
 	 * @param param the parameter to add
 	 */
 	public def Method addParameter(Param param) {
@@ -63,14 +73,14 @@ class Method extends Member<Method> {
 
 	/**
 	 * Sets the body of this method.
-	 * 
+	 *
 	 * @param body the body to set
 	 */
 	public def Method setBody(String body) {
 		this.body = body;
 		return this;
 	}
-	
+
 	override protected generateMember() '''
 	«generateAbstract()»«name»(«IF params !== null»«FOR p : params»«p.name»: «p.type»«ENDFOR»«ENDIF»)«IF !returnType.nullOrEmpty»: «returnType»«ENDIF»«IF abstract»;«ELSE» «IF !hasBody»{}«ELSE»{
 		«IF !body.nullOrEmpty»

@@ -100,7 +100,7 @@ public class ASTProcessor extends AbstractProcessor {
 	 * This method performs some preparatory tasks (e.g., creating an instance of {@link ASTMetaInfoCache}) and ensures
 	 * consistency by tracking the 'isProcessing' state with try/finally; for actual processing, this method delegates
 	 * to method {@link #processAST(RuleEnvironment, Script, ASTMetaInfoCache)}.
-	 * 
+	 *
 	 * @param resource  may not be null.
 	 * @param cancelIndicator  may be null.
 	 */
@@ -144,7 +144,7 @@ public class ASTProcessor extends AbstractProcessor {
 	 * There exists a single "main phase" where 95% of processing happens (entry point for this main phase is method
 	 * {@link #processSubtree(RuleEnvironment, EObject, ASTMetaInfoCache, int)}), plus a number of smaller phases before
 	 * and after that where some special handling is performed.
-	 * 
+	 *
 	 * @param resource  may not be null.
 	 * @param cancelIndicator  may be null.
 	 */
@@ -180,7 +180,7 @@ public class ASTProcessor extends AbstractProcessor {
 
 	/**
 	 * Process given node and all of its direct and indirect children.
-	 * 
+	 *
 	 * @param node  the root of the subtree to process; must be an AST node.
 	 */
 	def package void processSubtree(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
@@ -246,15 +246,15 @@ public class ASTProcessor extends AbstractProcessor {
 			// N4JSResource#resolveLazyCrossReferences(CancelIndicator), so we have to guarantee that all lazy
 			// cross-references are actually resolved; (2) the type system may not resolve all proxies and some
 			// nodes are not typed at all (i.e. isTypableNode() returns false), so we have to enforce this here.
-			 
-			// We also perform all processing, related to outgoing references from the current node at this point.	
+
+			// We also perform all processing, related to outgoing references from the current node at this point.
 			resolveAndProcessReferencesInNode(node, cache);
 
 		} finally {
 			cache.astNodesCurrentlyBeingTyped.remove(node);
 		}
 	}
-	
+
 	def private boolean isPostponedNode(EObject node) {
 		return
 			isPostponedInitializer(node)
@@ -264,7 +264,7 @@ public class ASTProcessor extends AbstractProcessor {
 				|| node.eContainer instanceof PropertySetterDeclaration
 				|| node.eContainer instanceof PropertyMethodDeclaration));
 	}
-	
+
 	/**
 	 * Initializers are postponed iff:
 	 * <ul>
@@ -285,7 +285,7 @@ public class ASTProcessor extends AbstractProcessor {
 						// Check if the initializer refers to other fpars
 						val allFPars = funDef.fpars;
 						val allRefs = EcoreUtilN4.getAllContentsOfTypeStopAt(fpar, IdentifierRef, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY);
-						
+
 						for (IdentifierRef ir : allRefs) {
 							val id = ir.getId();
 							val idRefCausesCyclDep =
@@ -318,7 +318,7 @@ public class ASTProcessor extends AbstractProcessor {
 	 * <p>
 	 * Via this method, other processors can request a forward processing of some subtree. Does nothing if the given
 	 * node was processed already, either as part of a forward reference or during normal processing.
-	 * 
+	 *
 	 * @return <code>true</code> iff the forward processing is legal, <code>false</code> otherwise.
 	 */
 	def package boolean processSubtree_forwardReference(RuleEnvironment G, TypableElement node, ASTMetaInfoCache cache) {
@@ -506,7 +506,7 @@ public class ASTProcessor extends AbstractProcessor {
 		for(eRef : astNode.eClass.EReferences) {
 			if(!eRef.isContainment) { // only cross-references have proxies (in our case)
 				val node = astNode.eGet(eRef, true);
-				
+
 				if (node instanceof EObject) {
 					recordReferencesToLocalVariables(eRef, astNode, node, cache);
 				}
@@ -517,12 +517,12 @@ public class ASTProcessor extends AbstractProcessor {
 	def private recordReferencesToLocalVariables(EReference reference, EObject sourceNode, EObject targetNode,
 		ASTMetaInfoCache cache) {
 
-		// If targetNode is still a proxy its resolution failed, 
+		// If targetNode is still a proxy its resolution failed,
 		// therefore it should be skipped.
 		if (targetNode.eIsProxy) {
 			return;
 		}
-		// skip non-local references		
+		// skip non-local references
 		if (sourceNode.eResource !== targetNode.eResource) {
 			return;
 		}
@@ -531,7 +531,7 @@ public class ASTProcessor extends AbstractProcessor {
 			if (targetNode instanceof ExportedVariableDeclaration) {
 				return;
 			}
-			
+
 			cache.storeLocalVariableReference(targetNode, sourceNode);
 		}
 	}

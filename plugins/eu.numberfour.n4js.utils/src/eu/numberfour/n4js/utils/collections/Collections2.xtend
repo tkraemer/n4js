@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -34,23 +34,23 @@ class Collections2 {
 	}
 
 	/**
-	 * Creates a new linked list containing the given elements. This just delegates to 
+	 * Creates a new linked list containing the given elements. This just delegates to
 	 * {@link CollectionLiterals#newLinkedList}.
-	 * 
+	 *
 	 * @param initial the initial elements of the list
-	 * 
+	 *
 	 * @return the newly created linked list
 	 */
 	def static <T> LinkedList<T> newLinkedList(T... initial) {
 		return CollectionLiterals.newLinkedList(initial);
 	}
-	
+
 	/**
-	 * Creates a new array-backed list containing the given elements. This just delegates to 
+	 * Creates a new array-backed list containing the given elements. This just delegates to
 	 * {@link CollectionLiterals#newArrayList}.
-	 * 
+	 *
 	 * @param initial the initial elements of the list
-	 * 
+	 *
 	 * @return the newly created array-backed list
 	 */
 	def static <T> ArrayList<T> newArrayList(T... initial) {
@@ -58,36 +58,36 @@ class Collections2 {
 	}
 
 	/**
-	 * Creates a new hash set containing the given elements. This just delegates to 
+	 * Creates a new hash set containing the given elements. This just delegates to
 	 * {@link CollectionLiterals#newHashSet}.
-	 * 
+	 *
 	 * @param initial the initial elements of the set
-	 * 
+	 *
 	 * @return the newly created hash set
 	 */
 	def static <T> HashSet<T> newHashSet(T... initial) {
 		return CollectionLiterals.newHashSet(initial);
 	}
-	
+
 	/**
-	 * Creates a new linked hash set containing the given elements. This just delegates to 
+	 * Creates a new linked hash set containing the given elements. This just delegates to
 	 * {@link CollectionLiterals#newLinkedHashSet}.
-	 * 
+	 *
 	 * @param initial the initial elements of the set
-	 * 
+	 *
 	 * @return the newly created linked hash set
 	 */
 	def static <T> LinkedHashSet<T> newLinkedHashSet(T... initial) {
 		return CollectionLiterals.newLinkedHashSet(initial);
 	}
-	
+
 	/**
-	 * Creates a new tree set containing the given elements. This just delegates to 
+	 * Creates a new tree set containing the given elements. This just delegates to
 	 * {@link CollectionLiterals#newTreeSet}.
-	 * 
+	 *
 	 * @param comparator the comparator to use
 	 * @param initial the initial elements of the set
-	 * 
+	 *
 	 * @return the newly created tree set
 	 */
 	def static <T> TreeSet<T> newTreeSet(Comparator<? super T> comparator, T... initial) {
@@ -95,11 +95,11 @@ class Collections2 {
 	}
 
 	/**
-	 * Creates a new hash set containing the given elements. This just delegates to 
+	 * Creates a new hash set containing the given elements. This just delegates to
 	 * {@link CollectionLiterals#newHashMap}.
-	 * 
+	 *
 	 * @param initial the initial elements of the map
-	 * 
+	 *
 	 * @return the newly created hash map
 	 */
 	def static <K,V> HashMap<K,V> newHashMap(Pair<? extends K, ? extends V>... initial) {
@@ -107,11 +107,11 @@ class Collections2 {
 	}
 
 	/**
-	 * Creates a new linked hash set containing the given elements. This just delegates to 
+	 * Creates a new linked hash set containing the given elements. This just delegates to
 	 * {@link CollectionLiterals#newLinkedHashMasp}.
-	 * 
+	 *
 	 * @param initial the initial elements of the map
-	 * 
+	 *
 	 * @return the newly created linked hash map
 	 */
 	def static <K,V> LinkedHashMap<K,V> newLinkedHashMap(Pair<? extends K, ? extends V>... initial) {
@@ -119,11 +119,11 @@ class Collections2 {
 	}
 
 	/**
-	 * Creates a new linked hash set containing the given elements. This just delegates to 
+	 * Creates a new linked hash set containing the given elements. This just delegates to
 	 * {@link CollectionLiterals#newTreeMap}.
-	 * 
+	 *
 	 * @param initial the initial elements of the map
-	 * 
+	 *
 	 * @return the newly created linked hash map
 	 */
 	def static <K,V> TreeMap<K,V> newTreeMap(Comparator<? super K> comparator, Pair<? extends K, ? extends V>... initial) {
@@ -132,7 +132,7 @@ class Collections2 {
 
 	/**
 	 * Concatenate the given lists while omitting duplicates.
-	 * 
+	 *
 	 * @param listA
 	 *            the first list, must not be <code>null</code>
 	 * @param listB

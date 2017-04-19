@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -31,7 +31,7 @@ import static extension eu.numberfour.n4js.n4mf.utils.parsing.ManifestValuesPars
  * manifest fragments. This is similar what N4JS Quick Fix for manifest is doing is doing to obtain data from manifest content.
  * Effectively those tests are also testing some parts of the {@link ManifestValuesParsingUtil}
  * but it is not focused on it (i.e. not all its execution paths might be tested here).
- * 
+ *
  */
 @RunWith(XtextRunner)
 @InjectWith(N4JSInjectorProvider)

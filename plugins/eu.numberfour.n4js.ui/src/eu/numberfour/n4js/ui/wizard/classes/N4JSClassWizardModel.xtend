@@ -22,15 +22,15 @@ import eu.numberfour.n4js.utils.beans.PropertyChangeSupport
  * A data model to hold the informations of a {@link N4JSNewClassWizard}.
  */
 @PropertyChangeSupport
-class N4JSClassWizardModel extends N4JSClassifierWizardModel 
+class N4JSClassWizardModel extends N4JSClassifierWizardModel
 	implements InterfacesContainingModel, AccessModifiableModel, NamedModel, DefinitionFileModel {
-	
+
 	var boolean finalAnnotated;
 	var ClassifierReference superClass = new ClassifierReference("", "");
-	
+
 	@Override
 	override getClassifierName() {
 		return 'class';
 	}
-	
+
 }

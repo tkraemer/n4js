@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -66,7 +66,7 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
  * <li>the only place where this limitation becomes tricky is the evaluation of property access expressions, see
  * {@link #eval(RuleEnvironment, ParameterizedPropertyAccessExpression, RecursionGuard)}.
  * </ul>
- * 
+ *
  * <sup>1</sup> main rationale for this decision was to keep the handling of computed property names from complicating
  * the scoping and main AST traversal. Without resolving computed property names beforehand, all the code in scoping,
  * AST traversal, type system, and helper classes such as {@link ContainerTypesHelper} would have to cope with

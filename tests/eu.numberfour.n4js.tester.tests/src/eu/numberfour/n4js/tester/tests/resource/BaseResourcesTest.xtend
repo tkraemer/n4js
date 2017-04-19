@@ -57,8 +57,8 @@ abstract class BaseResourcesTest {
 
 	@Inject
 	private HttpServerManager serverManager;
-	
-	@Inject 
+
+	@Inject
 	public extension TesterTestsConfiguration ttConfig;
 
 
@@ -72,7 +72,7 @@ abstract class BaseResourcesTest {
 		queue = provider.get();
 		events = synchronizedMultimap(create);
 	}
-	
+
 
 	@After
 	public def void after() {

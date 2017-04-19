@@ -27,7 +27,7 @@ class N4JSLanguageUtils_getVarianceOfPositionRelativeToItsRootTest extends Abstr
 			class G<T> {}
 			class G_CO<out T> {}
 			class G_CONTRA<in T> {}
-			
+
 			class Test<T> {
 				m() {
 					var test: «code»;

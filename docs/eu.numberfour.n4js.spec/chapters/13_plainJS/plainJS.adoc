@@ -1,8 +1,5 @@
-
-= PlainJS
-:find:
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -11,6 +8,9 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
 ////
+
+= PlainJS
+:find:
 
 Since N4JS is a super set of JavaScript, is it both possible to use plain JavaScript in N4JS and vice versa.
 There may be some obstacles due to concepts introduced by N4JS to make code more maintainable and robust:

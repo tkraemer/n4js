@@ -43,9 +43,8 @@ import eu.numberfour.n4js.xpect.config.Preferences;
 import eu.numberfour.n4js.xpect.methods.FormatterXpectMethod.TextRegionAccessFactory;
 
 /**
- * @author Moritz Eysholdt
+ *
  */
-
 @SuppressWarnings("restriction")
 @XpectImport({ TextRegionAccessFactory.class, Preferences.class, Preference.class })
 public class FormatterXpectMethod {

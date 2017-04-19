@@ -59,9 +59,9 @@ package class PolyProcessor extends AbstractPolyProcessor {
 	private N4JSTypeSystem ts;
 	@Inject
 	private TypeSystemHelper tsh;
-	
+
 	@Inject
-	private JavaScriptVariantHelper jsVariantHelper; 
+	private JavaScriptVariantHelper jsVariantHelper;
 
 
 	// ################################################################################################################

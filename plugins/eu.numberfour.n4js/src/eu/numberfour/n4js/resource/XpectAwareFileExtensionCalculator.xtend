@@ -23,14 +23,14 @@ import com.google.common.base.Strings
  */
  @Singleton
 public class XpectAwareFileExtensionCalculator {
-	
+
 	def public String getXpectAwareFileExtension(EObject eob) {
 		if ((eob === null) || (eob.eResource === null)) {
 			return "";
 		}
 		return eob.eResource.URI.getXpectAwareFileExtension;
 	}
-	
+
 	/**
 	 * Return the file extension of an URI
 	 */
@@ -40,7 +40,7 @@ public class XpectAwareFileExtensionCalculator {
 		}
 		return uri.getXpectAwareFileExtensionOrEmpty
 	}
-	
+
 	def private String getXpectAwareFileExtensionOrEmpty(URI uri){
 		var ext = uri.fileExtension;
 		if(N4JSGlobals.XT_FILE_EXTENSION.equals(ext)){

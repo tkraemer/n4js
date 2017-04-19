@@ -109,11 +109,11 @@ class BlockTransformation extends Transformation {
 
 		// Dealing with async:
 		// NOTE in former implementations it was necessary to analyze fall-off cases where some execution paths did not
-		// end in return-statements. Henc, the following code-snippet was used: 
+		// end in return-statements. Henc, the following code-snippet was used:
 		//	//		val fallOffCase = (eConFA instanceof FunctionDefinition)
 		//	//				&& blockAssistant.hasBodyWhereExecutionFallsOff(eConFA as FunctionDefinition)
-		// This is not necessary any more. 
-		
+		// This is not necessary any more.
+
 		// case 1: return;   		 =>   return;  // NTD
 		// case 2: return expr; 	 =>   return expr; // NTD
 		// case 3: return await expr; =>   return expr;     --> remove await

@@ -150,7 +150,7 @@ class CompileTimeEvaluatorTest {
 		assertValueOfCompileTimeExpr(enumStringBased, "Color.GREEN", "*green*");
 		assertValueOfCompileTimeExpr(enumStringBased, "Color.RED + Color.GREEN + Color.BLUE", "RED*green*BLUE");
 		assertValueOfCompileTimeExpr(enumStringBased, "`_${Color.RED}_${Color.GREEN}_${Color.BLUE}_`", "_RED_*green*_BLUE_");
-		
+
 		// non-@StringBased enums are not treated as compile-time expressions:
 		val enumPlain = '''
 			enum Color { RED, GREEN: '*green*', BLUE }

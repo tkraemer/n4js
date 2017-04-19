@@ -44,8 +44,8 @@ import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode
  * @see http://www.eclipse.org/Xtext/documentation.html#outline
  */
 class N4JSOutlineTreeProvider extends BackgroundOutlineTreeProvider  {
-	
-	
+
+
 	/** casted access to the underlying label provider. */
 	private def N4JSLabelProvider getN4JSLabelProvider() {
 		return labelProvider as N4JSLabelProvider;
@@ -67,8 +67,8 @@ class N4JSOutlineTreeProvider extends BackgroundOutlineTreeProvider  {
 			getN4JSLabelProvider.removeCancelIndicator();
 		}
 	}
-	
-	/** Overridden to use dispatch methods ending in underscore {#createChildren_(...)}. 
+
+	/** Overridden to use dispatch methods ending in underscore {#createChildren_(...)}.
 	 * Dispatch call is wrapped in null/cancel check.*/
 	override void createChildren(IOutlineNode parentNode, EObject modelElement) {
 		checkCanceled()
@@ -76,14 +76,14 @@ class N4JSOutlineTreeProvider extends BackgroundOutlineTreeProvider  {
 			createChildren_(parentNode,modelElement);
 		}
 	}
-	
+
 	def dispatch protected void createChildren_(DocumentRootNode parentNode, EObject modelElement) {
-		// First entry should not dispatch but specifically create the root node 
-		super.createChildren(parentNode, modelElement)	
+		// First entry should not dispatch but specifically create the root node
+		super.createChildren(parentNode, modelElement)
 	}
-	
+
 	def dispatch protected void createChildren_(IOutlineNode parentNode, EObject modelElement) {
-		// TODO maybe we do not want create arbitrary nodes here, 
+		// TODO maybe we do not want create arbitrary nodes here,
 		// then we should remove the following line:
 		super.createChildren(parentNode, modelElement);
 	}
@@ -120,14 +120,14 @@ class N4JSOutlineTreeProvider extends BackgroundOutlineTreeProvider  {
 			}
 		}
 	}
-	
+
 	// create nodes for literals
 	def dispatch protected void createChildren_(IOutlineNode parentNode, N4EnumDeclaration ed) {
 		for (literal : ed.literals.filterNull) {
 			parentNode.createNode(literal)
 		}
 	}
-	
+
 	def dispatch boolean canCreateChildNode(Object element) {
 		true;
 	}
@@ -158,9 +158,9 @@ class N4JSOutlineTreeProvider extends BackgroundOutlineTreeProvider  {
 
 	/** Overridden to enable the dispatch-method mechanism of Xtend */
 	def dispatch protected boolean isLeaf(EObject modelElement) {
-		// route through to default implementation. 
+		// route through to default implementation.
 		return super.isLeaf(modelElement);
-	}	
+	}
 
 	def dispatch protected boolean isLeaf(Void _null) {
 		return true;

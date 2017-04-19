@@ -124,7 +124,7 @@ public class ExportSelectionPage extends WizardExportResourcesPage {
 		choiceList = CheckboxTableViewer.newCheckList(choiceListGroup, SWT.BORDER);
 		choiceList.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		choiceList.setLabelProvider(WorkbenchLabelProvider.getDecoratingWorkbenchLabelProvider());
-		
+
 		// sort the projects before displaying, ignoring case like in the workspace projects view.
 		final List<IProject> sortedProjects = new ArrayList<>(projects.keySet());
 		sortedProjects.sort((a, b) -> a.getName()

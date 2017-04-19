@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -76,7 +76,7 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * NEEEDED
-	 * 
+	 *
 	 * when removed check methods will be called twice once by N4JSValidator, and once by
 	 * AbstractDeclarativeN4JSValidator
 	 */
@@ -85,7 +85,7 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	@Check
-	def checkExportedWhenVisibilityHigherThanPrivate(TypeDefiningElement typeDefiningElement) {		
+	def checkExportedWhenVisibilityHigherThanPrivate(TypeDefiningElement typeDefiningElement) {
 		if (!jsVariantHelper.requireCheckExportedWhenVisibilityHigherThanPrivate(typeDefiningElement)) {
 			return; // does not apply to plain JS files
 		}

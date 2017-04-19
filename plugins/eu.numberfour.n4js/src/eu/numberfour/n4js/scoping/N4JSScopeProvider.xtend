@@ -122,7 +122,7 @@ class N4JSScopeProvider extends AbstractScopeProvider implements IDelegatingScop
 	@Inject extension VariableVisibilityChecker
 
 	@Inject extension ProjectUtils;
-	
+
 	@Inject JavaScriptVariantHelper jsVariantHelper;
 
 	protected def IScope delegateGetScope(EObject context, EReference reference) {
@@ -441,7 +441,7 @@ class N4JSScopeProvider extends AbstractScopeProvider implements IDelegatingScop
 				val isStaticContext = context instanceof N4MemberDeclaration && (context as N4MemberDeclaration).static;
 				val IScope parent = getTypeScope(context.eContainer, reference, isStaticContext); // use new static access status for parent scope
 				if (context instanceof N4ClassDeclaration) {
-					if ( context.isPolyfill 
+					if ( context.isPolyfill
 						||	context.isStaticPolyfill ) { // in polyfill? delegate to filled type and its type variables
 						val filledType = context.definedTypeAsClass?.superClassRef?.declaredType;
 						return scopeWithTypeAndItsTypeVariables(parent, filledType, fromStaticContext); // use old static access status for current scope
@@ -463,7 +463,7 @@ class N4JSScopeProvider extends AbstractScopeProvider implements IDelegatingScop
 
 				// do we set super type reference of polyfill?
 				if (container instanceof N4ClassDeclaration) {
-					if (container.superClassRef === context 
+					if (container.superClassRef === context
 						&&	(container.isPolyfill || container.isStaticPolyfill)
 					) {
 						val script = EcoreUtil2.getContainerOfType(container, Script);

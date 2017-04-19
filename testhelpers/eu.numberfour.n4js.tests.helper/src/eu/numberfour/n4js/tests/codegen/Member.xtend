@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
 package eu.numberfour.n4js.tests.codegen
 
 /**
@@ -41,10 +51,10 @@ abstract class Member<T extends Member<T>> extends Fragment<T> {
 		/**
 		 * Builds a member name from the given name and visibility by appending an appropriate string
 		 * to the given name.
-		 * 
+		 *
 		 * @param visibility the visibility value
 		 * @param the member name prefix
-		 * 
+		 *
 		 * @return the newly created member name
 		 */
 		static def String makeName(Visibility visibility, String memberName) {
@@ -53,9 +63,9 @@ abstract class Member<T extends Member<T>> extends Fragment<T> {
 
 		/**
 		 * Returns an appropriate member name extension depending on the given visibility.
-		 * 
+		 *
 		 * @param visibility the visibility value
-		 * 
+		 *
 		 * @return the name extension
 		 */
 		static def String getNameExtension(Visibility visibility) {
@@ -71,9 +81,9 @@ abstract class Member<T extends Member<T>> extends Fragment<T> {
 
 		/**
 		 * Builds an appropriate code fragment for the given member visibility.
-		 * 
+		 *
 		 * @param visibility the visibility value
-		 * 
+		 *
 		 * @return the code fragment
 		 */
 		static def String generate(Visibility visibility) {
@@ -117,10 +127,10 @@ abstract class Member<T extends Member<T>> extends Fragment<T> {
 		/**
 		 * Builds a member name from the given name and static specifier by appending an appropriate string
 		 * to the given name.
-		 * 
+		 *
 		 * @param static_ whether or not the member is static
 		 * @param the member name prefix
-		 * 
+		 *
 		 * @return the newly created member name
 		 */
 		static def String makeName(Static static_, String classifierName) {
@@ -129,9 +139,9 @@ abstract class Member<T extends Member<T>> extends Fragment<T> {
 
 		/**
 		 * Returns an appropriate member name extension depending on the given static specification.
-		 * 
+		 *
 		 * @param static_ whether or not the member is static
-		 * 
+		 *
 		 * @return the name extension
 		 */
 		static def String getNameExtension(Static static_) {
@@ -143,9 +153,9 @@ abstract class Member<T extends Member<T>> extends Fragment<T> {
 
 		/**
 		 * Returns an appropriate code fragment depending on the given static specification.
-		 * 
+		 *
 		 * @param static_ whether or not the member is static
-		 * 
+		 *
 		 * @return the code fragment
 		 */
 		static def String generate(Static static_) {
@@ -163,7 +173,7 @@ abstract class Member<T extends Member<T>> extends Fragment<T> {
 
 	/**
 	 * Creates a new member with the given parameters.
-	 * 
+	 *
 	 * @param name the name of the member
 	 */
 	protected new(String name) {
@@ -207,9 +217,9 @@ abstract class Member<T extends Member<T>> extends Fragment<T> {
 
 	/**
 	 * Set the visibility.
-	 * 
+	 *
 	 * @param visibility the visibility to set
-	 * 
+	 *
 	 * @return this builder
 	 */
 	public def T setVisibility(Visibility visibility) {
@@ -219,7 +229,7 @@ abstract class Member<T extends Member<T>> extends Fragment<T> {
 
 	/**
 	 * Make the member static.
-	 * 
+	 *
 	 * @return this builder
 	 */
 	public def T makeStatic() {
@@ -228,7 +238,7 @@ abstract class Member<T extends Member<T>> extends Fragment<T> {
 
 	/**
 	 * Specify whether the member is static.
-	 * 
+	 *
 	 * @param static_ whether or not the member is static
 	 */
 	public def T setStatic(Static static_) {
@@ -238,7 +248,7 @@ abstract class Member<T extends Member<T>> extends Fragment<T> {
 
 	/**
 	 * Indicates whether this member is static.
-	 * 
+	 *
 	 * @return <code>true</code> if this member is static and <code>false</code> otherwise
 	 */
 	public def boolean isStatic() {
@@ -254,7 +264,7 @@ abstract class Member<T extends Member<T>> extends Fragment<T> {
 
 	/**
 	 * Set the override status of the member.
-	 * 
+	 *
 	 * @param override_ the override status
 	 */
 	public def T setOverride(Override override_) {
@@ -264,7 +274,7 @@ abstract class Member<T extends Member<T>> extends Fragment<T> {
 
 	/**
 	 * Indicates whether this member overrides.
-	 * 
+	 *
 	 * @return <code>true</code> if this member overrides
 	 */
 	public def boolean isOverride() {
@@ -279,14 +289,14 @@ abstract class Member<T extends Member<T>> extends Fragment<T> {
 
 	/**
 	 * Generates a code fragment for the visibility of this member.
-	 * 
+	 *
 	 * @return the code fragment
 	 */
 	private def generateVisibility() '''«VisibilityExtensions.generate(visibility)» '''
 
 	/**
 	 * Generates a code fragment according to whether this member is static or not.
-	 * 
+	 *
 	 * @return the code fragment
 	 */
 	private def generateStatic() {
@@ -295,7 +305,7 @@ abstract class Member<T extends Member<T>> extends Fragment<T> {
 
 	/**
 	 * Abstract method that generates the actual member code.
-	 * 
+	 *
 	 * @return the generated code fragment
 	 */
 	protected abstract def CharSequence generateMember()

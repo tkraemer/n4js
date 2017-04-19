@@ -24,7 +24,7 @@ public class CSVParserTest {
 	private static def void assertResult(List<List<String>> expected, CSVData actual) {
 		var Iterator<List<String>> expectedIt = expected.iterator();
 		var Iterator<CSVRecord> actualIt = actual.iterator();
-		
+
 		while (expectedIt.hasNext() || actualIt.hasNext()) {
 			assertEquals(expectedIt.hasNext(), actualIt.hasNext());
 			val List<String> expectedRecord = expectedIt.next();
@@ -36,7 +36,7 @@ public class CSVParserTest {
 	private static def void assertRecords(Iterable<String> expected, Iterable<String> actual) {
 		var Iterator<String> expectedIt = expected.iterator();
 		var Iterator<String> actualIt = actual.iterator();
-		
+
 		while (expectedIt.hasNext() && actualIt.hasNext()) {
 			assertEquals(expectedIt.hasNext(), actualIt.hasNext());
 			assertEquals(expectedIt.next(), actualIt.next());
@@ -48,25 +48,25 @@ public class CSVParserTest {
 		assertResult(#[
 			#["1", "2", "3"],
 			#["1", "2", "3"]
-		], 
+		],
 		CSVParser.parse("1,2,3\r\n1,2,3"));
 
 		assertResult(#[
 			#["1", "2", ""],
 			#["1", "2", "3"]
-		], 
+		],
 		CSVParser.parse("1,2,\r\n1,2,3"));
 
 		assertResult(#[
 			#["1", "2", ""],
 			#["", "2", "3"]
-		], 
+		],
 		CSVParser.parse("1,2,\r\n,2,3"));
 
 		assertResult(#[
 			#["", "", "Supplier", "Class","",""],
 			#["", "", "Subject of Access", "Field, Accessor, Method", "", "Static Field, Getter, Setter, Method", "", ""]
-		], 
+		],
 		CSVParser.parse(",,Supplier,Class,,\r\n,,Subject of Access,\"Field, Accessor, Method\",,\"Static Field, Getter, Setter, Method\",,\r\n"));
 	}
 
@@ -89,7 +89,7 @@ public class CSVParserTest {
 			#[""]
 		], CSVParser.parse("\n\n"));
 	}
-	
+
 	@Test
 	public def void testOneRowWithThreeFields() {
 		assertResult(#[
@@ -98,7 +98,7 @@ public class CSVParserTest {
 		One,Two,Three
 		'''));
 	}
-	
+
 	@Test
 	public def void testOneRowWithThreeEmptyFields() {
 		assertResult(#[
@@ -107,7 +107,7 @@ public class CSVParserTest {
 		,,
 		'''));
 	}
-	
+
 	@Test
 	public def void testOneRowWithSomeEmptyFields() {
 		assertResult(#[
@@ -133,25 +133,25 @@ public class CSVParserTest {
 
 		assertResult(#[
 			#["", "", "", "One"]
-		], 
+		],
 		CSVParser.parse('''
 		,,,One
 		'''));
-		
+
 		assertResult(#[
 			#["One", "", "Two", ""]
 		],
 		CSVParser.parse('''
 		One,,Two,
 		'''));
-		
+
 		assertResult(#[
 			#["One", "", "", "Two"]
 		],
 		CSVParser.parse('''
 		One,,,Two
 		'''));
-		
+
 		assertResult(#[
 			#["", "One", "Two", ""]
 		],
@@ -159,7 +159,7 @@ public class CSVParserTest {
 		,One,Two,
 		'''));
 	}
-	
+
 	@Test
 	public def void testSeveralRowsOfSameLength() {
 		assertResult(#[
@@ -193,7 +193,7 @@ public class CSVParserTest {
 		,,,
 		'''));
 	}
-	
+
 	@Test
 	public def void testSeveralRowsOfDifferingLengths() {
 		assertResult(#[
@@ -233,7 +233,7 @@ public class CSVParserTest {
 
 		,,
 		'''));
-		
+
 		assertResult(#[
 			#["One", "Two", "Three"],
 			#[""],
@@ -243,14 +243,14 @@ public class CSVParserTest {
 		],
 		CSVParser.parse('''
 		One,Two,Three
-		
+
 		,
-		
+
 		Five,Six,Seven,Eight
 		'''));
 	}
 
-	
+
 	@Test
 	public def void testFieldsWithControlChars() {
 		assertResult(#[
@@ -268,8 +268,8 @@ public class CSVParserTest {
 			#["Five", "Six", "Seven", "Eight"]
 		],
 		CSVParser.parse('''
-		"One,Two, 
-		
+		"One,Two,
+
 		Three"
 		"
 		"

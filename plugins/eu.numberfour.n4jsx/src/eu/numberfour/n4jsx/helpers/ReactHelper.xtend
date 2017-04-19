@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -40,37 +40,37 @@ class ReactHelper {
 	@Inject	protected N4JSTypeSystem ts;
 	@Inject protected TypeSystemHelper tsh
 	@Inject	private IResourceScopeCache resourceScopeCacheHelper;
-	@Inject extension XtextUtilN4; 
-			
+	@Inject extension XtextUtilN4;
+
 	public final static String REACT_MODULE = "react";
-	public final static String REACT_KEY = "KEY__" + REACT_MODULE;	
+	public final static String REACT_KEY = "KEY__" + REACT_MODULE;
 	public final static String REACT_COMPONENT = "Component";
 	public final static String REACT_ELEMENT = "Element";
 	public final static String REACT_DEFINITION_FILE = REACT_MODULE + "." + N4JSGlobals.N4JSD_FILE_EXTENSION;
-	
+
 	/**
 	 * Look up React.Element in the index.
-	 * 
+	 *
 	 * @param context the EObject serving the context to look for React.Element.
 	 */
 	def public TClassifier lookUpReactElement(EObject context) {
 		return lookUpReactClassifier(context, REACT_ELEMENT);
 	}
-	
+
 	/**
 	 * Look up React.Component in the index.
-	 * 
+	 *
 	 * @param context the EObject serving the context to look for React.Component.
 	 */
 	def public TClassifier lookUpReactComponent(EObject context) {
 		return lookUpReactClassifier(context, REACT_COMPONENT);
 	}
-	
+
 	/**
 	 * Lookup React component/element type. For increased efficiency, the found results are cached.
-	 * 
+	 *
 	 * @param context the EObject serving the context to look for React classifiers.
-	 * @param reactClassifierName the name of React classifier.  
+	 * @param reactClassifierName the name of React classifier.
 	 */
 	def private TClassifier lookUpReactClassifier(EObject context, String reactClassifierName) {
 		val String key = REACT_KEY + "." + reactClassifierName;
@@ -79,7 +79,7 @@ class ReactHelper {
 			val descs = context.getVisibleEObjectDescriptions(TypesPackage::eINSTANCE.TClass);
 			val String reactClassifierFQNSuffix = REACT_MODULE + "." + reactClassifierName;
 			val eod = descs.findFirst[ desc | desc.isReactClassifierDescription(reactClassifierFQNSuffix) ]
-			
+
 			if (eod === null) return null;
 			var classifier = eod.EObjectOrProxy;
 			if (classifier.eIsProxy) {
@@ -92,14 +92,14 @@ class ReactHelper {
 			}
 		])
 	}
-	
+
 	private def boolean isReactClassifierDescription(IEObjectDescription desc, String suffix) {
     	return desc.EObjectURI.trimFragment.lastSegment == REACT_DEFINITION_FILE && desc.qualifiedName.toString.endsWith(suffix)
     }
-	
+
 	/**
 	 * Calculate the type that an JSX element is binding to, usually class/function type
-	 * 
+	 *
 	 * @param jsxElem the input JSX element
 	 * @return the typeref that the JSX element is binding to and null if not found
 	 */
@@ -113,11 +113,11 @@ class ReactHelper {
 			return exprResult.value;
 		}
 	}
-	
+
 	/**
 	 * Calculate the "props" type of an JSX element. It is either the first type parameter of React.Component class or
 	 * the type of the first parameter of a functional React component
-	 * 
+	 *
 	 * @param jsxElement the input JSX element
 	 * @return the typeref if exists and null otherwise
 	 */
@@ -125,8 +125,8 @@ class ReactHelper {
 		val TypeRef exprTypeRef = jsxElem.JSXElementBindingType
 		if (exprTypeRef === null)
 			return null;
-					
-		val G = jsxElem.newRuleEnvironment;		
+
+		val G = jsxElem.newRuleEnvironment;
 		if (exprTypeRef instanceof TypeTypeRef && (exprTypeRef as TypeTypeRef).constructorRef) {
 			// The JSX elements refers to a class
 			val tclass = tsh.getStaticType(G, exprTypeRef as TypeTypeRef);
@@ -134,8 +134,8 @@ class ReactHelper {
 				ReactHelper.REACT_COMPONENT);
 			if (tComponentClassifier === null || tComponentClassifier.typeVars.isEmpty) {
 				return null;
-			}	
-			
+			}
+
 			val reactComponentProps = tComponentClassifier.typeVars.get(0);
 			// Add type variable -> type argument mappings from the current and all super types
 			tsh.addSubstitutions(G, TypeUtils.createTypeRef(tclass));
@@ -153,10 +153,10 @@ class ReactHelper {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return the type of a field or return type of a getter.
-	 * 
+	 *
 	 * @param member MUST be either a field or getter (otherwise an exception is thrown).
 	 */
 	def public TypeRef typeRefOfFieldOrGetter(TMember member, TypeRef context) {

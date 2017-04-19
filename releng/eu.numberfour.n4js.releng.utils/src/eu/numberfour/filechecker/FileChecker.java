@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -41,36 +42,44 @@ public class FileChecker {
 
 	/** Extensions of files that should be checked more thoroughly. */
 	private static final String[] FILE_EXTENSIONS = { ".java", ".xtend", ".xtext", ".xcore", ".xsemantics", ".xml",
-			".mwe2" };
+			".mwe2", ".adoc" };
 
-	/** Names of folders containing generated code or other artifacts. All contents will be ignored. */
-	private static final String[] FOLDERS_WITH_GENERATED_ARTIFACTS = { "bin", "src-gen", "xtend-gen", "xsemantics-gen",
-			"emf-gen", "grammar-gen" };
-
-	/** Optional file in the root of a git repository that declares some files as third-pary files. */
-	private static final String THIRD_PARTY_FILE_NAME = "third-party.txt";
-
-	/** No file may include the string "copyright" except as part of the following string OR in third-party files. */
-	private static final String COPYRIGHT_LINE = "Copyright (c) 2016 NumberFour AG.";
-
-	/** Files with an extension listed in {@link #FILE_EXTENSIONS} must starts with this header. */
-	private static final String[] COPYRIGHT_HEADER = {
-			"/**",
-			" * Copyright (c) 2016 NumberFour AG.",
-			" * All rights reserved. This program and the accompanying materials",
-			" * are made available under the terms of the Eclipse Public License v1.0",
-			" * which accompanies this distribution, and is available at",
-			" * http://www.eclipse.org/legal/epl-v10.html",
-			" *",
-			" * Contributors:",
-			" *   NumberFour AG - Initial API and implementation",
-			" */"
+	/** These files will be ignored. May contain '/' but should not start or end with '/'. */
+	private static final String[] IGNORED_FILES = {
+			".antlr-generator-3.2.0-patch.jar" // downloaded by xtext but under git-ignore, so not in repository
 	};
 
-	/** XML files must start with this header. */
-	private static final String[] COPYRIGHT_HEADER_XML = {
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
-			"<!--",
+	/** All contents of these folders will be ignored. May contain '/' but should not start or end with '/'. */
+	private static final String[] IGNORED_FOLDERS = {
+			".git",
+			"bin",
+			"src-gen", "xtend-gen", "xsemantics-gen",
+			"emf-gen", "grammar-gen",
+			"generated-docs",
+			"eu.numberfour.n4js.jsdoc2spec.tests/testresourcesADoc",
+			"tools/eu.numberfour.n4js.hlc/target/wsp", // temporary test data under git-ignore, so not in repository
+			// temporarily ignored folders FIXME remove the following folders!!!!
+			"n4js/n4js-libraries",
+			"n4js/plugins/eu.numberfour.n4js.external.libraries",
+			"n4js/plugins/eu.numberfour.n4js.runner/res"
+	};
+
+	/** Words disallowed outside of copyright headers. Each word should start with a single capitalized letter. */
+	private static final String[] BANNED_WORDS = {
+			"Copyright",
+			"License"
+			// FIXME add more banned words (at least temporarily to prepare initial contribution):
+			// "NumberFour",
+			// "Number Four",
+			// "numberfour.jira.com",
+			// "jira.numberfour.eu"
+	};
+
+	/** Optional file in the root of a git repository that declares some files as third-party files. */
+	private static final String THIRD_PARTY_FILE_NAME = "third-party.txt";
+
+	/** Files with an extension listed in {@link #FILE_EXTENSIONS} must start with this header. */
+	private static final String[] COPYRIGHT_TEXT = {
 			"Copyright (c) 2016 NumberFour AG.",
 			"All rights reserved. This program and the accompanying materials",
 			"are made available under the terms of the Eclipse Public License v1.0",
@@ -79,11 +88,30 @@ public class FileChecker {
 			"",
 			"Contributors:",
 			"  NumberFour AG - Initial API and implementation",
-			"-->"
 	};
 
-	private static final String COPYRIGHT_HEADER_JOINED = Joiner.on("\n").join(COPYRIGHT_HEADER);
-	private static final String COPYRIGHT_HEADER_XML_JOINED = Joiner.on("\n").join(COPYRIGHT_HEADER_XML);
+	/**
+	 * Files with an extension listed in {@link #FILE_EXTENSIONS} must start with this header (derived from
+	 * {@link #COPYRIGHT_TEXT}).
+	 */
+	private static final String COPYRIGHT_HEADER = ("/**\n"
+			+ " * " + Joiner.on("\n * ").join(COPYRIGHT_TEXT) + "\n"
+			+ " */").replace("\n * \n", "\n *\n");
+
+	/** XML files must start with this header (derived from {@link #COPYRIGHT_TEXT}). */
+	private static final String COPYRIGHT_HEADER_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+			+ "<!--\n"
+			+ Joiner.on("\n").join(COPYRIGHT_TEXT) + "\n"
+			+ "-->";
+
+	/** ADOC files must start with this header (derived from {@link #COPYRIGHT_TEXT}). */
+	private static final String COPYRIGHT_HEADER_ADOC = "////\n"
+			+ Joiner.on("\n").join(COPYRIGHT_TEXT) + "\n"
+			+ "////";
+
+	/** XCORE files must contain this copyright notice directive (derived from {@link #COPYRIGHT_TEXT}). */
+	private static final String COPYRIGHT_GEN_MODEL_PROPERTY = "copyrightText=\""
+			+ Joiner.on("\\n").join(COPYRIGHT_TEXT) + "\"";
 
 	// ################################################################################################################
 	// this section contains the main code that performs the checking
@@ -94,8 +122,10 @@ public class FileChecker {
 			return false; // never ignore pom.xml!
 		if (file.isDirectory())
 			return true; // ignore folders
-		if (isBelowFolder(pathStr, FOLDERS_WITH_GENERATED_ARTIFACTS))
-			return true; // ignore generated files
+		if (isFile(pathStr, IGNORED_FILES))
+			return true; // ignore ignored files
+		if (isBelowFolder(pathStr, IGNORED_FOLDERS))
+			return true; // ignore files in ignored folders
 		if (hasExtension(path, ".prefs"))
 			return true; // ignore Eclipse preferences and property files
 		return false;
@@ -103,12 +133,13 @@ public class FileChecker {
 
 	private Report check(Path path, String content, boolean isRegisteredAsThirdParty) {
 		final Report report = new Report(path);
-		if (hasExtension(path, ".xml")) {
+
+		if (hasExtension(path, ".xml")) { // FIXME apply ordinary checks to .xml files (by removing this special case)
 
 			// special case: .xml files
 
-			if (!content.startsWith(COPYRIGHT_HEADER_XML_JOINED)) {
-				report.problems.add("does not contain correct copyright header for .xml files");
+			if (!hasCorrectCopyrightHeader(path, content)) {
+				report.problems.add("does not contain correct copyright header");
 			}
 
 		} else if (hasExtension(path, ".jar")) {
@@ -119,41 +150,46 @@ public class FileChecker {
 				report.problems.add("unregistered jar (might contain third party stuff)");
 			}
 
-		} else if (hasExtension(path, FILE_EXTENSIONS)) {
-
-			// default checks for files with one of the extensions in FILE_EXTENSIONS
-
-			final int len = content.length();
-			final char charLast = len > 0 ? content.charAt(len - 1) : 0;
-			final char char2ndToLast = len > 1 ? content.charAt(len - 2) : 0;
-
-			if (content.contains("\r")) {
-				report.problems.add("contains invalid line endings (i.e. contains carriage return: '\\r')");
-			} else {
-				if (charLast != '\n' || char2ndToLast == '\n') {
-					report.problems.add("does not end with a single empty line");
-				}
-				if (containsTrailingWhiteSpace(content)) {
-					report.problems.add("must not contain lines with trailing white-space");
-				}
-				if (!isRegisteredAsThirdParty && !content.startsWith(COPYRIGHT_HEADER_JOINED)) {
-					report.problems.add("does not contain correct copyright header");
-				}
-				if (!isRegisteredAsThirdParty && content.contains("@" + "author")) {
-					report.problems.add("must not contain author tags");
-				}
-			}
 		} else {
 
-			// checks for all other files
+			if (hasExtension(path, FILE_EXTENSIONS)) {
 
-			if (content.contains("copyright") || content.contains("Copyright") || content.contains("COPYRIGHT")) {
+				// checks for files with one of the extensions in FILE_EXTENSIONS
 
-				final boolean isNumberFourCopyright = content.indexOf("Copyright") == content
-						.indexOf(COPYRIGHT_LINE);
+				final int len = content.length();
+				final char charLast = len > 0 ? content.charAt(len - 1) : 0;
+				final char char2ndToLast = len > 1 ? content.charAt(len - 2) : 0;
 
-				if (!isNumberFourCopyright && !isRegisteredAsThirdParty) {
-					report.problems.add("must not contain string \"copyright\"");
+				if (content.contains("\r")) {
+					report.problems.add("contains invalid line endings (i.e. contains carriage return: '\\r')");
+				} else {
+					if (len > 0 && (charLast != '\n' || char2ndToLast == '\n')) {
+						report.problems.add("does not end with a single empty line");
+						// writeFile(path, fixFileEnding(content));
+					}
+					if (containsTrailingWhiteSpace(content)) {
+						report.problems.add("must not contain lines with trailing white-space");
+						// writeFile(path, trimTrailingWhiteSpace(content));
+					}
+					if (!isRegisteredAsThirdParty && !hasCorrectCopyrightHeader(path, content)) {
+						report.problems.add("does not contain correct copyright header");
+					}
+					if (!isRegisteredAsThirdParty && hasExtension(path, ".xcore")
+							&& !content.contains(COPYRIGHT_GEN_MODEL_PROPERTY)) {
+						report.problems.add(".xcore file does not contain correct 'copyrightText' genModel property");
+					}
+					if (!isRegisteredAsThirdParty && !hasExtension(path, ".adoc") && content.contains("@" + "author")) {
+						report.problems.add("must not contain author tags");
+					}
+				}
+			}
+
+			// checks for all files
+
+			if (!isRegisteredAsThirdParty && !path.endsWith("about.html")) {
+				final String bannedWord = containsBannedWord(path, content);
+				if (bannedWord != null) {
+					report.problems.add("must not contain banned word '" + bannedWord + "'");
 				}
 			}
 		}
@@ -226,7 +262,7 @@ public class FileChecker {
 
 						try {
 
-							final String content = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+							final String content = readFile(path);
 							final Report report = check(path, content, thirdPartyFiles.contains(path));
 							(report.problems.isEmpty() ? validFiles : invalidFiles).put(path, report);
 
@@ -330,10 +366,12 @@ public class FileChecker {
 		// make sure files exist
 		final List<Path> paths = lines.stream().map((l) -> rootPath.resolve(l)).collect(Collectors.toList());
 		for (Path p : paths) {
-			if (!p.toFile().exists())
+			if (!p.toFile().exists()) {
 				throw new IOException("file does not exist: " + p);
-			if (!p.toFile().isFile())
+			}
+			if (!p.toFile().isFile()) {
 				throw new IOException("not a file: " + p);
+			}
 		}
 		System.out.println("    " + paths.size() + " files declared as third-party files.");
 		return new HashSet<>(paths); // order does not matter, so don't need LinkedHashSet
@@ -343,13 +381,16 @@ public class FileChecker {
 		int idx = 0;
 		while (idx < str.length()) {
 			idx = str.indexOf('\n', idx);
-			if (idx < 0)
+			if (idx < 0) {
 				break;
+			}
 			char ch = idx > 0 ? str.charAt(idx - 1) : 'X';
-			if (ch == '\r')
+			if (ch == '\r') {
 				ch = idx > 1 ? str.charAt(idx - 2) : 'X';
-			if (ch != '\n' && Character.isWhitespace(ch))
+			}
+			if (ch != '\n' && Character.isWhitespace(ch)) {
 				return true;
+			}
 			idx++;
 		}
 		return false;
@@ -365,19 +406,109 @@ public class FileChecker {
 
 	private static boolean hasExtension(Path path, String... extensions) {
 		final Path namePath = path.getFileName();
-		if (namePath == null)
+		if (namePath == null) {
 			return false;
+		}
 		final String name = namePath.toString();
-		for (String ext : extensions)
-			if (name.endsWith(ext))
+		for (String ext : extensions) {
+			if (name.endsWith(ext)) {
 				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean isFile(String pathStr, String... fileNames) {
+		for (String fileName : fileNames) {
+			if (pathStr.endsWith("/" + fileName)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	private static boolean isBelowFolder(String pathStr, String... folderNames) {
-		for (String folderName : folderNames)
-			if (pathStr.contains("/" + folderName + "/"))
+		for (String folderName : folderNames) {
+			if (pathStr.contains("/" + folderName + "/")) {
 				return true;
+			}
+		}
 		return false;
+	}
+
+	private static boolean hasCorrectCopyrightHeader(Path path, String content) {
+		return beginIndexWithoutCopyrightHeader(path, content) > 0;
+	}
+
+	private static int beginIndexWithoutCopyrightHeader(Path path, String content) {
+		if (hasExtension(path, ".xml")) {
+			return startsWithCopyrightHeader(content, COPYRIGHT_HEADER_XML)
+					? COPYRIGHT_HEADER_XML.length() : 0;
+		} else if (hasExtension(path, ".adoc")) {
+			return startsWithCopyrightHeader(content, COPYRIGHT_HEADER_ADOC)
+					? COPYRIGHT_HEADER_ADOC.length() : 0;
+		} else if (hasExtension(path, ".js") || hasExtension(path, ".n4js") || hasExtension(path, ".n4jsd")) {
+			final String hdr = COPYRIGHT_HEADER.replace("/**\n", "/*\n");
+			return startsWithCopyrightHeader(content, hdr) ? hdr.length() : 0;
+		} else {
+			return startsWithCopyrightHeader(content, COPYRIGHT_HEADER) ? COPYRIGHT_HEADER.length() : 0;
+		}
+	}
+
+	private static boolean startsWithCopyrightHeader(String content, String header) {
+		return content.startsWith(header) || content.startsWith(header.replace(" 2016 ", " 2017 ")); // FIXME
+	}
+
+	private static String containsBannedWord(Path path, String content) {
+		return containsWord(path, content, true, BANNED_WORDS);
+	}
+
+	private static String containsWord(Path path, String content, boolean skipCopyrightHeader, String... words) {
+		if (skipCopyrightHeader) {
+			final int beginIndex = beginIndexWithoutCopyrightHeader(path, content);
+			content = content.substring(beginIndex);
+			if (hasExtension(path, ".xcore")) {
+				content = content.replace("copyrightFields=\"false\",", "");
+				content = content.replace(COPYRIGHT_GEN_MODEL_PROPERTY, "");
+				content = content.replace(COPYRIGHT_GEN_MODEL_PROPERTY.replace(" 2016 ", " 2017 "), ""); // FIXME
+			}
+		}
+		for (String word : words) {
+			if (content.contains(word) || content.contains(word.toLowerCase())
+					|| content.contains(word.toUpperCase())) {
+				return word;
+			}
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unused")
+	private static String fixFileEnding(String content) {
+		if (content.length() > 0) {
+			int endIndex = content.length();
+			while (endIndex > 0 && content.charAt(endIndex - 1) == '\n') {
+				--endIndex;
+			}
+			content = content.substring(0, endIndex) + '\n';
+		}
+		return content;
+	}
+
+	@SuppressWarnings("unused")
+	private static String trimTrailingWhiteSpace(String content) {
+		return content.replaceAll("[ \\t\\x0B\\f\\r]+\\n", "\n");
+	}
+
+	private static String readFile(Path path) throws IOException {
+		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+	}
+
+	@SuppressWarnings("unused")
+	private static void writeFile(Path path, String content) {
+		try {
+			Files.write(path, content.getBytes(StandardCharsets.UTF_8), StandardOpenOption.TRUNCATE_EXISTING);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

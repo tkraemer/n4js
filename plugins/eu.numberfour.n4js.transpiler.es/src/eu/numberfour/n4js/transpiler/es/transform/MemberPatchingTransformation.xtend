@@ -34,7 +34,7 @@ import eu.numberfour.n4js.utils.Log
  * This transformation will add new "full" members or {@link DelegatingMember}s to the <code>ownedMembersRaw</code>
  * property of {@link ContainerType}s in the intermediate model.
  */
-@Log 
+@Log
 class MemberPatchingTransformation extends Transformation {
 	@Inject private DelegationAssistant delegationAssistant;
 	@Inject private TypeAssistant typeAssistant;
@@ -111,12 +111,12 @@ class MemberPatchingTransformation extends Transformation {
 			state.info.setOriginalDefinedMember(member, field);
 			state.info.markAsConsumedFromInterface(member);
 		}
-		
-		
+
+
 		// add delegates to inherited fields/getters/setters shadowed by an owned setter XOR getter
 		// NOTE: Partial shadowing in general is disallowed by validation. However, in incomplete
-		// API-impl situation we still support this feature here to propagate generated stubs for 
-		// test reporting-purposes. 
+		// API-impl situation we still support this feature here to propagate generated stubs for
+		// test reporting-purposes.
 		// MOVED: the actual implementation moved to the {@link eu.numberfour.n4js.transpiler.es.transform.ApiImplStubGenerationTransformation} class
 		// the following code will issue errors if such a 'forbidden' case is still encountered:
 		for(accTuple : cmoft.concreteAccessorTuples) {

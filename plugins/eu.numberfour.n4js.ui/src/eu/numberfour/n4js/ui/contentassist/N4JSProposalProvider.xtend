@@ -93,7 +93,7 @@ class N4JSProposalProvider extends AbstractN4JSProposalProvider {
 	 * </p><p>
 	 * TODO IDE-2227 fix handling of qualified names in content assist or create follow-up task
 	 * </p>
-	 * 
+	 *
 	 * @see AbstractJavaBasedContentProposalProvider
 	 */
 	override protected getProposalFactory(String ruleName, ContentAssistContext contentAssistContext) {

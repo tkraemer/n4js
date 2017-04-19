@@ -46,8 +46,8 @@ class N4JSImportValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
 	ImportStateCalculator importStateCalculator;
-	
-	@Inject 
+
+	@Inject
 	private JavaScriptVariantHelper jsVariantHelper;
 
 	/**

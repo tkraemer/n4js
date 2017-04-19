@@ -90,7 +90,7 @@ class N4JSQuickfixProvider extends AbstractN4JSQuickfixProvider {
 
 	@Inject
 	extension SemanticChangeProvider
-	
+
 	@Inject
 	protected JavaScriptVariantHelper jsVariantHelper;
 

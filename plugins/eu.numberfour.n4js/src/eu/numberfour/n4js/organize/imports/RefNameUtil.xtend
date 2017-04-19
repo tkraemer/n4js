@@ -42,7 +42,7 @@ class RefNameUtil {
 				if(nodeText.startsWith(typingLiteral)){
 					// handle things like
 					// foo2 : ~r~  /*  ~r~ */  A
-					// nodeText does not contain whitespace or comments, so it is like 
+					// nodeText does not contain whitespace or comments, so it is like
 					// ~r~A
 					// drop typing strategy literal value and return just
 					// A

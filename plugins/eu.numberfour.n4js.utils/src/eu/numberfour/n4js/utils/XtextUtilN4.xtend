@@ -29,10 +29,10 @@ class XtextUtilN4 {
 	@Inject IContainer.Manager containerManager;
 	@Inject ResourceDescriptionsProvider resourceDescriptionsProvider;
 	@Inject	IResourceDescription.Manager descriptionManager;
-	
-	/** 
+
+	/**
 	 * Return all EObjectDescriptions in the index that are visible from an EObject.
-	 *  @param o 
+	 *  @param o
 	 * 			the EObject
 	 * <p>
 	 * See Lorenzo's book page 260.
@@ -40,23 +40,23 @@ class XtextUtilN4 {
 	def Iterable<IEObjectDescription> getVisibleEObjectDescriptions(EObject o) {
 		o.visibleContainers.map [ container | container.exportedObjects ].flatten;
 	}
-	
-	/** 
+
+	/**
 	 * Return all EObjectDescriptions of a certain type in the index that are visible from an EObject.
-	 * @param o 
+	 * @param o
 	 *			the EObject.
-	 * @param type 
+	 * @param type
 	 * 			the type of EObjectDescriptions to filter.
 	 * <p>
 	 * See Lorenzo's book page 260.
 	 */
 	def Iterable<IEObjectDescription> getVisibleEObjectDescriptions(EObject o, EClass type) {
 		o.visibleContainers.map [ container | container.getExportedObjectsByType(type) ].flatten;
-	}	
-	
+	}
+
 	/**
 	 * Return all visible containers from within a given resource.
-	 * @param resource 
+	 * @param resource
 	 * 					the resource
 	 */
 	def List<IContainer> getVisibleContainers(Resource resource) {
@@ -64,7 +64,7 @@ class XtextUtilN4 {
 		val resourceDescription = descriptionManager.getResourceDescription(resource);
 		return  containerManager.getVisibleContainers(resourceDescription, index);
 	}
-	
+
 	def private List<IContainer> getVisibleContainers(EObject o) {
 		val index = resourceDescriptionsProvider.getResourceDescriptions((o.eResource));
 		val resourceDescription = index.getResourceDescription(o.eResource.URI)

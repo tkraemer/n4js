@@ -260,20 +260,20 @@ class ModuleWrappingTransformation extends Transformation {
 				val module = state.info.getImportedModule(elementIM);
 
 				// calculate names in output
-				val completeModuleSpecifier = 
+				val completeModuleSpecifier =
 					if (JSXBackendHelper.isJsxBackendModule(module)) {
 						jsx.jsxBackendModuleSpecifier(module, state.resource)
 					} else {
 						module.completeModuleSpecifier
 					}
-				
+
 				val fparName = if (JSXBackendHelper.isJsxBackendModule(module)) {
 						jsx.getJsxBackendCompleteModuleSpecifierAsIdentifier(module)
 					} else {
 						"$_import_"+module.completeModuleSpecifierAsIdentifier
 					}
-				
-				
+
+
 
 				val moduleSpecifierAdjustment = getModuleSpecifierAdjustment(module);
 				val actualModuleSpecifier = if(moduleSpecifierAdjustment!==null) {

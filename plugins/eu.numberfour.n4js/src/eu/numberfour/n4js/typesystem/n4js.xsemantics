@@ -338,7 +338,7 @@ rule typeThisKeyword
 	G |- ThisLiteral t : TypeRef T
 from {
 	var TypeRef rawT; G |~ t ~> rawT
-	
+
 	rawT = versionResolver.resolveVersion(rawT, rawT)
 	T = TypeUtils.enforceNominalTyping(rawT)
 }
@@ -594,7 +594,7 @@ from {
 			t = typeSystemHelper.getGeneratorTNext(G, actualGenTypeRef);
 		}
 	}
-	
+
 	if (t == null) {
 		t = G.anyTypeRef;
 	}
@@ -799,7 +799,7 @@ from {
 					val fte = T as FunctionTypeExpression
 					fte.returnTypeRef = TypeUtils.copyIfContained(thisTypeRef);
 				} else {
-					T = TypeUtils.createFunctionTypeExpression(null, 
+					T = TypeUtils.createFunctionTypeExpression(null,
 						F.typeVars, F.fpars, thisTypeRef);
 				}
 			}
@@ -1074,10 +1074,10 @@ from {
 }
 
 /*
- * This rule introduces a variation point to the type system. 
- * In particular, it allows sub languages to type newly introduced 
- * expression types that are unknown to N4JS. To use the variation point, 
- * a sub language can use dependency injection to inject a custom implementation 
+ * This rule introduces a variation point to the type system.
+ * In particular, it allows sub languages to type newly introduced
+ * expression types that are unknown to N4JS. To use the variation point,
+ * a sub language can use dependency injection to inject a custom implementation
  * of UnsupportedExpressionTypeHelper
  */
 rule typeUnsupportedExpression
@@ -1167,11 +1167,11 @@ from {
 	} else {
 		T = G.anyTypeRef
 	}
-	
+
 	if (jsVariantHelper.enforceDynamicTypes(vdecl)) {
 		T = typeSystemHelper.makeDynamic(T);
 	}
-	
+
 }
 
 rule typeFormalParameter
@@ -1216,7 +1216,7 @@ from {
 }
 
 axiom typeCatchVariable G |- CatchVariable catchVariable:
-	if (jsVariantHelper.enforceDynamicTypes(catchVariable)) {//  e.g. plain ECMAScript 
+	if (jsVariantHelper.enforceDynamicTypes(catchVariable)) {//  e.g. plain ECMAScript
 		G.anyTypeRefDynamic
 	} else { // e.g. N4JS
 		G.anyTypeRef
@@ -1730,8 +1730,8 @@ from {
 		G |~ rightTypeArg \/ var TypeRef lowerBoundRight
 
 		G |- upperBoundLeft <: upperBoundRight
-		G |- lowerBoundRight <: lowerBoundLeft 
-	} 
+		G |- lowerBoundRight <: lowerBoundLeft
+	}
 }
 
 /*
@@ -2300,17 +2300,17 @@ from {
 }
 /*
  * This rule defines a variant point for defining expected type for new kinds of expressions in a new sub-language.
- * By doing this, subtype checking is done automatically by N4JS infrastructure for these new expressions as well 
- * 
- * Other extension point is the rule typeUnsupportedExpression 
+ * By doing this, subtype checking is done automatically by N4JS infrastructure for these new expressions as well
+ *
+ * Other extension point is the rule typeUnsupportedExpression
  */
 rule expectedTypeInUnsupportedContainer
 	G |- EObject container |> Expression expr: TypeRef T
 from {
-	T = expressionTypeHelper.expectedExpressionTypeInEObject(container, expr, G)	
+	T = expressionTypeHelper.expectedExpressionTypeInEObject(container, expr, G)
 }
 
- 
+
 
 // **********************************************************************
 // Judgment upperBound (extends)
@@ -2403,7 +2403,7 @@ from {
 	} else {
 		T = ct;
 	}
-	
+
 }
 
 
@@ -2619,7 +2619,7 @@ from {
 		{
 			// ---- NOTE: this code was copied in rule 'substTypeVariablesInClassifierTypeRef' above (keep in sync!) ----
 			// do we have a substitution?
-			
+
 			// this might be changed when working on GH-12
 			var temp = env(G, typeVar, TypeRef)
 			if (typeRef instanceof ParameterizedTypeRefStructural) {
@@ -2629,7 +2629,7 @@ from {
 					temp = ptrs;
 				}
 			}
-			
+
 			val tempDeclaredType = temp.declaredType
 			if (typeVar !== tempDeclaredType
 					&& (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic))

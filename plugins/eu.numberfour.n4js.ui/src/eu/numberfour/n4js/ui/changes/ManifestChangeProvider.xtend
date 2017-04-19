@@ -24,12 +24,12 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
  * This class provides basic change functionality for N4JS manifest files.
  */
 class ManifestChangeProvider {
-	
+
 	private static val PROJECT_DEPENDENCIES_KEY = "ProjectDependencies";
 	private static val REQUIRED_RUNTIME_LIBRARIES_KEY = "RequiredRuntimeLibraries";
 	private static val EXTENDED_RUNTIME_ENVIRONMENT_KEY = "ExtendedRuntimeEnvironment"
 
-	
+
 	public static def IAtomicChange addSourceFoldersToManifest(Resource manifestResource, List<String> sourceFolders) {
 		val manifestSourceFolders = new ArrayList<String>(sourceFolders);
 
@@ -52,7 +52,7 @@ class ManifestChangeProvider {
 
 	/**
 	 *  Returns change instance to insert given project dependency into manifest file.
-	 * 
+	 *
 	 * @param resourceUri The URI of the manifest resource
 	 * @param dependencies List of project identifiers
 	 * @param description The ProjectDescription AST element of the manifest to modify.
@@ -70,10 +70,10 @@ class ManifestChangeProvider {
 		if (dependencies.length < 1) {
 			return null;
 		}
-		
-		
-		var StringBuilder textToInsert = new StringBuilder(); 
-		if (description.projectDependencies === null) { //If no dependency list (frame), create one. 
+
+
+		var StringBuilder textToInsert = new StringBuilder();
+		if (description.projectDependencies === null) { //If no dependency list (frame), create one.
 			textToInsert.append("\n" + ManifestChangeProvider.PROJECT_DEPENDENCIES_KEY + " {");
 
 			val INode globalDescriptionNode = NodeModelUtils.findActualNodeFor(description);
@@ -83,7 +83,7 @@ class ManifestChangeProvider {
 			val INode lastDep = NodeModelUtils.findActualNodeFor(description.projectDependencies.projectDependencies.last);
 			offset = lastDep.offset + lastDep.length;
 			textToInsert.append(",");
-		} else { //If empty dependency list, replace the whole empty block 
+		} else { //If empty dependency list, replace the whole empty block
 			textToInsert.append(ManifestChangeProvider.PROJECT_DEPENDENCIES_KEY + " {");
 			withFrame = true;
 			val INode depsNode = NodeModelUtils.findActualNodeFor(description.projectDependencies);
@@ -99,10 +99,10 @@ class ManifestChangeProvider {
 
 		new Replacement(manifestResource.URI, offset, length, textToInsert.toString);
 	}
-	
+
 	/**
 	 *  Returns change instance to insert given required runtime library into manifest file.
-	 * 
+	 *
 	 * @param resourceUri The URI of the manifest resource
 	 * @param dependencies List of runtime library identifiers
 	 * @param projectDescription The ProjectDescription object of the manifest
@@ -111,46 +111,46 @@ class ManifestChangeProvider {
 		var offset = -1;
 		var length = 0;
 		var withFrame = false;
-		
+
 		// Remove all dependencies, that are already part of the list
 		if (projectDescription.requiredRuntimeLibraries !== null) {
 			dependencies.removeIf [ projectDescription.requiredRuntimeLibraries.requiredRuntimeLibraries.map[project.projectId].contains(it)]
 		}
-		
+
 		if (dependencies.length < 1) {
 			return null;
 		}
-				
-		var StringBuilder textToInsert = new StringBuilder(); 
-		if (projectDescription.requiredRuntimeLibraries === null) { //If no runtime library list (frame), create one. 
+
+		var StringBuilder textToInsert = new StringBuilder();
+		if (projectDescription.requiredRuntimeLibraries === null) { //If no runtime library list (frame), create one.
 			textToInsert.append("\n" + ManifestChangeProvider.REQUIRED_RUNTIME_LIBRARIES_KEY + " {");
 			val INode globalDescriptionNode = NodeModelUtils.findActualNodeFor(projectDescription);
 			offset = globalDescriptionNode.offset + globalDescriptionNode.length;
 			withFrame = true;
 		} else if (projectDescription.requiredRuntimeLibraries.requiredRuntimeLibraries.length > 0) { //If existing runtime library list, append after the last one
-			val INode lastDep = NodeModelUtils.findActualNodeFor(projectDescription.requiredRuntimeLibraries.requiredRuntimeLibraries.last); 
+			val INode lastDep = NodeModelUtils.findActualNodeFor(projectDescription.requiredRuntimeLibraries.requiredRuntimeLibraries.last);
 			offset = lastDep.offset + lastDep.length;
 			textToInsert.append(",");
-		} else { //If empty dependency list, replace the whole empty block 
+		} else { //If empty dependency list, replace the whole empty block
 			textToInsert.append(ManifestChangeProvider.REQUIRED_RUNTIME_LIBRARIES_KEY + " {");
 			withFrame = true;
 			val INode requiredRuntimeNode = NodeModelUtils.findActualNodeFor(projectDescription.requiredRuntimeLibraries);
 			offset = requiredRuntimeNode.offset;
 			length = requiredRuntimeNode.length;
 		}
-				
+
 		textToInsert.append('''«FOR dep : dependencies SEPARATOR ","»«"\n\t" + dep»«ENDFOR»''')
-		
-		if (withFrame) { 
+
+		if (withFrame) {
 			textToInsert.append("\n}");
 		}
-		
+
 		new Replacement(manifestResource.URI, offset, length, textToInsert.toString);
 	}
-	
+
 	/**
 	 * Returns change instance to set the ExtendedRuntimeEnvironment to the given value.
-	 * 
+	 *
 	 * @param manifestResource The manifest resource
 	 * @param runtimeEnvironment The runtime environment to set
 	 * @param projectDescription The project description object of the manifest

@@ -35,7 +35,7 @@ class TypeRefsToVariablesAssembler extends AbstractScriptAssembler {
 	def RuleEnvironment prepareScriptAndCreateRuleEnvironment(String... typeExpressions) {
 		return prepareScriptAndCreateRuleEnvironment(#[], JavaScriptVariant.n4js, typeExpressions)
 	}
-	
+
 	/**
 	 * To be called by test for appending newly generated variable declarations with given types.
 	 * <p>

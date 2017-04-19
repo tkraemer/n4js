@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -29,7 +29,7 @@ import eu.numberfour.n4js.utils.Log
 import org.eclipse.xtext.formatting2.internal.HiddenRegionReplacer
 
 /**
- * 
+ *
  */
 @FinalFieldsConstructor class N4JSGenericFormatter {
 
@@ -64,7 +64,7 @@ import org.eclipse.xtext.formatting2.internal.HiddenRegionReplacer
 				val insertAt = region.textRegionAccess.regionForOffset(previous.offset, 0)
 				document.addReplacer(new InsertSemi(insertAt, ";"));
 			} else if (text.trim.isEmpty) {
-				// Don't eat up white space here.	
+				// Don't eat up white space here.
 				// Look for first line break and replace with ";\n":
 				val lbIdx = text.indexOf("\n");
 				if( lbIdx >= 0 ) {
@@ -85,8 +85,8 @@ import org.eclipse.xtext.formatting2.internal.HiddenRegionReplacer
 
 	/**
 	 * Format whitespace around (), [], and {}
-	 * 
-	 * When multiple pairs of (), [], or {} open in the same line, indentation is only applied for the innermost pair. 
+	 *
+	 * When multiple pairs of (), [], or {} open in the same line, indentation is only applied for the innermost pair.
 	 */
 	def void formatParenthesisBracketsAndBraces(EObject script, extension IFormattableDocument document) {
 		val all = newArrayList()
@@ -101,8 +101,8 @@ import org.eclipse.xtext.formatting2.internal.HiddenRegionReplacer
 			val outermost = bracePairsInSameLine.head
 			val innermost = bracePairsInSameLine.last
 
-			// keep track of lastOpen/lastClose to avoid formatting the HiddenRegion twice if that hidden region 
-			// is located directly between two brackets. Then, first.append[] would collide with second.prepend[]. 
+			// keep track of lastOpen/lastClose to avoid formatting the HiddenRegion twice if that hidden region
+			// is located directly between two brackets. Then, first.append[] would collide with second.prepend[].
 			var IHiddenRegion lastOpen = null
 			var IHiddenRegion lastClose = null
 			for (pair : bracePairsInSameLine) {
@@ -130,7 +130,7 @@ import org.eclipse.xtext.formatting2.internal.HiddenRegionReplacer
 			val ISemanticRegion close = innermost.value;
 			if (open.nextSemanticRegion == close && !open.nextHiddenRegion.isMultiline) { // empty brace-pair
 				open.append[noSpace; priority = PRIO_1];
-			} // otherwise, if there is a newline before the innermost closing bracket, we want to format the surrounded tokens multiline style. 
+			} // otherwise, if there is a newline before the innermost closing bracket, we want to format the surrounded tokens multiline style.
 			else if (close.previousHiddenRegion.isMultiline) {
 				close.prepend[newLine; priority = PRIO_1].appendNewLine(document);
 				open.append[newLine; priority = PRIO_1];
@@ -140,8 +140,8 @@ import org.eclipse.xtext.formatting2.internal.HiddenRegionReplacer
 					comma.prepend[noSpace; priority = PRIO_1]
 					.append[
 						// If dangling comma, then a conflict arises with new line of close.
-						// Avoid here by using Prio_2 
-						setNewLines(1,1,2);	
+						// Avoid here by using Prio_2
+						setNewLines(1,1,2);
 						priority = PRIO_2
 					];
 				}
@@ -195,57 +195,56 @@ import org.eclipse.xtext.formatting2.internal.HiddenRegionReplacer
 
 @Log
 class IndentHandlingTextReplaceMerger extends TextReplacerMerger {
-	
+
 	new(AbstractFormatter2 formatter) {
 		super(formatter)
 	}
-	
-	/** Overridden for special case of {@link InsertSemi} & {@link HiddenRegionReplacer} merging. 
+
+	/** Overridden for special case of {@link InsertSemi} & {@link HiddenRegionReplacer} merging.
 	 * Calls super implementation if no InsertSemi object is involved */
 	override merge(List<? extends ITextReplacer> conflicting) {
 		if(conflicting.findFirst[it instanceof InsertSemi] === null ){
 			// standard case
 			return super.merge(conflicting);
 		}
-		
+
 		// there is an insertSemi.
 		val semiReplacements = conflicting.filter(InsertSemi).toList;
 		val otherReplacements = conflicting.filter[!(it instanceof InsertSemi)].toList;
-		
-		
+
+
 		if( semiReplacements.size !== 1  || otherReplacements.size !== 1  ) {
 			logger.warn( '''
 			Unhandled merge-case: "
-				"Semis replacer («semiReplacements.size») :«semiReplacements» 
+				"Semis replacer («semiReplacements.size») :«semiReplacements»
 				"Non-Semi replacer ( «otherReplacements.size»  «otherReplacements»
 			 ''')
-				
-			return null; // null creates merge Exception 
+
+			return null; // null creates merge Exception
 		}
 		// exactly one:
 		val semiRepl = semiReplacements.get(0);
 		val otherRepl = otherReplacements.get(0);
-		
+
 		if( otherRepl instanceof HiddenRegionReplacer ) {
 			// copy over the indentation information
 			semiRepl.indentationIncrease = otherRepl.formatting.indentationIncrease;
 			semiRepl.indentationDecrease = otherRepl.formatting.indentationDecrease;
 			// NOT handled are the following non-null cases:
-			if( otherRepl.formatting.autowrap !== null 
+			if( otherRepl.formatting.autowrap !== null
 				|| otherRepl.formatting.newLineDefault !== null
 				|| otherRepl.formatting.newLineMax !== null
 				|| otherRepl.formatting.newLineMin !== null
 				|| otherRepl.formatting.noIndentation !== null
 				|| otherRepl.formatting.space !== null
 			) {
-				logger.warn("Unsupported property for merging."); 
+				logger.warn("Unsupported property for merging.");
 				return null; // Throws exception in caller.
 			}
 			return semiRepl;
 		}
-		
+
 		return null;
 	}
-	
-}
 
+}

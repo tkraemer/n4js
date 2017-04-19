@@ -426,14 +426,14 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	 */
 	def List<TypeRef> getSubtypesOnly(RuleEnvironment G, TypeRef... typeRefs) {
 		val intersectTRs = new LinkedList<TypeRef>();
-		
+
 		for (s : typeRefs) {
 			if (! intersectTRs.exists[ts.subtypeSucceeded(G, it, s)]) {
 				Iterables.removeIf(intersectTRs, [ts.subtypeSucceeded(G, s, it)]);
 				intersectTRs.add(s)
 			}
 		}
-		
+
 		return intersectTRs
 	}
 
@@ -450,7 +450,7 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 				unionTRs.add(s)
 			}
 		}
-		
+
 		return unionTRs
 	}
 
@@ -465,9 +465,9 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		val myThisTypeRef = ts.thisTypeRef(G, expr).value;
 		G2.addThisType(myThisTypeRef); // takes the real-this type even if it is a type{this} reference.
 
-		if (funDef === null || !funDef.isGenerator) 
+		if (funDef === null || !funDef.isGenerator)
 			return null; // yields only occur in generator functions
-		
+
 		val tFun = funDef.definedType;
 		if (tFun instanceof TFunction) {
 			val actualReturnTypeRef = tFun.returnTypeRef;

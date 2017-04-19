@@ -16,50 +16,50 @@ import java.util.Map
 import org.eclipse.xtend.lib.annotations.Data
 
 /**
- * Simple POJO for representing a difference. 
+ * Simple POJO for representing a difference.
  */
 @Data
 class Diff<T> {
-	
+
 	/**
 	 * The initial, ordered state of the relevant items.
 	 */
 	val T[] oldItems;
-	
+
 	/**
 	 * The initial, ordered state of all items.
 	 */
 	val T[] oldAllItems;
-	
+
 	/**
 	 * The items that have been added.
 	 */
 	val T[] addedItems;
-	
+
 	/**
 	 * The removed items.
 	 */
 	val T[] deletedItems;
-	
+
 	/**
 	 * Map of edited items. Keys are old state, values are the new state.
 	 */
 	val Map<T, T> editedItems;
-	
+
 	/**
 	 * The final, ordered state of the relevant items.
 	 */
 	val T[] newItems;
-	
+
 	/**
 	 * The final, ordered state of all items.
 	 */
 	val T[] newAllItems;
-	
+
 	/**
-	 * Returns with {@code true} if the diff contains no addition, deletion and no edition 
+	 * Returns with {@code true} if the diff contains no addition, deletion and no edition
 	 * and the state of all and relevant items equals with the new state of all and relevant items.
-	 * Otherwise returns with {@code false}. 
+	 * Otherwise returns with {@code false}.
 	 */
 	def isEmpty() {
 		return addedItems.empty
@@ -68,7 +68,7 @@ class Diff<T> {
 			&& Arrays.equals(newItems, oldItems)
 			&& Arrays.equals(newAllItems, oldAllItems)
 	}
-	
+
 	@Override
 	override toString() {
 		'''Diff:
@@ -83,5 +83,5 @@ class Diff<T> {
 		-----------------------------
 		''';
 	}
-	
+
 }

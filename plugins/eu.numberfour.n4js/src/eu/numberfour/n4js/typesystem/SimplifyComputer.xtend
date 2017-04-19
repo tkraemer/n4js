@@ -75,14 +75,14 @@ class SimplifyComputer extends TypeSystemHelperStrategy {
 		}
 
 	}
-	
+
 	/**
 	 * Returns a simplified list of all TypeRefs of a composed type.
 	 */
 	def <T extends ComposedTypeRef> List<TypeRef> getSimplifiedTypeRefs(RuleEnvironment G, T composedType) {
 		return getSimplifiedTypeRefs(G, composedType, false);
 	}
-	
+
 	def private <T extends ComposedTypeRef> List<TypeRef> getSimplifiedTypeRefs(RuleEnvironment G, T composedType, boolean copyIfContained) {
 		if (composedType === null) {
 			return null;
@@ -100,7 +100,7 @@ class SimplifyComputer extends TypeSystemHelperStrategy {
 		} else {
 			set.addAll(composedType.typeRefs);
 		}
-		
+
 		val List<TypeRef> typeRefs = new LinkedList<TypeRef>();
 		val undefinedTypeRef = G.undefinedTypeRef
 		val nullTypeRef = G.nullTypeRef

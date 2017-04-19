@@ -182,7 +182,7 @@ public class ContentAssistXpectMethod {
 	 contentAssistList              at 'a.<|>methodA'       proposals             unordered --> methodA2, methodA
 	 contentAssistList              at 'a.<|>methodA'       display   'methodA2'            --> 'methodA2(): any - A'
 	 contentAssistList kind 'smart' at 'a.<|>methodA'       display   'methodA2'            --> 'methodA2(): any - A'
-	
+
 	                    kind        offset                  checkType  selected    mode
 	                    arg4        arg2                    arg3       arg5        arg6
 	 */

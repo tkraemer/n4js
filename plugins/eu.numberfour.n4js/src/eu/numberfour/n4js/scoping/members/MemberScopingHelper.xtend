@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -62,7 +62,7 @@ class MemberScopingHelper {
 	@Inject TypeSystemHelper tsh;
 	@Inject MemberScope.MemberScopeFactory memberScopeFactory
 	@Inject private MemberVisibilityChecker memberVisibilityChecker
-	@Inject	private JavaScriptVariantHelper jsVariantHelper; 
+	@Inject	private JavaScriptVariantHelper jsVariantHelper;
 
 
 	/**
@@ -70,7 +70,7 @@ class MemberScopingHelper {
 	 * <p>
 	 * When choosing static scope, the {@code context} is inspected to determine read/write access
 	 * but only if it's a {@link ParameterizedPropertyAccessExpression} or a {@code IndexedAccessExpression}.
-	 * 
+	 *
 	 * @param receiverTypeRef
 	 *               TypeRef for the value whose scope is of interest.
 	 * @param context
@@ -267,12 +267,12 @@ class MemberScopingHelper {
 		if (intersectiontypeexp.typeRefs.isEmpty) {
 			return IScope.NULLSCOPE;
 		}
-	
+
 		val List<IScope> subScopes = intersectiontypeexp.typeRefs.map [ elementTypeRef |
 			val scope = members(elementTypeRef, request);
 			return scope;
 		]
-		
+
 		return new IntersectionMemberScope(intersectiontypeexp, request.context, subScopes, ts);
 	}
 

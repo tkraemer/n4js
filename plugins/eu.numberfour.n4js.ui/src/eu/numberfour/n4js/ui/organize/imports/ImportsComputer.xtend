@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -74,20 +74,20 @@ public class ImportsComputer {
 
 	@Inject
 	private ImportProvidedElementLabelprovider importProvidedElementLabelprovider;
-	
+
 	/** Adapter used to mark programmatically created AST-Elements without a corresponding parse tree node. */
 	private final Adapter nodelessMarker = new AdapterImpl();
 
 	@Inject
 	private ImportSpacerUserPreferenceHelper spacerPreference;
-	
+
 	@Inject
 	private N4JSCandidateFilter candidateFilter;
 
 
 	/**
 	 * Calculate the real content of the new import section in the file header.
-	 * 
+	 *
 	 * @param xtextResource the resource to organize
 	 * @param lineEnding current active line ending in file
 	 * @param interaction mode of handling ambiguous situations
@@ -231,7 +231,7 @@ public class ImportsComputer {
 			.filter[isCandidate(it, usedName)]
 			.forEach[resolution.add(usedName, it)]
 	}
-	
+
 	/** Creates {@link ImportableObject} from provided name and object description. Result is added to the collection. */
 	private def boolean add(Multimap<String, ImportableObject> resolution, String usedName, IEObjectDescription ieoDescription) {
 		resolution.put(usedName, new ImportableObject(usedName, ieoDescription, ieoDescription.isDefaultExport))
@@ -248,7 +248,7 @@ public class ImportsComputer {
 			qName.getSegment(qName.segmentCount - 2) == name);
 	}
 
-	/** Extracts the token text for existing import-declaration or creates new textual representation for 
+	/** Extracts the token text for existing import-declaration or creates new textual representation for
 	 * a new generated import declaration.
 	 */
 	private def String extractPureText(ImportDeclaration declaration, XtextResource resource) {
@@ -286,15 +286,15 @@ public class ImportsComputer {
 	}
 
 	/**
-	 * Rewrites the node-content without comments. 
-	 *  
+	 * Rewrites the node-content without comments.
+	 *
 	 * Inspired by {@link NodeModelUtils#getTokenText(INode)} but can treat any {@link LeafNodeWithSyntaxError syntax error}
 	 * nodes as a hidden one and reformats White-space after opening and before closing curly brace according to spacer-policy
-	 * 
+	 *
 	 * @param node the node to reformat.
 	 * @param spacer append after "{" and prepend before "}" can be empty string, then no white-space is inserted after
 	 * @param ignoredSyntaxErrorIssues - nodes of type LeafNodeWithSyntaxError having one of this issues are treated as ignored/hidden leafs
-	 * @returns modified textual form.  
+	 * @returns modified textual form.
 	 */
 	private static def String rewriteTokenText(ICompositeNode node, String spacer,
 		String... ignoredSyntaxErrorIssues) {
@@ -312,21 +312,21 @@ public class ImportsComputer {
 				val text = leaf.getText();
 				if (builder.length() > 0) { // do not insert space before any content.
 					if (openingCurlySeen) {
-						// last real text was "{"  
+						// last real text was "{"
 						builder.append(spacer);
 					} else if ("}" == text) {
 						// this text is "}"
 						builder.append(spacer);
 					} else if ("," == text) {
-						// drop WS in front of commas.	
+						// drop WS in front of commas.
 					} else {
-						// standard-WS handling. 
+						// standard-WS handling.
 						if (hiddenSeen) {
 							builder.append(' ');
 						}
 					}
 				}
-				// record state of opening curly brace: 
+				// record state of opening curly brace:
 				openingCurlySeen = "{" == text;
 				builder.append(text);
 				hiddenSeen = false;
@@ -366,9 +366,9 @@ public class ImportsComputer {
 	/**
 	 * Depending on interaction-mode:
 	 * Present a user dialog and let the user choose a distinct import for each unresolved problem.
-	 * 
+	 *
 	 * For each key in {@code multiMap} exactly one solution is returned.
-	 * 
+	 *
 	 */
 	private def <T> List<T> disambiguate(Multimap<String, T> multiMapName2Candidates,
 		Interaction interaction) throws BreakException {
@@ -413,4 +413,3 @@ public class ImportsComputer {
 		return result;
 	}
 }
-	

@@ -34,7 +34,7 @@ class JSXWithOutFreeTextTest extends AbstractN4JSXParserTest {
 		assertEquals(3, script.scriptElements.size)
 		assertType(N4ClassDeclaration, script.scriptElements.get(0))
 		assertType(FunctionDeclaration, script.scriptElements.get(2))
-		
+
 		val JSXElement jsxElement = (script.scriptElements.get(1) as ExpressionStatement).expression as JSXElement;
 		assertTagName("div", jsxElement);
 	}
@@ -49,11 +49,11 @@ class JSXWithOutFreeTextTest extends AbstractN4JSXParserTest {
 		assertEquals(3, script.scriptElements.size)
 		assertType(N4ClassDeclaration, script.scriptElements.get(0))
 		assertType(FunctionDeclaration, script.scriptElements.get(2))
-		
+
 		val JSXElement jsxElement = (script.scriptElements.get(1) as ExpressionStatement).expression as JSXElement;
 		assertTagName("div", jsxElement);
 	}
-	
+
 	@Test
 	def void testOpenCloseTagWithNested() {
 		val script = '''
@@ -64,31 +64,31 @@ class JSXWithOutFreeTextTest extends AbstractN4JSXParserTest {
 		assertEquals(3, script.scriptElements.size)
 		assertType(N4ClassDeclaration, script.scriptElements.get(0))
 		assertType(FunctionDeclaration, script.scriptElements.get(2))
-		
+
 		val JSXElement jsxElement = (script.scriptElements.get(1) as ExpressionStatement).expression as JSXElement;
 		assertTagName("div", jsxElement);
 		assertTagName("Foo", jsxElement.jsxChildren.get(0));
 	}
-	
+
 	@Test
 	def void testOpenCloseTagWithNestedExpression() {
 		val script = '''
 			class Foo{}
-			<div>{`Hello 
+			<div>{`Hello «»
 			World`}</div>
 			function bar() {}
 		'''.parseSuccessfully
 		assertEquals(3, script.scriptElements.size)
 		assertType(N4ClassDeclaration, script.scriptElements.get(0))
 		assertType(FunctionDeclaration, script.scriptElements.get(2))
-		
+
 		val JSXElement jsxElement = (script.scriptElements.get(1) as ExpressionStatement).expression as JSXElement;
 		assertTagName("div", jsxElement);
 		val TemplateSegment seg = ((jsxElement.jsxChildren.get(0) as JSXExpression).expression as TemplateLiteral).segments.head as TemplateSegment;
-		
+
 		assertEquals("Hello \nWorld",seg.valueAsString );
 	}
-	
+
 	@Test
 	def void testOpenCloseTagWithPropertyAttribute() {
 		val script = '''
@@ -99,14 +99,14 @@ class JSXWithOutFreeTextTest extends AbstractN4JSXParserTest {
 		assertEquals(3, script.scriptElements.size)
 		assertType(N4ClassDeclaration, script.scriptElements.get(0))
 		assertType(FunctionDeclaration, script.scriptElements.get(2))
-		
+
 		val JSXElement jsxElement = (script.scriptElements.get(1) as ExpressionStatement).expression as JSXElement;
 		assertTagName("div", jsxElement);
-		
+
 		val attr = jsxElement.jsxAttributes.head as JSXPropertyAttribute
 		assertEquals("Test", (attr.jsxAttributeValue as StringLiteral).value)
 	}
-	
+
 	/**
 	 * The example produces the same error when using the babel transpiler.
 	 */
@@ -114,7 +114,7 @@ class JSXWithOutFreeTextTest extends AbstractN4JSXParserTest {
 	def void testRegExAmbiguity() {
 		'''
 			"Hello"
-			
+
 			<div></div>
 		'''.parseWithError
 	}
@@ -126,10 +126,10 @@ class JSXWithOutFreeTextTest extends AbstractN4JSXParserTest {
 	def void testRegExAmbiguityContra() {
 		'''
 			<div></div>
-			
+
 			"Hello"
 		'''.parseSuccessfully
 	}
-			
-			
+
+
 }

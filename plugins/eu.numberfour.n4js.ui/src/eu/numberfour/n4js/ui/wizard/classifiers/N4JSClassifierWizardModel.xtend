@@ -59,11 +59,10 @@ abstract class N4JSClassifierWizardModel extends WorkspaceWizardModel {
 		}
 		return effectiveModuleSpecifier;
 	}
-	
+
 	/**
 	 * Returns with the human readable name of the classifier. For instance interface or class.
 	 */
 	public def abstract String getClassifierName();
-	
+
 }
-			

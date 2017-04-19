@@ -70,7 +70,7 @@ class ValidatorMessageHelper {
 	 */
 	private def String staticOrConstKeyword(TMember member) {
 		if (member !== null && member.static) {
-			// exception for 'const' which is tagged static but meaning is implied by 'const' keyword 
+			// exception for 'const' which is tagged static but meaning is implied by 'const' keyword
 			if(member instanceof TField) {
 				if( member.isConst ) return "const ";
 			}
@@ -337,7 +337,7 @@ class ValidatorMessageHelper {
 					}
 				}
 			}
-			
+
 			val ptr = tfunction.returnTypeRef as ParameterizedTypeRef;
 			val asyncReturnType = ptr.typeArgs.get(0);
 			if (asyncReturnType !== null) {

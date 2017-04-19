@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -55,7 +55,7 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 
 /**
  * Validation of rules that apply to individual members of a classifier.<p>
- * 
+ *
  * Validation of rules about members:
  * <ul>
  * <li>if the rules require to take into account the other owned or inherited members of the
@@ -73,7 +73,7 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * NEEDED
-	 * 
+	 *
 	 * when removed check methods will be called twice once by N4JSValidator, and once by
 	 * AbstractDeclarativeN4JSValidator
 	 */
@@ -102,7 +102,7 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 	 * only set during post processing as of IDE-2468, we now have to perform validations for computed property names
 	 * here.
 	 */
-	@Check 
+	@Check
 	def void checkComputedPropertyName(PropertyNameOwner owner) {
 		if (owner.hasComputedPropertyName) {
 			val name = owner.name

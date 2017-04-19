@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -79,7 +79,7 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * NEEEDED
-	 * 
+	 *
 	 * when removed check methods will be called twice once by N4JSValidator, and once by
 	 * AbstractDeclarativeN4JSValidator
 	 */
@@ -330,7 +330,7 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 
-	/** 
+	/**
 	 * Check N4JS annotation to be in definition file.
 	 */
 	private def internalCheckN4JS(Annotation annotation) {
@@ -444,7 +444,7 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * Constraints 139 (static polyfill layout)  §139
-	 * 
+	 *
 	 */
 	private def internalCheckStaticPolyfill(Annotation annotation) {
 		val AnnotableElement element = annotation.annotatedElement as AnnotableElement;

@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
 package eu.numberfour.n4js.tests.codegen
 
 /**
@@ -18,17 +28,17 @@ class Field extends Member<Field> {
 
 	/**
 	 * Sets the field type.
-	 * 
+	 *
 	 * @param fieldType the field type
 	 */
 	public def Field setFieldType(String fieldType) {
 		this.fieldType = fieldType;
 		return this;
 	}
-	
+
 	/**
 	 * Sets the default value or expression.
-	 * 
+	 *
 	 * @param defaultValue the default value
 	 */
 	public def Field setDefaultValue(String defaultValue) {
@@ -40,4 +50,3 @@ class Field extends Member<Field> {
 	«IF !fieldType.nullOrEmpty»«fieldType» «ENDIF»«name»«IF !defaultValue.nullOrEmpty» = «defaultValue»«ENDIF»;
 	'''
 }
-

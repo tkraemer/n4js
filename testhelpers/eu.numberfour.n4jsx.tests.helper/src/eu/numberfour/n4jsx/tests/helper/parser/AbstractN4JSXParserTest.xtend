@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -29,7 +29,7 @@ import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4jsx.n4JSX.JSXChild
 
 /**
- * N4JSX version of N4JS' AbstractParserTest 
+ * N4JSX version of N4JS' AbstractParserTest
  */
 @RunWith(XtextRunner)
 @InjectWith(N4JSXInjectorProvider)
@@ -74,7 +74,7 @@ public abstract class AbstractN4JSXParserTest extends Assert {
 	protected def assertType(Class<?> type, EObject astElement) {
 		assertTrue("Expected type " + type.name + ", was " + astElement.class.name, type.isInstance(astElement))
 	}
-	
+
 	protected def assertTagName(String expectedName, JSXChild jsxElement) {
 		val actualName = ((jsxElement as JSXElement).jsxElementName.expression as IdentifierRef).idAsText;
 		assertEquals(expectedName, actualName)

@@ -57,21 +57,21 @@ class StructuralMembersTripleIteratorTest extends AbstractN4JSTest {
 					public f: string;
 				}
 			'''.parseAndValidateSuccessfully;
-			
+
 			val classes = script.eContents.filter(N4ClassDeclaration).map[definedType].filter(TClass);
-			
+
 			val L = classes.findFirst[name=='L'];
 			val LF = classes.findFirst[name=='LF'];
 			val R = classes.findFirst[name=='R'];
 			val RF = classes.findFirst[name=='RF'];
-			
+
 			L_getter = L.ownedMembers.filter(TGetter).head;
 			L_setter = L.ownedMembers.filter(TSetter).head;
 			L_field = LF.ownedMembers.filter(TField).head;
 			R_getter = R.ownedMembers.filter(TGetter).head;
 			R_setter = R.ownedMembers.filter(TSetter).head;
 			R_field = RF.ownedMembers.filter(TField).head;
-	
+
 			isMemberPreparationDone = true;
 		}
 
@@ -88,7 +88,7 @@ class StructuralMembersTripleIteratorTest extends AbstractN4JSTest {
 		val iter = StructuralMembersTripleIterator.ofUnprepared(
 			#[ L_setter ], #[ R_setter ],
 			TypingStrategy.NOMINAL, TypingStrategy.STRUCTURAL_FIELDS);
-		
+
 		assertEquals(tripleOf(L_setter,R_setter), iter.next);
 		assertFalse(iter.hasNext);
 	}
@@ -98,7 +98,7 @@ class StructuralMembersTripleIteratorTest extends AbstractN4JSTest {
 		val iter = StructuralMembersTripleIterator.ofUnprepared(
 			#[ L_getter ], #[ R_getter ],
 			TypingStrategy.NOMINAL, TypingStrategy.STRUCTURAL_FIELDS);
-		
+
 		assertEquals(tripleOf(L_getter,R_getter), iter.next);
 		assertFalse(iter.hasNext);
 	}
@@ -108,7 +108,7 @@ class StructuralMembersTripleIteratorTest extends AbstractN4JSTest {
 		val iter = StructuralMembersTripleIterator.ofUnprepared(
 			#[ ], #[ R_setter ],
 			TypingStrategy.NOMINAL, TypingStrategy.STRUCTURAL_FIELDS);
-		
+
 		assertEquals(tripleOf(null,R_setter), iter.next);
 		assertFalse(iter.hasNext);
 	}
@@ -118,7 +118,7 @@ class StructuralMembersTripleIteratorTest extends AbstractN4JSTest {
 		val iter = StructuralMembersTripleIterator.ofUnprepared(
 			#[ L_getter ], #[ R_setter ],
 			TypingStrategy.NOMINAL, TypingStrategy.STRUCTURAL_FIELDS);
-		
+
 		assertEquals(tripleOf(null,R_setter), iter.next);
 		assertFalse(iter.hasNext);
 	}
@@ -128,7 +128,7 @@ class StructuralMembersTripleIteratorTest extends AbstractN4JSTest {
 		val iter = StructuralMembersTripleIterator.ofUnprepared(
 			#[ ], #[ R_getter ],
 			TypingStrategy.NOMINAL, TypingStrategy.STRUCTURAL_FIELDS);
-		
+
 		assertEquals(tripleOf(null,R_getter), iter.next);
 		assertFalse(iter.hasNext);
 	}
@@ -138,7 +138,7 @@ class StructuralMembersTripleIteratorTest extends AbstractN4JSTest {
 		val iter = StructuralMembersTripleIterator.ofUnprepared(
 			#[ L_setter ], #[ R_getter ],
 			TypingStrategy.NOMINAL, TypingStrategy.STRUCTURAL_FIELDS);
-		
+
 		assertEquals(tripleOf(null,R_getter), iter.next);
 		assertFalse(iter.hasNext);
 	}
@@ -149,7 +149,7 @@ class StructuralMembersTripleIteratorTest extends AbstractN4JSTest {
 			#[ L_setter ],
 			#[ R_getter, R_setter ],
 			TypingStrategy.NOMINAL, TypingStrategy.STRUCTURAL_FIELDS);
-		
+
 		assertEquals(tripleOf(null,null,R_getter), iter.next);
 		assertEquals(tripleOf(L_setter,null,R_setter), iter.next);
 		assertFalse(iter.hasNext);
@@ -161,7 +161,7 @@ class StructuralMembersTripleIteratorTest extends AbstractN4JSTest {
 			#[ L_getter ],
 			#[ R_getter, R_setter ],
 			TypingStrategy.NOMINAL, TypingStrategy.STRUCTURAL_FIELDS);
-		
+
 		assertEquals(tripleOf(L_getter,null,R_getter), iter.next);
 		assertEquals(tripleOf(null,null,R_setter), iter.next);
 		assertFalse(iter.hasNext);
@@ -173,7 +173,7 @@ class StructuralMembersTripleIteratorTest extends AbstractN4JSTest {
 			#[ L_getter, L_setter ],
 			#[ R_field ],
 			TypingStrategy.NOMINAL, TypingStrategy.STRUCTURAL_FIELDS);
-		
+
 		assertEquals(tripleOf(L_getter,L_setter,R_field), iter.next);
 		assertFalse(iter.hasNext);
 	}
@@ -184,7 +184,7 @@ class StructuralMembersTripleIteratorTest extends AbstractN4JSTest {
 			#[ L_getter ],
 			#[ R_field ],
 			TypingStrategy.NOMINAL, TypingStrategy.STRUCTURAL_FIELDS);
-		
+
 		assertEquals(tripleOf(L_getter,null,R_field), iter.next);
 		assertFalse(iter.hasNext);
 	}
@@ -195,7 +195,7 @@ class StructuralMembersTripleIteratorTest extends AbstractN4JSTest {
 			#[ L_setter ],
 			#[ R_field ],
 			TypingStrategy.NOMINAL, TypingStrategy.STRUCTURAL_FIELDS);
-		
+
 		assertEquals(tripleOf(L_setter,null,R_field), iter.next);
 		assertFalse(iter.hasNext);
 	}
@@ -206,7 +206,7 @@ class StructuralMembersTripleIteratorTest extends AbstractN4JSTest {
 			#[ L_field ],
 			#[ R_getter, R_setter ],
 			TypingStrategy.NOMINAL, TypingStrategy.STRUCTURAL_FIELDS);
-		
+
 		assertEquals(tripleOf(L_field,null,R_getter), iter.next);
 		assertEquals(tripleOf(L_field,null,R_setter), iter.next);
 		assertFalse(iter.hasNext);
@@ -218,7 +218,7 @@ class StructuralMembersTripleIteratorTest extends AbstractN4JSTest {
 			#[ L_field ],
 			#[ R_getter ],
 			TypingStrategy.NOMINAL, TypingStrategy.STRUCTURAL_FIELDS);
-		
+
 		assertEquals(tripleOf(L_field,null,R_getter), iter.next);
 		assertFalse(iter.hasNext);
 	}
@@ -229,7 +229,7 @@ class StructuralMembersTripleIteratorTest extends AbstractN4JSTest {
 			#[ L_field ],
 			#[ R_setter ],
 			TypingStrategy.NOMINAL, TypingStrategy.STRUCTURAL_FIELDS);
-		
+
 		assertEquals(tripleOf(L_field,null,R_setter), iter.next);
 		assertFalse(iter.hasNext);
 	}

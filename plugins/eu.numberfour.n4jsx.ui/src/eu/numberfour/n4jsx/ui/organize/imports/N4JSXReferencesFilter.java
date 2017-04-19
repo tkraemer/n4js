@@ -1,6 +1,5 @@
-package eu.numberfour.n4jsx.ui.organize.imports;
 /**
- * Copyright (c) 2017 NumberFour AG.
+ * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +8,7 @@ package eu.numberfour.n4jsx.ui.organize.imports;
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
+package eu.numberfour.n4jsx.ui.organize.imports;
 
 import org.eclipse.emf.ecore.EObject;
 

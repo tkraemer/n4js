@@ -172,7 +172,7 @@ public abstract class AbstractPluginUITest extends AbstractIDEBUG_Test {
 	 * Asserts that {@code expected} argument is {@link Class#isAssignableFrom(Class) assignable} from the
 	 * {@code actual} argument. If {@code true}, then returns with the casted type safe instance, otherwise throws an
 	 * exception.
-	 * 
+	 *
 	 * @param actual
 	 *            the actual object to check. Must not be {@code null}.
 	 * @param expected

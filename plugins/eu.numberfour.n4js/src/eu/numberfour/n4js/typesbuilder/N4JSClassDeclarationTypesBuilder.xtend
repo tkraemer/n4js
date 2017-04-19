@@ -72,7 +72,7 @@ public class N4JSClassDeclarationTypesBuilder {
 		n4Class.definedType = tclass;
 
 		target.topLevelTypes += tclass;
-		
+
 		return tclass;
 	}
 

@@ -38,9 +38,9 @@ class GH_184_TemplateStringTest extends AbstractTranspilerTest {
 			 var foo = `\n party`;
 			 var bar = "\n party";
 			 console.log(foo === bar); //should be true but is false
-			 
+
 			 var foo2 = `"${bar}"`
-			 var bar2 = '"\n party"'; 
+			 var bar2 = '"\n party"';
 		''';
 
 		val moduleWrapped = '''

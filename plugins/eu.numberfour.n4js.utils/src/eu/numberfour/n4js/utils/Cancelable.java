@@ -17,14 +17,14 @@ public interface Cancelable {
 
 	/**
 	 * Returns {@code true} if the concrete instance is cancelable. Otherwise returns with {@code false}.
-	 * 
+	 *
 	 * @return {@code true} if the instance is cancelable, otherwise {@code false}.
 	 */
 	boolean isCancelable();
 
 	/**
 	 * Sets the cancelable state of the concrete instance based on the boolean argument.
-	 * 
+	 *
 	 * @param b
 	 *            the desired cancelable state of the instance.
 	 */

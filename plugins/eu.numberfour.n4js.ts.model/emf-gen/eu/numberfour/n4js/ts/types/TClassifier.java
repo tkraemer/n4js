@@ -4,6 +4,9 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
  */
 package eu.numberfour.n4js.ts.types;
 
@@ -68,8 +71,7 @@ public interface TClassifier extends ContainerType<TMember>, SyntaxRelatedTEleme
 	 * The declared version of the type. This is not used by N4JS at the moment but only
 	 * in derived languages such as N4IDL. It needs to be stored in the type model though as
 	 * it is required to be cached (i.e. stored in the Xtext index) for scoping etc.
-	 * 
-	 * This is set by the N4IDL types builder.
+	 * 	 * This is set by the N4IDL types builder.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Declared Version</em>' attribute.
 	 * @see #setDeclaredVersion(int)

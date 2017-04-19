@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
 package eu.numberfour.n4jsx.scoping
 
 import com.google.inject.Inject
@@ -14,16 +24,16 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 
 /**
- * This class contains custom scoping for N4JSX language. The main difference compared to N4JSScopeProvider 
- * is that we need to bind JSX property attributes to fields of "props" type 
- * 
+ * This class contains custom scoping for N4JSX language. The main difference compared to N4JSScopeProvider
+ * is that we need to bind JSX property attributes to fields of "props" type
+ *
  * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#scoping
  * on how and when to use it
  */
 class N4JSXScopeProvider extends N4JSScopeProvider {
 	@Inject MemberScopingHelper memberScopingHelper
 	@Inject extension ReactHelper reactHelper;
-	
+
 	@Override
 	override getScope(EObject context, EReference reference) {
 		if (reference == N4JSXPackage.Literals.JSX_PROPERTY_ATTRIBUTE__PROPERTY) {
