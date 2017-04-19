@@ -117,3 +117,6 @@ testhelpers/eu.numberfour.n4js.tester.tests.helper/tagsoup-1.2.1.jar
 # Torsten (copied from items AG)
 plugins/eu.numberfour.n4js.ui/src/eu/nmberfour/n4js/ui/logging/EclipseLogAppender.java
 
+# unknown copied from JDT:
+plugins/eu.numberfour.n4js.ui/src/eu/numberfour/n4js/ui/organize/imports/MultiElementListSelectionDialog.java
+
