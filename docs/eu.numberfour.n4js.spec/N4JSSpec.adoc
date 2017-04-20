@@ -12,11 +12,12 @@ Contributors:
 :find:
 include::{find}config.adoc[]
 
+mathinclude::{find}commands.tex[]
+
 = N4JS Language Specification
 Numberfour AG
 {revnumber}, {docdatetime}
 
-mathinclude::{find}commands.tex[]
 
 [.n4jslogo]
 image::{find}images/n4jslogo.png[400,400,align="center"]
@@ -91,5 +92,3 @@ include::{find}acronyms.adoc[]
 == Bibliography
 
 bibliography::[]
-
-// TODO: update biblio for missing reference cite:[Gosling14a]
