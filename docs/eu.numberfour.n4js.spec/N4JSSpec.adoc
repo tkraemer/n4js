@@ -15,21 +15,13 @@ include::{find}config.adoc[]
 mathinclude::{find}commands.tex[]
 
 = N4JS Language Specification
-Numberfour AG
-{revnumber}, {docdatetime}
-
+{docdatetime}
 
 [.n4jslogo]
 image::{find}images/n4jslogo.png[400,400,align="center"]
 
 [.center]
-*Version: {revnumber}*
-
-[.center]
 *Last Updated: {docdate}*
-
-[.center]
-*(C) 2016 NumberFour AG*
 
 [.center]
 *Authors:* +
