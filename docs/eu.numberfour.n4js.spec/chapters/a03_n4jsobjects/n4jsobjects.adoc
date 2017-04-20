@@ -14,8 +14,8 @@ Contributors:
 
 == Reflection Model
 
-task:IDE-1236[]
-task:IDEBUG-344[]
+
+
 
 N4JS provided metadata for reflection (and introspection). This
 information is available via instances of some reflection model classes
@@ -391,7 +391,7 @@ N4JS provides additional Error types as subtypes of `Error`.
 
 [.language-n4js]
 === N4ApiNotImplemented
-task:IDE-1510[]
+
 
 Considering API definitions and concrete implementations of those APIs
 the error `N4-Api-Not-Implemented-Error` is introduced to specifically report missing implementations.

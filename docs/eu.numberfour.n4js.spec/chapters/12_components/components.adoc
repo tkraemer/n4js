@@ -130,7 +130,7 @@ Other adaptations, such as enabling ECMSScript 6 object types in ECMAScript 5 en
 Instead of directly supporting these kind of 'hacks', other components specify which runtime environment and libraries they depend on by specifying unique runtime ids.
 Possible shims (in case of environments) or polyfils (in case of libraries) are transparently provided by the execution environment and the bootstrap code.
 
-task:IDE-1036[]
+
 
 === Tests
 Tests are special projects which contain tests for other projects.
@@ -157,11 +157,11 @@ The manifest file `manifest.n4mf` is stored at the root of the project (and expl
 For build and production purposes, other files such as `pom.xml` or `.project` files are automatically derived from the `manifest.n4mf`.
 These files are not to be added manually.
 
-task:IDE-1400[]
+
 
 [.language-n4js]
 == Component Manifest
-task:IDE-18[]
+
 
 === Syntax
 
@@ -545,7 +545,7 @@ Paths Paths are constrained in the following way:
 4.  A path must not contain wild cards.
 5.  A path has to be relative to the project path.
 6.  A path has to point to folder.
-7.  The folder a defined path points to must exist in the project (but in case of non-existent folders of source fragments, only a warning is shown). task:IDEBUG-339[]
+7.  The folder a defined path points to must exist in the project (but in case of non-existent folders of source fragments, only a warning is shown).
 --
 
 
@@ -699,7 +699,7 @@ An N4JS Component `C` can be executed in an runtime environment `E`, written as 
 
 [.language-n4js]
 == Modules
-task:IDE-8[]
+
 
 All N4JS files are modules, sometimes also called compilation unit (CU).
 This is the overall structure of a module, based on cite:[ECMA15a(S14)].
@@ -726,7 +726,7 @@ ScriptElement:
 
 Grammar and semantics of import statement is described in <<_import-statement>>; of export statement described in <<_export-statement>>.
 
-task:IDE-179[]
+
 An import statement imports a variable declaration, function declaration, or N4 type declaration defined and exported by another module into the current
 module under the given alias (which is similar to the original name if no alias is defined).
 The name of the module is its project’s source folder’s relative path without any extension, see <<_qualified-names>> for details.
@@ -763,7 +763,7 @@ Pseudo properties to be set via annotations are explained in <<_annotations>>.
 
 [.language-n4js]
 == NumberFour Archives (NFAR)
-task:IDE-19[] task:IDE-37[] task:IDE-46[]
+
 
 
 Compiled projects are packaged in a N4 bundle archive and use `nfar` as a file extension.
