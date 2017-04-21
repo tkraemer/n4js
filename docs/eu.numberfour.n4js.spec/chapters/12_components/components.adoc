@@ -750,7 +750,7 @@ This is the union of _loadtimeDeps_ and _runtimeDeps_ which maintains the orderi
 
 Pseudo properties to be set via annotations are explained in <<_annotations>>.
 
-[.language-n4js]
+
 [[n4js-archives-nfar]]
 == N4JS Archives (NFAR)
 
@@ -774,9 +774,7 @@ A nfar archive has the following structure:
   the manifest file
 `bundle.json`::
   This is used to track the format/version of the contained data, so that we are able to see if two bundles are compatible with each other
-  
-  
-===
+
 
 [.language-n4js]
 == Properties Files

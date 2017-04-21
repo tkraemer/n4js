@@ -12,10 +12,8 @@ Contributors:
 = Expressions
 :find:
 
-[.language-n4js]
---
-For all expressions, we define the following pseudo properties:
 
+For all expressions, we define the following pseudo properties:
 
 `containingExpression` ::
 The parent expression, in which an expression is contained, may be null.
@@ -35,7 +33,7 @@ In case of instance methods of a class `T`, this usually is the classifier `T`; 
 
 `container` ::
 The direct owner of the expression.
---
+z
 ////
 \todo[JvP,LB]{How to best model that the inferred type must always be "conform" to a declared type if present?}
 \todo[JvP,LB]{Autoconversion: See chapter conversions}
@@ -780,21 +778,21 @@ The equation $isAccessor = \lnot isData$ is always true.
 For a given object literal $ol$ the following constraints must hold (cf. cite:[ECMA11a(p.66)]:
 
 * the name of each property is given as an identifier, a string literal, a numeric literal, or as a computed property name with a compile-time expression (see <<compile-time-expressions>>). In particular, string literals, e.g. `['myProp']`, built-in symbols, e.g. `[Symbol.iterator]`, and literals of `@StringBased` enums are all valid computed property names.
-* Object literal may not have two PropertyNameValuePairs with the same name in strict mode (cf. 4.a):
+* Object literal may not have two PropertyNameValuePairs with the same name in strict mode (cf. 4.a cite:[ECMA11a(p.66)]):
 +
 [%hardbreaks]
 $mode=\lenum{strict} \rightarrow \spc \forall pa \in ol.propertyAssignments, pa.isData:$
 $\spc \nexists pa' \in ol.propertyAssignments:$
 $\spc pa'.isAccessor \land pa'.name = pa.name$
 
-* Object literal may not have PropertyNameValuePair and ``PropertyGetterDeclaration``/``PropertySetterDeclaration`` with the same name (cf. 4.b/c):
+* Object literal may not have PropertyNameValuePair and ``PropertyGetterDeclaration``/``PropertySetterDeclaration`` with the same name (cf. 4.b/c cite:[ECMA11a(p.66)]):
 +
 [%hardbreaks]
 $\forall \spc pa \in ol.propertyAssignments, pa.isData : $
 $\nexists \spc pgsd \in ol.propertyAssignments : $
 $\mu(pgsd) \neq\type{PropertyNameValuePair} \land pgsd.name = pa.name$
 
-* Object literal may not have multiple `PropertyGetterDeclaration` or `PropertySetterDeclaration` with the same name (cf. 4.d):
+* Object literal may not have multiple `PropertyGetterDeclaration` or `PropertySetterDeclaration` with the same name (cf. 4.d cite:[ECMA11a(p.66)]):
 +
 [%hardbreaks]
 $\forall \spc pg \in ol.propertyAssignments, pg.isAccessor:$
@@ -1045,11 +1043,10 @@ An index access expression is valid iff one of the following cases applies:
 
 1. the receiver is of a dynamic type. In this case, the index may be any expression (need not be a compile-time expression).
 2. the receiver is an immediate instance of `Object`, i.e. it is a subtype of `Object` and its super types but **not** of any other type including `pass:[~Object]` and `pass:[~~Object]`.
-3. the receiver is of type Array, ArgumentType, string, or String (including their subtypes) +
-**and** the index is an expression of type `number`.
-4. the index expression is a compile-time expression +
-**and** the receiver type defines a member with a name equal to the string representation of the index expression's compile-time value +
-**and** the receiver is not an enum.
+3. the receiver is of type Array, ArgumentType, string, or String (including their subtypes) **and** the index is an expression of type `number`.
+4. the index expression is a compile-time expression
+** *and* the receiver type defines a member with a name equal to the string representation of the index expression's compile-time value +
+** *and* the receiver is not an enum.
 --
 
 Although index access is very limited, it is still possible to use immediate instances of `Object` in terms of a map (but this applies only to index access, not the dot notation):
@@ -1504,6 +1501,8 @@ $ \spc \infer{\tee \lstnfbnf{'void'}\ expression: \type{undefined}}{} $
 $ \spc \infer{\tee \lstnfbnf{'typeof'}\ expression: \type{string}}{} $
 $ \spc \infer{\tee \lstnfbnf{('++'|'--'|'+'|'-'|'~')}\ expression: \type{number}}{} $
 $ \spc \infer{\tee \lstnfbnf{'!'}\ expression: \type{boolean}}{} $
+
+//~
 
 === Multiplicative Expression
 
@@ -2325,13 +2324,8 @@ exprStmt = cexpr.container \land \mu(cexpr.container) = \type{ExpressionStatemen
 ++++
 3.  The containing statement $stmtExpr$ must be directly contained in a constructor body:
 +
-[math]
-++++
-\beginalign
-\spc\mu(exprStmt.containingFunction)=\type{Constructor}) \\
-\spc\land exprStmt.container = exprStmt.containingFunction.body
-\endalign
-++++
+$\mu(exprStmt.containingFunction)=\type{Constructor})$
+$\spc\land exprStmt.container = exprStmt.containingFunction.body$
 4.  There must be no access to and not return statement before the containing statement $exprStmt$.
 +
 Let $si$ be the index of $exprStmt$ in the constructor body:
@@ -2374,10 +2368,7 @@ If the super literal $s$ is used to access a member of the super class, all of t
 $\mu(s..containingClass) = \type{Class}$
 3.  The super literal must not be used in a nested function expression:
 +
-[math]
-++++
-\mu(s.containingFunction=s.containingMethodOrFieldAccessor
-++++
+$\mu(s.containingFunction)=s.containingMethodOrFieldAccessor$
 4.  If the return type of the method access via super is this, the actually bound this type will be the type of the calling class (and not of the class defining the method).
 +
 [math]

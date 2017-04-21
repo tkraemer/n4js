@@ -9,8 +9,8 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
-= Members
 
+= Members
 
 
 A member is either a method (which may be a special constructor function), a data field, or a getter or a setter.
@@ -21,7 +21,7 @@ Similar to object literals, there must be no data field with the same name as a 
 described in <<_redefinition-of-members>>.
 
 [.language-n4js]
-=== Syntax
+== Syntax
 
 .Syntax N4JS member access modifier
 [source,xtext]
@@ -42,8 +42,6 @@ Arbitrary annotations, see <<Annotations>> for details.
 N4JS member access modifier: `private`, `project`, `potected`, or `public`; the latter two can be combined with `@Internal`; default is `project` for classes and private interfaces.
 For a non-private interface defaults to the interface’s visibility.
 
-
-
 `name` ::
 The simple name of the member, that is an identifier name (cf. <<_valid-names>>).
 
@@ -53,11 +51,8 @@ Boolean property to distinguish instance from classifier members, see <<_static-
 
 The following pseudo properties are defined via annotations:
 
-
 `deprecated` ::
 Boolean property set to true if annotation `@Deprecated` is set. footnote:[ version 0.4  - not implemented in version 0.3]
-
-
 
 And we additionally define the following pseudo properties:
 
@@ -100,11 +95,9 @@ The following pseudo property is set to make fields compatible with properties o
 `configurable` ::
 Boolean flag reflecting the property descriptor $configurable$, this is always set to false for members.
 
-=== Semantics
+== Semantics
 
 The members of a given classifier `C` must be named such that the following constraints are met:
-
-
 
 .Member Names
 [req,id=IDE-52,version=1]
@@ -120,7 +113,6 @@ other is non-static:
 \endalign
 ++++
 .  The member name must be a valid identifier name, see <<_identifier-names-and-identifiers,Identifier Grammar>>.
-
 
 --
 
