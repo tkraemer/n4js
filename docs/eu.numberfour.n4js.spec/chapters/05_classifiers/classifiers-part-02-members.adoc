@@ -21,7 +21,7 @@ Similar to object literals, there must be no data field with the same name as a 
 described in <<_redefinition-of-members>>.
 
 [.language-n4js]
-=== Syntax
+== Syntax
 
 .Syntax N4JS member access modifier
 [source,xtext]
