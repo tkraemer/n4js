@@ -59,7 +59,7 @@ These components are described in detail later.
 // TODO where ^^
 
 A component is similar to a single project in the N4JS IDE.
-It is shipped as <<_numberfour-archives-nfar,NFAR>> archive and contains:
+It is shipped as <<n4js-archives-nfar,NFAR>> archive and contains:
 
 
 Manifest::
@@ -456,7 +456,7 @@ Output ::
 Path to output folder, compilers may use subfolders inside this folder.
 
 Libraries ::
-List of paths to libraries, that is, folders in which <<_numberfour-archives-nfar,NFARs>> are found.
+List of paths to libraries, that is, folders in which <<n4js-archives-nfar,NFARs>> are found.
 
 Resources ::
 List of paths to resources, that is, folders in which images, CSS etc. is found.
@@ -577,8 +577,8 @@ The following manifest shows the use of filters to disable validation and module
 ProjectId: Test
 ProjectType: lib
 ProjectVersion: 0.0.1-SNAPSHOT
-VendorId: eu.numberfour
-VendorName: "NumberFour AG"
+VendorId: eu.goodcompany
+VendorName: "Good Company AG"
 Output: "src-gen"
 Sources {
     source {
@@ -751,6 +751,7 @@ This is the union of _loadtimeDeps_ and _runtimeDeps_ which maintains the orderi
 Pseudo properties to be set via annotations are explained in <<_annotations>>.
 
 [.language-n4js]
+[[n4js-archives-nfar]]
 == N4JS Archives (NFAR)
 
 Compiled projects are packaged in a bundle archive and use `nfar` as a file extension.

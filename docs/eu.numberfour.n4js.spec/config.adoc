@@ -11,7 +11,7 @@ Contributors:
 
 // ======================= AsciiSpec Processor Configuration =======================
 // Inline Task Macro Config
-// See https://github.numberfour.eu/NumberFour/asciispec#inline-task-macro for details.
+// See https://numberfour.github.io/asciispec/spec.html#_inline_task_macro for details.
 
 // Path to Bib File (usually in same folder as index.adoc)
 :bib-file: n4jsspec.bib

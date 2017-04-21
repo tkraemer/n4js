@@ -166,8 +166,8 @@ in the root of our fibonacci project:
 ProjectId: fibonacci
 ProjectType: library
 ProjectVersion: 1.2.3
-VendorId: eu.numberfour
-VendorName: "NumberFour AG"
+VendorId: eu.goodcompany
+VendorName: "Good Company AG"
 Output: "src-gen"
 Sources {
     source {

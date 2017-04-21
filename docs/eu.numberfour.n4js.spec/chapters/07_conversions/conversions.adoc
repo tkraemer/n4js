@@ -382,7 +382,7 @@ getter `n4class`. Since it is static getter, it is actually an instance getter o
 --
 
 This example demonstrates how these reflective features are accessed:
-//% see /eu.numberfour.ide.n4js.transpiler.es5.tests/testdata/spec_chap_06_04/Ex57_Reflection_with_N4Class.n4js.xt
+//% see /org.eclipse.n4js.transpiler.es5.tests/testdata/spec_chap_06_04/Ex57_Reflection_with_N4Class.n4js.xt
 
 [source,n4js]
 ----

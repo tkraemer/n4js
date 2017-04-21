@@ -12,4 +12,4 @@ Contributors:
 [discrete]
 = Abstract
 
-This document contains the NumberFour JavaScript Specification.
+This document contains the N4JS Specification.

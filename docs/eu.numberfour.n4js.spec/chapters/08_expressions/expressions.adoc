@@ -100,7 +100,7 @@ If there is no receiver it is bound to the global object, however, we often do n
 ////
 % This example only works in Browsers. Or in node-repl console. When loaded from a file (aka as a module)
 % node assigns a local environment.
-% Nevertheless see /eu.numberfour.ide.n4js.transpiler.es5.tests/testdata/spec_chap_07_01_01/Ex58_this_keyword.n4js.xt
+% Nevertheless see /org.eclipse.n4js.transpiler.es5.tests/testdata/spec_chap_07_01_01/Ex58_this_keyword.n4js.xt
 ////
 
 [source,n4js]
@@ -1198,7 +1198,7 @@ The following examples demonstrates the usage of abstract classes and constructo
 
 [source,n4js]
 ----
-/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+/* XPECT_SETUP org.eclipse.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
 abstract class A {}
 class B extends A {}
@@ -1779,7 +1779,7 @@ The compiler rewrites the code to make this work.
 The following example demonstrates the use of the operator with an interface.
 This is, of course, not working in pure ECMAScript.
 
-//% see /eu.numberfour.ide.n4js.transpiler.es5.tests/testdata/spec_chap_07_01_16/Ex72_instanceof_with_interfaces.n4js.xt
+//% see /org.eclipse.n4js.transpiler.es5.tests/testdata/spec_chap_07_01_16/Ex72_instanceof_with_interfaces.n4js.xt
 
 [source,n4js]
 ----
