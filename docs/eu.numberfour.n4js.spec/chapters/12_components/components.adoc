@@ -90,17 +90,6 @@ Different N4JS component types are described in this section.
 At compile time and runtime, dependent components have to be available.
 This is the responsibility of the user interface (<<AC,IDE>> or <<AC,CLI>>) and described in the <<AC,N4IDE>> specification.
 
-=== Apps
-
-Applications allow developers to bundle a project as an application and deploy it to an N4 environment.
-An application is visible to users of the N4 platform in the app store.
-Users can subscribe and use an application that is available in the app store.
-
-=== Processors
-
-Processors allow developers to bundle a project as a processor which can run asynchronously on an N4 environment.
-Users can deploy a processor to an N4 environment so that other developers can use its services.
-
 === Libraries
 
 A library is a user project providing modules with declaration.
@@ -762,16 +751,11 @@ This is the union of _loadtimeDeps_ and _runtimeDeps_ which maintains the orderi
 Pseudo properties to be set via annotations are explained in <<_annotations>>.
 
 [.language-n4js]
-== NumberFour Archives (NFAR)
+== N4JS Archives (NFAR)
 
-
-
-Compiled projects are packaged in a N4 bundle archive and use `nfar` as a file extension.
+Compiled projects are packaged in a bundle archive and use `nfar` as a file extension.
 A nfar file is a zip archive that contains all source files, compiled files and metadata of a project.
-It’s used to deploy projects to:
-
-* N4 environments via the N4 deployment web service
-* Maven artifact repositories via the standard Maven deploy
+It’s used to deploy projects to Maven artifact repositories via the standard Maven deploy.
 
 A nfar archive has the following structure:
 
@@ -785,62 +769,13 @@ A nfar archive has the following structure:
   contains the compiled JavaScript.
 `/model/`::
   contains the compiled type model.
-`manifest.pmi`::
+`manifest.n4mf`::
   the manifest file
 `bundle.json`::
   This is used to track the format/version of the contained data, so that we are able to see if two bundles are compatible with each other
-`package.json`::
-  This contains the _N4 deployment descriptor_ required by the N4 deployment webservice.
-  This file is only added to the nfar file when deploying it to a N4 environment!
-  That means that it’s not available in nfar files deployed to a Maven artifact repository.
-
-=== N4 Deployment Descriptor
-
-// todo[N4 Deployment Descriptor]{Why is it needed? Where is it generated? Does it has to be changed?
-
-The N4 deployment descriptor of a project `p` is a NFON formatted file with the following structure:
-
-//TODO add NFON syntax highlighting
-
-[source,n4js]
-----
-{
-  "@type":"n4.deployment.PackageDescription",
-  "kind":~$p.deploymentKind$~, // LIBRARY, APPLICATION or PROCESSOR
-  "name":~$p.name$~,
-  "singleton":~$p.type="LIBRARY"$~,
-  "version":~$p.version$~,
-  "displayName":"",
-  "buildComment":"",
-  "allJavaScriptFile":~$p.allJavaScriptFile$~,
-  "allMinJavaScriptFile":~$p.allMinJavaScriptFile$~,
-  "dependentPackages": [
-    // for (d in ~$p.dependencies$~)
-    {
-        "@type":"n4.deployment.DependencyInfo",
-        "name": ~$d.name$~,
-        "version": ~$d.version$~
-    }
-  ],
-  "properties": {
-    "@type":"n4.coreservices.graph.deployment.AppProperties",
-    "objectHandlers": [
-        // for (o in ~$p.objectHandlers$~)
-        {
-                "@type":"n4.coreservices.graph.deployment.ObjectHandler",
-                "type":~$o.type$~,
-                "viewId":~$o.viewId$~,
-                "viewType":~$o.viewType$~,
-                "perspectiveId":~$o.perspectiveId$~,
-                "onlyCreatedByApp":~$o.onlyCreatedByApp$~,
-                "actions":~$o.actions$~, // array of strings
-                "docFileProvider":~$o.docFileProvider$~,
-                "docMimeContentTypeMatch":~$o.docMimeContentTypeMatch$~
-        }
-    ]
-  }
-}
-----
+  
+  
+===
 
 [.language-n4js]
 == Properties Files
@@ -851,7 +786,7 @@ Properties files have the file extension `properties` and describe how to locali
 They basically define keys <<_primitive-pathselector-and-i18nkey>> with their values.
 The key is used during runtime to retrieve text localized to the user’s locale.
 
-[[n4-deployment-descriptor-syntax]]
+[[property-file-syntax]]
 === Syntax
 
 The syntax of a resource file is defined as:

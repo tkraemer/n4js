@@ -1185,7 +1185,7 @@ They are solely defined for enabling additional validation.
 
 * `pathSelector<T>` is a generic type for specifying path selector expressions. PathSelectors are used to specify a path to a property in a (JSON-like) model tree.
 * The type variable `T` defines the context type (or type of the root of the tree) in which the selector is to be validated.
-A path selector is defined as a string literal that has to conform to the path selector grammar cite:[PathSelector].
+A path selector is defined as a string literal that has to conform to the path selector grammar.
 The context type is then used to perform a semantic
 // TODO: The path selector grammar along with base classes using these selectors are not part of the public version yet. Path selectors are not yet validated at compile time.
 * `i18nKey` is a string which refers to an internationalization key.
