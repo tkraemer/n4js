@@ -1,0 +1,30 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
+
+/* XPECT output ---
+<==
+stdout:
+Final
+Final
+Final
+Final
+stderr:
+==>
+--- */
+
+class SuperCheck {
+	@Final inheritedMember = "Inherited";
+}
+
+@Final
+class Check extends SuperCheck {
+    @Final iAmAnnotated = "why my meta is wrong?";
+    @Final hello() {}
+}
+
+// Print class final annotations
+Check.n4type.annotations.forEach(anno => console.log(anno.name));
+
+// Print member final annotations
+Check.n4type.members(false, true, false).forEach(member => {
+	member.annotations.forEach(anno => console.log(anno.name));
+});

@@ -105,7 +105,8 @@ public final class AnnotationDefinition {
 	 */
 	public final static AnnotationDefinition FINAL = define("Final")
 			.targets(N4_CLASS_DECLARATION, N4_MEMBER_DECLARATION)
-			.targetsWithCustomError(N4_INTERFACE_DECLARATION).end();
+			.targetsWithCustomError(N4_INTERFACE_DECLARATION)
+			.retention(RetentionPolicy.RUNTIME).end();
 
 	/**
 	 * 5.2.2.3. Covariant Constructors
