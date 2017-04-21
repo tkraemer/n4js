@@ -40,7 +40,6 @@ public class IncrementalBuilderCornerCasesPluginTest extends AbstractBuilderPart
 	 * However, the test is probably quite fragile and maybe the bug cannot be reproduced after future
 	 * other changes to the incremental builder.
 	 * <p>
-	 * For details, see https://jira.numberfour.eu/browse/IDEBUG-347
 	 */
 	@Test
 	def void testMissingReloadBug() {

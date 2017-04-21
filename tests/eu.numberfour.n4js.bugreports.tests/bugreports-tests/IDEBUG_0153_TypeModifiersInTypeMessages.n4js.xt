@@ -1,4 +1,3 @@
-// https://numberfour.jira.com/browse/IDEBUG-153
 
 function f(cb : {function(string=undefined):void}) {}
 

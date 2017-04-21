@@ -39,6 +39,8 @@ public class FileChecker {
 
 	private static final String[] REPOS = { "n4js", "n4js-n4" };
 	private static final String[] REPOS_MANDATORY = { "n4js" };
+	/** Optional file in the root of a git repository that declares some files as third-party files. */
+	private static final String THIRD_PARTY_FILE_NAME = "third-party.txt";
 
 	/** Extensions of files that should be checked more thoroughly. */
 	private static final String[] FILE_EXTENSIONS = { ".java", ".xtend", ".xtext", ".xcore", ".xsemantics", ".xml",
@@ -46,7 +48,9 @@ public class FileChecker {
 
 	/** These files will be ignored. May contain '/' but should not start or end with '/'. */
 	private static final String[] IGNORED_FILES = {
-			".antlr-generator-3.2.0-patch.jar" // downloaded by xtext but under git-ignore, so not in repository
+			".antlr-generator-3.2.0-patch.jar", // downloaded by xtext but under git-ignore, so not in repository
+			FileChecker.class.getSimpleName() + ".java",
+			THIRD_PARTY_FILE_NAME
 	};
 
 	/** All contents of these folders will be ignored. May contain '/' but should not start or end with '/'. */
@@ -54,29 +58,94 @@ public class FileChecker {
 			".git",
 			"bin",
 			"src-gen", "xtend-gen", "xsemantics-gen",
-			"emf-gen", "grammar-gen",
+			"emf-gen", "grammar-gen", "model/generated",
 			"generated-docs",
 			"eu.numberfour.n4js.jsdoc2spec.tests/testresourcesADoc",
 			"tools/eu.numberfour.n4js.hlc/target/wsp", // temporary test data under git-ignore, so not in repository
-			// temporarily ignored folders FIXME remove the following folders!!!!
-			"n4js/n4js-libraries",
-			"n4js/plugins/eu.numberfour.n4js.external.libraries",
-			"n4js/plugins/eu.numberfour.n4js.runner/res"
+
+			// ============ ignored folders with 3rd party dependencies ==============
+			// we keep information about those in different place so here we skip them
+			// notice we skip concrete concrete dependencies, not all together,
+			// this way we will detect if new ones are added
+
+			// ------------------------ RUNNERS ---------------------------
+			/* promise library, MIT, https://www.npmjs.com/package/when */
+			"plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/when",
+			/* module loader, MIT, https://www.npmjs.com/package/systemjs */
+			"plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/systemjs",
+			/* module loader, MIT, https://www.npmjs.com/package/es6-module-loader */
+			"plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/es6-module-loader",
+			/* window.fetch for node, MIT, https://www.npmjs.com/package/node-fetch */
+			"plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/node-fetch/",
+			/* string encoding util, MIT, https://www.npmjs.com/package/encoding */
+			"plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/encoding/",
+			/* string encoding util, MIT, https://www.npmjs.com/package/iconv-lite */
+			"plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/iconv-lite/",
+			/* node stream util, MIT, https://www.npmjs.com/package/is-stream */
+			"plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/is-stream/",
+
+			// -------------------- LIBRARY MANAGER -------------------------
+			/* promise library, MIT, https://www.npmjs.com/package/when */
+			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/when",
+			/* module loader, MIT, https://www.npmjs.com/package/systemjs */
+			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/systemjs",
+			/* module loader, MIT, https://www.npmjs.com/package/es6-module-loader */
+			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader",
+			/* window.fetch for node. MIT, https://www.npmjs.com/package/node-fetch */
+			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/node-fetch",
+			/* string encoding util, MIT, https://www.npmjs.com/package/encoding */
+			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/encoding/",
+			/* string encoding util, MIT, https://www.npmjs.com/package/iconv-lite */
+			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/iconv-lite/",
+			/* node stream util, MIT, https://www.npmjs.com/package/is-stream */
+			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/is-stream/",
+
 	};
 
 	/** Words disallowed outside of copyright headers. Each word should start with a single capitalized letter. */
 	private static final String[] BANNED_WORDS = {
 			"Copyright",
-			"License"
+			"License",
+			"numberfour.jira.com",
+			"jira.numberfour.eu",
 			// FIXME add more banned words (at least temporarily to prepare initial contribution):
 			// "NumberFour",
 			// "Number Four",
-			// "numberfour.jira.com",
-			// "jira.numberfour.eu"
 	};
 
-	/** Optional file in the root of a git repository that declares some files as third-party files. */
-	private static final String THIRD_PARTY_FILE_NAME = "third-party.txt";
+	/** Endings of the paths (i.e. file names) that <b>can</b> contain {@link #BANNED_WORDS} */
+	private static final String[] BANNED_WORDS_WHITELIST = {
+
+			/* eclipse copyrights */
+			"notice.html",
+			"about.html",
+			"EPL-1.0.html",
+			"epl-v10.html",
+			"asl-v20.txt",
+			"plugin.properties",
+
+			/* open source copyrights */
+			"LICENSE",
+			"LICENSE.md",
+			"license",
+			"license.adoc",
+			"licenses.adoc",
+			"README.md",
+			"README.adoc",
+			"readme.md",
+			"package.json",
+
+			/* N4JS documentation specific */
+			"n4js/docs/eu.numberfour.n4js.spec/N4JSSpec.adoc",
+			"docs/index.html",
+			"acronyms.adoc",
+
+			/* our documentation includes some files with their own licenses */
+			"scripts/highlight.min.js",
+			"styles/adoc-readthedocs.css",
+			"styles/foundation.css",
+			"styles/foundation.css",
+	};
 
 	/** Files with an extension listed in {@link #FILE_EXTENSIONS} must start with this header. */
 	private static final String[] COPYRIGHT_TEXT = {
@@ -95,6 +164,11 @@ public class FileChecker {
 	 * {@link #COPYRIGHT_TEXT}).
 	 */
 	private static final String COPYRIGHT_HEADER = ("/**\n"
+			+ " * " + Joiner.on("\n * ").join(COPYRIGHT_TEXT) + "\n"
+			+ " */").replace("\n * \n", "\n *\n");
+
+	/** JS files must start with this header (derived from {@link #COPYRIGHT_TEXT}). */
+	private static final String COPYRIGHT_HEADER_JS = ("/*\n"
 			+ " * " + Joiner.on("\n * ").join(COPYRIGHT_TEXT) + "\n"
 			+ " */").replace("\n * \n", "\n *\n");
 
@@ -186,7 +260,7 @@ public class FileChecker {
 
 			// checks for all files
 
-			if (!isRegisteredAsThirdParty && !path.endsWith("about.html")) {
+			if (!isRegisteredAsThirdParty && !canContainBannedWord(path)) {
 				final String bannedWord = containsBannedWord(path, content);
 				if (bannedWord != null) {
 					report.problems.add("must not contain banned word '" + bannedWord + "'");
@@ -442,14 +516,12 @@ public class FileChecker {
 
 	private static int beginIndexWithoutCopyrightHeader(Path path, String content) {
 		if (hasExtension(path, ".xml")) {
-			return startsWithCopyrightHeader(content, COPYRIGHT_HEADER_XML)
-					? COPYRIGHT_HEADER_XML.length() : 0;
+			return startsWithCopyrightHeader(content, COPYRIGHT_HEADER_XML) ? COPYRIGHT_HEADER_XML.length() : 0;
 		} else if (hasExtension(path, ".adoc")) {
-			return startsWithCopyrightHeader(content, COPYRIGHT_HEADER_ADOC)
-					? COPYRIGHT_HEADER_ADOC.length() : 0;
-		} else if (hasExtension(path, ".js") || hasExtension(path, ".n4js") || hasExtension(path, ".n4jsd")) {
-			final String hdr = COPYRIGHT_HEADER.replace("/**\n", "/*\n");
-			return startsWithCopyrightHeader(content, hdr) ? hdr.length() : 0;
+			return startsWithCopyrightHeader(content, COPYRIGHT_HEADER_ADOC) ? COPYRIGHT_HEADER_ADOC.length() : 0;
+		} else if (hasExtension(path, ".js") || hasExtension(path, ".n4js") || hasExtension(path, ".n4jsd")
+				|| hasExtension(path, ".n4mf")) {
+			return startsWithCopyrightHeader(content, COPYRIGHT_HEADER_JS) ? COPYRIGHT_HEADER_JS.length() : 0;
 		} else {
 			return startsWithCopyrightHeader(content, COPYRIGHT_HEADER) ? COPYRIGHT_HEADER.length() : 0;
 		}
@@ -457,6 +529,15 @@ public class FileChecker {
 
 	private static boolean startsWithCopyrightHeader(String content, String header) {
 		return content.startsWith(header) || content.startsWith(header.replace(" 2016 ", " 2017 ")); // FIXME
+	}
+
+	private static boolean canContainBannedWord(Path path) {
+		for (String whitelisted : BANNED_WORDS_WHITELIST) {
+			if (path.endsWith(whitelisted)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static String containsBannedWord(Path path, String content) {

@@ -30,7 +30,6 @@ import static org.junit.Assert.*
 /**
  * Test class for comma expression
  *
- * @see https://numberfour.jira.com/browse/IDE-350
  */
 @RunWith(XtextRunner)
 @InjectWith(N4JSInjectorProvider)

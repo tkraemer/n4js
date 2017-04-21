@@ -51,8 +51,7 @@ class ClassesGetterSetterTypesBuilderTest extends AbstractTypesBuilderTest {
 		]
 
 		// currently everything is exported to user data and Xtext index, e.g. to be able to
-		// use in IDE "Open Type", the visibility issue (public, exported) is tracked in
-		// https://numberfour.jira.com/browse/IDE-84
+		// use in IDE "Open Type"
 		val expectedExportedTypeToNamePairsOnIndex = #[
 			typeof(TModule) -> qualifiedNamePrefix + "ClassesGetterSetter",
 			typeof(TClass) -> "Callee"

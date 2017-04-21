@@ -1,6 +1,5 @@
 /* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest END_SETUP */
  
-// see https://numberfour.jira.com/browse/IDEBUG-42 
 
 /* XPECT output --- 
 <==

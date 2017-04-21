@@ -1,6 +1,5 @@
 /* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportPendingTest END_SETUP  */
 
-// see https://numberfour.jira.com/browse/IDE-839
 //this should be able to be used in a union of a return type
 
 

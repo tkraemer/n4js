@@ -27,7 +27,6 @@ import static org.junit.Assert.*
 /**
  * Base test class for operator test (6.1.10- 6.1.18)
  *
- * @see https://numberfour.jira.com/browse/IDE-345
  */
 @RunWith(XtextRunner)
 @InjectWith(N4JSInjectorProvider)

@@ -33,7 +33,6 @@ import static eu.numberfour.n4js.validation.validators.UnsupportedFeatureValidat
 /**
  * Tests for computing probable this target.
  *
- * @see <a href="https://numberfour.jira.com/browse/IDE-343">IDE-343</a>
  */
 @InjectWith(N4JSInjectorProvider)
 @RunWith(XtextRunner)

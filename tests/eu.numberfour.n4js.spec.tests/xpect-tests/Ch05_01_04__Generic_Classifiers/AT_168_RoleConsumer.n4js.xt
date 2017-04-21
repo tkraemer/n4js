@@ -44,8 +44,8 @@ class CwithMultiR1 implements R1, RoleWithR1 {}
 
 
 // part 5 - bound parameters
-//TODO to be done as part of https://numberfour.jira.com/browse/IDE-38
+//TODO to be done as part of IDE-38
 
 
 // part 6 - bound parameters
-//TODO to be done as part of https://numberfour.jira.com/browse/IDE-38
+//TODO to be done as part of IDE-38

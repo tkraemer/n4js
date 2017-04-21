@@ -45,7 +45,6 @@ class N4MFValidator extends AbstractN4MFValidator {
 
 	private extension N4mfPackage = N4mfPackage.eINSTANCE;
 
-	// TODO define validations, see https://numberfour.jira.com/browse/IDE-330
 	@Inject
 	private IPathProvider pathProvider
 

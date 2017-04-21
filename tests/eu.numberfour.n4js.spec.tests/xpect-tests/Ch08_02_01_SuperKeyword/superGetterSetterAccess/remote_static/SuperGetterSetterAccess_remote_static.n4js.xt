@@ -24,7 +24,7 @@
 //
 // NOTE: sub-case 2) does *not* apply to the static case tested in this file. However, this might
 //       be changed by IDE-1453, and then this test should be aligned to the one for the non-static
-//       case in folder "../remote"; see: https://jira.numberfour.eu/browse/IDE-1453
+//       case in folder "../remote";
 //
 
 

@@ -1,4 +1,3 @@
-// https://numberfour.jira.com/browse/IDEBUG-31
 
 //indexOf needs to work with numbers, strings, enums and other non objects.
 

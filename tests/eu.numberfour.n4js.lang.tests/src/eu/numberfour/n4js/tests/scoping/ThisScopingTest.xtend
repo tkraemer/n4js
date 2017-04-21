@@ -42,7 +42,6 @@ import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
  * to force the scoping to actually create the type. That is, we use "this.s" instead of "this".</p>
  *
  * @see AT_185_ThisScopingTest
- * @see <a href="https://numberfour.jira.com/browse/IDE-343">IDE-343</a>
  * @see N4JSScopeProvider
  */
 @InjectWith(N4JSInjectorProvider)

@@ -33,7 +33,7 @@ function Box(w : number,h : number) {
 		}) 
 		function() { return this.w * this.h }
 }
-// waiting for https://numberfour.jira.com/browse/IDE-522
+// waiting for IDE-522
 //var bError = Box(1,2) 
 //var bOK = new Box(1,2)
 

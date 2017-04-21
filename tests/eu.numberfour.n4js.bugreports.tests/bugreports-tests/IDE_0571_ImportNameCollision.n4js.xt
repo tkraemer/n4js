@@ -8,7 +8,6 @@
    END_SETUP 
  */
 
-// see https://numberfour.jira.com/browse/IDE-571
 //Import name should error if redefined.
 
 // XPECT warnings --> "The import of Partytime is unused." at "Partytime"

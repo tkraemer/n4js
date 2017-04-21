@@ -1,9 +1,6 @@
 /* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP  */
 
 
-// see: https://numberfour.jira.com/browse/IDE-521
-
-
 class A {
 	private x : string;
 

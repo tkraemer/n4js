@@ -1,7 +1,6 @@
 /* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
 
 
-// https://numberfour.jira.com/browse/IDE-379
 // Note: It is coercing rather than boxing, as we do not have influence on the runtime
 // neither autoboxing nor unboxing working/implemented
 
