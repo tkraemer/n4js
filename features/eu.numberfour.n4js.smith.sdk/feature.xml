@@ -17,11 +17,11 @@ Contributors:
 			license-feature="org.eclipse.license"
 			license-feature-version="1.0.1.v20140414-1359">
 
-	 <description url="http://www.numberfour.eu/">
+	 <description>
 			Feature for internal N4JS IDE plugins only intended for development (for example, the AST Graph view).
 	 </description>
 
-	 <copyright url="http://www.numberfour.eu/">
+	 <copyright>
 			Copyright (c) 2016 NumberFour AG.
 
 All rights reserved. This program and the accompanying materials
