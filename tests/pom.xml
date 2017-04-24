@@ -27,7 +27,10 @@ Contributors:
 		<!-- ************************************** JUnit Tests -->
 
         <!-- Release Engineering Tools Tests -->
-		<module>eu.numberfour.n4js.releng.utils.tests</module>		
+		<module>eu.numberfour.n4js.releng.utils.tests</module>
+
+		<!-- JSDoc tests -->
+		<module>eu.numberfour.n4js.jsdoc2spec.tests</module>
 		
 		<!-- Type system tests -->
 		<module>eu.numberfour.n4js.ts.model.tests</module>
