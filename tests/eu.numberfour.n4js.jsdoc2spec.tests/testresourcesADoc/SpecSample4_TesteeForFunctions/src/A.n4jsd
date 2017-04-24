@@ -1,0 +1,15 @@
+/**
+ * @spec Spec for Function foofunc
+ */
+export external function foofunc();
+
+export external var 
+/**
+ * @spec Spec for Var barvar
+ */
+barvar: string;
+
+/**
+ * @spec Spec for Var bar2var
+ */
+export external var bar2var: string;

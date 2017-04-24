@@ -1,0 +1,7 @@
+@@StaticPolyfillModule 
+@StaticPolyfill
+export public class A extends A {
+	@Override
+	public foo(x: any, n: number=) {}
+	public bar() {}
+}

@@ -1,0 +1,24 @@
+public class ReqTest {
+
+	/**
+	 * @spec Basic Description
+	 * @reqid 1000_a
+	 */
+	@Test
+	basics___Case(): string {}
+
+	/**
+	 * @spec Ext Description
+	 * @reqid 1001_b
+	 */
+	@Test
+	ext___Case(): string {}
+
+	/**
+	 * @spec Foo Test Description
+	 * @reqid 1000_b
+	 * @testee A.A.foo
+	 */
+	@Test
+	testFoo(): string {}
+}

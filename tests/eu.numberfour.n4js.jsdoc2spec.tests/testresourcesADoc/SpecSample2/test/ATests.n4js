@@ -1,0 +1,23 @@
+/**
+ * @testeeType A.A
+ */
+public class ATest {
+
+	/**
+	 * @testeeMember bar
+	 */
+	@Test
+	testBarBasics(): string {}
+
+	/**
+	 * @testee A.A.bar
+	 */
+	@Test
+	testOnlyInA(): string {}
+}
+
+/**
+ * @testeeType A.B
+ */
+public class BTest extends ATest {
+}

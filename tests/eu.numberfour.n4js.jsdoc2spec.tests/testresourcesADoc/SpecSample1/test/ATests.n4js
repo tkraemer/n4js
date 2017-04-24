@@ -1,0 +1,25 @@
+public class ATest {
+
+	/**
+	 * @testee A.A.bar
+	 */
+	@Test
+	testBarBasics(): string {}
+}
+
+public class DTest {
+
+	/**
+	 * Test internal comment
+	 * @testee A.D.bar
+	 */
+	@Test
+	testBarAgain(): string {}
+	/**
+	 * Baz is supposed to do nothing.
+	 * @testee A.D.baz
+	 * @specFromDescription
+	 */
+	@Test
+	testBazAgain(): string {}
+}
