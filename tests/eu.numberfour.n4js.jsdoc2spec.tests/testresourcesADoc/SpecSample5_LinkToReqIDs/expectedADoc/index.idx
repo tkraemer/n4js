@@ -1,0 +1,13 @@
+n4js-n4#tests
+	eu.numberfour.n4js.jsdoc2spec.tests#testresources
+		NO_PACKAGE
+			A.n4jsd
+				A::1::11::12
+				A#foo::2::13::27
+	eu.numberfour.n4js.jsdoc2spec.tests#testresourcesADoc.SpecSample5_LinkToReqIDs.test
+		NO_PACKAGE
+			ReqTest.n4js
+				ReqTest::1::11::12
+				ReqTest#basics___Case::7::13::26
+				ReqTest#ext___Case::14::27::40
+				ReqTest#testFoo::22::41::54

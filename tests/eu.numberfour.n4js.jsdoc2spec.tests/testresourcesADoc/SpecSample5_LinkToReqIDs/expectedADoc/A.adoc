@@ -1,0 +1,23 @@
+include::{find}config.adoc[]
+:docinfodir: ../../../../../headers/apiModules
+:linkattrs:
+:toc:
+
+= Module A
+
+== Class A
+
+
+
+[[gsec:spec_A.A.foo]]
+[role=memberdoc]
+=== ++Method foo++
+
+==== Signature
+srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#foo++[``++project foo(): void++``]
+
+==== Semantics
+
+++Foo++:: srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample5_LinkToReqIDs/test/ReqTest:ReqTest#testFoo++[Test]
+
+Foo Test Description

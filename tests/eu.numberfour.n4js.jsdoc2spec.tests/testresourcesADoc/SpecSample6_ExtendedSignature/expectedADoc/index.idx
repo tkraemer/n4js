@@ -1,0 +1,11 @@
+n4js-n4#tests
+	eu.numberfour.n4js.jsdoc2spec.tests#testresources
+		NO_PACKAGE
+			A.n4jsd
+				A::3::30::31
+				A#bar::6::48::63
+				A#baz::7::64::79
+				A#constructor::4::32::47
+				A#foo::5::80::95
+				A@xgreet::8::96::111
+				func::1::11::26

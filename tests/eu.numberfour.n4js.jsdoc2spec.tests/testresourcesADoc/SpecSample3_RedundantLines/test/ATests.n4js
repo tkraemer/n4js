@@ -1,0 +1,24 @@
+
+abstract class BaseTests {
+    /** 
+     * Text.
+     * @specFromDescription
+     * @testeeMember foo
+     */
+   @Test testFoo(): void {}
+   
+   abstract initFixture()
+}
+
+/**
+ * @testeeType A.A
+ */
+class TestsFixture1 extends BaseTests {
+    @Override initFixture() {  }
+}
+/**
+ * @testeeType A.A
+ */
+class TestsFixture2 extends BaseTests {
+    @Override initFixture() {  }
+}

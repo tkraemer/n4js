@@ -1,0 +1,11 @@
+:toc:
+
+= Content of Repository n4js-n4
+
+== Project Source Folder: eu.numberfour.n4js.jsdoc2spec.tests:testresources=== Module A
+
+==== Module A
+
+	* srclink::n4js-n4:tests/eu.numberfour.n4js.jsdoc2spec.tests:testresources:A.A[]
+
+	* srclink::n4js-n4:tests/eu.numberfour.n4js.jsdoc2spec.tests:testresources:A.A#foo[]

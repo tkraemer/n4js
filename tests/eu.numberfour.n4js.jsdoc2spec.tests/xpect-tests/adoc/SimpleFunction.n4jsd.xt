@@ -1,0 +1,28 @@
+/* XPECT_SETUP eu.numberfour.n4js.jsdoc2spec.JSDoc2SpecTest END_SETUP  */
+
+/* XPECT specADoc ---
+   
+   [[gsec:spec_adoc.SimpleFunction.foo]]
+   [role=memberdoc]
+   === ++Function foo++
+   
+   ==== Signature
+   srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/SimpleFunction:foo++[``++function foo(): void++``]
+   
+   ==== Description
+   
+   Spec of Function.
+   
+   
+   ==== Semantics
+   [.todo, label="test function ++foo++"]
+   --
+   Add tests specifying semantics for ``++foo++``
+   --
+   
+   ---
+ */
+/**
+ * @spec Spec of Function.
+ */
+export external public function foo();

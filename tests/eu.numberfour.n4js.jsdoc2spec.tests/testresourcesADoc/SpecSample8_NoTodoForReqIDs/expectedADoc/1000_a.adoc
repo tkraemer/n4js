@@ -1,0 +1,5 @@
+==== Semantics
+
+++basics++:: srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample8_NoTodoForReqIDs/test/ReqTest:ReqTest#basics___Case++[++Case++]
+
+Basic Description

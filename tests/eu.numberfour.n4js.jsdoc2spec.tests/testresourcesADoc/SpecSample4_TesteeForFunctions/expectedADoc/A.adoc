@@ -1,0 +1,56 @@
+include::{find}config.adoc[]
+:docinfodir: ../../../../../headers/apiModules
+:linkattrs:
+:toc:
+
+= Module A
+
+== Variables
+
+
+[[gsec:spec_A.bar2var]]
+[role=memberdoc]
+=== ++Variable bar2var++
+
+==== Signature
+srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:bar2var++[``++bar2var: string++``]
+
+==== Description
+
+Spec for Var bar2var
+
+
+
+[[gsec:spec_A.barvar]]
+[role=memberdoc]
+=== ++Variable barvar++
+
+==== Signature
+srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:barvar++[``++barvar: string++``]
+
+==== Description
+
+Spec for Var barvar
+
+==== Semantics
+
+++Bar basics++:: srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample4_TesteeForFunctions/test/ATests:ATest#testBarBasics++[Test]
+
+
+== Functions
+
+
+[[gsec:spec_A.foofunc]]
+[role=memberdoc]
+=== ++Function foofunc++
+
+==== Signature
+srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:foofunc++[``++function foofunc(): void++``]
+
+==== Description
+
+Spec for Function foofunc
+
+==== Semantics
+
+++Func basics++:: srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample4_TesteeForFunctions/test/ATests:ATest#testFuncBasics++[Test]

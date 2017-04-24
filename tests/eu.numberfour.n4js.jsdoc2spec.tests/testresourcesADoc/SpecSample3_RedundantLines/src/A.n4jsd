@@ -1,0 +1,8 @@
+/**
+ * @Spec spec for class A from source code
+ */
+export external public class A {
+
+	public foo(): string;
+}
+

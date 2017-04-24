@@ -1,0 +1,5 @@
+==== Semantics
+
+++ext++:: srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample5_LinkToReqIDs/test/ReqTest:ReqTest#ext___Case++[++Case++]
+
+Ext Description

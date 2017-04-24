@@ -1,0 +1,26 @@
+include::{find}config.adoc[]
+:docinfodir: ../../../../../headers/apiModules
+:linkattrs:
+:toc:
+
+= Module A
+
+== Class A
+
+todo:Hello[]
+
+[[gsec:spec_A.A.bar]]
+[role=memberdoc]
+=== ++Method bar++
+todo:To something here[]
+
+==== Signature
+srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#bar++[``++public bar(n: number): string++``]
+
+==== Description
+
+spec for method A.bar from source code
+
+==== Semantics
+
+++Bar basics++:: srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample10_TodoTags/test/ATests:ATest#testBarBasics++[Test]

@@ -1,0 +1,5 @@
+@@StaticPolyfillAware
+
+export public class X {
+	my() {}
+}

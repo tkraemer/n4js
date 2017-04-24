@@ -1,0 +1,56 @@
+include::{find}config.adoc[]
+:docinfodir: ../../../../../headers/apiModules
+:linkattrs:
+:toc:
+
+= Module A
+
+== Class A
+
+
+
+[[gsec:spec_A.A.bar]]
+[role=memberdoc]
+=== ++Method bar++
+
+==== Signature
+srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#bar++[``++public bar(): void++``]
+footnote:[Polyfilled from n4js-n4:testresources]
+
+
+==== Semantics
+[.todo, label="test ++A.bar++"]
+--
+Add tests specifying semantics for ``++bar(): void++``
+--
+
+
+[[gsec:spec_A.A.base]]
+[role=memberdoc]
+=== ++Method base++
+
+==== Signature
+srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#base++[``++public base(x: number): void++``]
+
+
+==== Semantics
+[.todo, label="test ++A.base++"]
+--
+Add tests specifying semantics for ``++base(x: number): void++``
+--
+
+
+[[gsec:spec_A.A.foo]]
+[role=memberdoc]
+=== ++Method foo++
+
+==== Signature
+srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#foo++[``++public foo(x: any, n: number=…): void++``]
+footnote:[Polyfilled from n4js-n4:testresources]
+
+
+==== Semantics
+[.todo, label="test ++A.foo++"]
+--
+Add tests specifying semantics for ``++foo(x: any, n: number=…): void++``
+--

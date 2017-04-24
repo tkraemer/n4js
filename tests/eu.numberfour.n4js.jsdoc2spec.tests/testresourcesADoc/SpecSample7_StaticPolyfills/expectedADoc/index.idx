@@ -1,0 +1,8 @@
+n4js-n4#tests
+	eu.numberfour.n4js.jsdoc2spec.tests#testresources
+		NO_PACKAGE
+			A.n4js
+				A::2::11::12
+				A#bar::6::13::29
+				A#base::3::30::45
+				A#foo::4::46::62
