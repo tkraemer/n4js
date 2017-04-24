@@ -21,7 +21,7 @@ export external public class Comparable {
 	   === ++Method equals++
 	   
 	   ==== Signature
-	   srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/Comparable:Comparable#equals++[``++public equals(other: any): boolean++``]
+	   srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/Comparable:Comparable#equals++[``++public equals(other: any): boolean++``]
 	   
 	   ==== Description
 	   
@@ -50,7 +50,7 @@ export external public class Comparable {
 	   === ++Static method equal++
 	   
 	   ==== Signature
-	   srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/Comparable:Comparable@equal++[``++public equal(left: any, right: any): boolean++``]
+	   srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/Comparable:Comparable@equal++[``++public equal(left: any, right: any): boolean++``]
 	   
 	   ==== Description
 	   

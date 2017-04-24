@@ -13,7 +13,7 @@ include::{find}config.adoc[]
 === ++Variable bar2var++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:bar2var++[``++bar2var: string++``]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:bar2var++[``++bar2var: string++``]
 
 ==== Description
 
@@ -26,7 +26,7 @@ Spec for Var bar2var
 === ++Variable barvar++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:barvar++[``++barvar: string++``]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:barvar++[``++barvar: string++``]
 
 ==== Description
 
@@ -34,7 +34,7 @@ Spec for Var barvar
 
 ==== Semantics
 
-++Bar basics++:: srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample4_TesteeForFunctions/test/ATests:ATest#testBarBasics++[Test]
+++Bar basics++:: srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample4_TesteeForFunctions/test/ATests:ATest#testBarBasics++[Test]
 
 
 == Functions
@@ -45,7 +45,7 @@ Spec for Var barvar
 === ++Function foofunc++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:foofunc++[``++function foofunc(): void++``]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:foofunc++[``++function foofunc(): void++``]
 
 ==== Description
 
@@ -53,4 +53,4 @@ Spec for Function foofunc
 
 ==== Semantics
 
-++Func basics++:: srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample4_TesteeForFunctions/test/ATests:ATest#testFuncBasics++[Test]
+++Func basics++:: srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample4_TesteeForFunctions/test/ATests:ATest#testFuncBasics++[Test]

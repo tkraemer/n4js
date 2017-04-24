@@ -14,7 +14,7 @@ include::{find}config.adoc[]
 === ++Method bar++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#bar++[``++project bar(n: number): string++``]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#bar++[``++project bar(n: number): string++``]
 
 ==== Description
 
@@ -22,7 +22,7 @@ spec for method A.bar from source code
 
 ==== Semantics
 
-++Bar basics++:: srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample1/test/ATests:ATest#testBarBasics++[Test]
+++Bar basics++:: srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample1/test/ATests:ATest#testBarBasics++[Test]
 
 
 
@@ -31,7 +31,7 @@ spec for method A.bar from source code
 === ++Method baz++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#baz++[``++project baz(): string++``]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#baz++[``++project baz(): string++``]
 
 ==== Description
 
@@ -53,7 +53,7 @@ Add tests specifying semantics for ``++baz(): string++``
 === ++Method foo++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:B#foo++[``++project foo(s: string): void++``]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:B#foo++[``++project foo(s: string): void++``]
 
 
 ==== Semantics
@@ -74,7 +74,7 @@ Inherited from
 
 ==== Semantics
 
-++Bar again++:: srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample1/test/ATests:DTest#testBarAgain++[Test]
+++Bar again++:: srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample1/test/ATests:DTest#testBarAgain++[Test]
 
 
 [[gsec:spec_D.A.baz]]
@@ -86,6 +86,6 @@ Inherited from
 
 ==== Semantics
 
-++Baz again++:: srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample1/test/ATests:DTest#testBazAgain++[Test]
+++Baz again++:: srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample1/test/ATests:DTest#testBazAgain++[Test]
 
 Baz is supposed to do nothing.

@@ -13,7 +13,7 @@ include::{find}config.adoc[]
 === ++Function func++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:func++[``++async function func(x: string, n: number=…, ...p: string): string++``]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:func++[``++async function func(x: string, n: number=…, ...p: string): string++``]
 
 
 ==== Semantics
@@ -31,7 +31,7 @@ Add tests specifying semantics for ``++func++``
 === ++Constructor constructor++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#constructor++[``++public constructor(s: ~i~this): this[A]++``]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#constructor++[``++public constructor(s: ~i~this): this[A]++``]
 
 
 ==== Semantics
@@ -46,7 +46,7 @@ Add tests specifying semantics for ``++constructor(s: ~i~this): this[A]?++``
 === ++Method bar++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#bar++[``++project async bar(): string++``]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#bar++[``++project async bar(): string++``]
 
 
 ==== Semantics
@@ -61,7 +61,7 @@ Add tests specifying semantics for ``++async bar(): Promise<string,?>++``
 === ++Method baz++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#baz++[``++@TestAPI @Final @Internal public baz(): string++``]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#baz++[``++@TestAPI @Final @Internal public baz(): string++``]
 
 
 ==== Semantics
@@ -76,7 +76,7 @@ Add tests specifying semantics for ``++baz(): string++``
 === ++Method foo++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#foo++[``++public foo(x: string, n: number=…, ...p: string): void++``]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#foo++[``++public foo(x: string, n: number=…, ...p: string): void++``]
 
 
 ==== Semantics
@@ -91,7 +91,7 @@ Add tests specifying semantics for ``++foo(x: string, n: number=…, ...p: strin
 === ++Static method xgreet++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A@xgreet++[``++project xgreet(some: union{string,number}): void++``]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A@xgreet++[``++project xgreet(some: union{string,number}): void++``]
 
 
 ==== Semantics

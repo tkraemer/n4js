@@ -14,8 +14,8 @@ include::{find}config.adoc[]
 === ++Method bar++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#bar++[``++public bar(): void++``]
-footnote:[Polyfilled from n4js-n4:testresources]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#bar++[``++public bar(): void++``]
+footnote:[Polyfilled from n4js:testresources]
 
 
 ==== Semantics
@@ -30,7 +30,7 @@ Add tests specifying semantics for ``++bar(): void++``
 === ++Method base++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#base++[``++public base(x: number): void++``]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#base++[``++public base(x: number): void++``]
 
 
 ==== Semantics
@@ -45,8 +45,8 @@ Add tests specifying semantics for ``++base(x: number): void++``
 === ++Method foo++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#foo++[``++public foo(x: any, n: number=…): void++``]
-footnote:[Polyfilled from n4js-n4:testresources]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#foo++[``++public foo(x: any, n: number=…): void++``]
+footnote:[Polyfilled from n4js:testresources]
 
 
 ==== Semantics

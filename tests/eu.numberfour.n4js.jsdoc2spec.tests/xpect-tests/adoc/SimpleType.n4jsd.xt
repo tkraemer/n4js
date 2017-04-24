@@ -17,7 +17,7 @@ export external public class C {
 	   === ++Method foo++
 	   
 	   ==== Signature
-	   srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/SimpleType:C#foo++[``++public foo(): void++``]
+	   srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/SimpleType:C#foo++[``++public foo(): void++``]
 	   
 	   ==== Description
 	   
@@ -58,7 +58,7 @@ export external public class D {
 	   === ++Method foo++
 	   
 	   ==== Signature
-	   srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/SimpleType:D#foo++[``++public foo(): void++``]
+	   srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/SimpleType:D#foo++[``++public foo(): void++``]
 	   
 	   ==== Description
 	   
@@ -92,7 +92,7 @@ export external public class D {
 	   === ++Method bar++
 	   
 	   ==== Signature
-	   srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/SimpleType:D#bar++[``++public bar(): void++``]
+	   srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/SimpleType:D#bar++[``++public bar(): void++``]
 	   
 	   ==== Description
 	   

@@ -7,7 +7,7 @@
    === ++Function foo++
    
    ==== Signature
-   srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/SimpleFunction:foo++[``++function foo(): void++``]
+   srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/SimpleFunction:foo++[``++function foo(): void++``]
    
    ==== Description
    

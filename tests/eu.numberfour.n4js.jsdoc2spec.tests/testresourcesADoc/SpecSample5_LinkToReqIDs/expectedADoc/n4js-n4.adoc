@@ -6,6 +6,6 @@
 
 ==== Module A
 
-	* srclink::n4js-n4:tests/eu.numberfour.n4js.jsdoc2spec.tests:testresources:A.A[]
+	* srclink::n4js:tests/eu.numberfour.n4js.jsdoc2spec.tests:testresources:A.A[]
 
-	* srclink::n4js-n4:tests/eu.numberfour.n4js.jsdoc2spec.tests:testresources:A.A#foo[]
+	* srclink::n4js:tests/eu.numberfour.n4js.jsdoc2spec.tests:testresources:A.A#foo[]

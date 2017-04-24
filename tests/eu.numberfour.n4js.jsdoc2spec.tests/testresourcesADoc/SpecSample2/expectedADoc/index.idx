@@ -1,4 +1,4 @@
-n4js-n4#tests
+n4js#tests
 	eu.numberfour.n4js.jsdoc2spec.tests#testresources
 		NO_PACKAGE
 			A.n4jsd

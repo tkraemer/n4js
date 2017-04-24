@@ -1,10 +1,10 @@
-n4js-n4#tests
+n4js#tests
 	eu.numberfour.n4js.jsdoc2spec.tests#testresourcesADoc.SpecSample9_StaticPolyfill.src
 		NO_PACKAGE
 			X.n4js
 				X::3::11::12
-				X#bar::5::13::27::n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc.SpecSample9_StaticPolyfill.poly
-				X#foo::6::28::44::n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc.SpecSample9_StaticPolyfill.poly
+				X#bar::5::13::27::n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc.SpecSample9_StaticPolyfill.poly
+				X#foo::6::28::44::n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc.SpecSample9_StaticPolyfill.poly
 				X#my::4::45::60
 	eu.numberfour.n4js.jsdoc2spec.tests#testresourcesADoc.SpecSample9_StaticPolyfill.tests
 		NO_PACKAGE

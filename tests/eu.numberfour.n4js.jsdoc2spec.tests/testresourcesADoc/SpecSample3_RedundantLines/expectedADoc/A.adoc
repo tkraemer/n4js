@@ -15,10 +15,10 @@ include::{find}config.adoc[]
 === ++Method foo++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#foo++[``++public foo(): string++``]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#foo++[``++public foo(): string++``]
 
 ==== Semantics
 
-++Foo++:: srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample3_RedundantLines/test/ATests:BaseTests#testFoo++[Test]
+++Foo++:: srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample3_RedundantLines/test/ATests:BaseTests#testFoo++[Test]
 
 Text.

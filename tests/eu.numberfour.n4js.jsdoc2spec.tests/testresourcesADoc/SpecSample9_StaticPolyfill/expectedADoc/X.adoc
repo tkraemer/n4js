@@ -14,12 +14,12 @@ include::{find}config.adoc[]
 === ++Method bar++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample9_StaticPolyfill/src/X:X#bar++[``++project bar(): void++``]
-footnote:[Polyfilled from n4js-n4:testresourcesADoc/SpecSample9_StaticPolyfill/poly]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample9_StaticPolyfill/src/X:X#bar++[``++project bar(): void++``]
+footnote:[Polyfilled from n4js:testresourcesADoc/SpecSample9_StaticPolyfill/poly]
 
 ==== Semantics
 
-++test++:: srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample9_StaticPolyfill/tests/XTest:XTest#test++[Test]
+++test++:: srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample9_StaticPolyfill/tests/XTest:XTest#test++[Test]
 
 
 
@@ -28,8 +28,8 @@ footnote:[Polyfilled from n4js-n4:testresourcesADoc/SpecSample9_StaticPolyfill/p
 === ++Method foo++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample9_StaticPolyfill/src/X:X#foo++[``++project foo(): void++``]
-footnote:[Polyfilled from n4js-n4:testresourcesADoc/SpecSample9_StaticPolyfill/poly]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample9_StaticPolyfill/src/X:X#foo++[``++project foo(): void++``]
+footnote:[Polyfilled from n4js:testresourcesADoc/SpecSample9_StaticPolyfill/poly]
 
 
 ==== Semantics
@@ -44,7 +44,7 @@ Add tests specifying semantics for ``++foo(): void++``
 === ++Method my++
 
 ==== Signature
-srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample9_StaticPolyfill/src/X:X#my++[``++project my(): void++``]
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample9_StaticPolyfill/src/X:X#my++[``++project my(): void++``]
 
 
 ==== Semantics

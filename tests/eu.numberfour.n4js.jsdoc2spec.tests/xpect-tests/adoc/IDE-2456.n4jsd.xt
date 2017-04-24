@@ -7,7 +7,7 @@
    === ++Function async1++
    
    ==== Signature
-   srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/IDE-2456:async1++[``++async function async1(): void++``]
+   srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/IDE-2456:async1++[``++async function async1(): void++``]
    
    ==== Description
    
@@ -36,7 +36,7 @@ external async function async1() : void {}
    === ++Function async2++
    
    ==== Signature
-   srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/IDE-2456:async2++[``++async function async2(): Promise<string,?>++``]
+   srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/IDE-2456:async2++[``++async function async2(): Promise<string,?>++``]
    
    ==== Description
    
@@ -68,7 +68,7 @@ external async function async2() : Promise<string, ?> {
    === ++Function gen1++
    
    ==== Signature
-   srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/IDE-2456:gen1++[``++function * gen1(): void++``]
+   srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/IDE-2456:gen1++[``++function * gen1(): void++``]
    
    ==== Description
    
@@ -96,7 +96,7 @@ external function * gen1() : void {}
    === ++Function gen2++
    
    ==== Signature
-   srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/IDE-2456:gen2++[``++function * gen2(): String++``]
+   srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/IDE-2456:gen2++[``++function * gen2(): String++``]
    
    ==== Description
    
@@ -124,7 +124,7 @@ external function * gen2() : String {}
    === ++Function gen3++
    
    ==== Signature
-   srclnk:++n4js-n4:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/IDE-2456:gen3++[``++function * gen3(): Generator<String,Number,undefined>++``]
+   srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:xpect-tests/adoc/IDE-2456:gen3++[``++function * gen3(): Generator<String,Number,undefined>++``]
    
    ==== Description
    
