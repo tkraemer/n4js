@@ -1,0 +1,7 @@
+@@StaticPolyfillModule
+
+@StaticPolyfill
+export public class X extends X{
+	bar() {}
+	foo() {}
+}

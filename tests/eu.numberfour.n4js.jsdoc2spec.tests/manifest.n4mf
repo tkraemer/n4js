@@ -1,0 +1,11 @@
+ProjectId: eu.numberfour.n4js.jsdoc2spec.tests
+VendorId: eu.numberfour
+VendorName: "NumberFour AG"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "META-INF"
+Sources {
+	source {
+		"xpect-tests"
+	}
+}

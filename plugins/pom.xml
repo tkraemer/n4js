@@ -63,6 +63,11 @@ Contributors:
 		<module>eu.numberfour.n4js.transpiler.es</module>
 		<!-- jsdoc -->
 		<module>eu.numberfour.n4js.jsdoc</module>
+		<!-- jsdoc to adoc exporter -->
+		<module>eu.numberfour.n4js.jsdoc2spec</module>
+		<module>eu.numberfour.n4js.jsdoc2spec.ui</module>
+		<!-- AST graph viewer -->
+		<module>eu.numberfour.n4js.smith.graph</module>
 		<!-- xpect -->
 		<module>eu.numberfour.n4js.xpect</module>
 		<module>eu.numberfour.n4js.xpect.ui</module>

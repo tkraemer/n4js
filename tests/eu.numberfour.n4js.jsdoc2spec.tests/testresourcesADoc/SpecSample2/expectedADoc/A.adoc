@@ -1,0 +1,44 @@
+include::{find}config.adoc[]
+:docinfodir: ../../../../../headers/apiModules
+:linkattrs:
+:toc:
+
+= Module A
+
+== Class A
+
+
+
+[[gsec:spec_A.A.bar]]
+[role=memberdoc]
+=== ++Method bar++
+
+==== Signature
+srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresources/A:A#bar++[``++public bar(n: number): string++``]
+
+==== Description
+
+spec for method A.bar from source code
+
+==== Semantics
+
+++Bar basics++:: srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample2/test/ATests:ATest#testBarBasics++[Test]
+
+
+
+++Only in a++:: srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample2/test/ATests:ATest#testOnlyInA++[Test]
+
+
+== Class B
+
+
+[[gsec:spec_B.A.bar]]
+[role=memberdoc]
+=== ++Method bar++
+
+Inherited from
+++class A++
+
+==== Semantics
+
+++Bar basics++:: srclnk:++n4js:tests:eu.numberfour.n4js.jsdoc2spec.tests:testresourcesADoc/SpecSample2/test/ATests:ATest#testBarBasics++[Test]

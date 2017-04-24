@@ -1,0 +1,12 @@
+/**
+ * @testeeType A.A
+ */
+public class ATest {
+
+	/**
+	 * @testeeMember bar
+	 */
+	@Test
+	testBarBasics(): string {}
+}
+

@@ -1,0 +1,11 @@
+/**
+ * @todo Hello
+ */
+export external public class A {
+
+	/**
+	 * @spec spec for method A.bar from source code
+	 * @todo To something here
+	 */
+	public bar(n: number): string;
+}

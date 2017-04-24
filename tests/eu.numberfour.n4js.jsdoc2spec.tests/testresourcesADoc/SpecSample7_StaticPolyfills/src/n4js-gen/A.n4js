@@ -1,0 +1,5 @@
+@@StaticPolyfillAware
+export public class A {
+	public base(x: number) {}
+	public foo(x: string) {}
+}

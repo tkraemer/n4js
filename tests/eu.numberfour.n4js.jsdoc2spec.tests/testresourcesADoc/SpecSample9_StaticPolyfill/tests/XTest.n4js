@@ -1,0 +1,12 @@
+export public class XTest {
+	
+	
+	/**
+	 * @testee X.X.bar
+	 */
+	@Test
+	public test() {}
+
+	
+	
+}

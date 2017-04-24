@@ -1,0 +1,30 @@
+/* XPECT_SETUP eu.numberfour.n4js.jsdoc2spec.JSDoc2SpecTest END_SETUP  */
+
+export external public var
+/* XPECT specADoc ---
+   ==== Description
+   
+   Spec of Variable.
+   
+   
+   ---
+ */
+/**
+ * @spec Spec of Variable.
+ */
+bar : string;
+
+
+
+/* XPECT specADoc ---
+   ==== Description
+   
+   Spec of Variable2.
+   
+   
+   ---
+ */
+/**
+ * @spec Spec of Variable2.
+ */
+export external public var bar2 : string;

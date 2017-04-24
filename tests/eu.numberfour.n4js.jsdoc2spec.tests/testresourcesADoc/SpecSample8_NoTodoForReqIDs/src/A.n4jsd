@@ -1,0 +1,6 @@
+class A {
+	/**
+	 * @reqid 1000_a
+	 */
+	foo(): void;
+}

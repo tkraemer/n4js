@@ -1,0 +1,16 @@
+n4js#tests
+	eu.numberfour.n4js.jsdoc2spec.tests#testresources
+		NO_PACKAGE
+			A.n4jsd
+				A::4::11::12
+				A#foo::6::13::27
+	eu.numberfour.n4js.jsdoc2spec.tests#testresourcesADoc.SpecSample3_RedundantLines.test
+		NO_PACKAGE
+			ATests.n4js
+				BaseTests::2::11::12
+				BaseTests#initFixture::10::13::22
+				BaseTests#testFoo::8::23::42
+				TestsFixture1::16::46::47
+				TestsFixture1#initFixture::17::48::63
+				TestsFixture2::22::67::68
+				TestsFixture2#initFixture::23::69::84
