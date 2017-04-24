@@ -70,7 +70,7 @@ Contributors:
 |LCST
 |Least Common Super Type, also known as _join_
 |N4JS
-|NumberFour JavaScript
+|Niceness for JavaScript
 |N4JSED
 |N4JS Environment Definition
 |N4IDE
