@@ -577,8 +577,8 @@ The following manifest shows the use of filters to disable validation and module
 ProjectId: Test
 ProjectType: lib
 ProjectVersion: 0.0.1-SNAPSHOT
-VendorId: eu.goodcompany
-VendorName: "Good Company AG"
+VendorId: eu.mycompany
+VendorName: "My Company AG"
 Output: "src-gen"
 Sources {
     source {

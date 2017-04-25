@@ -365,8 +365,8 @@ files created by the New Project wizard look like the following:
 ProjectId: n4js.example.tasks
 ProjectType: library
 ProjectVersion: 0.0.1
-VendorId: eu.goodcompany
-VendorName: "Good Company AG"
+VendorId: eu.mycompany
+VendorName: "MyCompany AG"
 Output: "src-gen"
 Sources {
   source {
