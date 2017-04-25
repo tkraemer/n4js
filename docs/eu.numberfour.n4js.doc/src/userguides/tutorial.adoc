@@ -365,8 +365,8 @@ files created by the New Project wizard look like the following:
 ProjectId: n4js.example.tasks
 ProjectType: library
 ProjectVersion: 0.0.1
-VendorId: eu.numberfour
-VendorName: "NumberFour AG"
+VendorId: eu.mycompany
+VendorName: "MyCompany AG"
 Output: "src-gen"
 Sources {
   source {
@@ -648,8 +648,8 @@ Sources {
   }
 }
 ProjectDependencies {
-  eu.numberfour.mangelhaft,
-  eu.numberfour.mangelhaft.assert
+  org.eclipse.n4js.mangelhaft,
+  org.eclipse.n4js.mangelhaft.assert
 }
 ----
 

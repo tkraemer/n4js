@@ -9,14 +9,15 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
-﻿:notitle:
+﻿
 
 .N4JS Documentation
 = N4JS Userguides
+:notitle:
 
 All the resources you need to begin type safe development with the N4JS IDE
 
-
+.Documentation
 == Index
 
 ---
@@ -59,8 +60,10 @@ using the N4JS IDE.
 
 Using the built-in example projects as a reference, this in-depth tutorial covers the most important tools and features
 of the N4JS IDE. The example project is explained as a domain model and built step-by-step.
-New features of the N4JS IDE are introduced along the way such as *modules* , *type annotations* ,
-*dependency injection* , *testing*  with an example test project and more.
+New features of the N4JS IDE are introduced along the way such as *modules*, *type annotations*,
+*dependency injection*, *testing* with an example test project and more.
 
 
 * <<tutorial.adoc#tutorial,In-Depth Tutorial>>: Begin using the more powerful features N4JS has to offer!
+
+include::license.adoc[leveloffset=+1]

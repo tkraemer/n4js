@@ -9,22 +9,10 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
-:config_adoc_include_guard: 1
-
 // ======================= AsciiSpec Processor Configuration =======================
 // Inline Task Macro Config
-// See https://github.numberfour.eu/NumberFour/asciispec#inline-task-macro for details.
+// See https://numberfour.github.io/asciispec/spec.html#_inline_task_macro for details.
 
-:task_def_IDEBUG-: GitHub;IDE Bugs;https://github.com/NumberFour/N4JS/issues/{TASK_ID};images/github.png;GH-{TASK_ID}
-:task_def_IDE-: Jira;IDE Backlog;https://jira.numberfour.eu/browse/IDE-{TASK_ID};images/jira.png;IDE-{TASK_ID}
-:task_def_GH-: Github;IDE Bugs;https://github.com/NumberFour/N4JS/issues/{TASK_ID};images/github.png;GH-{TASK_ID}
-:task_def_SL-: Jira;STDLIB Backlog;https://jira.numberfour.eu/browse/SL-{TASK_ID};images/jira.png;IDE-{TASK_ID}
-
-// =========================== Inline Cwiki Macro Config ===========================
-// See https://github.numberfour.eu/NumberFour/asciispec#inline-cwiki-macro for  details.
-:cwiki_def: https://confluence.numberfour.eu/display/{PATH};https://confluence.numberfour.eu/pages/viewpage.action?pageId={PAGE_ID};images/jira.png;Confluence entry:{TITLE}
-
-// =========================== AsciiSpec Bibliography ===========================
 // Path to Bib File (usually in same folder as index.adoc)
 :bib-file: n4jsspec.bib
 
