@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: eu.numberfour.n4js.xpect.tests
+Bundle-Name: %pluginName
 Bundle-SymbolicName: eu.numberfour.n4js.xpect.tests;singleton:=true
 Bundle-Version: 0.0.1.qualifier
 Fragment-Host: eu.numberfour.n4js;bundle-version="0.0.1"
@@ -33,5 +33,5 @@ Import-Package: org.apache.log4j,
  org.junit.runners;version="4.5.0",
  org.junit.runners.model;version="4.5.0",
  org.hamcrest.core
-Bundle-Vendor: Eclipse N4JS Project
+Bundle-Vendor: %providerName
 Export-Package: eu.numberfour.n4js.xpect.tests

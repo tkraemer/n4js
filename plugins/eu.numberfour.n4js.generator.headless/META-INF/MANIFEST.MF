@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: N4JS Generator Headless
+Bundle-Name: %pluginName
 Bundle-SymbolicName: eu.numberfour.n4js.generator.headless
 Bundle-Version: 0.0.1.qualifier
-Bundle-Vendor: Eclipse N4JS Project
+Bundle-Vendor: %providerName
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: eu.numberfour.n4js.generator;bundle-version="0.0.1",
  eu.numberfour.n4js.generator.common;bundle-version="0.0.1",

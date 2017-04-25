@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: N4JS Composed Generator
+Bundle-Name: %pluginName
 Bundle-SymbolicName: eu.numberfour.n4js.generator;singleton:=true
 Bundle-Version: 0.0.1.qualifier
-Bundle-Vendor: Eclipse N4JS Project
+Bundle-Vendor: %providerName
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: eu.numberfour.n4js.transpiler.es,
  org.apache.log4j,

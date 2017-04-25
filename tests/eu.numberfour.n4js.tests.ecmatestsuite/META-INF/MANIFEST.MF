@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: eu.numberfour.n4js.tests.ecmatestsuite
+Bundle-Name: %pluginName
 Bundle-SymbolicName: eu.numberfour.n4js.tests.ecmatestsuite
 Bundle-Version: 0.0.1.qualifier
-Bundle-Vendor: Eclipse N4JS Project
+Bundle-Vendor: %providerName
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.junit,
  org.eclipse.emf.ecore,

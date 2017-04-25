@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: JSDoc to Spec UI
+Bundle-Name: %pluginName
 Bundle-SymbolicName: eu.numberfour.n4js.jsdoc2spec.ui;singleton:=true
 Bundle-Version: 0.0.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -25,4 +25,4 @@ Import-Package: eu.numberfour.n4js.ts,
  org.eclipse.xtext.util
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: eu.numberfour.n4js.jsdoc2spec.JSDoc2SpecActivator
-Bundle-Vendor: Eclipse N4JS Project
+Bundle-Vendor: %providerName
