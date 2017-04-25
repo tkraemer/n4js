@@ -78,6 +78,14 @@ NumberFour AG - Initial API and implementation
          version="0.0.0"/>
 
    <includes
+         id="eu.numberfour.n4js.smith.sdk"
+         version="0.0.0"/>
+
+   <includes
+         id="eu.numberfour.n4js.jsdoc2spec.sdk"
+         version="0.0.0"/>
+
+   <includes
          id="eu.numberfour.n4jsx.sdk"
          version="0.0.0"/>
 

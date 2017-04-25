@@ -1,0 +1,14 @@
+n4js#tests
+	eu.numberfour.n4js.jsdoc2spec.tests#testresources
+		NO_PACKAGE
+			A.n4jsd
+				A::4::11::12
+				A#bar::9::13::34
+				B::13::38::51
+	eu.numberfour.n4js.jsdoc2spec.tests#testresourcesADoc.SpecSample2.test
+		NO_PACKAGE
+			ATests.n4js
+				ATest::4::11::12
+				ATest#testBarBasics::9::13::28
+				ATest#testOnlyInA::15::29::44
+				BTest::22::48::49

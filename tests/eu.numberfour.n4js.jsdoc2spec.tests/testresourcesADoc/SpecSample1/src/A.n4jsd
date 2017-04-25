@@ -1,0 +1,26 @@
+/**
+ * @Spec spec for class A from source code
+ */
+export external public class A {
+	
+	/**
+	 * @spec spec for method A.bar from source code
+	 */
+	bar(n: number): string;
+
+	/**
+	 * @return some return descr.
+	 *
+	 * @spec spec for method A.baz from source code
+	 */
+	baz(): string;
+}
+
+export external public class B {
+	foo(s: string);
+}
+
+// C only in latex
+
+export external public class D extends A {
+}

@@ -11,8 +11,6 @@ class_obj.png								- /org.eclipse.jdt.ui/icons/full/obj16/class_obj.png
 ### default could be project in N4JS
 innerclass_default_obj.gif					- /org.eclipse.jdt.ui/icons/full/obj16/innerclass_default_obj.gif
 innerclass_private_obj.gif					- /org.eclipse.jdt.ui/icons/full/obj16/innerclass_private_obj.gif
-## roles
-role_obj.gif								- /n4.ide.js.ui_0.52.20.jar/icons/obj16/role_obj.gif
 ## interface
 innerinterface_public_obj.gif				- /org.eclipse.jdt.ui/icons/full/obj16/innerinterface_public_obj.gif
 innerinterface_protected_obj.gif			- /org.eclipse.jdt.ui/icons/full/obj16/innerinterface_protected_obj.gif

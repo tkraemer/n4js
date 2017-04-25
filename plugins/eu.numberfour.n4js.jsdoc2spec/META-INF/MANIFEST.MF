@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JSDoc to Spec
+Bundle-SymbolicName: eu.numberfour.n4js.jsdoc2spec;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: eu.numberfour.n4js,
+ eu.numberfour.n4js.ui,
+ eu.numberfour.n4js.ts.model,
+ eu.numberfour.n4js.jsdoc,
+ eu.numberfour.n4js.environments,
+ eu.numberfour.n4js.ts,
+ org.eclipse.jgit;bundle-version="3.5.1",
+ eu.numberfour.n4js.n4mf.model
+Import-Package: org.eclipse.core.runtime,
+ org.osgi.framework;version="1.8.0"
+Export-Package: eu.numberfour.n4js.jsdoc2spec,
+ eu.numberfour.n4js.jsdoc2spec.adoc
+Bundle-Vendor: NumberFour AG

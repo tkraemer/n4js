@@ -1,0 +1,13 @@
+n4js#tests
+	eu.numberfour.n4js.jsdoc2spec.tests#testresources
+		NO_PACKAGE
+			A.n4jsd
+				bar2var::15::11::24
+				barvar::10::25::42
+				foofunc::4::46::63
+	eu.numberfour.n4js.jsdoc2spec.tests#testresourcesADoc.SpecSample4_TesteeForFunctions.test
+		NO_PACKAGE
+			ATests.n4js
+				ATest::1::11::12
+				ATest#testBarBasics::12::13::28
+				ATest#testFuncBasics::6::29::44

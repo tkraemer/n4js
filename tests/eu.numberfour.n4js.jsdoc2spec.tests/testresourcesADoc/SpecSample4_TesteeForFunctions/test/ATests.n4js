@@ -1,0 +1,14 @@
+public class ATest {
+
+	/**
+	 * @testee A.foofunc
+	 */
+	@Test
+	testFuncBasics(): string {}
+
+	/**
+	 * @testee A.barvar
+	 */
+	@Test
+	testBarBasics(): string {}
+}
