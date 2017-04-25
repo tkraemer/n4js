@@ -1,8 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: N4jsx
-Bundle-SymbolicName: eu.numberfour.n4jsx;singleton:=true
+Bundle-Vendor: Eclipse N4JS Project
 Bundle-Version: 0.0.1.qualifier
+Bundle-SymbolicName: eu.numberfour.n4jsx;singleton:=true
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.eclipse.xtext.xbase;resolution:=optional;visibility:=reexport,

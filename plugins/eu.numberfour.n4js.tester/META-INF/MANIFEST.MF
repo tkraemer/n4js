@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: N4 Tester Core
 Bundle-SymbolicName: eu.numberfour.n4js.tester;singleton:=true
 Bundle-Version: 0.0.1.qualifier
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: Eclipse N4JS Project
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javax.inject,
  javax.servlet,

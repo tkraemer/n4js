@@ -1,8 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Hlc
-Bundle-SymbolicName: eu.numberfour.n4js.hlc
+Bundle-Vendor: Eclipse N4JS Project
 Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: eu.numberfour.n4js.hlc
 Export-Package: eu.numberfour.n4js.hlc,
  eu.numberfour.n4js.hlc.helper
 Require-Bundle: eu.numberfour.n4js,

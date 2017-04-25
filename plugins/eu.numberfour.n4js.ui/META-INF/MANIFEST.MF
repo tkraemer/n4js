@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: eu.numberfour.n4js.ui
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: Eclipse N4JS Project
 Bundle-Version: 0.0.1.qualifier
 Bundle-SymbolicName: eu.numberfour.n4js.ui; singleton:=true
 Bundle-ActivationPolicy: lazy

@@ -25,4 +25,4 @@ Import-Package: eu.numberfour.n4js.ts,
  org.eclipse.xtext.util
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: eu.numberfour.n4js.jsdoc2spec.JSDoc2SpecActivator
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: Eclipse N4JS Project

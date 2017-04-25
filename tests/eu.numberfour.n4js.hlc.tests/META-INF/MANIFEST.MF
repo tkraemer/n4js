@@ -1,8 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests
-Bundle-SymbolicName: eu.numberfour.n4js.hlc.tests
+Bundle-Vendor: Eclipse N4JS Project
 Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: eu.numberfour.n4js.hlc.tests
 Export-Package: eu.numberfour.n4js.hlc.tests
 Require-Bundle: eu.numberfour.n4js,
  eu.numberfour.n4js.hlc;bundle-version="1.0.0",

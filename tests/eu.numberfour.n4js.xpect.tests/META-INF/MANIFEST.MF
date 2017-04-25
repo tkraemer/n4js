@@ -33,5 +33,5 @@ Import-Package: org.apache.log4j,
  org.junit.runners;version="4.5.0",
  org.junit.runners.model;version="4.5.0",
  org.hamcrest.core
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: Eclipse N4JS Project
 Export-Package: eu.numberfour.n4js.xpect.tests

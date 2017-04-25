@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: N4JS IDE Product
 Bundle-SymbolicName: eu.numberfour.n4js.product;singleton:=true
 Bundle-Version: 0.0.1.qualifier
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: Eclipse N4JS Project
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,

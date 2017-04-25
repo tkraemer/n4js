@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: eu.numberfour.n4js.releng.utils.tests
 Bundle-SymbolicName: eu.numberfour.n4js.releng.utils.tests
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: Eclipse N4JS Project
 Bundle-Version: 0.0.1.qualifier
 Fragment-Host: eu.numberfour.n4js.releng.utils
 Import-Package: org.apache.log4j,

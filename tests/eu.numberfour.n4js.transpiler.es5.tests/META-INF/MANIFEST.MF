@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: N4JS ECMAScript 5 Transpiler Tests
 Bundle-SymbolicName: eu.numberfour.n4js.transpiler.es5.tests
 Bundle-Version: 0.0.1.qualifier
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: Eclipse N4JS Project
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.xpect.xtext.lib;bundle-version="0.1.0",
  org.eclipse.core.runtime,

@@ -4,7 +4,7 @@ Bundle-Name: N4JS Xsemantics-based Type System Tests
 Bundle-SymbolicName: eu.numberfour.n4js.xsemantics.tests;singleton:=true
 Fragment-Host: eu.numberfour.n4js
 Bundle-Version: 0.0.1.qualifier
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: Eclipse N4JS Project
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.xtext.junit4;bundle-version="2.5.0",
  eu.numberfour.n4js.tests.helper,

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: N4MF UI Tests Helper
 Bundle-SymbolicName: eu.numberfour.n4js.n4mf.ui.tests.helper
 Bundle-Version: 0.0.1.qualifier
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: Eclipse N4JS Project
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: eu.numberfour.n4js.n4mf,
  eu.numberfour.n4js.n4mf.ui,

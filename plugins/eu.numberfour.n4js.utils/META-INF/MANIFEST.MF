@@ -49,5 +49,5 @@ Export-Package: eu.numberfour.n4js.fileextensions,
  eu.numberfour.n4js.utils.validation.impl,
  eu.numberfour.n4js.utils.validation.util,
  eu.numberfour.n4js.xtext.scoping
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: Eclipse N4JS Project
 Bundle-ClassPath: .

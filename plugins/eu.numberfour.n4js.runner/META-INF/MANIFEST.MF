@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: eu.numberfour.n4js.runner
 Bundle-SymbolicName: eu.numberfour.n4js.runner;singleton:=true
 Bundle-Version: 0.0.1.qualifier
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: Eclipse N4JS Project
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: eu.numberfour.n4js.runner,
  eu.numberfour.n4js.runner.exceptions,

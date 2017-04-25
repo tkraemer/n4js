@@ -16,4 +16,4 @@ Export-Package: eu.numberfour.n4js.n4JS,
  eu.numberfour.n4js.n4JS.impl,
  eu.numberfour.n4js.n4JS.util
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: Eclipse N4JS Project

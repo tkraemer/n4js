@@ -16,4 +16,4 @@ Import-Package: org.eclipse.core.runtime,
  org.osgi.framework;version="1.8.0"
 Export-Package: eu.numberfour.n4js.jsdoc2spec,
  eu.numberfour.n4js.jsdoc2spec.adoc
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: Eclipse N4JS Project

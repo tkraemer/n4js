@@ -20,4 +20,4 @@ Require-Bundle: eu.numberfour.n4js.tests.helper,
  org.xpect.xtext.lib,
  eu.numberfour.n4js.n4mf.ui,
  eu.numberfour.n4js.xpect
-Bundle-Vendor: NumberFour Ag
+Bundle-Vendor: Eclipse N4JS Project
