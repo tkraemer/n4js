@@ -66,4 +66,7 @@ New features of the N4JS IDE are introduced along the way such as *modules*, *ty
 
 * <<tutorial.adoc#tutorial,In-Depth Tutorial>>: Begin using the more powerful features N4JS has to offer!
 
-include::license.adoc[leveloffset=+1]
+---
+
+* <<license.adoc,License>>
+
