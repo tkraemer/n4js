@@ -15,7 +15,7 @@ Contributors:
 [[AC]]
 
 
-[.langauge-bash]
+[.language-bash]
 [cols="^1m,5h,^1m,5h"]
 |===
 |CDep
@@ -61,7 +61,7 @@ Contributors:
 |IDE
 |Integrated Development Environment
 |IDL
-|Interface Definition Langage
+|Interface Definition Language
 |LSP
 |Liskov Substitution Principle cite:[Martin96b]
 //TODO missing from biblio ^^^
@@ -70,7 +70,7 @@ Contributors:
 |LCST
 |Least Common Super Type, also known as _join_
 |N4JS
-|NumberFour JavaScript
+|N4JS for JavaScript
 |N4JSED
 |N4JS Environment Definition
 |N4IDE

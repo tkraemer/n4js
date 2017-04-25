@@ -10,7 +10,7 @@ Contributors:
 ////
 
 = Annotations
-task:IDE-139[] task:IDE-260[] task:IDE-272[]
+
 
 [.language-n4js]
 == Introduction
@@ -156,4 +156,4 @@ TIP: *version>0.5* - This is not part of version 0.3
 [.language-n4js]
 == Declaration of Annotations
 
-TIP: *version>0.5* - Not implemented in version 0.3 task:IDE-139[]
+TIP: *version>0.5* - Not implemented in version 0.3

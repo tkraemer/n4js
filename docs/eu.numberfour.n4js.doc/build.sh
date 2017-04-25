@@ -47,7 +47,7 @@ do
 	REL_PATH="${REL_PATH//[\/]/../}"
 	HEADER_DIR=$(basename $(dirname $f))
 	OUT_FOLDER=./$GEN_FOLDER/$(dirname $f)
-	ATTRS="-a doctype=book -a experimental=true -a stylesheet=n4js-adoc.css -a sectlinks -a docinfo1=true -a linkcss=true -a !source-highlighter -a icons=font"
+	ATTRS="-a doctype=book -a experimental=true -a stylesheet=n4js-adoc.css -a sectlinks -a docinfo1=true -a linkcss=true -a !source-highlighter -a reproducible -a icons=font"
 
 	echo running $ASPEC on $ADOC_FILE to $OUT_FOLDER
 

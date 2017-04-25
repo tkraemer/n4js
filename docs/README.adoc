@@ -26,7 +26,7 @@ Generate Eclipse Help::
 +
 [source,bash]
 ----
-cd docs/eu.numberfour.n4js.doc
+cd docs/org.eclipse.n4js.doc
 mvn -Dtycho.mode=maven verify
 ----
 
@@ -35,7 +35,7 @@ HTML for Web: ::
 +
 [source,bash,subs=quotes]
 ----
-cd docs/eu.numberfour.n4js.doc/src
+cd docs/org.eclipse.n4js.doc/src
 ./build.sh
 
 # Running the script with the `-p` flag opens the pages in a browser:
@@ -47,7 +47,7 @@ Language Specification: ::
 +
 [source,bash,subs=quotes]
 ----
-cd docs/eu.numberfour.n4js.spec
+cd docs/org.eclipse.n4js.spec
 ./build.sh
 
 # Running the script with the `-p` flag opens the pages in a browser:
@@ -60,30 +60,30 @@ Contributions to the source code and documentation of N4JS are highly encouraged
 Updating, maintaining and improving documentation can be done by experts or complete beginners alike.
 Bring your experience or fresh perspectives to enrich help resources that assist N4JS developers everywhere.
 
-== How to Contribute\
+== How to Contribute
 
 To contribute or improve N4JS help, https://help.github.com/articles/fork-a-repo/[fork the N4JS repo], create a pull request with edited or new AsciiDoc files in the source folder and your contribution will be reviewed for inclusion.
 
 All documentation for N4JS is written in AsciiDoc (`.adoc` format) and is deployed using a single-source toolchain described below.
-The source documentation is located in the NumberFour N4JS repository at:
+The source documentation is located in the N4JS repository at:
 
-`https://github.com/NumberFour/n4js/tree/master/docs[NumberFour/n4js/docs]`
+`https://github.com/NumberFour/n4js/tree/master/docs[n4js/docs]`
 
-The IDE is built using https://maven.apache.org/[Apache Maven] and running `mvn verify` builds the N4JS IDE including documentation at the following directory: `n4js/docs/eu.numberfour.n4js.doc/target`.
+The IDE is built using https://maven.apache.org/[Apache Maven] and running `mvn verify` builds the N4JS IDE including documentation at the following directory: `n4js/docs/org.eclipse.n4js.doc/target`.
 
-The documentation plugin can be run as a standalone module by navigating to `n4js/docs/eu.numberfour.n4js.doc` and running
+The documentation plugin can be run as a standalone module by navigating to `n4js/docs/org.eclipse.n4js.doc` and running
 
 `mvn -Dtycho.mode=maven verify`
 
 == Documentation Plugin Details
 
-The N4JS documentation plugin at `n4js/docs/eu.numberfour.n4js.doc` contains user guides, tutorials and feature articles.
+The N4JS documentation plugin at `n4js/docs/org.eclipse.n4js.doc` contains user guides, tutorials and feature articles.
 These files are used for the public N4JS http://numberfour.github.io/[project pages] and the bundled Eclipse help.
 
 A brief overview of the docs plugin looks like the following:
 
 [source]
-n4js/docs/eu.numberfour.n4js.doc/
+n4js/docs/org.eclipse.n4js.doc/
 ├── help-pages.txt
 ├── pom.xml
 ├── plugin.xml
@@ -100,7 +100,7 @@ n4js/docs/eu.numberfour.n4js.doc/
 └── toc.xml
 
 
-* **pom.xml** - Describes the build of the `eu.numberfour.n4js.doc` plugin.
+* **pom.xml** - Describes the build of the `org.eclipse.n4js.doc` plugin.
 * **plugin.xml** - Describes how the plugin extends the platform and implements functionality.
 * **help-pages.txt** - A list containing the paths of the **target** HTML files. This is used to generate the **toc.xml**.
 * **toc.xml** - Table Of Contents; contains a structured index of the help pages so they may be registered online or within the N4JS IDE
@@ -108,7 +108,7 @@ n4js/docs/eu.numberfour.n4js.doc/
 === Generating N4JS IDE Help
 
 The Eclipse Help bundled with the N4JS IDE is a collection of HTML files accompanied by a `toc.xml` that lists their hierarchy.
-In the Maven build, the POM at `n4js/docs/eu.numberfour.n4js.doc/pom.xml` is configured to execute these plugins in the following order:
+In the Maven build, the POM at `n4js/docs/org.eclipse.n4js.doc/pom.xml` is configured to execute these plugins in the following order:
 
 . The `asciidoctor-maven-plugin` converts source AsciiDoc files (`src` folder) to HTML (`target` folder).
 . An `antrun-plugin` creates a .txt file containing the paths to the generated HTML pages called `help-pages.txt`.

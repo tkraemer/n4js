@@ -20,8 +20,8 @@ Build PDF, HTML and launch in browser: ::
 == Prerequisites
 
 AsciiSpec ::
-https://github.numberfour.eu/NumberFour/asciispec
+https://github.com/NumberFour/asciispec
 
 == Reporting Bugs
 
-For reporting bugs and submitting feedback and feature requests, please open an issue in the https://github.numberfour.eu/NumberFour/asciispec/issues[AsciiSpec Repository] and a corresponding Jira Ticket, if necessary.
+For reporting bugs and submitting feedback and feature requests, please open an issue in the https://github.com/NumberFour/asciispec/issues[AsciiSpec Repository] and a corresponding Jira Ticket, if necessary.
