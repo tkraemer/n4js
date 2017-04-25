@@ -16,6 +16,10 @@ Contributors:
 .Licence
 = Licence
 
+The section states the licence of the N4JS Eclipse Plugin.
+
+== Licence Text
+
 December 14, 2008
 
 The Eclipse Foundation makes available all content in this plug-in ("Content").  Unless otherwise
