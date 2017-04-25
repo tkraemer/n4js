@@ -69,4 +69,3 @@ New features of the N4JS IDE are introduced along the way such as *modules*, *ty
 ---
 
 * <<license.adoc,License>>
-
