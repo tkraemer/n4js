@@ -31,7 +31,7 @@ import eu.numberfour.n4js.transpiler.im.Script_IM;
 import eu.numberfour.n4js.transpiler.print.SourceMapAwareAppendable.SourceOutputMapping;
 import eu.numberfour.n4js.transpiler.sourcemap.FilePosition;
 import eu.numberfour.n4js.transpiler.sourcemap.SourceMapGenerator;
-import eu.numberfour.n4js.transpiler.sourcemap.SourceMapGeneratorV3;
+import eu.numberfour.n4js.transpiler.sourcemap.SourceMapGeneratorDummy;
 
 /**
  * A not so pretty printer.
@@ -57,7 +57,7 @@ public class PrettyPrinter {
 
 		if (emitSourceMaps) {
 			final SourceMapInfo sourceMapInfo = optSourceMapInfo.get();
-			final SourceMapGenerator generator = new SourceMapGeneratorV3();
+			final SourceMapGenerator generator = new SourceMapGeneratorDummy();
 
 			// append link to source maps to outCode
 			out.newLine();
