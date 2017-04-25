@@ -7,19 +7,19 @@ which accompanies this distribution, and is available at
 http://www.eclipse.org/legal/epl-v10.html
 
 Contributors:
-	NumberFour AG - Initial API and implementation
+  NumberFour AG - Initial API and implementation
 -->
 <feature
-			id="eu.numberfour.n4js.smith.sdk"
-			label="N4JS Smith SDK Feature "
-			version="0.0.1.qualifier"
-			provider-name="NumberFour AG"
-			license-feature="org.eclipse.license"
-			license-feature-version="1.0.1.v20140414-1359">
+      id="eu.numberfour.n4js.smith.sdk"
+      label="N4JS Smith SDK Feature"
+      version="0.0.1.qualifier"
+      provider-name="Eclipse N4JS Project"
+      license-feature="org.eclipse.license"
+      license-feature-version="1.0.1.v20140414-1359">
 
-	 <description>
-			Feature for internal N4JS IDE plugins only intended for development (for example, the AST Graph view).
-	 </description>
+   <description>
+      Feature for internal N4JS IDE plugins only intended for development (for example, the AST Graph view).
+   </description>
 
    <copyright>
       Copyright (c) 2016 NumberFour AG.
@@ -32,11 +32,15 @@ Contributors:
   NumberFour AG - Initial API and implementation
    </copyright>
 
-	 <plugin
-				 id="eu.numberfour.n4js.smith.graph"
-				 download-size="0"
-				 install-size="0"
-				 version="0.0.0"
-				 unpack="false"/>
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="eu.numberfour.n4js.smith.graph"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>

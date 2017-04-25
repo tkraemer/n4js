@@ -13,7 +13,7 @@ Contributors:
       id="eu.numberfour.n4js.tester.sdk"
       label="N4 Tester SDK"
       version="0.0.1.qualifier"
-      provider-name="NumberFour AG"
+      provider-name="Eclipse N4JS Project"
       license-feature="org.eclipse.license"
       license-feature-version="1.0.1.v20140414-1359">
 
@@ -31,6 +31,10 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
    </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
 
    <plugin
          id="eu.numberfour.n4js.tester"
