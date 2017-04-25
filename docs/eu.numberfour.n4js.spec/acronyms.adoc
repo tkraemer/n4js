@@ -15,7 +15,7 @@ Contributors:
 [[AC]]
 
 
-[.langauge-bash]
+[.language-bash]
 [cols="^1m,5h,^1m,5h"]
 |===
 |CDep
@@ -61,7 +61,7 @@ Contributors:
 |IDE
 |Integrated Development Environment
 |IDL
-|Interface Definition Langage
+|Interface Definition Language
 |LSP
 |Liskov Substitution Principle cite:[Martin96b]
 //TODO missing from biblio ^^^
@@ -69,8 +69,9 @@ Contributors:
 |Least Upper Bound, also known as _supremum_
 |LCST
 |Least Common Super Type, also known as _join_
+// TODO: Think of a better name for N4JS
 |N4JS
-|NumberFour JavaScript
+|Niceness for JavaScript
 |N4JSED
 |N4JS Environment Definition
 |N4IDE
