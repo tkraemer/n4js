@@ -69,9 +69,8 @@ Contributors:
 |Least Upper Bound, also known as _supremum_
 |LCST
 |Least Common Super Type, also known as _join_
-// TODO: Think of a better name for N4JS
 |N4JS
-|Niceness for JavaScript
+|N4JS for JavaScript
 |N4JSED
 |N4JS Environment Definition
 |N4IDE
