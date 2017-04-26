@@ -129,6 +129,7 @@ import com.google.common.collect.Multimap;
 		final AtomicInteger count = new AtomicInteger(0);
 		final AtomicInteger ignored = new AtomicInteger(0);
 		final AtomicInteger checked = new AtomicInteger(0);
+		final AtomicInteger checkedThirdParty = new AtomicInteger(0);
 		final Map<Path, Report> validFiles = new LinkedHashMap<>();
 		final Map<Path, Report> invalidFiles = new LinkedHashMap<>();
 		final Map<Path, Throwable> erroneousFiles = new LinkedHashMap<>();
@@ -163,7 +164,11 @@ import com.google.common.collect.Multimap;
 								checkFolder(path, path.getNameCount() - repoPath.getNameCount(), report);
 							} else {
 								final String content = readFile(path);
-								checkFile(path, content, thirdPartyFiles.contains(path), report);
+								final boolean isThirdParty = thirdPartyFiles.contains(path);
+								if (isThirdParty) {
+									checkedThirdParty.incrementAndGet();
+								}
+								checkFile(path, content, isThirdParty, report);
 							}
 							(report.problems.isEmpty() ? validFiles : invalidFiles).put(path, report);
 
@@ -210,7 +215,8 @@ import com.google.common.collect.Multimap;
 			sleep(500);
 		}
 		System.out.println("-------------------------------------------------------------------------------------");
-		System.out.println("Checked " + checked + " files (" + ignored + " ignored; " + count + " total).");
+		System.out.println("Checked " + checked + " files, including " + checkedThirdParty + " third-party files ("
+				+ ignored + " ignored; " + count + " total).");
 		System.out.println("Valid files: " + validFiles.size());
 		System.out.println("Invalid files: " + invalidFiles.size());
 		System.out.println("Erroneous files: " + erroneousFiles.size());
@@ -221,14 +227,15 @@ import com.google.common.collect.Multimap;
 	/**
 	 * <pre>
 	 * #
-	 * # List of files with third-party copyright.
+	 * # List of files and folders with third-party copyright.
 	 * #
 	 * #
 	 * # This file is processed automatically by FileChecker.java to ensure the below information is kept up-to-date.
 	 * #
 	 * # Format:
 	 * # every non-empty line in this file either starts with '#' and is then a comment (to be ignored) or must
-	 * # contain the relative path to a file with third-party copyright. The paths must be relative to the folder
+	 * # contain the relative path to a file with third-party copyright. If a path ends in "/**" it must point to
+	 * # a folder and its contents are declared to be third-party files. All paths must be relative to the folder
 	 * # containing this file.
 	 * #
 	 * </pre>
@@ -249,17 +256,48 @@ import com.google.common.collect.Multimap;
 		// make sure all paths are relative
 		if (lines.stream().anyMatch((l) -> l.startsWith("/") || l.startsWith("\\")))
 			throw new IOException("paths in " + FILE_NAME__THIRD_PARTY + " must be relative, i.e. not start with '/'");
-		// make sure files exist
+		// make sure all files/folders exist & are of correct type
 		final List<Path> paths = lines.stream().map((l) -> rootPath.resolve(l)).collect(Collectors.toList());
+		int files = 0;
+		int folders = 0;
 		for (Path p : paths) {
-			if (!p.toFile().exists()) {
-				throw new IOException("file does not exist: " + p);
-			}
-			if (!p.toFile().isFile()) {
-				throw new IOException("not a file: " + p);
+			if (p.endsWith("**")) {
+				// folder
+				final Path parent = p.getParent();
+				if (!parent.toFile().exists()) {
+					throw new IOException("folder does not exist: " + parent);
+				}
+				if (!parent.toFile().isDirectory()) {
+					throw new IOException("not a folder: " + parent);
+				}
+				folders++;
+			} else {
+				// file
+				if (!p.toFile().exists()) {
+					throw new IOException("file does not exist: " + p);
+				}
+				if (!p.toFile().isFile()) {
+					throw new IOException("not a file: " + p);
+				}
+				files++;
 			}
 		}
-		System.out.println("    " + paths.size() + " files declared as third-party files.");
+		// replace folders by their contained files
+		for (int i = 0; i < paths.size(); i++) {
+			final Path p = paths.get(i);
+			if (p.endsWith("**")) {
+				final Path parent = p.getParent();
+				final List<Path> allFiles = getAllContainedFiles(parent);
+				if (allFiles.isEmpty()) {
+					throw new IOException("folder is empty: " + parent);
+				}
+				paths.remove(i);
+				paths.addAll(i, allFiles);
+				i += allFiles.size() - 1;
+			}
+		}
+		System.out.println("    " + files + " files and " + folders + " folders (for a total of " + paths.size()
+				+ " files) declared as third-party artifacts.");
 		return new HashSet<>(paths); // order does not matter, so don't need LinkedHashSet
 	}
 
@@ -351,6 +389,10 @@ import com.google.common.collect.Multimap;
 
 	protected static String trimTrailingWhiteSpace(String content) {
 		return content.replaceAll("[ \\t\\x0B\\f\\r]+\\n", "\n");
+	}
+
+	protected static List<Path> getAllContainedFiles(Path path) throws IOException {
+		return Files.walk(path).filter(p -> p.toFile().isFile()).collect(Collectors.toList());
 	}
 
 	protected static String readFile(Path path) throws IOException {

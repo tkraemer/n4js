@@ -64,44 +64,6 @@ public class FileChecker extends AbstractFileChecker {
 			"generated-docs",
 			"eu.numberfour.n4js.jsdoc2spec.tests/testresourcesADoc",
 			"tools/eu.numberfour.n4js.hlc/target/wsp", // temporary test data under git-ignore, so not in repository
-
-			// ============ ignored folders with 3rd party dependencies ==============
-			// we keep information about those in different place so here we skip them
-			// notice we skip concrete concrete dependencies, not all together,
-			// this way we will detect if new ones are added
-
-			// ------------------------ RUNNERS ---------------------------
-			/* promise library, MIT, https://www.npmjs.com/package/when */
-			"plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/when",
-			/* module loader, MIT, https://www.npmjs.com/package/systemjs */
-			"plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/systemjs",
-			/* module loader, MIT, https://www.npmjs.com/package/es6-module-loader */
-			"plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/es6-module-loader",
-			/* window.fetch for node, MIT, https://www.npmjs.com/package/node-fetch */
-			"plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/node-fetch/",
-			/* string encoding util, MIT, https://www.npmjs.com/package/encoding */
-			"plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/encoding/",
-			/* string encoding util, MIT, https://www.npmjs.com/package/iconv-lite */
-			"plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/iconv-lite/",
-			/* node stream util, MIT, https://www.npmjs.com/package/is-stream */
-			"plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/is-stream/",
-
-			// -------------------- LIBRARY MANAGER -------------------------
-			/* promise library, MIT, https://www.npmjs.com/package/when */
-			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/when",
-			/* module loader, MIT, https://www.npmjs.com/package/systemjs */
-			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/systemjs",
-			/* module loader, MIT, https://www.npmjs.com/package/es6-module-loader */
-			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader",
-			/* window.fetch for node. MIT, https://www.npmjs.com/package/node-fetch */
-			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/node-fetch",
-			/* string encoding util, MIT, https://www.npmjs.com/package/encoding */
-			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/encoding/",
-			/* string encoding util, MIT, https://www.npmjs.com/package/iconv-lite */
-			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/iconv-lite/",
-			/* node stream util, MIT, https://www.npmjs.com/package/is-stream */
-			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/is-stream/",
-
 	};
 
 	/** Words disallowed outside of copyright headers. Each word should start with a single capitalized letter. */
