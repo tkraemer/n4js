@@ -10,38 +10,15 @@
  */
 package eu.numberfour.filechecker;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.Multimap;
 
 /**
- * Sniffs through all files and checks them for integrity (copyright headers, formatting, line endings, etc.).
+ * Sniffs through all files and checks them for integrity (copyright headers, formatting, Unix line endings, etc.).
  */
-public class FileChecker {
-
-	private static final String[] REPOS = { "n4js", "n4js-n4" }; // FIXME remove all references to "n4js-n4"
-	private static final String[] REPOS_MANDATORY = { "n4js" };
+public class FileChecker extends AbstractFileChecker {
 
 	/** Name used as vendor (in manifest.mf) and provider (in feature.xml). */
 	private static final String PROVIDER_NAME = "Eclipse N4JS Project";
@@ -70,9 +47,6 @@ public class FileChecker {
 	/** Name of file containing the Eclipse Public License. */
 	private static final String FILE_NAME__EPL = "EPL-1.0.html";
 
-	/** Optional file in the root of a git repository that declares some files as third-party files. */
-	private static final String FILE_NAME__THIRD_PARTY = "third-party.txt";
-
 	/** Extensions of files that should be checked more thoroughly. */
 	private static final String[] FILE_EXTENSIONS = { ".java", ".xtend", ".xtext", ".xcore", ".xsemantics", ".xml",
 			".mwe2", ".adoc" };
@@ -81,12 +55,6 @@ public class FileChecker {
 	private static final String[] IGNORED_FILES = {
 			".antlr-generator-3.2.0-patch.jar", // downloaded by xtext but under git-ignore, so not in repository
 			FILE_NAME__THIRD_PARTY
-	};
-
-	/** Folders that are ignored entirely (contained files won't even be counted as "ignored files"). */
-	private static final String[] DISREGARDED_FOLDERS = {
-			".git",
-			"bin"
 	};
 
 	/** All contents of these folders will be ignored. May contain '/' but should not start or end with '/'. */
@@ -152,6 +120,7 @@ public class FileChecker {
 	private static final String[] BANNED_WORDS_WHITELIST = {
 
 			/* myself ;-) */
+			AbstractFileChecker.class.getSimpleName() + ".java",
 			FileChecker.class.getSimpleName() + ".java",
 
 			/* eclipse copyrights */
@@ -254,9 +223,9 @@ public class FileChecker {
 	private static final Pattern PATTERN_LICENSE_TAG_COMPILED = Pattern.compile(PATTERN_LICENSE_TAG);
 
 	// ################################################################################################################
-	// this section contains the main code that performs the checking
 
-	private boolean isIgnored(Path path, String pathStr) {
+	@Override
+	protected boolean isIgnored(Path path, String pathStr) {
 		if (path.endsWith("pom.xml"))
 			return false; // never ignore pom.xml!
 		if (isFile(pathStr, IGNORED_FILES))
@@ -270,10 +239,13 @@ public class FileChecker {
 		return false;
 	}
 
+	// ################################################################################################################
+
 	/**
 	 * Invoked for every file for which {@link #isIgnored(Path, String)} returns <code>false</code>.
 	 */
-	private void checkFile(Path path, String content, boolean isRegisteredAsThirdParty, Report report) {
+	@Override
+	protected void checkFile(Path path, String content, boolean isRegisteredAsThirdParty, Report report) {
 
 		if (!isRegisteredAsThirdParty) {
 			if (path.endsWith(FILE_NAME__PLUGIN_PROPERTIES) || path.endsWith(FILE_NAME__FEATURE_PROPERTIES)) {
@@ -389,10 +361,13 @@ public class FileChecker {
 		}
 	}
 
+	// ################################################################################################################
+
 	/**
 	 * Invoked for every folder for which {@link #isIgnored(Path, String)} returns <code>false</code>.
 	 */
-	private void checkFolder(Path path, int depth, Report report) {
+	@Override
+	protected void checkFolder(Path path, int depth, Report report) {
 		if (depth == 0) {
 			checkFolderRepositoryRoot(path, report);
 		} else if (depth == 2 && !isBelowFolder(path.toString(), "n4js/n4js-libraries")) {
@@ -449,283 +424,16 @@ public class FileChecker {
 	}
 
 	// ################################################################################################################
+	// Utility Methods
 
-	/** Main method. */
-	public static void main(String[] args) {
-		final Path rootPath = findRootPath(args);
-		if (rootPath == null || !rootPath.toFile().exists() || !rootPath.toFile().isDirectory()) {
-			System.out.println("ERROR: not found or does not point to a folder.");
-			System.out.println("Root path must either be given as first command line argument\n"
-					+ "OR the current working directory must lie in an N4JS git repository.");
-			System.exit(1);
-			return; // required to make null-analysis happy
-		}
-		for (String repoMandatory : REPOS_MANDATORY) {
-			if (!rootPath.resolve(repoMandatory).toFile().isDirectory()) {
-				System.out.println("ERROR: root folder does not contain a sub folder \"" + repoMandatory + "\"");
-				System.exit(1);
-				return; // required to make null-analysis happy
-			}
-		}
-		final Path[] repoPaths = Arrays.asList(REPOS).stream().map((repoName) -> rootPath.resolve(repoName))
-				.toArray((n) -> new Path[n]);
-		final boolean success = new FileChecker().run(repoPaths);
-		System.exit(success ? 0 : 1);
-	}
-
-	private static final class Report {
-		public final Path path;
-		public final List<String> problems = new ArrayList<>();
-
-		public Report(Path path) {
-			this.path = path;
-		}
-	}
-
-	private boolean run(Path... repoPaths) {
-		System.out.println("=====================================================================================");
-
-		final AtomicInteger count = new AtomicInteger(0);
-		final AtomicInteger ignored = new AtomicInteger(0);
-		final AtomicInteger checked = new AtomicInteger(0);
-		final Map<Path, Report> validFiles = new LinkedHashMap<>();
-		final Map<Path, Report> invalidFiles = new LinkedHashMap<>();
-		final Map<Path, Throwable> erroneousFiles = new LinkedHashMap<>();
-
-		try {
-			for (Path repoPath : repoPaths) {
-				System.out.println("Asserting file integrity in " + repoPath);
-				final Set<Path> thirdPartyFiles = readListOfThirdPartyFiles(repoPath);
-				System.out.print("Checking files ...");
-				Files.walk(repoPath).forEachOrdered((path) -> {
-					File file = path.toFile();
-					String pathStr = getCanonicalPath(file);
-
-					if (isBelowFolder(pathStr, DISREGARDED_FOLDERS)) {
-						return; // completely ignore these folders (do not even count the files)
-					}
-
-					count.incrementAndGet();
-
-					if (isIgnored(path, pathStr)) {
-
-						ignored.incrementAndGet();
-
-					} else {
-
-						checked.incrementAndGet();
-
-						try {
-
-							final Report report = new Report(path);
-							if (path.toFile().isDirectory()) {
-								checkFolder(path, path.getNameCount() - repoPath.getNameCount(), report);
-							} else {
-								final String content = readFile(path);
-								checkFile(path, content, thirdPartyFiles.contains(path), report);
-							}
-							(report.problems.isEmpty() ? validFiles : invalidFiles).put(path, report);
-
-						} catch (Throwable th) {
-							erroneousFiles.put(path, th);
-							// do not abort entirely, continue with next file
-						}
-					}
-				});
-				System.out.println(" done.");
-			}
-		} catch (IOException e) {
-			System.out.println("ERROR while walking folder tree:");
-			e.printStackTrace();
-			System.out.println("ABORTING");
-			return false;
-		}
-
-		System.out.println("-------------------------------------------------------------------------------------");
-		if (!invalidFiles.isEmpty()) {
-			final Multimap<String, Path> pathsPerError = LinkedHashMultimap.create();
-			invalidFiles.values().stream()
-					.forEachOrdered((r) -> r.problems.stream().forEachOrdered((err) -> pathsPerError.put(err, r.path)));
-			final List<String> errors = new ArrayList<>(pathsPerError.keySet());
-			Collections.sort(errors);
-			for (String err : errors) {
-				final Collection<Path> paths = pathsPerError.get(err);
-				System.out.println("PROBLEM in " + paths.size() + " files: " + err);
-				for (Path path : paths) {
-					System.out.println("    " + path);
-				}
-			}
-		} else {
-			System.out.println("No problems.");
-		}
-		if (!erroneousFiles.isEmpty()) {
-			System.out.flush();
-			sleep(500);
-			for (Entry<Path, Throwable> e : erroneousFiles.entrySet()) {
-				System.err.println("ERROR processing file: " + e.getKey());
-				e.getValue().printStackTrace();
-			}
-			System.err.flush();
-			sleep(500);
-		}
-		System.out.println("-------------------------------------------------------------------------------------");
-		System.out.println("Checked " + checked + " files (" + ignored + " ignored; " + count + " total).");
-		System.out.println("Valid files: " + validFiles.size());
-		System.out.println("Invalid files: " + invalidFiles.size());
-		System.out.println("Erroneous files: " + erroneousFiles.size());
-		System.out.println("=====================================================================================");
-		return invalidFiles.isEmpty() && erroneousFiles.isEmpty();
-	}
-
-	// ################################################################################################################
-
-	/**
-	 * The root path is expected to point to the folder containing the git repositories listed in {@link #REPOS}. It
-	 * must be provided as the first command line argument OR it will be derived from the current working directory.
-	 *
-	 * Returns <code>null</code> in case of error.
-	 */
-	private static Path findRootPath(String[] args) {
-		try {
-			if (args.length > 0) {
-				// take root path from 1st command line argument
-				return new File(args[0]).getCanonicalFile().toPath();
-			} else {
-				// derive root path from current working directory
-				File curr = new File(".").getCanonicalFile();
-				while (curr != null && curr.isDirectory()
-						&& !org.eclipse.xtext.util.Arrays.contains(REPOS, curr.getName())) {
-					curr = curr.getParentFile();
-				}
-				return curr != null ? curr.getParentFile().toPath() : null;
-			}
-		} catch (IOException e) {
-			return null;
-		}
-	}
-
-	/**
-	 * <pre>
-	 * #
-	 * # List of files with third-party copyright.
-	 * #
-	 * #
-	 * # This file is processed automatically by FileChecker.java to ensure the below information is kept up-to-date.
-	 * #
-	 * # Format:
-	 * # every non-empty line in this file either starts with '#' and is then a comment (to be ignored) or must
-	 * # contain the relative path to a file with third-party copyright. The paths must be relative to the folder
-	 * # containing this file.
-	 * #
-	 * </pre>
-	 */
-	private static Set<Path> readListOfThirdPartyFiles(Path rootPath) throws IOException {
-		System.out.println("Reading list of third-party files from \"" + FILE_NAME__THIRD_PARTY + "\" ...");
-		final Path thirdPartyList = rootPath.resolve(FILE_NAME__THIRD_PARTY);
-		if (!thirdPartyList.toFile().exists()) {
-			// note: providing a third-party.txt file is optional, so no error here:
-			System.out.println("    no such file found, assuming 0 third-party files.");
-			return Collections.emptySet();
-		}
-		final List<String> lines = Files.readAllLines(thirdPartyList, StandardCharsets.UTF_8);
-		// trim all lines
-		lines.replaceAll((l) -> l.trim());
-		// remove empty lines and comments
-		lines.removeIf((l) -> l.length() == 0 || l.startsWith("#"));
-		// make sure all paths are relative
-		if (lines.stream().anyMatch((l) -> l.startsWith("/") || l.startsWith("\\")))
-			throw new IOException("paths in " + FILE_NAME__THIRD_PARTY + " must be relative, i.e. not start with '/'");
-		// make sure files exist
-		final List<Path> paths = lines.stream().map((l) -> rootPath.resolve(l)).collect(Collectors.toList());
-		for (Path p : paths) {
-			if (!p.toFile().exists()) {
-				throw new IOException("file does not exist: " + p);
-			}
-			if (!p.toFile().isFile()) {
-				throw new IOException("not a file: " + p);
-			}
-		}
-		System.out.println("    " + paths.size() + " files declared as third-party files.");
-		return new HashSet<>(paths); // order does not matter, so don't need LinkedHashSet
-	}
-
-	private static boolean containsTrailingWhiteSpace(String str) {
-		int idx = 0;
-		while (idx < str.length()) {
-			idx = str.indexOf('\n', idx);
-			if (idx < 0) {
-				break;
-			}
-			char ch = idx > 0 ? str.charAt(idx - 1) : 'X';
-			if (ch == '\r') {
-				ch = idx > 1 ? str.charAt(idx - 2) : 'X';
-			}
-			if (ch != '\n' && Character.isWhitespace(ch)) {
-				return true;
-			}
-			idx++;
-		}
-		return false;
-	}
-
-	private static String getCanonicalPath(File file) {
-		try {
-			return file.getCanonicalPath();
-		} catch (IOException e) {
-			throw new Error(e);
-		}
-	}
-
-	private static boolean hasExtension(Path path, String... extensions) {
-		final Path namePath = path.getFileName();
-		if (namePath == null) {
-			return false;
-		}
-		final String name = namePath.toString();
-		for (String ext : extensions) {
-			if (name.endsWith(ext)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private static boolean isFile(String pathStr, String... fileNames) {
-		for (String fileName : fileNames) {
-			if (pathStr.endsWith("/" + fileName)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private static boolean isBelowFolder(String pathStr, String... folderNames) {
-		for (String folderName : folderNames) {
-			if (pathStr.contains("/" + folderName + "/")) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private static boolean inN4Repo(Path path) {
-		return isBelowFolder(path.toString(), "n4js-n4");
+	private static boolean hasCorrectCopyrightHeader(Path path, String content) {
+		return beginIndexWithoutCopyrightHeader(path, content) > 0;
 	}
 
 	private void assertContainsFileWithName(Path path, String fileName, Report report) {
 		if (!containsFileWithName(path, fileName)) {
 			report.problems.add("folder missing required file: " + fileName);
 		}
-	}
-
-	private boolean containsFileWithName(Path path, String fileName) {
-		final File file = path.toFile();
-		final File[] files = file.listFiles();
-		return files != null && Stream.of(files).anyMatch(f -> fileName.equals(f.getName()));
-	}
-
-	private static boolean hasCorrectCopyrightHeader(Path path, String content) {
-		return beginIndexWithoutCopyrightHeader(path, content) > 0;
 	}
 
 	private static int beginIndexWithoutCopyrightHeader(Path path, String content) {
@@ -778,46 +486,12 @@ public class FileChecker {
 		return null;
 	}
 
-	private boolean containsPattern(String str, Pattern pattern) {
-		return pattern.matcher(str).find();
-	}
+	// ################################################################################################################
 
-	@SuppressWarnings("unused")
-	private static String fixFileEnding(String content) {
-		if (content.length() > 0) {
-			int endIndex = content.length();
-			while (endIndex > 0 && content.charAt(endIndex - 1) == '\n') {
-				--endIndex;
-			}
-			content = content.substring(0, endIndex) + '\n';
-		}
-		return content;
-	}
-
-	@SuppressWarnings("unused")
-	private static String trimTrailingWhiteSpace(String content) {
-		return content.replaceAll("[ \\t\\x0B\\f\\r]+\\n", "\n");
-	}
-
-	private static String readFile(Path path) throws IOException {
-		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
-	}
-
-	@SuppressWarnings("unused")
-	private static void writeFile(Path path, String content) {
-		try {
-			Files.write(path, content.getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE,
-					StandardOpenOption.TRUNCATE_EXISTING);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private static void sleep(long ms) {
-		try {
-			Thread.sleep(ms);
-		} catch (InterruptedException e) {
-			// ignore
-		}
+	/** Main method. */
+	public static void main(String[] args) {
+		final Path[] repoPaths = findRepoPaths(args);
+		final boolean success = new FileChecker().run(repoPaths);
+		System.exit(success ? 0 : 1);
 	}
 }
