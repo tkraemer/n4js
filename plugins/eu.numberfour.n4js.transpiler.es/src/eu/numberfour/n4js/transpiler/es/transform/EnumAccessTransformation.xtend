@@ -11,12 +11,15 @@
 package eu.numberfour.n4js.transpiler.es.transform
 
 import eu.numberfour.n4js.AnnotationDefinition
+import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ImportDeclaration
+import eu.numberfour.n4js.n4JS.ParenExpression
 import eu.numberfour.n4js.n4JS.StringLiteral
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.transpiler.Transformation
 import eu.numberfour.n4js.transpiler.im.IdentifierRef_IM
 import eu.numberfour.n4js.transpiler.im.ParameterizedPropertyAccessExpression_IM
+import eu.numberfour.n4js.transpiler.im.SymbolTableEntry
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal
 import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TEnumLiteral
@@ -49,37 +52,88 @@ class EnumAccessTransformation extends Transformation {
 	}
 
 	override transform() {
-		collectNodes(state.im, ParameterizedPropertyAccessExpression_IM, true).forEach[transformEnumLiteralAccess];
+		collectNodes(state.im, ParameterizedPropertyAccessExpression_IM, true).forEach[transformEnumAccess];
 	}
 
-	def private void transformEnumLiteralAccess(ParameterizedPropertyAccessExpression_IM expr) {
-		val target = expr.target;
-		if(target instanceof IdentifierRef_IM) {
-			val idSTE = target.id_IM;
-			val id = if(idSTE instanceof SymbolTableEntryOriginal) idSTE.originalTarget;
-			if(id instanceof TEnum && (id as TEnum).isStringBased) {
-				val tEnum = id as TEnum;
-				val propSTE = expr.property_IM;
-				val prop = if(propSTE instanceof SymbolTableEntryOriginal) propSTE.originalTarget;
-				if(prop instanceof TEnumLiteral) {
-					// case 1: reference to an enum literal
-					// so, 'expr' is something like "Color.RED" with Color being a string-based enum,
-					// and RED one of its literals
-					// --> turn this into a plain string literal
-					replace(expr, prop.enumLiteralToStringLiteral);
-				} else if(prop === member_StringBasedEnum_literals) {
-					// case 2: references to getter 'literals' of an enum
-					// --> turn this into an array literal of string literals representing the enum's literals
-					replace(expr, getReferenceToLiteralsConstant(tEnum));
-				}
-			}
+	def private void transformEnumAccess(ParameterizedPropertyAccessExpression_IM expr) {
+		val propSTE = expr.property_IM;
+		val prop = if (propSTE instanceof SymbolTableEntryOriginal) propSTE.originalTarget;
+		switch prop {
+			TEnumLiteral 									: resolveOriginalStringBasedEnum(expr).transformEnumLiteralAccess(expr, prop)
+			case prop === member_StringBasedEnum_literals 	: resolveOriginalStringBasedEnum(expr).transformEnumLiteralsConstantAccess(expr)
 		}
 	}
 
+	/** 
+	 * Assumes {@code originalEnum} was resolved to string based enum, e,g, <code>@StringBased enum Color {RED : "red", SOME}</code>,
+	 * transforms access to <code>Color.RED</code> to <code>"red"</code> and <code>Color.SOME</code> to <code>"SOME"</code>.It is low level transformation, assumes
+	 * caller did all necessary checks and did provide proper data. Replacement is applied only if none of the provided parameters is {@code null}.
+	 * 
+	 * @param originalEnum string based enum from AST for which literal access is generated.
+	 * @param expr expression which will have value generated.
+	 * @param prop enum literal from which value is generated. 
+	 */
+	private def transformEnumLiteralAccess(TEnum originalEnum, ParameterizedPropertyAccessExpression_IM expr,
+		TEnumLiteral prop) {
+		if (originalEnum !== null && expr !== null && prop !== null) {
+			replace(expr, enumLiteralToStringLiteral(prop));
+		}
+	}
+
+	/** 
+	 * Assumes {@code originalEnum} was resolved to string based enum, e,g, <code>@StringBased enum Color {RED : "red", SOME}</code>,
+	 * transforms access to <code>Color.literals</code> to <code>["red", "SOME"</code>. It is low level transformation, assumes
+	 * caller did all necessary checks and did provide proper data. Replacement is applied only if none of the provided parameters is {@code null}.
+	 * 
+	 * @param originalEnum string based enum from AST for which literals access is generated.
+	 * @param expr expression which will have values generated.
+	 */
+	private def transformEnumLiteralsConstantAccess(TEnum originalEnum, ParameterizedPropertyAccessExpression_IM expr) {
+		if (originalEnum !== null && expr !== null) {
+			replace(expr, getReferenceToLiteralsConstant(originalEnum));
+		}
+	}
+
+	/**
+	 * Resolves left hand side of the {@code ParameterizedPropertyAccessExpression_IM} to the original {@link AnnotationDefinition#STRING_BASED} enum.
+	 * 
+	 * @return resolved original string based enum or null.
+	 */
+	def private TEnum resolveOriginalStringBasedEnum(ParameterizedPropertyAccessExpression_IM pex) {
+		val targetEnumSTE = resolveOriginalExpressionTarget(pex.target)
+		if (targetEnumSTE instanceof SymbolTableEntryOriginal) {
+			val orginal = targetEnumSTE.originalTarget;
+			if (orginal instanceof TEnum) {
+				if (orginal.isStringBased) {
+					return orginal;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Resolve target of the {@code ParameterizedPropertyAccessExpression_IM} when left hand side is an simple access or nested expression, e.g. for
+	 * <ul>
+	 *   <li> <code> Enum.EnumLiteral </code> </li>
+	 *   <li> <code> Enum.literals </code> </li>
+	 *   <li> <code> (((((Enum)))).EnumLiteral </code> </li>
+	 *   <li> <code> (((((Enum)))).literals </code> </li>
+	 * </ul>
+	 *  resolves to {@code SymbolTableEntry} of the Enum.
+	 */
+	def private SymbolTableEntry resolveOriginalExpressionTarget(Expression ex){
+		switch ex {
+			IdentifierRef_IM 							: ex.rewiredTarget
+			ParameterizedPropertyAccessExpression_IM 	: ex.property_IM
+			ParenExpression								: resolveOriginalExpressionTarget(ex.expression)
+			default 									: null
+		}
+	}
 
 	def private getReferenceToLiteralsConstant(TEnum tEnum) {
 		var vdecl = literalsConstants.get(tEnum);
-		if(vdecl===null) {
+		if (vdecl === null) {
 			vdecl = createLiteralsConstant(tEnum);
 			literalsConstants.put(tEnum, vdecl);
 		}
@@ -93,9 +147,9 @@ class EnumAccessTransformation extends Transformation {
 		state.info.markAsToHoist(vdecl);
 		val vstmnt = _VariableStatement(vdecl);
 		val lastImport = state.im.scriptElements.filter(ImportDeclaration).last;
-		if(lastImport!==null) {
+		if (lastImport !== null) {
 			insertAfter(lastImport, vstmnt);
-		} else if(!state.im.scriptElements.empty) {
+		} else if (!state.im.scriptElements.empty) {
 			insertBefore(state.im.scriptElements.head, vstmnt);
 		} else {
 			state.im.scriptElements.add(vstmnt);
@@ -103,12 +157,13 @@ class EnumAccessTransformation extends Transformation {
 		createSymbolTableEntryIMOnly(vdecl);
 		return vdecl;
 	}
+
 	def private String findUniqueNameForLiteralsConstant(TEnum tEnum) {
 		val names = literalsConstants.values.map[name].toSet;
 		var newName = "$enumLiteralsOf" + (tEnum?.name ?: "Unnamed");
-		if(names.contains(newName)) {
+		if (names.contains(newName)) {
 			var cnt = 1;
-			while(names.contains(newName + cnt)) {
+			while (names.contains(newName + cnt)) {
 				cnt++;
 			}
 			newName = newName + cnt;
@@ -119,6 +174,7 @@ class EnumAccessTransformation extends Transformation {
 	def private boolean isStringBased(TEnum tEnum) {
 		return AnnotationDefinition.STRING_BASED.hasAnnotation(tEnum);
 	}
+
 	def private StringLiteral enumLiteralToStringLiteral(TEnumLiteral enumLiteral) {
 		return _StringLiteral(enumLiteral?.value ?: enumLiteral.name);
 	}

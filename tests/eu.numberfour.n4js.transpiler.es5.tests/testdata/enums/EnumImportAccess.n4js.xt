@@ -1,0 +1,38 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest 	
+   ResourceSet {
+		ThisFile {}
+		File "Defs.n4js" {}
+	}
+	
+	END_SETUP
+ */
+
+
+/* XPECT output ---
+<==
+stdout:
+X { name: 'X1', value: 'x one' }
+X { name: 'X2', value: 'X2' }
+[ X { name: 'X1', value: 'x one' },
+  X { name: 'X2', value: 'X2' },
+  X { name: 'X3', value: 'x three' } ]
+[ X { name: 'X1', value: 'x one' },
+  X { name: 'X2', value: 'X2' },
+  X { name: 'X3', value: 'x three' } ]
+X { name: 'X3', value: 'x three' }
+[ X { name: 'X1', value: 'x one' },
+  X { name: 'X2', value: 'X2' },
+  X { name: 'X3', value: 'x three' } ]
+stderr:
+==>
+--- */
+
+import { X } from "enums/Defs";
+
+console.log(X.X1);
+console.log((X).X2);
+console.log(X.literals);
+console.log((X).literals);
+
+console.log((((((X))))).X3);
+console.log((((((X))))).literals);
