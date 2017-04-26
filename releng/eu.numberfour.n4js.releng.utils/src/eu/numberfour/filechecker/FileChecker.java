@@ -116,6 +116,40 @@ public class FileChecker extends AbstractFileChecker {
 			"styles/adoc-readthedocs.css",
 			"styles/foundation.css",
 			"styles/foundation.css",
+
+			/* markdown, license at the bottom */
+			"n4js-libraries/eu.numberfour.mangelhaft.reporter.ide/messages.md",
+
+			/* shell scripts, shebang before license */
+			"n4js-libraries/n4js-node/src/js/n4js-cli.js",
+			"plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/n4js-node/n4js-cli.js",
+			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/src/js/n4js-cli.js",
+			"n4js-libraries/n4js-node-mangelhaft/src/js/n4js-mangelhaft-cli.js",
+			"plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/n4js-node-mangelhaft/n4js-mangelhaft-cli.js",
+			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node-mangelhaft/src/js/n4js-mangelhaft-cli.js",
+			"n4js-libraries/n4js-node-mangelhaft/tests/npm-test.sh",
+			"plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node-mangelhaft/tests/npm-test.sh",
+
+			/* templates */
+			"plugins/eu.numberfour.n4js.external.libraries/src/eu/numberfour/n4js/external/libraries/PackageJson.java",
+			"plugins/eu.numberfour.n4js.external.libraries/src/eu/numberfour/n4js/external/libraries/TargetPlatformFactory.xtend",
+			"plugins/eu.numberfour.n4js.npmexporter/src/eu/numberfour/n4js/npmexporter/PackageJsonData.java",
+			"plugins/eu.numberfour.n4js.runner/schema/eu.numberfour.n4js.runner.runners.exsd",
+			"plugins/eu.numberfour.n4js.utils/schema/eu.numberfour.n4js.utils.fileExtensions.exsd",
+			"plugins/eu.numberfour.n4js.common.unicode/src/eu/numberfour/n4js/common/unicode/generator/UnicodeGrammarGenerator.xtend",
+
+			/* tests */
+			"tests/eu.numberfour.n4js.n4ide.spec.tests/xpect-test/Ch05_04_01_02__Organize_Imports/organize_imports/gh103/GH103.txt",
+			"tests/eu.numberfour.n4js.smoke.tests/src/eu/numberfour/n4js/smoke/tests/GeneratedSmokeTestCases2.xtend",
+			"tests/eu.numberfour.n4js.lang.tests/src/eu/numberfour/n4js/tests/contentassist/NodeModelTokenSourceTest.xtend",
+			"tests/eu.numberfour.n4js.lang.tests/src/eu/numberfour/n4js/npmexporter/PackageJasonTemplateTest.xtend",
+
+			/* update site */
+			"releng/eu.numberfour.n4js.targetplatform/N4JS.setup",
+			"releng/eu.numberfour.n4js.targetplatform/eu.numberfour.n4js.targetplatform.target",
+
+			/* product info needs to mention license */
+			"builds/eu.numberfour.n4js.product.build/eu.numberfour.ide.product.product",
 	};
 
 	/** Files with an extension listed in {@link #FILE_EXTENSIONS} must start with this header. */

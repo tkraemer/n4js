@@ -8,31 +8,8 @@
 # every non-empty line in this file either starts with '#' and is then a comment (to be ignored) or must
 # contain the relative path to a file with third-party copyright. If a path ends in "/**" it must point to
 # a folder and its contents are declared to be third-party files. All paths must be relative to the folder
-# containing this file. 
+# containing this file.
 #
-
-
-############################################################
-# proper license, but custom formatting
-
-## markdown, license at the bottom
-n4js-libraries/eu.numberfour.mangelhaft.reporter.ide/messages.md
-plugins/eu.numberfour.n4js.external.libraries/mangelhaft/eu.numberfour.mangelhaft.reporter.ide/messages.md
-
-# html, license in head section
-plugins/eu.numberfour.n4js.external.libraries/mangelhaft/eu.numberfour.mangelhaft.runner.html/src/resources/test.html
-plugins/eu.numberfour.n4js.external.libraries/mangelhaft/eu.numberfour.mangelhaft.runner.html/src/resources/test_.html
-
-## shell, shebang before license
-n4js-libraries/n4js-node/src/js/n4js-cli.js
-plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/n4js-node/n4js-cli.js
-plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/src/js/n4js-cli.js
-n4js-libraries/n4js-node-mangelhaft/src/js/n4js-mangelhaft-cli.js
-plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/n4js-node-mangelhaft/n4js-mangelhaft-cli.js
-plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node-mangelhaft/src/js/n4js-mangelhaft-cli.js
-n4js-libraries/n4js-node-mangelhaft/tests/npm-test.sh
-plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node-mangelhaft/tests/npm-test.sh
-
 
 
 ############################################################
@@ -75,63 +52,58 @@ plugins/eu.numberfour.n4js.environments/src-env/env/builtin_js.n4ts
 ############################################################
 # folders containing 3rd party projects in runners and external libraries (i.e. library manager)
 
-## runners
+# runners
 
-# promise library, MIT, https://www.npmjs.com/package/when
+## promise library, MIT, https://www.npmjs.com/package/when
 plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/when/**
-# module loader, MIT, https://www.npmjs.com/package/systemjs
+
+## module loader, MIT, https://www.npmjs.com/package/systemjs
 plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/systemjs/**
-# module loader, MIT, https://www.npmjs.com/package/es6-module-loader
+
+## module loader, MIT, https://www.npmjs.com/package/es6-module-loader
 plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/es6-module-loader/**
-# window.fetch for node, MIT, https://www.npmjs.com/package/node-fetch
+
+## window.fetch for node, MIT, https://www.npmjs.com/package/node-fetch
 plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/node-fetch/**
-# string encoding util, MIT, https://www.npmjs.com/package/encoding
+
+## string encoding util, MIT, https://www.npmjs.com/package/encoding
 plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/encoding/**
-# string encoding util, MIT, https://www.npmjs.com/package/iconv-lite
+
+## string encoding util, MIT, https://www.npmjs.com/package/iconv-lite
 plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/iconv-lite/**
-# node stream util, MIT, https://www.npmjs.com/package/is-stream
+
+## node stream util, MIT, https://www.npmjs.com/package/is-stream
 plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/is-stream/**
 
-## external libraries (i.e. library manager)
+# external libraries (i.e. library manager)
 
-# promise library, MIT, https://www.npmjs.com/package/when
+## TODO reconsider how to deal with mangelhaft
+## mangelhaft library, EPL
+## contains the following third-party artifacts:
+## MIT license, https://github.com/substack/node-deep-equal
+## MIT license, https://github.com/nodejs/node/blob/master/lib/assert.js
+## plugins/eu.numberfour.n4js.external.libraries/mangelhaft/eu.numberfour.mangelhaft.assert/src/n4js/n4/mangel/assert/Assert.n4js
+## MIT license, http://millermedeiros.github.com/js-signals/
+## plugins/eu.numberfour.n4js.external.libraries/mangelhaft/eu.numberfour.mangelhaft/src/n4js/n4/mangel/mangeltypes/signal/Signal.n4js
+plugins/eu.numberfour.n4js.external.libraries/mangelhaft/**
+
+## promise library, MIT, https://www.npmjs.com/package/when
 plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/when/**
-# module loader, MIT, https://www.npmjs.com/package/systemjs
+
+## module loader, MIT, https://www.npmjs.com/package/systemjs
 plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/systemjs/**
-# window.fetch for node. MIT, https://www.npmjs.com/package/node-fetch
+
+## window.fetch for node. MIT, https://www.npmjs.com/package/node-fetch
 plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/node-fetch/**
-# string encoding util, MIT, https://www.npmjs.com/package/encoding
+
+## string encoding util, MIT, https://www.npmjs.com/package/encoding
 plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/encoding/**
-# string encoding util, MIT, https://www.npmjs.com/package/iconv-lite
+
+## string encoding util, MIT, https://www.npmjs.com/package/iconv-lite
 plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/iconv-lite/**
-# node stream util, MIT, https://www.npmjs.com/package/is-stream
+
+## node stream util, MIT, https://www.npmjs.com/package/is-stream
 plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/is-stream/**
-
-
-
-############################################################
-# templates, tests and others with "banned" words
-
-## templates
-plugins/eu.numberfour.n4js.external.libraries/src/eu/numberfour/n4js/external/libraries/PackageJson.java
-plugins/eu.numberfour.n4js.external.libraries/src/eu/numberfour/n4js/external/libraries/TargetPlatformFactory.xtend
-plugins/eu.numberfour.n4js.npmexporter/src/eu/numberfour/n4js/npmexporter/PackageJsonData.java
-plugins/eu.numberfour.n4js.runner/schema/eu.numberfour.n4js.runner.runners.exsd
-plugins/eu.numberfour.n4js.utils/schema/eu.numberfour.n4js.utils.fileExtensions.exsd
-plugins/eu.numberfour.n4js.common.unicode/src/eu/numberfour/n4js/common/unicode/generator/UnicodeGrammarGenerator.xtend
-
-## tests
-tests/eu.numberfour.n4js.n4ide.spec.tests/xpect-test/Ch05_04_01_02__Organize_Imports/organize_imports/gh103/GH103.txt
-tests/eu.numberfour.n4js.smoke.tests/src/eu/numberfour/n4js/smoke/tests/GeneratedSmokeTestCases2.xtend
-tests/eu.numberfour.n4js.lang.tests/src/eu/numberfour/n4js/tests/contentassist/NodeModelTokenSourceTest.xtend
-tests/eu.numberfour.n4js.lang.tests/src/eu/numberfour/n4js/npmexporter/PackageJasonTemplateTest.xtend
-
-## update site 
-releng/eu.numberfour.n4js.targetplatform/N4JS.setup
-releng/eu.numberfour.n4js.targetplatform/eu.numberfour.n4js.targetplatform.target
-
-## product info needs to mention license
-builds/eu.numberfour.n4js.product.build/eu.numberfour.ide.product.product
 
 
 
@@ -140,18 +112,6 @@ builds/eu.numberfour.n4js.product.build/eu.numberfour.ide.product.product
 
 #### Creative Commons attribution-noncommercial-sharealike License, http://lucumr.pocoo.org/2011/2/6/automatic-semicolon-insertion/
 tests/eu.numberfour.n4js.lang.tests/src/eu/numberfour/n4js/tests/parser/ES_07_09_AutomaticSemicolonInsertionParserTest.xtend
-
-## files in bootstrap code
-### contains (our) EPL header, but also additional license info
-#### MIT license, http://millermedeiros.github.com/js-signals/
-n4js-libraries/eu.numberfour.mangelhaft/src/n4js/n4/mangel/mangeltypes/signal/Signal.n4js
-plugins/eu.numberfour.n4js.external.libraries/mangelhaft/eu.numberfour.mangelhaft/src/n4js/n4/mangel/mangeltypes/signal/Signal.n4js
-#### MIT license, https://github.com/substack/node-deep-equal
-#### MIT license, https://github.com/nodejs/node/blob/master/lib/assert.js
-n4js-libraries/eu.numberfour.mangelhaft.assert/src/n4js/n4/mangel/assert/Assert.n4js
-plugins/eu.numberfour.n4js.external.libraries/mangelhaft/eu.numberfour.mangelhaft.assert/src/n4js/n4/mangel/assert/Assert.n4js
-#### "Public Domain", https://github.com/douglascrockford/JSON-js/blob/master/cycle.js
-n4js-libraries/eu.numberfour.mangelhaft.assert/src/n4js/n4/mangel/assert/Decycle.n4js
 
 
 
@@ -186,3 +146,19 @@ testhelpers/eu.numberfour.n4js.tester.tests.helper/tagsoup-1.2.1.jar
 ### Apache 2.0
 plugins/eu.numberfour.n4js.generator/lib/guice-multibindings-3.0.jar
 
+
+
+############################################################
+# the following folder contains temporary copies of some of the above files
+# TODO remove this folder entirely
+#
+# there is only one third-party artifact not covered above:
+## "Public Domain", https://github.com/douglascrockford/JSON-js/blob/master/cycle.js
+## n4js-libraries/eu.numberfour.mangelhaft.assert/src/n4js/n4/mangel/assert/Decycle.n4js
+#
+#n4js-libraries/**
+# new:
+n4js-libraries/eu.numberfour.mangelhaft.assert/src/n4js/n4/mangel/assert/Decycle.n4js
+# covered above:
+n4js-libraries/eu.numberfour.mangelhaft.assert/src/n4js/n4/mangel/assert/Assert.n4js
+n4js-libraries/eu.numberfour.mangelhaft/src/n4js/n4/mangel/mangeltypes/signal/Signal.n4js
