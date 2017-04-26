@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -31,6 +32,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 
@@ -296,6 +298,14 @@ import com.google.common.collect.Multimap;
 				i += allFiles.size() - 1;
 			}
 		}
+		// check for duplicates
+		final Set<Path> duplicates = collectDuplicates(paths);
+		if (!duplicates.isEmpty()) {
+			throw new IOException("the following files are declared more than once in " + FILE_NAME__THIRD_PARTY
+					+ " (maybe because they are contained in a folder declared with \"/**\"):\n    "
+					+ Joiner.on("\n    ").join(duplicates));
+		}
+		// report to user
 		System.out.println("    " + files + " files and " + folders + " folders (for a total of " + paths.size()
 				+ " files) declared as third-party artifacts.");
 		return new HashSet<>(paths); // order does not matter, so don't need LinkedHashSet
@@ -406,6 +416,17 @@ import com.google.common.collect.Multimap;
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	protected static <T> Set<T> collectDuplicates(Collection<? extends T> coll) {
+		final Set<T> duplicates = new LinkedHashSet<>();
+		final Set<T> seen = new HashSet<>();
+		for (T p : coll) {
+			if (!seen.add(p)) {
+				duplicates.add(p);
+			}
+		}
+		return duplicates;
 	}
 
 	protected static void sleep(long ms) {
