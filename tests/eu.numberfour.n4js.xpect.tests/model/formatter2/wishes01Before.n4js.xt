@@ -1,4 +1,3 @@
-
 /* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest 
 	ResourceSet {
 		ThisFile {}
@@ -173,7 +172,6 @@ function foo(bar: int): ~Object with {bar?: int;} {
 };
 --- */
 /*
- * Copyright...
  * preconfigure print margin to 100
  */
 

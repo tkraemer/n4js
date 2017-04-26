@@ -13,7 +13,6 @@ var c = new MyChain();
 // XPECT errors --> "string is not a subtype of number." at "c.next().m()" 
 var n : number = c.next().m()
 
-/* from https://numberfour.jira.com/browse/IDE-875 */
 
 // XPECT noerrors -->
 class Edge<V extends Vertex<V, E>, E extends Edge<V, E>> {

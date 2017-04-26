@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: N4MF Xpect UI Tests
+Bundle-Name: %pluginName
 Bundle-SymbolicName: eu.numberfour.n4js.n4mf.xpect.ui.tests
 Bundle-Version: 0.0.1.qualifier
 Fragment-Host: eu.numberfour.n4js.n4mf;bundle-version="0.0.1"
@@ -35,4 +35,4 @@ Import-Package: org.apache.log4j,
  org.junit.runner.notification;version="4.5.0",
  org.junit.runners;version="4.5.0",
  org.junit.runners.model;version="4.5.0"
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: %providerName

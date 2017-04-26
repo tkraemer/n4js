@@ -23,7 +23,6 @@ import org.junit.runner.RunWith
 /**
  * N4JS Spec Test: 6.1.5. Object Literal, Subtyping Type Inference
  *
- * @see https://numberfour.jira.com/browse/IDE-691
  */
 @RunWith(XtextRunner)
 @InjectWith(N4JSInjectorProvider)

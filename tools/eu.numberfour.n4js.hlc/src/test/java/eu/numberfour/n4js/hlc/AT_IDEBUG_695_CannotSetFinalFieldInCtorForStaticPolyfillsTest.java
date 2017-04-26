@@ -21,7 +21,7 @@ import eu.numberfour.n4js.hlc.N4jsc.ExitCodeException;
 import eu.numberfour.n4js.hlc.helper.N4CliHelper;
 
 /**
- * AT for <a href="https://jira.numberfour.eu/browse/IDEBUG-695">IDEBUG-695</a>.
+ * Test setting final field in the ctor if filled class inherits a spec ctor.
  */
 public class AT_IDEBUG_695_CannotSetFinalFieldInCtorForStaticPolyfillsTest extends AbstractN4jscTest {
 

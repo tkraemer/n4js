@@ -30,7 +30,6 @@ import static org.junit.Assert.*
 /**
  * N4JS Spec Test: 6.1.5. Object Literal, Type Inference
  *
- * @see https://numberfour.jira.com/browse/IDE-343
  */
 @RunWith(XtextRunner)
 @InjectWith(N4JSInjectorProvider)

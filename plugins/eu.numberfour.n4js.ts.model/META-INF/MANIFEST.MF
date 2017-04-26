@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: eu.numberfour.n4js.ts.model
+Bundle-Name: %pluginName
 Bundle-SymbolicName: eu.numberfour.n4js.ts.model;singleton:=true
 Bundle-Version: 0.0.1.qualifier
 Require-Bundle: eu.numberfour.n4js.releng.utils;resolution:=optional,
@@ -21,4 +21,4 @@ Export-Package: eu.numberfour.n4js.ts.types.impl,
  eu.numberfour.n4js.ts.types,
  eu.numberfour.n4js.ts.types.internal,
  eu.numberfour.n4js.ts.types.util
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: %providerName

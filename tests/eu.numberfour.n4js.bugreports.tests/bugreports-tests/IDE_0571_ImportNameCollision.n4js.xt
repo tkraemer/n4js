@@ -8,12 +8,11 @@
    END_SETUP 
  */
 
-// see https://numberfour.jira.com/browse/IDE-571
 //Import name should error if redefined.
 
 // XPECT warnings --> "The import of Partytime is unused." at "Partytime"
 import { Partytime } from "Partytime";
 
-// XPECT errors --> "Variable Partytime duplicates named import Partytime (line 15)." at "Partytime"
+// XPECT errors --> "Variable Partytime duplicates named import Partytime (line 14)." at "Partytime"
 const Partytime : string = "excellent";
 

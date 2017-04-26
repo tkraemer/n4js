@@ -1,25 +1,28 @@
 #
-# List of files with third-party copyright.
+# List of files and folders with third-party copyright.
 #
 #
 # This file is processed automatically by FileChecker.java to ensure the below information is kept up-to-date.
 #
 # Format:
 # every non-empty line in this file either starts with '#' and is then a comment (to be ignored) or must
-# contain the relative path to a file with third-party copyright. The paths must be relative to the folder
+# contain the relative path to a file with third-party copyright. If a path ends in "/**" it must point to
+# a folder and its contents are declared to be third-party files. All paths must be relative to the folder
 # containing this file.
 #
 
 
-## implementation of source maps file format from Google
-plugins/eu.numberfour.n4js.transpiler/src/eu/numberfour/n4js/transpiler/sourcemap/Base64.java
-plugins/eu.numberfour.n4js.transpiler/src/eu/numberfour/n4js/transpiler/sourcemap/Base64VLQ.java
-plugins/eu.numberfour.n4js.transpiler/src/eu/numberfour/n4js/transpiler/sourcemap/FilePosition.java
-plugins/eu.numberfour.n4js.transpiler/src/eu/numberfour/n4js/transpiler/sourcemap/SourceMapGenerator.java
-plugins/eu.numberfour.n4js.transpiler/src/eu/numberfour/n4js/transpiler/sourcemap/SourceMapGeneratorV3.java
-plugins/eu.numberfour.n4js.transpiler/src/eu/numberfour/n4js/transpiler/sourcemap/SourceMapSection.java
-plugins/eu.numberfour.n4js.transpiler/src/eu/numberfour/n4js/transpiler/sourcemap/Util.java
-plugins/eu.numberfour.n4js.transpiler/src/eu/numberfour/n4js/transpiler/sourcemap/LICENSE-2.0.txt
+############################################################
+# code copies from various places
+
+## Torsten (copied from items AG)
+plugins/eu.numberfour.n4js.ui/src/eu/nmberfour/n4js/ui/logging/EclipseLogAppender.java
+
+## Torsten copied from JDT:
+plugins/eu.numberfour.n4js.ui/src/eu/numberfour/n4js/ui/organize/imports/MultiElementListSelectionDialog.java
+
+## Akos copied from org.eclipse.core.resources
+plugins/eu.numberfour.n4js.utils/src/eu/numberfour/n4js/utils/resources/ComputeProjectOrder.java
 
 
 ## code from items AG copied and adjusted by items consultants for NumberFour AG
@@ -36,11 +39,6 @@ testhelpers/eu.numberfour.n4js.ui.tests.helper/src/eu/numberfour/n4js/tests/buil
 plugins/eu.numberfour.n4js.tester/src/org/eclipse/jetty/servlets/CrossOriginFilter.java
 
 
-## taken from Eclipse code: org.eclipse.core.internal.resources
-## EPL 1.0
-plugins/eu.numberfour.n4js.utils/src/eu/numberfour/n4js/utils/resources/ComputeProjectOrder.java
-
-
 ## taken from Eclipse code: org.eclipse.emf.ecore_2.10.1.v20140901-1043.jar
 ## EPL 1.0
 tools/eu.numberfour.n4js.hlc/src/main/resources/org/eclipse/emf/ecore/plugin/plugin.properties
@@ -50,38 +48,76 @@ tools/eu.numberfour.n4js.hlc/src/main/resources/org/eclipse/emf/ecore/plugin/plu
 plugins/eu.numberfour.n4js.environments/src-env/env/builtin_js.n4ts
 
 
-## files in bootstrap code
-plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/encoding/LICENSE
-#plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/dist/es6-module-loader-dev.js
-#plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/dist/es6-module-loader.js
-#plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/Gruntfile.js
-#plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/LICENSE-MIT
-#plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/package.json
-#plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/es6-module-loader/README.md
-plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/iconv-lite/LICENSE
-plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/node-fetch/LICENSE.md
-plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/systemjs/LICENSE
-plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/when/LICENSE.txt
-plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/encoding/LICENSE
-plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/es6-module-loader/dist/es6-module-loader-dev.js
-plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/es6-module-loader/dist/es6-module-loader.js
-plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/es6-module-loader/Gruntfile.js
-plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/es6-module-loader/LICENSE-MIT
-plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/es6-module-loader/package.json
-plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/es6-module-loader/README.md
-plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/iconv-lite/LICENSE
-plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/node-fetch/LICENSE.md
-plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/systemjs/LICENSE
-plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/when/LICENSE.txt
+
+############################################################
+# folders containing 3rd party projects in runners and external libraries (i.e. library manager)
+
+# runners
+
+## promise library, MIT, https://www.npmjs.com/package/when
+plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/when/**
+
+## module loader, MIT, https://www.npmjs.com/package/systemjs
+plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/systemjs/**
+
+## module loader, MIT, https://www.npmjs.com/package/es6-module-loader
+plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/es6-module-loader/**
+
+## window.fetch for node, MIT, https://www.npmjs.com/package/node-fetch
+plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/node-fetch/**
+
+## string encoding util, MIT, https://www.npmjs.com/package/encoding
+plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/encoding/**
+
+## string encoding util, MIT, https://www.npmjs.com/package/iconv-lite
+plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/iconv-lite/**
+
+## node stream util, MIT, https://www.npmjs.com/package/is-stream
+plugins/eu.numberfour.n4js.runner/res/ide-nodejs-env/is-stream/**
+
+# external libraries (i.e. library manager)
+
+## TODO reconsider how to deal with mangelhaft
+## mangelhaft library, EPL
+## contains the following third-party artifacts:
+## MIT license, https://github.com/substack/node-deep-equal
+## MIT license, https://github.com/nodejs/node/blob/master/lib/assert.js
+## plugins/eu.numberfour.n4js.external.libraries/mangelhaft/eu.numberfour.mangelhaft.assert/src/n4js/n4/mangel/assert/Assert.n4js
+## MIT license, http://millermedeiros.github.com/js-signals/
+## plugins/eu.numberfour.n4js.external.libraries/mangelhaft/eu.numberfour.mangelhaft/src/n4js/n4/mangel/mangeltypes/signal/Signal.n4js
+plugins/eu.numberfour.n4js.external.libraries/mangelhaft/**
+
+## promise library, MIT, https://www.npmjs.com/package/when
+plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/when/**
+
+## module loader, MIT, https://www.npmjs.com/package/systemjs
+plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/systemjs/**
+
+## window.fetch for node. MIT, https://www.npmjs.com/package/node-fetch
+plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/node-fetch/**
+
+## string encoding util, MIT, https://www.npmjs.com/package/encoding
+plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/encoding/**
+
+## string encoding util, MIT, https://www.npmjs.com/package/iconv-lite
+plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/iconv-lite/**
+
+## node stream util, MIT, https://www.npmjs.com/package/is-stream
+plugins/eu.numberfour.n4js.external.libraries/runtime/n4js-node/node_modules/is-stream/**
 
 
 
-######################################################################################################
-#
+############################################################
+## test cases copied from 3rd party
+
+#### Creative Commons attribution-noncommercial-sharealike License, http://lucumr.pocoo.org/2011/2/6/automatic-semicolon-insertion/
+tests/eu.numberfour.n4js.lang.tests/src/eu/numberfour/n4js/tests/parser/ES_07_09_AutomaticSemicolonInsertionParserTest.xtend
+
+
+
+############################################################
 # bundled jar files
-#
 # TODO avoid bundling them
-#
 
 ## from Eclipse Orbit
 testhelpers/eu.numberfour.n4js.tester.tests.helper/commons-codec-1.6.jar
@@ -92,31 +128,37 @@ testhelpers/eu.numberfour.n4js.tester.tests.helper/hamcrest-library-1.3.jar
 testhelpers/eu.numberfour.n4js.tester.tests.helper/httpcore-4.3.3.jar
 testhelpers/eu.numberfour.n4js.tester.tests.helper/httpclient-4.3.6.jar
 
-## Apache 2.0
+## others
+### Apache 2.0
 testhelpers/eu.numberfour.n4js.tester.tests.helper/httpmime-4.3.6.jar
-
-## Apache 2.0
-plugins/eu.numberfour.n4js.generator/lib/guice-multibindings-3.0.jar
-
-## Apache 2.0
 testhelpers/eu.numberfour.n4js.tester.tests.helper/groovy-2.3.7.jar
 testhelpers/eu.numberfour.n4js.tester.tests.helper/groovy-json-2.3.7.jar
 testhelpers/eu.numberfour.n4js.tester.tests.helper/groovy-xml-2.3.7.jar
-
-## Apache 2.0
 testhelpers/eu.numberfour.n4js.tester.tests.helper/rest-assured-2.4.0-sources.jar
 testhelpers/eu.numberfour.n4js.tester.tests.helper/rest-assured-2.4.0.jar
-
-## Apache 2.0
 testhelpers/eu.numberfour.n4js.tester.tests.helper/tagsoup-1.2.1.jar
 
+## actually unused, this library did not work correctly for us in that version
+## maybe it we should try new version (4+) : http://mvnrepository.com/artifact/com.google.inject.extensions/guice-multibindings/4.1.0
+## problem with not using is, we hack around with hardcoded paths, class path inspection at runtime and reflection API
+## this approach forces us to hace weird coupling (and dependency graph) between generator bundles and transpiler bundles
+## (note that when introducing more transpilers, e.g. for N4JSX and others) this gets only worse.
+### Apache 2.0
+plugins/eu.numberfour.n4js.generator/lib/guice-multibindings-3.0.jar
 
 
-## NEW STUFF:
 
-# Torsten (copied from items AG)
-plugins/eu.numberfour.n4js.ui/src/eu/nmberfour/n4js/ui/logging/EclipseLogAppender.java
-
-# unknown copied from JDT:
-plugins/eu.numberfour.n4js.ui/src/eu/numberfour/n4js/ui/organize/imports/MultiElementListSelectionDialog.java
-
+############################################################
+# the following folder contains temporary copies of some of the above files
+# TODO remove this folder entirely
+#
+# there is only one third-party artifact not covered above:
+## "Public Domain", https://github.com/douglascrockford/JSON-js/blob/master/cycle.js
+## n4js-libraries/eu.numberfour.mangelhaft.assert/src/n4js/n4/mangel/assert/Decycle.n4js
+#
+#n4js-libraries/**
+# new:
+n4js-libraries/eu.numberfour.mangelhaft.assert/src/n4js/n4/mangel/assert/Decycle.n4js
+# covered above:
+n4js-libraries/eu.numberfour.mangelhaft.assert/src/n4js/n4/mangel/assert/Assert.n4js
+n4js-libraries/eu.numberfour.mangelhaft/src/n4js/n4/mangel/mangeltypes/signal/Signal.n4js

@@ -22,7 +22,6 @@ import eu.numberfour.n4js.validation.JavaScriptVariant
 /**
  * Test class for assignment expressions (6.1.21)
  *
- * @see https://numberfour.jira.com/browse/IDE-349
  */
 @RunWith(XtextRunner)
 @InjectWith(N4JSInjectorProvider)

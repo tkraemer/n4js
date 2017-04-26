@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Regex Tests Helper
+Bundle-Name: %pluginName
 Bundle-SymbolicName: eu.numberfour.n4js.regex.tests.helper
 Bundle-Version: 0.0.1.qualifier
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: %providerName
 Require-Bundle: eu.numberfour.n4js.regex,
  org.eclipse.core.runtime,
  org.eclipse.xtext.junit4

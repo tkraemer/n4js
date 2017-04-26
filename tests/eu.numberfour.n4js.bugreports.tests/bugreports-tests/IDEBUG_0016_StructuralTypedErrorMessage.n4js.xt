@@ -1,5 +1,4 @@
 
-// see https://numberfour.jira.com/browse/IDEBUG-16
 
 //Unhelpful error message when structural typing error.
 class Rhino {

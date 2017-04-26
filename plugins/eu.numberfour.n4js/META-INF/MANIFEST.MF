@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: eu.numberfour.n4js
-Bundle-Vendor: NumberFour AG
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
 Bundle-Version: 0.0.1.qualifier
-Bundle-SymbolicName: eu.numberfour.n4js; singleton:=true
+Bundle-SymbolicName: eu.numberfour.n4js;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.eclipse.xtext.xbase;resolution:=optional;visibility:=reexport,

@@ -30,7 +30,6 @@ import static org.junit.Assert.*
 /**
  * Test class for function expression, see  6.1.10. Function Expression
  *
- * @see https://numberfour.jira.com/browse/IDE-433
  */
 @RunWith(XtextRunner)
 @InjectWith(N4JSInjectorProviderWithIssueSuppression)

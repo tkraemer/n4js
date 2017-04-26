@@ -1,4 +1,3 @@
-// see https://numberfour.jira.com/browse/IDE-833
 
 //Overriding toString and valueOf (to allow autoconversions) receives error about a super class method. Also there is a documentation
 //bug because it does not specify that these methods are public.

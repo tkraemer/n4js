@@ -43,7 +43,6 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
  * @see AT_185_ThisScopingTest
  * @see ThisScopingTest
  * @see MemberScope
- * @see <a href="https://numberfour.jira.com/browse/IDE-343">IDE-343</a>
  */
 @InjectWith(N4JSInjectorProvider)
 @RunWith(XtextRunner)
@@ -97,7 +96,6 @@ class StaticScopingTest {
 	}
 
 	@Test
-	// https://numberfour.jira.com/browse/IDE-528
 	def void testStaticTypeInference() {
 		val script = '''
 			class A {

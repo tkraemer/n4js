@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: eu.numberfour.n4js.utils
+Bundle-Name: %pluginName
 Bundle-SymbolicName: eu.numberfour.n4js.utils;singleton:=true
 Bundle-Version: 0.0.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -49,5 +49,5 @@ Export-Package: eu.numberfour.n4js.fileextensions,
  eu.numberfour.n4js.utils.validation.impl,
  eu.numberfour.n4js.utils.validation.util,
  eu.numberfour.n4js.xtext.scoping
-Bundle-Vendor: NumberFour AG
+Bundle-Vendor: %providerName
 Bundle-ClassPath: .

@@ -1,5 +1,4 @@
-// see https://numberfour.jira.com/browse/IDE-672
 
 var barf : number;
-//XPECT errors --> "Variable barf duplicates variable barf (line 3)." at "barf"
+//XPECT errors --> "Variable barf duplicates variable barf (line 2)." at "barf"
 var barf : string;
