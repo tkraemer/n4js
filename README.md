@@ -4,6 +4,10 @@
 
 <hr/>
 
+# DO NOT ADD ANY ISSUES HERE. Instead, use https://github.com/eclipse/n4js
+
+<hr/>
+
 ## N4JS
 
 The N4JS language and its IDE enables high-quality JavaScript development for large Node.js projects. 
